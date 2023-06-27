@@ -1,26 +1,29 @@
 import {postRequest} from '../libs/AxiosService.util';
 
 export async function serviceCreateUnit(params) {
-    return await postRequest('unit/create', params);
+    return await postRequest('units/create', params);
 }
 
 export async function serviceUpdateUnit(params) {
-    return await postRequest('unit/update', params);
+    return await postRequest('units/update', params);
 }
 
 export async function serviceDeleteUnit(params) {
-    return await postRequest('unit/delete', params);
+    return await postRequest('units/delete', params);
 }
 
 export async function serviceGetUnit (params) {
-    return await postRequest('unit', params);
+    return await postRequest('units', params);
 }
 
 export async function serviceGetUnitList (params) {
-    return await postRequest('unit/list', params);
+    return await postRequest('units/list', params);
 }
 
 export async function serviceUnitCheck (params) {
-    return await postRequest('unit/check', params);
+    return await postRequest('units/check', params);
 }
 
+export async function serviceGetUnitDetails(params) {
+    return await postRequest('units/detail', params);
+}
