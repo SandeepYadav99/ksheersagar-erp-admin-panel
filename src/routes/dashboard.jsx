@@ -10,6 +10,8 @@ import DepartmentList from "../views/Department/Department/DepartmentList.contai
 import EmployeeList from "../views/EmployeeList/EmployeeList.container";
 import EmployeeListCreate from "../views/EmployeeList/EmployeeListCreate";
 import UnitList from "../views/Inventory/Unit/UnitList.container";
+import CategoryList from "../views/Inventory/Category/CategoryList.container";
+import SubCategoryList from "../views/Inventory/SubCategory/SubCategoryList.container";
 
 const NewDashboard = lazy(() => import("../views/dashboard/NewDashboard.view"));
 const LocationList = lazy(() =>
@@ -102,6 +104,31 @@ const dashboardRoutes = [
     parent: "inventory",
     // roles: [Roles.ADMIN, Roles.CORPORATE_HR],
   },
+  {
+    path: RouteName.CATEGORY,
+    sidebarName: "Category",
+    navbarName: "Category",
+    icon: PeopleOutlined,
+    component: CategoryList,
+    is_sidebar: true,
+    is_protect: true,
+    should_regex: true,
+    parent: "inventory",
+    // roles: [Roles.ADMIN, Roles.CORPORATE_HR],
+  },
+  {
+    path: RouteName.SUBCATEGORY,
+    sidebarName: "Category",
+    navbarName: "Category",
+    icon: PeopleOutlined,
+    component: SubCategoryList,
+    is_sidebar: false,
+    is_protect: true,
+    should_regex: true,
+    // parent: "inventory",
+    // roles: [Roles.ADMIN, Roles.CORPORATE_HR],
+  },
+
 ];
 
 export default dashboardRoutes;

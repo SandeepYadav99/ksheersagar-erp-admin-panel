@@ -13,5 +13,7 @@ export default {
   DEPARTMENT_UPDATE: "/department/update/",
   DEPARTMENT_DETAILS: "/department/details/",
 
-  UNIT:"/unit"
+  UNIT:"/unit",
+  CATEGORY:'/category',
+  SUBCATEGORY:'/subcategory'
 };
