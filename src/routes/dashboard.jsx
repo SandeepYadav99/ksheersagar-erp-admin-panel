@@ -117,9 +117,9 @@ const dashboardRoutes = [
     // roles: [Roles.ADMIN, Roles.CORPORATE_HR],
   },
   {
-    path: RouteName.SUBCATEGORY,
-    sidebarName: "Category",
-    navbarName: "Category",
+    path: `${RouteName.SUBCATEGORY}:id`,
+    // sidebarName: "Category",
+    // navbarName: "Category",
     icon: PeopleOutlined,
     component: SubCategoryList,
     is_sidebar: false,

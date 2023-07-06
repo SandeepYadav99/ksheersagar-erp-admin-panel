@@ -6,11 +6,14 @@ import SnackbarUtils from "../../../libs/SnackbarUtils";
 import { useParams } from "react-router";
 import Constants from "../../../config/constants";
 import RouteName from "../../../routes/Route.name";
-import { serviceCreateUnit, serviceGetUnitDetails, serviceUpdateUnit } from "../../../services/Unit.service";
+import { serviceCreateCategory, 
+  serviceGetCategoryDetails
+  // serviceGetUnitDetails, serviceUpdateUnit 
+} from "../../../services/Category.service";
 
 const initialForm = {
   name: "",
-  is_general: false,
+  // is_general: false,
   is_active: true,
 };
 
@@ -24,8 +27,9 @@ const useCategoryDetail = ({ handleToggleSidePannel }) => {
   const { id } = useParams();
 
   useEffect(() => {
+    console.log('id',id)
     if (id) {
-      serviceGetUnitDetails({ id: id }).then((res) => {
+      serviceGetCategoryDetails({ id: id }).then((res) => {
         if (!res.error) {
           const data = res?.data?.details;
           setForm({
@@ -61,10 +65,10 @@ const useCategoryDetail = ({ handleToggleSidePannel }) => {
   const submitToServer = useCallback(() => {
     if (!isSubmitting) {
       setIsSubmitting(true);
-      let req = serviceCreateUnit;
-      if (id) {
-        req = serviceUpdateUnit;
-      }
+      let req = serviceCreateCategory;
+      // if (id) {
+      //   req = serviceUpdateUnit;
+      // }
       req({
         ...form,
       }).then((res) => {

@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
-  actionCreateUnit,
-  actionDeleteUnit,
-  actionFetchUnit,
-  actionSetPageUnit,
-  actionUpdateUnit,
-} from "../../../actions/Unit.action";
+  actionCreateCategory,
+  // actionDeleteUnit,
+  actionFetchCategory, actionSetPageCategory,
+  // actionSetPageUnit,
+  // actionUpdateUnit,
+} from "../../../actions/Category.actions";
 import historyUtils from "../../../libs/history.utils";
 import LogUtils from "../../../libs/LogUtils";
 import RouteName from "../../../routes/Route.name";
@@ -30,7 +30,7 @@ const useCategoryList = ({}) => {
 
   useEffect(() => {
     dispatch(
-      actionFetchUnit(1, sortingData, {
+      actionFetchCategory(1, sortingData, {
         query: isMountRef.current ? query : null,
         query_data: isMountRef.current ? queryData : null,
       })
@@ -40,20 +40,20 @@ const useCategoryList = ({}) => {
 
   const handlePageChange = useCallback((type) => {
     console.log("_handlePageChange", type);
-    dispatch(actionSetPageUnit(type));
+    // dispatch(actionSetPageUnit(type));
   }, []);
   const handleSubCategory = useCallback((data) => {
-    console.log('here')
-    historyUtils.push(RouteName.SUBCATEGORY) //+
+    console.log('here',data)
+    historyUtils.push(RouteName.SUBCATEGORY+ data.id) //+
 }, []);
 
   const handleDataSave = useCallback(
     (data, type) => {
       // this.props.actionChangeStatus({...data, type: type});
       if (type == "CREATE") {
-        dispatch(actionCreateUnit(data));
+        dispatch(actionCreateCategory(data));
       } else {
-        dispatch(actionUpdateUnit(data));
+        // dispatch(actionUpdateUnit(data));
       }
       setSidePanel((e) => !e);
       setEditData(null);
@@ -66,7 +66,7 @@ const useCategoryList = ({}) => {
       console.log("_queryFilter", key, value);
       // dispatch(actionSetPageUnitRequests(1));
       dispatch(
-        actionFetchUnit(1, sortingData, {
+        actionFetchCategory(1, sortingData, {
           query: key == "SEARCH_TEXT" ? value : query,
           query_data: key == "FILTER_DATA" ? value : queryData,
         })
@@ -95,9 +95,9 @@ const useCategoryList = ({}) => {
   const handleSortOrderChange = useCallback(
     (row, order) => {
       console.log(`handleSortOrderChange key:${row} order: ${order}`);
-      dispatch(actionSetPageUnit(1));
+      dispatch(actionSetPageCategory(1));
       dispatch(
-        actionFetchUnit(
+        actionFetchCategory(
           1,
           { row, order },
           {
@@ -114,14 +114,14 @@ const useCategoryList = ({}) => {
     console.log(page);
   };
 
-  const handleDelete = useCallback(
-    (id) => {
-      dispatch(actionDeleteUnit(id));
-      setSidePanel(false);
-      setEditData(null);
-    },
-    [setEditData, setSidePanel]
-  );
+  // const handleDelete = useCallback(
+  //   (id) => {
+  //     dispatch(actionDeleteUnit(id));
+  //     setSidePanel(false);
+  //     setEditData(null);
+  //   },
+  //   [setEditData, setSidePanel]
+  // );
 
   const handleEdit = useCallback(
     (data) => {
@@ -161,7 +161,7 @@ const useCategoryList = ({}) => {
     handleSearchValueChange,
     handleRowSize,
     handleSortOrderChange,
-    handleDelete,
+    // handleDelete,
     handleEdit,
     handleSideToggle,
     handleViewDetails,

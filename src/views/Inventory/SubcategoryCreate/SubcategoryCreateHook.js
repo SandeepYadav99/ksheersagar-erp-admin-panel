@@ -6,11 +6,16 @@ import SnackbarUtils from "../../../libs/SnackbarUtils";
 import { useParams } from "react-router";
 import Constants from "../../../config/constants";
 import RouteName from "../../../routes/Route.name";
-import { serviceCreateUnit, serviceGetUnitDetails, serviceUpdateUnit } from "../../../services/Unit.service";
-
+import { serviceGetList } from "../../../services/Common.service";
+// import { serviceGetList } from "../../services/Common.service";
+import { serviceCreateSubcategory, 
+  // serviceGetUnitDetails, serviceUpdateUnit 
+} from "../../../services/Subcategory.service";
 const initialForm = {
   name: "",
-  is_general: false,
+  // is_general: false,
+  category_id:"",
+  unit_id:"",
   is_active: true,
 };
 
@@ -22,23 +27,31 @@ const useSubcategoryDetail = ({ handleToggleSidePannel }) => {
   const [isEdit, setIsEdit] = useState(false);
   const includeRef = useRef(null);
   const { id } = useParams();
+  const [listData, setListData] = useState()
 
+  // useEffect(() => {
+  //   if (id) {
+  //     serviceGetUnitDetails({ id: id }).then((res) => {
+  //       if (!res.error) {
+  //         const data = res?.data?.details;
+  //         setForm({
+  //           ...data,
+  //           is_active: data?.status === Constants.GENERAL_STATUS.ACTIVE,
+  //         });
+  //       } else {
+  //         SnackbarUtils.error(res?.message);
+  //       }
+  //     });
+  //   }
+  // }, [id]);
   useEffect(() => {
-    if (id) {
-      serviceGetUnitDetails({ id: id }).then((res) => {
+    serviceGetList(["UNITS"]).then(res => {
         if (!res.error) {
-          const data = res?.data?.details;
-          setForm({
-            ...data,
-            is_active: data?.status === Constants.GENERAL_STATUS.ACTIVE,
-          });
-        } else {
-          SnackbarUtils.error(res?.message);
+            setListData(res.data);
         }
-      });
-    }
-  }, [id]);
-  console.log('form',form)
+    });
+}, []);
+  // console.log('form',form)
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
     let required = ["name"];
@@ -61,16 +74,19 @@ const useSubcategoryDetail = ({ handleToggleSidePannel }) => {
   const submitToServer = useCallback(() => {
     if (!isSubmitting) {
       setIsSubmitting(true);
-      let req = serviceCreateUnit;
-      if (id) {
-        req = serviceUpdateUnit;
-      }
+      let req = serviceCreateSubcategory;
+      // if (id) {
+      //   req = serviceUpdateUnit;
+      // }
       req({
         ...form,
+        category_id:id
       }).then((res) => {
         if (!res.error) {
           handleToggleSidePannel();
-          window.location.reload();
+
+          console.log('jherjhej')
+          // window.location.reload();
         } else {
           SnackbarUtils.error(res.message);
         }
@@ -143,6 +159,7 @@ const useSubcategoryDetail = ({ handleToggleSidePannel }) => {
     includeRef,
     handleReset,
     id,
+    listData
   };
 };
 

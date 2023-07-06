@@ -63,16 +63,16 @@ const CategoryList = ({}) => {
   const tableStructure = useMemo(() => {
     return [
       {
-        key: "code",
+        key: "name",
         label: "Name",
         sortable: true,
         render: (value, all) => <div>{renderFirstCell(all)}</div>,
       },
       {
-        key: "general",
+        key: "subCategoryCount",
         label: "Subcategory",
         sortable: false,
-        render: (temp, all) => <div>{all?.is_general ? 'Yes' : 'No'}</div>,
+        render: (temp, all) => <div>{all?.subCategoryCount !==0 ? 'Yes' : 'No'}</div>,
       },
 
       {
@@ -82,7 +82,7 @@ const CategoryList = ({}) => {
         render: (temp, all) => <div>{renderStatus(all.status)}</div>,
       },
       {
-        key: "user_id",
+        key: "_id",
         label: "Action",
         render: (temp, all) => (
           

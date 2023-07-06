@@ -1,15 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
-  actionCreateUnit,
-  actionDeleteUnit,
-  actionFetchUnit,
-  actionSetPageUnit,
-  actionUpdateUnit,
-} from "../../../actions/Unit.action";
+  actionCreateSubcategory,
+  // actionDeleteUnit,
+  actionFetchSubcategory,
+  // actionSetPageUnit,
+  // actionUpdateUnit,
+} from "../../../actions/Subcategory.action";
 import historyUtils from "../../../libs/history.utils";
 import LogUtils from "../../../libs/LogUtils";
 import RouteName from "../../../routes/Route.name";
+import { useParams } from "react-router";
 
 const useSubCategoryList = ({}) => {
   const [isSidePanel, setSidePanel] = useState(false);
@@ -17,6 +18,7 @@ const useSubCategoryList = ({}) => {
   const [editData, setEditData] = useState(null);
   const dispatch = useDispatch();
   const isMountRef = useRef(false);
+  const catId= useParams();
   const {
     sorting_data: sortingData,
     is_fetching: isFetching,
@@ -30,9 +32,10 @@ const useSubCategoryList = ({}) => {
 
   useEffect(() => {
     dispatch(
-      actionFetchUnit(1, sortingData, {
+      actionFetchSubcategory(1, sortingData, {
         query: isMountRef.current ? query : null,
         query_data: isMountRef.current ? queryData : null,
+        category_id:catId?.id
       })
     );
     isMountRef.current = true;
@@ -40,7 +43,7 @@ const useSubCategoryList = ({}) => {
 
   const handlePageChange = useCallback((type) => {
     console.log("_handlePageChange", type);
-    dispatch(actionSetPageUnit(type));
+    // dispatch(actionSetPageSubcategory(type));
   }, []);
   const handleSubCategory = useCallback((data) => {
     console.log('here')
@@ -51,9 +54,9 @@ const useSubCategoryList = ({}) => {
     (data, type) => {
       // this.props.actionChangeStatus({...data, type: type});
       if (type == "CREATE") {
-        dispatch(actionCreateUnit(data));
+        dispatch(actionCreateSubcategory(data));
       } else {
-        dispatch(actionUpdateUnit(data));
+        // dispatch(actionUpdateUnit(data));
       }
       setSidePanel((e) => !e);
       setEditData(null);
@@ -66,7 +69,7 @@ const useSubCategoryList = ({}) => {
       console.log("_queryFilter", key, value);
       // dispatch(actionSetPageUnitRequests(1));
       dispatch(
-        actionFetchUnit(1, sortingData, {
+        actionFetchSubcategory(1, sortingData, {
           query: key == "SEARCH_TEXT" ? value : query,
           query_data: key == "FILTER_DATA" ? value : queryData,
         })
@@ -95,9 +98,9 @@ const useSubCategoryList = ({}) => {
   const handleSortOrderChange = useCallback(
     (row, order) => {
       console.log(`handleSortOrderChange key:${row} order: ${order}`);
-      dispatch(actionSetPageUnit(1));
+      // dispatch(actionSetPageSubcategory(1));
       dispatch(
-        actionFetchUnit(
+        actionFetchSubcategory(
           1,
           { row, order },
           {
@@ -116,7 +119,7 @@ const useSubCategoryList = ({}) => {
 
   const handleDelete = useCallback(
     (id) => {
-      dispatch(actionDeleteUnit(id));
+      // dispatch(actionDeletenit(id));
       setSidePanel(false);
       setEditData(null);
     },

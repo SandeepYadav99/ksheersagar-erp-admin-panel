@@ -7,6 +7,8 @@ import history from "../../../libs/history.utils";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import CustomSwitch from "../../../components/FormFields/CustomSwitch";
 import useDepartmentDetail from "./SubcategoryCreateHook";
+import CustomSelectField from "../../../components/FormFields/SelectField/SelectField.component";
+
 
 const useStyles = makeStyles((theme) => ({
   iconBtnError: {
@@ -29,8 +31,10 @@ const DepartmentCreateView = ({ handleToggleSidePannel }) => {
     onBlurHandler,
     changeTextData,
     id,
+    listData
   } = useDepartmentDetail({ handleToggleSidePannel });
   const classes = useStyles();
+  console.log('list',listData)
   return (
     <div className={styles.departmentWrap}>
       <div className={"formFlex"}>
@@ -51,7 +55,24 @@ const DepartmentCreateView = ({ handleToggleSidePannel }) => {
       </div>
       <div className={"formFlex"}>
         <div className={"formGroup"}>
-          <CustomTextField
+        <CustomSelectField
+              isError={errorData?.unit_id}
+              errorText={errorData?.unit_id}
+              label={"Sub-Category Unit"}
+              value={form?.grade_id}
+              handleChange={(value) => {
+                changeTextData(value, "unit_id");
+              }}
+            >
+              {listData?.UNITS?.map((dT) => {
+                return (
+                  <MenuItem value={dT?.id} key={dT?.id}>
+                    {dT?.label}
+                  </MenuItem>
+                );
+              })}
+            </CustomSelectField>
+          {/* <CustomTextField
             isError={errorData?.name}
             errorText={errorData?.name}
             label={"Sub-Category Unit"}
@@ -62,7 +83,7 @@ const DepartmentCreateView = ({ handleToggleSidePannel }) => {
             onBlur={() => {
               onBlurHandler("name");
             }}
-          />
+          /> */}
         </div>
       </div>
       <div className={"headerFlex"}>

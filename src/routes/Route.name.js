@@ -15,5 +15,5 @@ export default {
 
   UNIT:"/unit",
   CATEGORY:'/category',
-  SUBCATEGORY:'/subcategory'
+  SUBCATEGORY:'/subcategory/'
 };
