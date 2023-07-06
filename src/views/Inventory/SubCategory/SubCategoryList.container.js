@@ -41,7 +41,8 @@ const SubCategoryList = ({}) => {
     all: allData,
     currentPage,
     is_fetching: isFetching,
-  } = useSelector((state) => state.unit);
+    subcategory_id
+  } = useSelector((state) => state.subcategory);
 
   const renderStatus = useCallback((status) => {
     return <StatusPill status={status} />;
@@ -63,16 +64,16 @@ const SubCategoryList = ({}) => {
   const tableStructure = useMemo(() => {
     return [
       {
-        key: "code",
+        key: "name",
         label: "Name",
         sortable: true,
         render: (value, all) => <div>{renderFirstCell(all)}</div>,
       },
       {
-        key: "general",
+        key: "productsCount",
         label: "Products",
         sortable: false,
-        render: (temp, all) => <div>{all?.is_general ? 'Yes' : 'No'}</div>,
+        render: (temp, all) => <div>{all?.productsCount !==0 ? 'Yes' : 'No'}</div>,
       },
 
       {
@@ -82,7 +83,7 @@ const SubCategoryList = ({}) => {
         render: (temp, all) => <div>{renderStatus(all.status)}</div>,
       },
       {
-        key: "user_id",
+        key: "_id",
         label: "Action",
         render: (temp, all) => (
           
@@ -171,7 +172,7 @@ const SubCategoryList = ({}) => {
         </div>
         <SidePanelComponent
           handleToggle={handleToggleSidePannel}
-          title={"Create Subcategory"}
+          title={subcategory_id===0?"Create Subcategory":"Update Subcategory"}
           open={isSidePanel}
           side={"right"}
         >

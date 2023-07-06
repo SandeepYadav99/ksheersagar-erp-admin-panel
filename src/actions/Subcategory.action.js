@@ -4,7 +4,7 @@ import {
 serviceCreateSubcategory,
 //   serviceDeleteUnit,
   serviceGetSubcategory,
-//   serviceUpdateUnit,
+  serviceUpdateSubcategory,
 } from "../services/Subcategory.service";
 
 export const FETCH_INIT = "FETCH_INIT_UNIT";
@@ -23,6 +23,7 @@ export const SET_SERVER_PAGE = "SET_SERVER_PAGE_UNIT";
 export const CREATE_DATA = "CREATE_UNIT";
 export const UPDATE_DATA = "UPDATE_UNIT";
 export const DELETE_ITEM = "DELETE_UNIT";
+export const UPDATE_SUBCATEGORY_ID="UPDATE_SUBCATEGORY_ID"
 
 export function actionFetchSubcategory(
   index = 1,
@@ -71,16 +72,16 @@ export function actionCreateSubcategory(data) {
   };
 }
 
-// export function actionUpdateUnit(data) {
-//   const request = serviceUpdateUnit(data);
-//   return (dispatch) => {
-//     request.then((data) => {
-//       if (!data.error) {
-//         dispatch({ type: UPDATE_DATA, payload: data.data });
-//       }
-//     });
-//   };
-// }
+export function actionUpdateSubcategory(data) {
+  const request = serviceUpdateSubcategory(data);
+  return (dispatch) => {
+    request.then((data) => {
+      if (!data.error) {
+        dispatch({ type: UPDATE_DATA, payload: data.data });
+      }
+    });
+  };
+}
 
 // export function actionDeleteUnit(id) {
 //   const request = serviceDeleteUnit({ id: id });
@@ -143,4 +144,11 @@ export function actionSetPageCategory(page) {
     type: CHANGE_PAGE,
     payload: page,
   };
+}
+
+export function actionSubcategoryId(id){
+    return{
+        type:UPDATE_SUBCATEGORY_ID,
+        payload:id
+    }
 }

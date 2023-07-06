@@ -23,6 +23,7 @@ export const SET_SERVER_PAGE = "SET_SERVER_PAGE_UNIT";
 export const CREATE_DATA = "CREATE_UNIT";
 export const UPDATE_DATA = "UPDATE_UNIT";
 export const DELETE_ITEM = "DELETE_UNIT";
+export const UPDATE_DATA_ID="UPDATE_DATA_ID"
 
 export function actionFetchCategory(
   index = 1,
@@ -118,6 +119,12 @@ export function actionResetFilterUnit() {
     type: RESET_FILTER,
     payload: null,
   };
+}
+export function actionUpdateId(id){
+    return{
+        type:UPDATE_DATA_ID,
+        payload:id
+    }
 }
 
 export function actionSetPageCategory(page) {

@@ -4,6 +4,8 @@ import {
   actionCreateSubcategory,
   // actionDeleteUnit,
   actionFetchSubcategory,
+  actionSubcategoryId,
+  actionUpdateSubcategory
   // actionSetPageUnit,
   // actionUpdateUnit,
 } from "../../../actions/Subcategory.action";
@@ -24,7 +26,8 @@ const useSubCategoryList = ({}) => {
     is_fetching: isFetching,
     query,
     query_data: queryData,
-  } = useSelector((state) => state.unit);
+    subcategory_id
+  } = useSelector((state) => state.subcategory);
 
   useEffect(() => {
     // dispatch(actionFetchUnit());
@@ -56,7 +59,7 @@ const useSubCategoryList = ({}) => {
       if (type == "CREATE") {
         dispatch(actionCreateSubcategory(data));
       } else {
-        // dispatch(actionUpdateUnit(data));
+        dispatch(actionUpdateSubcategory(data));
       }
       setSidePanel((e) => !e);
       setEditData(null);
@@ -130,6 +133,7 @@ const useSubCategoryList = ({}) => {
     (data) => {
       setEditData(data);
       setSidePanel((e) => !e);
+      dispatch(actionSubcategoryId(data?.id))
     },
     [setEditData, setSidePanel]
   );

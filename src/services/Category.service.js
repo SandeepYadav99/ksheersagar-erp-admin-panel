@@ -4,9 +4,9 @@ export async function serviceCreateCategory(params) {
     return await postRequest('categories/create', params);
 }
 
-// export async function serviceUpdateUnit(params) {
-//     return await postRequest('units/update', params);
-// }
+export async function serviceUpdateCategory(params) {
+    return await postRequest('categories/update', params);
+}
 
 // export async function serviceDeleteUnit(params) {
 //     return await postRequest('units/delete', params);

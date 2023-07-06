@@ -8,14 +8,18 @@ import Constants from "../../../config/constants";
 import RouteName from "../../../routes/Route.name";
 import { serviceGetList } from "../../../services/Common.service";
 // import { serviceGetList } from "../../services/Common.service";
-import { serviceCreateSubcategory, 
+import {
+  serviceCreateSubcategory,
+  serviceGetSubcategoryDetails,
+  serviceUpdateSubcategory
   // serviceGetUnitDetails, serviceUpdateUnit 
 } from "../../../services/Subcategory.service";
+import { useSelector } from "react-redux";
 const initialForm = {
   name: "",
   // is_general: false,
-  category_id:"",
-  unit_id:"",
+  category_id: "",
+  unit_id: "",
   is_active: true,
 };
 
@@ -27,31 +31,39 @@ const useSubcategoryDetail = ({ handleToggleSidePannel }) => {
   const [isEdit, setIsEdit] = useState(false);
   const includeRef = useRef(null);
   const { id } = useParams();
-  const [listData, setListData] = useState()
+  const [listData, setListData] = useState();
+  const { subcategory_id } = useSelector(state => state.subcategory);
 
-  // useEffect(() => {
-  //   if (id) {
-  //     serviceGetUnitDetails({ id: id }).then((res) => {
-  //       if (!res.error) {
-  //         const data = res?.data?.details;
-  //         setForm({
-  //           ...data,
-  //           is_active: data?.status === Constants.GENERAL_STATUS.ACTIVE,
-  //         });
-  //       } else {
-  //         SnackbarUtils.error(res?.message);
-  //       }
-  //     });
-  //   }
-  // }, [id]);
+  useEffect(() => {
+    console.log('sjfjsfh')
+
+    if (subcategory_id !== 0) {
+      serviceGetSubcategoryDetails({ id: subcategory_id }).then((res) => {
+        if (!res.error) {
+          const data = res?.data?.details;
+          console.log('fgfgfffbf',data)
+          setForm({
+            // ...data,
+            name: data?.name,
+            unit_id: data?.unit_id,
+            category_id: data?.category_id,
+            id: subcategory_id,
+            is_active: data?.status === Constants.GENERAL_STATUS.ACTIVE,
+          });
+        } else {
+          SnackbarUtils.error(res?.message);
+        }
+      });
+    }
+  }, [subcategory_id]);
   useEffect(() => {
     serviceGetList(["UNITS"]).then(res => {
-        if (!res.error) {
-            setListData(res.data);
-        }
+      if (!res.error) {
+        setListData(res.data);
+      }
     });
-}, []);
-  // console.log('form',form)
+  }, []);
+  console.log('form', form)
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
     let required = ["name"];
@@ -75,12 +87,12 @@ const useSubcategoryDetail = ({ handleToggleSidePannel }) => {
     if (!isSubmitting) {
       setIsSubmitting(true);
       let req = serviceCreateSubcategory;
-      // if (id) {
-      //   req = serviceUpdateUnit;
-      // }
+      if (subcategory_id !== 0) {
+        req = serviceUpdateSubcategory;
+      }
       req({
         ...form,
-        category_id:id
+        category_id: id
       }).then((res) => {
         if (!res.error) {
           handleToggleSidePannel();
@@ -139,7 +151,7 @@ const useSubcategoryDetail = ({ handleToggleSidePannel }) => {
     [changeTextData]
   );
 
-  const handleDelete = useCallback(() => {}, []);
+  const handleDelete = useCallback(() => { }, []);
 
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });
@@ -159,7 +171,8 @@ const useSubcategoryDetail = ({ handleToggleSidePannel }) => {
     includeRef,
     handleReset,
     id,
-    listData
+    listData,
+    subcategory_id
   };
 };
 

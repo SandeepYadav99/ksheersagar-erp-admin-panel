@@ -4,6 +4,7 @@ import {
   actionCreateCategory,
   // actionDeleteUnit,
   actionFetchCategory, actionSetPageCategory,
+  actionUpdateId
   // actionSetPageUnit,
   // actionUpdateUnit,
 } from "../../../actions/Category.actions";
@@ -125,7 +126,9 @@ const useCategoryList = ({}) => {
 
   const handleEdit = useCallback(
     (data) => {
+      console.log('sjhdsjd',data)
       setEditData(data);
+      dispatch(actionUpdateId(data?.id))
       setSidePanel((e) => !e);
     },
     [setEditData, setSidePanel]
@@ -171,7 +174,8 @@ const useCategoryList = ({}) => {
     configFilter,
     handleCreate,
     handleToggleSidePannel,
-    handleSubCategory
+    handleSubCategory,
+    
   };
 };
 

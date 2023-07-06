@@ -10,6 +10,8 @@ import LocationReducer from "./Location.reducer";
 import DepartmentReducer from "./Department.reducer";
 import EmployeeReducer from "./Employee.reducer";
 import UnitReducer from "./Unit.reducer";
+import CategoryReducer from "./Category.reducer";
+import SubcategoryReducer from "./Subcategory.reducer";
 
 const rootReducer = combineReducers({
   state: (state = {}) => state,
@@ -23,7 +25,9 @@ const rootReducer = combineReducers({
   provider_user: ProviderUser,
   services: Services,
   employee:EmployeeReducer,
-  unit:UnitReducer
+  unit:UnitReducer,
+  category:CategoryReducer,
+  subcategory:SubcategoryReducer
 });
 
 export default rootReducer;

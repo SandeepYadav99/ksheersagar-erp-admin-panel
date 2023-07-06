@@ -31,7 +31,8 @@ const DepartmentCreateView = ({ handleToggleSidePannel }) => {
     onBlurHandler,
     changeTextData,
     id,
-    listData
+    listData,
+    subcategory_id
   } = useDepartmentDetail({ handleToggleSidePannel });
   const classes = useStyles();
   console.log('list',listData)
@@ -59,7 +60,7 @@ const DepartmentCreateView = ({ handleToggleSidePannel }) => {
               isError={errorData?.unit_id}
               errorText={errorData?.unit_id}
               label={"Sub-Category Unit"}
-              value={form?.grade_id}
+              value={form?.unit_id}
               handleChange={(value) => {
                 changeTextData(value, "unit_id");
               }}
@@ -111,7 +112,7 @@ const DepartmentCreateView = ({ handleToggleSidePannel }) => {
           onClick={handleSubmit}
           className={styles.createBtn}
         >
-          {id ? "Update" : "Create"}
+          {subcategory_id!==0 ? "Update" : "Create"}
         </ButtonBase>
       </div>
     </div>

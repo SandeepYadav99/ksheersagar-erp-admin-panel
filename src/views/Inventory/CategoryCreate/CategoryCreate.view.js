@@ -29,6 +29,7 @@ const DepartmentCreateView = ({ handleToggleSidePannel }) => {
     onBlurHandler,
     changeTextData,
     id,
+    category_id
   } = useDepartmentDetail({ handleToggleSidePannel });
   const classes = useStyles();
   return (
@@ -90,7 +91,7 @@ const DepartmentCreateView = ({ handleToggleSidePannel }) => {
           onClick={handleSubmit}
           className={styles.createBtn}
         >
-          {id ? "Update" : "Create"}
+          {category_id ? "Update" : "Create"}
         </ButtonBase>
       </div>
     </div>

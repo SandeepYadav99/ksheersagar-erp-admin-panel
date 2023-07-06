@@ -2,12 +2,15 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   isAlphaNumChars,
 } from "../../../libs/RegexUtils";
+import {useSelector} from "react-redux";
+
 import SnackbarUtils from "../../../libs/SnackbarUtils";
 import { useParams } from "react-router";
 import Constants from "../../../config/constants";
 import RouteName from "../../../routes/Route.name";
 import { serviceCreateCategory, 
-  serviceGetCategoryDetails
+  serviceGetCategoryDetails,
+  serviceUpdateCategory
   // serviceGetUnitDetails, serviceUpdateUnit 
 } from "../../../services/Category.service";
 
@@ -17,7 +20,7 @@ const initialForm = {
   is_active: true,
 };
 
-const useCategoryDetail = ({ handleToggleSidePannel }) => {
+const useCategoryDetail = ({ handleToggleSidePannel,data }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -25,15 +28,19 @@ const useCategoryDetail = ({ handleToggleSidePannel }) => {
   const [isEdit, setIsEdit] = useState(false);
   const includeRef = useRef(null);
   const { id } = useParams();
+  const {category_id} = useSelector(state => state.category);
+  console.log('id',category_id)
 
   useEffect(() => {
-    console.log('id',id)
-    if (id) {
-      serviceGetCategoryDetails({ id: id }).then((res) => {
+    if (category_id !==0) {
+      serviceGetCategoryDetails({ id: category_id }).then((res) => {
         if (!res.error) {
           const data = res?.data?.details;
+          console.log('data',data)
           setForm({
-            ...data,
+            // ...data,
+            id:data?.id,
+            name:data?.name,
             is_active: data?.status === Constants.GENERAL_STATUS.ACTIVE,
           });
         } else {
@@ -41,7 +48,7 @@ const useCategoryDetail = ({ handleToggleSidePannel }) => {
         }
       });
     }
-  }, [id]);
+  }, [category_id]);
   console.log('form',form)
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
@@ -66,9 +73,9 @@ const useCategoryDetail = ({ handleToggleSidePannel }) => {
     if (!isSubmitting) {
       setIsSubmitting(true);
       let req = serviceCreateCategory;
-      // if (id) {
-      //   req = serviceUpdateUnit;
-      // }
+      if (category_id !==0) {
+        req = serviceUpdateCategory;
+      }
       req({
         ...form,
       }).then((res) => {
@@ -147,6 +154,7 @@ const useCategoryDetail = ({ handleToggleSidePannel }) => {
     includeRef,
     handleReset,
     id,
+    category_id
   };
 };
 

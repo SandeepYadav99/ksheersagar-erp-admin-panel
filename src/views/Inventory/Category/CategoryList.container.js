@@ -41,7 +41,8 @@ const CategoryList = ({}) => {
     all: allData,
     currentPage,
     is_fetching: isFetching,
-  } = useSelector((state) => state.unit);
+    category_id
+  } = useSelector((state) => state.category);
 
   const renderStatus = useCallback((status) => {
     return <StatusPill status={status} />;
@@ -171,7 +172,7 @@ const CategoryList = ({}) => {
         </div>
         <SidePanelComponent
           handleToggle={handleToggleSidePannel}
-          title={"Create Category"}
+          title={category_id===0?"Create Category":"Update Category"}
           open={isSidePanel}
           side={"right"}
         >
