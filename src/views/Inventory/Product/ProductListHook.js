@@ -1,44 +1,40 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
-  actionCreateSubcategory,
+  actionCreateProduct,
   // actionDeleteUnit,
-  actionFetchSubcategory,
-  actionSubcategoryId,
-  actionUpdateSubcategory
+  actionFetchProduct, actionSetPageProduct,
+  actionUpdateId
   // actionSetPageUnit,
   // actionUpdateUnit,
-} from "../../../actions/Subcategory.action";
+} from "../../../actions/Product.action";
 import historyUtils from "../../../libs/history.utils";
 import LogUtils from "../../../libs/LogUtils";
 import RouteName from "../../../routes/Route.name";
-import { useParams } from "react-router";
 
-const useSubCategoryList = ({}) => {
+const useProductList = ({ }) => {
   const [isSidePanel, setSidePanel] = useState(false);
   const [isCalling, setIsCalling] = useState(false);
   const [editData, setEditData] = useState(null);
   const dispatch = useDispatch();
   const isMountRef = useRef(false);
-  const catId= useParams();
   const {
     sorting_data: sortingData,
     is_fetching: isFetching,
     query,
     query_data: queryData,
-    subcategory_id
-  } = useSelector((state) => state.subcategory);
-
+  } = useSelector((state) => state.product);
+  const { category_id } = useSelector(state => state.category)
   useEffect(() => {
     // dispatch(actionFetchUnit());
   }, []);
 
   useEffect(() => {
     dispatch(
-      actionFetchSubcategory(1, sortingData, {
+      actionFetchProduct(1, sortingData, {
         query: isMountRef.current ? query : null,
         query_data: isMountRef.current ? queryData : null,
-        category_id:catId?.id
+        category_id: category_id
       })
     );
     isMountRef.current = true;
@@ -46,20 +42,20 @@ const useSubCategoryList = ({}) => {
 
   const handlePageChange = useCallback((type) => {
     console.log("_handlePageChange", type);
-    // dispatch(actionSetPageSubcategory(type));
+    // dispatch(actionSetPageUnit(type));
   }, []);
-  const handleProduct = useCallback((data) => {
-    console.log('here')
-    historyUtils.push(RouteName.PRODUCT) //+
-}, []);
+  //   const handleSubCategory = useCallback((data) => {
+  //     console.log('here',data)
+  //     historyUtils.push(RouteName.SUBCATEGORY+ data.id) //+
+  // }, []);
 
   const handleDataSave = useCallback(
     (data, type) => {
       // this.props.actionChangeStatus({...data, type: type});
       if (type == "CREATE") {
-        dispatch(actionCreateSubcategory(data));
+        dispatch(actionCreateProduct(data));
       } else {
-        dispatch(actionUpdateSubcategory(data));
+        // dispatch(actionUpdateUnit(data));
       }
       setSidePanel((e) => !e);
       setEditData(null);
@@ -72,7 +68,7 @@ const useSubCategoryList = ({}) => {
       console.log("_queryFilter", key, value);
       // dispatch(actionSetPageUnitRequests(1));
       dispatch(
-        actionFetchSubcategory(1, sortingData, {
+        actionFetchProduct(1, sortingData, {
           query: key == "SEARCH_TEXT" ? value : query,
           query_data: key == "FILTER_DATA" ? value : queryData,
         })
@@ -101,9 +97,9 @@ const useSubCategoryList = ({}) => {
   const handleSortOrderChange = useCallback(
     (row, order) => {
       console.log(`handleSortOrderChange key:${row} order: ${order}`);
-      // dispatch(actionSetPageSubcategory(1));
+      dispatch(actionSetPageProduct(1));
       dispatch(
-        actionFetchSubcategory(
+        actionFetchProduct(
           1,
           { row, order },
           {
@@ -120,20 +116,21 @@ const useSubCategoryList = ({}) => {
     console.log(page);
   };
 
-  const handleDelete = useCallback(
-    (id) => {
-      // dispatch(actionDeletenit(id));
-      setSidePanel(false);
-      setEditData(null);
-    },
-    [setEditData, setSidePanel]
-  );
+  // const handleDelete = useCallback(
+  //   (id) => {
+  //     dispatch(actionDeleteUnit(id));
+  //     setSidePanel(false);
+  //     setEditData(null);
+  //   },
+  //   [setEditData, setSidePanel]
+  // );
 
   const handleEdit = useCallback(
     (data) => {
+      console.log('sjhdsjd', data)
       setEditData(data);
+      // dispatch(actionUpdateId(data?.id))
       setSidePanel((e) => !e);
-      dispatch(actionSubcategoryId(data?.id))
     },
     [setEditData, setSidePanel]
   );
@@ -154,7 +151,7 @@ const useSubCategoryList = ({}) => {
   }, []);
 
   const handleCreate = useCallback(() => {
-    historyUtils.push(RouteName.LOCATIONS_CREATE);
+    historyUtils.push(RouteName.PRODUCT_CREATE);
   }, []);
 
   const configFilter = useMemo(() => {
@@ -168,7 +165,7 @@ const useSubCategoryList = ({}) => {
     handleSearchValueChange,
     handleRowSize,
     handleSortOrderChange,
-    handleDelete,
+    // handleDelete,
     handleEdit,
     handleSideToggle,
     handleViewDetails,
@@ -178,8 +175,9 @@ const useSubCategoryList = ({}) => {
     configFilter,
     handleCreate,
     handleToggleSidePannel,
-    handleProduct
+    // handleSubCategory,
+
   };
 };
 
-export default useSubCategoryList;
+export default useProductList;

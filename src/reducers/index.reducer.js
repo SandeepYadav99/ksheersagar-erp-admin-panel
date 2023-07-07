@@ -12,6 +12,7 @@ import EmployeeReducer from "./Employee.reducer";
 import UnitReducer from "./Unit.reducer";
 import CategoryReducer from "./Category.reducer";
 import SubcategoryReducer from "./Subcategory.reducer";
+import ProductReducer from "./Product.reducer";
 
 const rootReducer = combineReducers({
   state: (state = {}) => state,
@@ -27,7 +28,8 @@ const rootReducer = combineReducers({
   employee:EmployeeReducer,
   unit:UnitReducer,
   category:CategoryReducer,
-  subcategory:SubcategoryReducer
+  subcategory:SubcategoryReducer,
+  product:ProductReducer
 });
 
 export default rootReducer;

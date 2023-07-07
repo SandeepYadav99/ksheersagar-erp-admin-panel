@@ -15,5 +15,8 @@ export default {
 
   UNIT:"/unit",
   CATEGORY:'/category',
-  SUBCATEGORY:'/subcategory/'
+  SUBCATEGORY:'/subcategory/',
+  PRODUCT:'/product',
+  PRODUCT_CREATE: "/product/create",
+
 };

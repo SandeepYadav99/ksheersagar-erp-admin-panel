@@ -11,11 +11,11 @@ import Constants from "../../../config/constants";
 import FilterComponent from "../../../components/Filter/Filter.component";
 import { Edit, RemoveRedEyeOutlined as ViewIcon } from "@material-ui/icons";
 import useAuthenticate from "../../../hooks/AuthenticateHook";
-import useSubCategoryList from "./SubCategoryListHook";
+import useCategoryList from "./ProductListHook";
 import StatusPill from "../../../components/Status/StatusPill.component";
-import SubcategoryCreateView from "../SubcategoryCreate/SubcategoryCreate.view";
+import ProductCreateView from "../ProductCreate/ProductCreate.view";
 
-const SubCategoryList = ({}) => {
+const ProductList = ({}) => {
   const {
     handleSortOrderChange,
     handleRowSize,
@@ -32,8 +32,10 @@ const SubCategoryList = ({}) => {
     configFilter,
     warehouses,
     handleToggleSidePannel,
-    handleProduct
-  } = useSubCategoryList({});
+    handleSubCategory,
+    // handleCreateProduct
+    
+  } = useCategoryList({});
 
   const { isCorporateHR } = useAuthenticate();
   const {
@@ -41,8 +43,8 @@ const SubCategoryList = ({}) => {
     all: allData,
     currentPage,
     is_fetching: isFetching,
-    subcategory_id
-  } = useSelector((state) => state.subcategory);
+    category_id
+  } = useSelector((state) => state.category);
 
   const renderStatus = useCallback((status) => {
     return <StatusPill status={status} />;
@@ -64,33 +66,56 @@ const SubCategoryList = ({}) => {
   const tableStructure = useMemo(() => {
     return [
       {
-        key: "name",
-        label: "Name",
+        // key: "name_en",
+        label: "Product Name",
         sortable: true,
-        render: (value, all) => <div>{renderFirstCell(all)}</div>,
+        render: (value, all) => <div>{all?.name_en}</div>,
       },
       {
-        key: "productsCount",
-        label: "Products",
+        // key: "code",
+        label: "Product Code",
+        sortable: true,
+        render: (value, all) => <div>{all?.code}</div>,
+      },
+      {
+        // key: "name",
+        label: "Category",
+        sortable: true,
+        render: (value, all) => <div>{all?.category?.name}</div>,
+      },
+      {
+        // key: "subCategoryCount",
+        label: "Subcategory",
         sortable: false,
-        render: (temp, all) => <div>{all?.productsCount !==0 ? 'Yes' : 'No'}</div>,
+        render: (temp, all) => <div>{all?.sub_category?.name}</div>,
       },
-
       {
-        key: "status",
+        // key: "name",
+        label: "Type",
+        sortable: true,
+        render: (value, all) => <div>{all?.type}</div>,
+      },
+      {
+        // key: "name",
+        label: "Unit",
+        sortable: true,
+        render: (value, all) => <div>{all?.units[0]?.name}</div>,
+      },
+      {
+        // key: "status",
         label: "Status",
         sortable: true,
         render: (temp, all) => <div>{renderStatus(all.status)}</div>,
       },
       {
-        key: "_id",
+        // key: "_id",
         label: "Action",
         render: (temp, all) => (
           
           <div>
             <IconButton onClick={() => { handleEdit(all) }} className={'tableActionBtn'} color='secondary' disabled={isCalling}><Edit fontSize={'small'} /></IconButton>
-            <IconButton className={'tableActionBtn'} color='secondary' disabled={isCalling}  onClick={() => {handleProduct(all)}}>
-                        <OpenInNew fontSize={'small'} className={styles.openIcon}/> <span className={styles.subText}>Products</span>
+            <IconButton className={'tableActionBtn'} color='secondary' disabled={isCalling}  onClick={() => {handleSubCategory(all)}}>
+                        <OpenInNew fontSize={'small'} className={styles.openIcon}/> <span className={styles.subText}>Data</span>
                     </IconButton >
             {/* <IconButton
               className={"tableActionBtn"}
@@ -107,7 +132,15 @@ const SubCategoryList = ({}) => {
       },
     ];
   }, [renderStatus, renderFirstCell, handleViewDetails, handleEdit, isCalling]);
-
+  // const renderCreateForm = useMemo(() => {
+  //   return (
+  //     <CreateView
+  //       handleDataSave={handleDataSave}
+  //       data={editData}
+  //       handleDelete={handleDelete}
+  //     />
+  //   );
+  // }, [handleDataSave, editData, handleDelete]);
   const tableData = useMemo(() => {
     const datatableFunctions = {
       onSortOrderChange: handleSortOrderChange,
@@ -139,15 +172,15 @@ const SubCategoryList = ({}) => {
       <PageBox>
         <div className={styles.headerContainer}>
           <div>
-            <span className={styles.title}>SubCategory List</span>
+            <span className={styles.title}>Product List</span>
             <div className={styles.newLine} />
           </div>
           <div>
             <ButtonBase
-              onClick={handleToggleSidePannel}
+              onClick={handleCreate}
               className={"createBtn"}
             >
-              ADD SUBCATEGORY{" "}
+              ADD PRODUCT{" "}
               <Add fontSize={"small"} className={"plusIcon"}></Add>
             </ButtonBase>
           </div>
@@ -172,15 +205,15 @@ const SubCategoryList = ({}) => {
         </div>
         <SidePanelComponent
           handleToggle={handleToggleSidePannel}
-          title={subcategory_id===0?"Create Subcategory":"Update Subcategory"}
+          title={category_id===0?"Create Product":"Update Product"}
           open={isSidePanel}
           side={"right"}
         >
-          <SubcategoryCreateView handleToggleSidePannel={handleToggleSidePannel}/>
+          <ProductCreateView handleToggleSidePannel={handleToggleSidePannel}/>
         </SidePanelComponent>
       </PageBox>
     </div>
   );
 };
 
-export default SubCategoryList;
+export default ProductList;
