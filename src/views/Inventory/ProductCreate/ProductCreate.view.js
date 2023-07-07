@@ -73,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
 //             }}
 //           />
 //         </div>
-//       </div> 
+//       </div>
 //       <div className={"headerFlex"}>
 //         <h4 className={"infoTitle"}>
 //           <div className={"heading"}>Status</div>
@@ -212,7 +212,7 @@ const ProductCreate = ({ location }) => {
                       onBlurHandler("code");
                     } } />
                 </div>
-                
+
                 <div className={"formGroup"}>
                 <CustomSelectField
               isError={errorData?.category_id}
@@ -255,7 +255,7 @@ const ProductCreate = ({ location }) => {
               })}
             </CustomSelectField>
             </div>
-            
+
         <div className={"formGroup"}>
           <CustomSelectField
             isError={errorData?.type}
@@ -279,6 +279,7 @@ const ProductCreate = ({ location }) => {
           <div className={"formFlex"}>
           <div className={"formGroup"}>
         <CustomSelectField
+            multiple
               isError={errorData?.unit_ids}
               errorText={errorData?.unit_ids}
               label={"Units"}

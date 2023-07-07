@@ -9,10 +9,10 @@ import { useParams } from "react-router";
 import Constants from "../../../config/constants";
 import RouteName from "../../../routes/Route.name";
 import { serviceGetList } from "../../../services/Common.service";
-import { serviceCreateProduct, 
+import { serviceCreateProduct,
   // serviceGetCategoryDetails,
   // serviceUpdateCategory
-  // serviceGetUnitDetails, serviceUpdateUnit 
+  // serviceGetUnitDetails, serviceUpdateUnit
 } from "../../../services/Product.service";
 
 const initialForm = {
@@ -30,7 +30,7 @@ const initialForm = {
   is_negative_allowed:false,
   is_batch_wise:false,
   is_first_in_first_out:true,
-  
+
 };
 
 const useProductDetail = ({ handleToggleSidePannel,data }) => {
@@ -69,7 +69,7 @@ const useProductDetail = ({ handleToggleSidePannel,data }) => {
         setListData(res.data);
       }
     });
-    
+
 
   }, []);
   console.log('form',listData)
@@ -99,10 +99,11 @@ const useProductDetail = ({ handleToggleSidePannel,data }) => {
       const fd = new FormData();
       Object.keys(form).forEach((key) => {
         // LogUtils.log("key", key);
-        // if (key !== "is_address_same") {
+        if (['unit_ids'].indexOf(key) < 0) {
           fd.append(key, form[key]);
-        // }
+        }
       });
+      fd.append('unit_ids', JSON.stringify(form?.unit_ids));
       // let req = serviceCreateProduct;
       // if (category_id !==0) {
       //   // req = serviceUpdateCategory;
