@@ -135,16 +135,16 @@ const useProductList = ({ }) => {
     [setEditData, setSidePanel]
   );
 
-  const handleToggleSidePannel = useCallback(() => {
-    setSidePanel((e) => !e);
-  }, [setSidePanel]);
+  // const handleToggleSidePannel = useCallback(() => {
+  //   setSidePanel((e) => !e);
+  // }, [setSidePanel]);
 
-  const handleSideToggle = useCallback(
-    (data) => {
-      historyUtils.push(RouteName.LOCATIONS_UPDATE + data?.id);
-    },
-    [setEditData, setSidePanel]
-  );
+  // const handleSideToggle = useCallback(
+  //   (data) => {
+  //     historyUtils.push(RouteName.LOCATIONS_UPDATE + data?.id);
+  //   },
+  //   [setEditData, setSidePanel]
+  // );
 
   const handleViewDetails = useCallback((data) => {
     historyUtils.push(RouteName.LOCATIONS_DETAILS + data.id); //+data.id
@@ -167,14 +167,14 @@ const useProductList = ({ }) => {
     handleSortOrderChange,
     // handleDelete,
     handleEdit,
-    handleSideToggle,
+    // handleSideToggle,
     handleViewDetails,
     isCalling,
     editData,
     isSidePanel,
     configFilter,
     handleCreate,
-    handleToggleSidePannel,
+    // handleToggleSidePannel,
     // handleSubCategory,
 
   };

@@ -14,6 +14,7 @@ import { serviceCreateProduct,
   // serviceUpdateCategory
   // serviceGetUnitDetails, serviceUpdateUnit
 } from "../../../services/Product.service";
+import historyUtils from "../../../libs/history.utils";
 
 const initialForm = {
   is_active: true,
@@ -115,7 +116,9 @@ const useProductDetail = ({ handleToggleSidePannel,data }) => {
       .then((res) => {
         if (!res.error) {
           console.log('idrierei')
-          handleToggleSidePannel();
+          historyUtils.push("/employees");
+
+          // handleToggleSidePannel();
           // window.location.reload();
         } else {
           SnackbarUtils.error(res.message);
