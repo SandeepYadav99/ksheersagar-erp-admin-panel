@@ -81,24 +81,24 @@ const DepartmentList = ({}) => {
         sortable: true,
         render: (temp, all) => <div>{renderStatus(all.status)}</div>,
       },
-      // {
-      //   key: "user_id",
-      //   label: "Action",
-      //   render: (temp, all) => (
-      //     <div>
-      //       <IconButton
-      //         className={"tableActionBtn"}
-      //         color="secondary"
-      //         disabled={isCalling}
-      //         // onClick={() => {
-      //         //   handleViewDetails(all);
-      //         // }}
-      //       >
-      //         <InfoOutlined fontSize={"small"} />
-      //       </IconButton>
-      //     </div>
-      //   ),
-      // },
+      {
+        key: "user_id",
+        label: "Action",
+        render: (temp, all) => (
+          <div>
+            <IconButton
+              className={"tableActionBtn"}
+              color="secondary"
+              disabled={isCalling}
+              // onClick={() => {
+              //   handleViewDetails(all);
+              // }}
+            >
+              <Edit fontSize={"small"} />
+            </IconButton>
+          </div>
+        ),
+      },
     ];
   }, [renderStatus, renderFirstCell, handleViewDetails, handleEdit, isCalling]);
 
@@ -170,7 +170,7 @@ const DepartmentList = ({}) => {
           open={isSidePanel}
           side={"right"}
         >
-          <DepartmentCreateView handleToggleSidePannel={handleToggleSidePannel}/>
+          <DepartmentCreateView handleToggleSidePannel={handleToggleSidePannel} isSidePanel={isSidePanel}/>
         </SidePanelComponent>
       </PageBox>
     </div>

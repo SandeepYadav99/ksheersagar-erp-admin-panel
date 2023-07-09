@@ -89,11 +89,11 @@ const UnitList = ({}) => {
               className={"tableActionBtn"}
               color="secondary"
               disabled={isCalling}
-              // onClick={() => {
-              //   handleViewDetails(all);
-              // }}
+              onClick={() => {
+                handleToggleSidePannel(all);
+              }}
             >
-              <InfoOutlined fontSize={"small"} />
+              <Edit fontSize={"small"} />
             </IconButton>
           </div>
         ),
@@ -163,13 +163,21 @@ const UnitList = ({}) => {
             </div>
           </div>
         </div>
+        {/* <SidePanelComponent
+          handleToggle={handleToggleSidePannel}
+          title={"Create Unit"}
+          open={isSidePanel}
+          side={"right"}
+        >
+          <UnitCreateView handleToggleSidePannel={handleToggleSidePannel} isSidePanel={isSidePanel}/>
+        </SidePanelComponent> */}
         <SidePanelComponent
           handleToggle={handleToggleSidePannel}
           title={"Create Unit"}
           open={isSidePanel}
           side={"right"}
         >
-          <UnitCreateView handleToggleSidePannel={handleToggleSidePannel}/>
+          <UnitCreateView handleToggleSidePannel={handleToggleSidePannel} isSidePanel={isSidePanel} empId={editData}/>
         </SidePanelComponent>
       </PageBox>
     </div>

@@ -23,17 +23,17 @@ import RouteName from "../../../routes/Route.name";
 import { serviceGetList } from "../../../services/index.services";
 
 const initialForm = {
-  name_en: "sadasd",
-  name_hi: "dasdsa",
-  code: "212",
-  city: "dasdas",
+  name_en: "",
+  name_hi: "",
+  code: "",
+  city: "",
   head_id: "",
-  address: "dasa",
-  type: "dasda",
+  address: "",
+  type: "",
   is_active: true,
   is_department_attendance: false,
-  google_page_url: "adasda",
-  contact: "32322332",
+  google_page_url: "",
+  contact: "",
 };
 const useLocationDetail = ({}) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -119,6 +119,12 @@ const useLocationDetail = ({}) => {
         delete errors[val];
       }
     });
+    if (
+      form?.contact &&
+      (!isNum(form?.contact) || form?.contact?.length !== 10)
+    ) {
+      errors["contact"] = true;
+    }
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
         delete errors[key];

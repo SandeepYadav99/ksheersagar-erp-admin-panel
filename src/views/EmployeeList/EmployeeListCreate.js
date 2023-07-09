@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import {
   Button,
   ButtonBase,
+  CircularProgress,
   InputAdornment,
   MenuItem,
 } from "@material-ui/core";
@@ -38,6 +39,7 @@ const EmployeeListCreate = ({ location }) => {
     filteredEmployees,
     defaultImg,
     empFlag,
+    isSubmitting,
   } = EmployeeListCreateHook({ location });
 
   const image = useMemo(() => {
@@ -142,7 +144,7 @@ const EmployeeListCreate = ({ location }) => {
             <CustomTextField
               isError={errorData?.emp_code}
               errorText={errorData?.emp_code}
-              label={"Employee ID"}
+              label={"Employee ID*"}
               value={form?.emp_code}
               onTextChange={(text) => {
                 changeTextData(text, "emp_code");
@@ -168,6 +170,7 @@ const EmployeeListCreate = ({ location }) => {
         <div className={"formFlex"}>
           <div className={"formGroup"}>
             <CustomTextField
+              type="number"
               isError={errorData?.age}
               errorText={errorData?.age}
               label={"Age"}
@@ -199,6 +202,7 @@ const EmployeeListCreate = ({ location }) => {
         <div className={"formFlex"}>
           <div className={"formGroup"}>
             <CustomTextField
+              type="number"
               isError={errorData?.contact}
               errorText={errorData?.contact}
               label={"Phone Number"}
@@ -279,6 +283,7 @@ const EmployeeListCreate = ({ location }) => {
         <div className={"formFlex"}>
           <div className={"formGroup"}>
             <CustomTextField
+              type="number"
               isError={errorData?.aadhar_no}
               errorText={errorData?.aadhar_no}
               label={"Aadhar Number"}
@@ -295,7 +300,7 @@ const EmployeeListCreate = ({ location }) => {
             <CustomSelectField
               isError={errorData?.location_id}
               errorText={errorData?.location_id}
-              label={"Location"}
+              label={"Location*"}
               value={form?.location_id}
               handleChange={(value) => {
                 changeTextData(value, "location_id");
@@ -316,7 +321,7 @@ const EmployeeListCreate = ({ location }) => {
             <CustomSelectField
               isError={errorData?.department_id}
               errorText={errorData?.department_id}
-              label={"Department"}
+              label={"Department*"}
               value={form?.department_id}
               handleChange={(value) => {
                 changeTextData(value, "department_id");
@@ -335,7 +340,7 @@ const EmployeeListCreate = ({ location }) => {
             <CustomSelectField
               isError={errorData?.role_id}
               errorText={errorData?.role_id}
-              label={"Sub-Department"}
+              label={"Role"}
               value={form?.role_id}
               handleChange={(value) => {
                 changeTextData(value, "role_id");
@@ -356,7 +361,7 @@ const EmployeeListCreate = ({ location }) => {
             <CustomTextField
               isError={errorData?.password}
               errorText={errorData?.password}
-              label={"Password"}
+              label={"Password*"}
               value={form?.password}
               onTextChange={(text) => {
                 changeTextData(text, "password");
@@ -370,7 +375,7 @@ const EmployeeListCreate = ({ location }) => {
             <CustomSelectField
               isError={errorData?.status}
               errorText={errorData?.status}
-              label={"Status"}
+              label={"Status*"}
               value={form?.status}
               handleChange={(value) => {
                 changeTextData(value, "status");
@@ -378,6 +383,8 @@ const EmployeeListCreate = ({ location }) => {
             >
               <MenuItem value="ACTIVE">ACTIVE</MenuItem>
               <MenuItem value="INACTIVE">INACTIVE</MenuItem>
+              <MenuItem value="SUSPENDED">SUSPENDED</MenuItem>
+              <MenuItem value="TERMINATED">TERMINATED</MenuItem>
             </CustomSelectField>
           </div>
         </div>
@@ -432,11 +439,16 @@ const EmployeeListCreate = ({ location }) => {
       <div className={"plainPaper"}>
         <div className={"headerFlex wrapper"}>
           <ButtonBase
+            disabled={isSubmitting ? true : false}
             type={"button"}
             className={styles.createBtn}
             onClick={handleSubmit}
           >
-            CREATE
+            {isSubmitting ? (
+              <CircularProgress color="success" size="20px" />
+            ) : (
+              "CREATE"
+            )}
           </ButtonBase>
         </div>
       </div>

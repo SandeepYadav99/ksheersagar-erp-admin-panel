@@ -176,24 +176,15 @@ const useEmployeeList = ({}) => {
     return [
       // {label: 'Country', name: 'country', type: 'text'},
       // {label: 'City', name: 'city', type: 'text'},
-      ...(role === Constants.ROLES.CORPORATE_HR
-        ? [
-            {
-              label: "Location",
-              name: "location_id",
-              type: "selectObject",
-              custom: { extract: { id: "id", title: "name" } },
-              fields: listData?.LOCATIONS,
-            },
-          ]
-        : []),
+
       {
-        label: "Grade",
-        name: "grade_id",
+        label: "Location",
+        name: "location_id",
         type: "selectObject",
-        custom: { extract: { id: "id", title: "label" } },
-        fields: listData?.GRADES,
+        custom: { extract: { id: "id", title: "name" } },
+        fields: listData?.LOCATIONS,
       },
+
       {
         label: "Department",
         name: "department_id",
