@@ -19,5 +19,5 @@ export default {
   PRODUCT:'/product',
   PRODUCT_CREATE: "/product/create",
   PRODUCT_UPDATE:"/product/update/",
-  PRODUCT_LIST:"/product/"
+  // PRODUCT_LIST:"/product/"
 };

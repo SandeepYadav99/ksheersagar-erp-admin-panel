@@ -39,7 +39,7 @@ const useSubCategoryList = ({}) => {
       actionFetchSubcategory(1, sortingData, {
         query: isMountRef.current ? query : null,
         query_data: isMountRef.current ? queryData : null,
-        category_id:catId?.id
+        // category_id:catId?.id
       })
     );
     isMountRef.current = true;
@@ -51,7 +51,7 @@ const useSubCategoryList = ({}) => {
   }, []);
   const handleProduct = useCallback((data) => {
     console.log('here')
-    historyUtils.push(RouteName.PRODUCT_LIST+catId?.id) //+
+    historyUtils.push(RouteName.PRODUCT) //+
 }, []);
 
   const handleDataSave = useCallback(

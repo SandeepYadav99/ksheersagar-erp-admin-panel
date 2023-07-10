@@ -159,18 +159,18 @@ const dashboardRoutes = [
     component: ProductCreate,
     is_sidebar: false,
   },
-  {
-    path: `${RouteName.PRODUCT_LIST}:id`,
-    sidebarName: "Products",
-    navbarName: "Products",
-    icon: PeopleOutlined,
-    component: ProductList,
-    is_sidebar: false,
-    is_protect: true,
-    should_regex: true,
-    parent: "inventory",
-    // roles: [Roles.ADMIN, Roles.CORPORATE_HR],
-  },
+  // {
+  //   path: `${RouteName.PRODUCT_LIST}:id`,
+  //   sidebarName: "Products",
+  //   navbarName: "Products",
+  //   icon: PeopleOutlined,
+  //   component: ProductList,
+  //   is_sidebar: false,
+  //   is_protect: true,
+  //   should_regex: true,
+  //   parent: "inventory",
+  //   // roles: [Roles.ADMIN, Roles.CORPORATE_HR],
+  // },
 
 ];
 
