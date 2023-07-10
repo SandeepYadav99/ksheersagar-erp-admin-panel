@@ -119,10 +119,13 @@ const ProductCreate = ({ location }) => {
     filteredEmployees,
     defaultImg,
     empFlag,
+    id,
+    handleDelete
 
   } = ProductCreateHook({ location });
 
   const image = useMemo(() => {
+    console.log('data image',form?.image)
     return (
       <File
         default_image={defaultImg ? defaultImg : ""}
@@ -144,6 +147,7 @@ const ProductCreate = ({ location }) => {
       />
     );
   }, [form?.image, changeTextData]);
+  console.log('form',form)
   return (
     <><>
       <div>
@@ -152,7 +156,7 @@ const ProductCreate = ({ location }) => {
             <ButtonBase onClick={() => history.goBack()}>
               <ArrowBackIosIcon fontSize={"small"} />{" "}
               <span>
-                <b>{"New"} Employee</b>
+                <b>{id?"Update":"New"} Product</b>
               </span>
             </ButtonBase>
             <div className={styles.newLines} />
@@ -161,7 +165,7 @@ const ProductCreate = ({ location }) => {
         <div className={"plainPaper"}>
           <div className={"headerFlex"}>
             <h4 className={"infoTitle"}>
-              <div className={"heading"}>Employee Personal Information</div>
+              <div className={"heading"}>Product Details</div>
               {/*<Tooltip title="Info" aria-label="info" placement="right">*/}
               {/*    <InfoIcon fontSize={'small'}/>*/}
               {/*</Tooltip>*/}
@@ -266,13 +270,19 @@ const ProductCreate = ({ location }) => {
               changeTextData(value, "type");
             }}
           >
-          {listData?.SUB_CATEGORIES?.map((dT) => {
+            <MenuItem value="RAW_MATERIAL">RAW_MATERIAL</MenuItem>
+              <MenuItem value="FINISHED_GOODS">FINISHED_GOODS</MenuItem>
+              <MenuItem value="SERVICE">SERVICE</MenuItem>
+              <MenuItem value="CONTAINER">CONTAINER</MenuItem>
+              <MenuItem value="ASSETS">ASSETS</MenuItem>
+
+          {/* {listData?.SUB_CATEGORIES?.map((dT) => {
                 return (
                   <MenuItem value={dT?.label} key={dT?.label}>
                     {dT?.label}
                   </MenuItem>
                 );
-              })}
+              })} */}
               </CustomSelectField>
         </div>
           </div>
@@ -338,7 +348,7 @@ const ProductCreate = ({ location }) => {
               name={"is_negative_allowed"}
               value={"is_negative_allowed"}
               onClick={() => {
-                changeTextData(!form?.is_address_same, "is_address_same");
+                changeTextData(!form?.is_negative_allowed, "is_negative_allowed");
               } }
               id="vehicle1"
               checked={form?.is_negative_allowed} />{" "}
@@ -397,13 +407,23 @@ const ProductCreate = ({ location }) => {
               </div>
             </div>
           </div>
+          <div className={styles.buttonContainer}>
+          <ButtonBase
+            type={"button"}
+            className={styles.deleteBtn}
+            onClick={handleDelete}
+          >
+            {id&&"DELETE"}
+          </ButtonBase>
           <ButtonBase
             type={"button"}
             className={styles.createBtn}
             onClick={handleSubmit}
           >
-            CREATE
+            {id?"UPDATE":"CREATE"}
           </ButtonBase>
+          </div>
+          
         </div>
       </div></>
     // </div >

@@ -2,7 +2,8 @@ import store from "../store";
 import Constants from "../config/constants";
 import {
 serviceCreateProduct,
-//   serviceDeleteUnit,
+  serviceDeleteProduct,
+  // serviceDeleteProduct,
   serviceGetProduct,
 //   serviceUpdateUnit,
 } from "../services/Product.service";
@@ -83,12 +84,12 @@ export function actionCreateProduct(data) {
 //   };
 // }
 
-// export function actionDeleteUnit(id) {
-//   const request = serviceDeleteUnit({ id: id });
-//   return (dispatch) => {
-//     dispatch({ type: DELETE_ITEM, payload: id });
-//   };
-// }
+export function actionDeleteProduct(id) {
+  const request = serviceDeleteProduct({ id: id });
+  return (dispatch) => {
+    dispatch({ type: DELETE_ITEM, payload: id });
+  };
+}
 
 export function actionChangePageUnit(page) {
   return (dispatch) => {

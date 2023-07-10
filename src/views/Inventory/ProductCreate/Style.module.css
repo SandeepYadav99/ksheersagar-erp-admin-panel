@@ -171,6 +171,15 @@
   text-transform: uppercase !important;
   font-weight: 600 !important;
 }
+.deleteBtn{
+  border: 2px solid #FF493F;
+  color: #FF493F !important;
+  padding: 12px 35px !important;
+  font-size: 0.8rem !important;
+  border-radius: 23px !important;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+}
 .departmentWrap{
   margin-top: 15px;
 }
@@ -188,4 +197,8 @@
 }
 .nameWrapper {
   flex: 1;
+}
+.buttonContainer{
+  display:flex;
+  column-gap: 37px;
 }

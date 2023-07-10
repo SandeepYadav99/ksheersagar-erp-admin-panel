@@ -34,6 +34,7 @@ const useSubCategoryList = ({}) => {
   }, []);
 
   useEffect(() => {
+    console.log(catId)
     dispatch(
       actionFetchSubcategory(1, sortingData, {
         query: isMountRef.current ? query : null,
@@ -50,7 +51,7 @@ const useSubCategoryList = ({}) => {
   }, []);
   const handleProduct = useCallback((data) => {
     console.log('here')
-    historyUtils.push(RouteName.PRODUCT) //+
+    historyUtils.push(RouteName.PRODUCT_LIST+catId?.id) //+
 }, []);
 
   const handleDataSave = useCallback(

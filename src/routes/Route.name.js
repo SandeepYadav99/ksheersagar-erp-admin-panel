@@ -18,5 +18,6 @@ export default {
   SUBCATEGORY:'/subcategory/',
   PRODUCT:'/product',
   PRODUCT_CREATE: "/product/create",
-
+  PRODUCT_UPDATE:"/product/update/",
+  PRODUCT_LIST:"/product/"
 };

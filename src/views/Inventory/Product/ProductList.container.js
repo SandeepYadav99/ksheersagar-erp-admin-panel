@@ -44,7 +44,7 @@ const ProductList = ({}) => {
     currentPage,
     is_fetching: isFetching,
     category_id
-  } = useSelector((state) => state.category);
+  } = useSelector((state) => state.product);
 
   const renderStatus = useCallback((status) => {
     return <StatusPill status={status} />;

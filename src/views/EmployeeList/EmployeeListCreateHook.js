@@ -112,7 +112,7 @@ function EmployeeListCreateHook({ location }) {
       "doj",
       "location_id",
       "password",
-      "department_id",
+      // "department_id",
       // "role_id",
       "gender",
       "status",

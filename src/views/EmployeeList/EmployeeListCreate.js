@@ -41,6 +41,7 @@ const EmployeeListCreate = ({ location }) => {
   } = EmployeeListCreateHook({ location });
 
   const image = useMemo(() => {
+    console.log(defaultImg)
     return (
       <File
         default_image={defaultImg ? defaultImg : ""}

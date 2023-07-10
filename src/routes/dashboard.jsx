@@ -151,6 +151,26 @@ const dashboardRoutes = [
     is_sidebar: false,
     // roles: [Roles.ADMIN, Roles.RECRUITER, Roles.CORPORATE_HR],
   },
+  {
+    path: `${RouteName.PRODUCT_UPDATE}:id`,
+    sidebarName: "Product Update",
+    navbarName: "Product Update",
+    icon: DashboardOutlined,
+    component: ProductCreate,
+    is_sidebar: false,
+  },
+  {
+    path: `${RouteName.PRODUCT_LIST}:id`,
+    sidebarName: "Products",
+    navbarName: "Products",
+    icon: PeopleOutlined,
+    component: ProductList,
+    is_sidebar: false,
+    is_protect: true,
+    should_regex: true,
+    parent: "inventory",
+    // roles: [Roles.ADMIN, Roles.CORPORATE_HR],
+  },
 
 ];
 

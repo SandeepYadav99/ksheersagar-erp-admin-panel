@@ -11,6 +11,7 @@ import {
 import historyUtils from "../../../libs/history.utils";
 import LogUtils from "../../../libs/LogUtils";
 import RouteName from "../../../routes/Route.name";
+import { useParams } from "react-router";
 
 const useProductList = ({ }) => {
   const [isSidePanel, setSidePanel] = useState(false);
@@ -24,7 +25,8 @@ const useProductList = ({ }) => {
     query,
     query_data: queryData,
   } = useSelector((state) => state.product);
-  const { category_id } = useSelector(state => state.category)
+  const {id} =useParams()
+  // const { category_id } = useSelector(state => state.category)
   useEffect(() => {
     // dispatch(actionFetchUnit());
   }, []);
@@ -34,7 +36,7 @@ const useProductList = ({ }) => {
       actionFetchProduct(1, sortingData, {
         query: isMountRef.current ? query : null,
         query_data: isMountRef.current ? queryData : null,
-        category_id: category_id
+        category_id: id
       })
     );
     isMountRef.current = true;
@@ -128,7 +130,9 @@ const useProductList = ({ }) => {
   const handleEdit = useCallback(
     (data) => {
       console.log('sjhdsjd', data)
-      setEditData(data);
+      historyUtils.push(RouteName.PRODUCT_UPDATE + data.id); //+data.id
+
+      // setEditData(data);
       // dispatch(actionUpdateId(data?.id))
       setSidePanel((e) => !e);
     },
