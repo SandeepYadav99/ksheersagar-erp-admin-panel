@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import {
-  isAlphaNumChars,
-} from "../../../libs/RegexUtils";
+import { isAlphaNumChars } from "../../../libs/RegexUtils";
 import SnackbarUtils from "../../../libs/SnackbarUtils";
 import { useParams } from "react-router";
 import Constants from "../../../config/constants";
 import RouteName from "../../../routes/Route.name";
-import { serviceCreateUnit, serviceGetUnitDetails, serviceUpdateUnit } from "../../../services/Unit.service";
+import {
+  serviceCreateUnit,
+  serviceGetUnitDetails,
+  serviceUpdateUnit,
+} from "../../../services/Unit.service";
 
 const initialForm = {
   name: "",
@@ -14,31 +16,42 @@ const initialForm = {
   is_active: true,
 };
 
-const useUnitDetail = ({ handleToggleSidePannel }) => {
+const useUnitDetail = ({ handleToggleSidePannel, isSidePanel, empId }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({ ...initialForm });
   const [isEdit, setIsEdit] = useState(false);
   const includeRef = useRef(null);
-  const { id } = useParams();
 
   useEffect(() => {
-    if (id) {
-      serviceGetUnitDetails({ id: id }).then((res) => {
+    if (empId) {
+      serviceGetUnitDetails({ id: empId }).then((res) => {
         if (!res.error) {
-          const data = res?.data?.details;
-          setForm({
-            ...data,
-            is_active: data?.status === Constants.GENERAL_STATUS.ACTIVE,
+          const empData = res?.data?.details;
+          console.log(">>>>", empData);
+          const data = {};
+          Object.keys({ ...empData }).forEach((key) => {
+            if (key in initialForm) {
+              data[key] = empData[key];
+            }
           });
+          console.log("data", data);
+          setForm({ ...initialForm, ...data, id: empData?.id , is_active: empData?.status === 'ACTIVE'});
         } else {
           SnackbarUtils.error(res?.message);
         }
       });
     }
-  }, [id]);
-  console.log('form',form)
+  }, [empId]);
+
+  console.log("editData", form);
+  useEffect(() => {
+    if (!isSidePanel) {
+      handleReset();
+    }
+  }, [isSidePanel]);
+
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
     let required = ["name"];
@@ -62,7 +75,7 @@ const useUnitDetail = ({ handleToggleSidePannel }) => {
     if (!isSubmitting) {
       setIsSubmitting(true);
       let req = serviceCreateUnit;
-      if (id) {
+      if (empId) {
         req = serviceUpdateUnit;
       }
       req({
@@ -77,7 +90,7 @@ const useUnitDetail = ({ handleToggleSidePannel }) => {
         setIsSubmitting(false);
       });
     }
-  }, [form, isSubmitting, setIsSubmitting, id]);
+  }, [form, isSubmitting, setIsSubmitting]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
@@ -142,7 +155,6 @@ const useUnitDetail = ({ handleToggleSidePannel }) => {
     handleDelete,
     includeRef,
     handleReset,
-    id,
   };
 };
 

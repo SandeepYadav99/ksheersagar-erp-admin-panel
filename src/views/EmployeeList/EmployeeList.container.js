@@ -33,7 +33,7 @@ const EmployeeList = ({}) => {
     configFilter,
     handleAddCandidate,
     createDD,
-    handleCreate
+    handleCreate,
   } = useEmployeeList({});
 
   const {
@@ -53,8 +53,13 @@ const EmployeeList = ({}) => {
       return (
         <div className={styles.firstCellFlex}>
           <div className={classNames(styles.firstCellInfo, "openSans")}>
-            <span className={styles.productName}>{obj?.name_en}</span> <br />
-            <span>{obj?.emp_code}</span>
+            <div>
+              <img src={obj?.image} />
+            </div>
+            <div>
+              <span className={styles.productName}>{obj?.name_en}</span><br/>
+              <span>{obj?.emp_code}</span>
+            </div>
           </div>
         </div>
       );

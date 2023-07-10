@@ -21,7 +21,17 @@
     justify-content: space-between;
     padding-bottom: 30px;
 }
-
+.inputWrap{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 5px;
+    font-size: .8rem;
+    font-weight: 600;
+}
+.inputWrap > input{
+    cursor: pointer;
+}
 .resetBtn{
     background: #F7A728 !important;
     padding: 20px 50px !important;

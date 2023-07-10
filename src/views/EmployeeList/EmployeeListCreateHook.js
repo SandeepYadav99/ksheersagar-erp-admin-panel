@@ -29,25 +29,25 @@ function EmployeeListCreateHook({ location }) {
   const initialForm = {
     emp_code: "",
     image: "",
-    status: "ACTIVE",
-    name_en: "avcdd",
-    name_hi: "avcdd",
+    status: "",
+    name_en: "",
+    name_hi: "",
     doj: "",
     age: "32",
     location_id: "",
     department_id: "",
     role_id: "",
-    gender: "MALE",
-    contact: "8989898989",
-    email: "abc@gmail.com",
-    father_name: "avcdd",
+    gender: "",
+    contact: "",
+    email: "",
+    father_name: "",
     permanent_address: "",
     current_address: "",
-    password: "32323",
-    aadhar_no: "898989989898",
+    password: "",
+    aadhar_no: "",
     is_address_same: false,
-    aadhaar_back:"",
-    aadhaar_front:"",
+    aadhaar_back: "",
+    aadhaar_front: "",
   };
   const [form, setForm] = useState({ ...initialForm });
   const [errorData, setErrorData] = useState({});
@@ -67,6 +67,7 @@ function EmployeeListCreateHook({ location }) {
     HR: [],
     DESIGNATIONS: [],
     LEVEL: [],
+    LOCATIONS: [],
   });
   useEffect(() => {
     serviceGetList([
@@ -76,6 +77,7 @@ function EmployeeListCreateHook({ location }) {
       "SUB_DEPARTMENTS",
       "JOB_ROLES",
       "DESIGNATIONS",
+      "LOCATIONS",
     ]).then((res) => {
       if (!res.error) {
         setListData(res.data);
@@ -109,22 +111,21 @@ function EmployeeListCreateHook({ location }) {
       "emp_code",
       "name_en",
       "name_hi",
-      "doj",
+      // "doj",
       "location_id",
       "password",
       // "department_id",
       // "role_id",
       "gender",
       "status",
-      "age",
-      "contact",
+      // "age",
+      // "contact",
       "father_name",
-      "permanent_address",
-      "current_address",
-      "aadhar_no",
-      "email",
+      // "permanent_address",
+      // "current_address",
+      // "aadhar_no",
+      // "email",
     ];
-
     required.forEach((val) => {
       if (
         (!form?.[val] && parseInt(form?.[val]) != 0) ||
@@ -135,11 +136,9 @@ function EmployeeListCreateHook({ location }) {
         delete errors[val];
       }
     });
-
     if (form?.email && !isEmail(form?.email)) {
       errors["email"] = true;
     }
-
     if (
       form?.contact &&
       (!isNum(form?.contact) || form?.contact?.length !== 10)
@@ -157,6 +156,7 @@ function EmployeeListCreateHook({ location }) {
     });
     return errors;
   }, [form, errorData]);
+
   const removeError = useCallback(
     (title) => {
       const temp = JSON.parse(JSON.stringify(errorData));
@@ -170,7 +170,7 @@ function EmployeeListCreateHook({ location }) {
     (text, fieldName) => {
       let shouldRemoveError = true;
       const t = { ...form };
-      if (fieldName === "name_en" || fieldName === "name_hi") {
+      if (fieldName === "name_en") {
         if (!text || (isAlphaNumChars(text) && text.toString().length <= 50)) {
           t[fieldName] = text;
         }
@@ -184,6 +184,14 @@ function EmployeeListCreateHook({ location }) {
           t.current_address = t?.permanent_address;
         }
         t[fieldName] = text;
+      } else if (fieldName === "age") {
+        if (text >= 0 && text < 100) {
+          t[fieldName] = text;
+        }
+      } else if (fieldName === "contact") {
+        if (text >= 0 && text?.length <= 10) {
+          t[fieldName] = text;
+        }
       } else {
         t[fieldName] = text;
       }
@@ -265,7 +273,7 @@ function EmployeeListCreateHook({ location }) {
     if (index >= 0) {
       const departments = locations[index]?.departments;
       return listData?.DEPARTMENTS?.filter(
-        (val) => departments.indexOf(val.id) >= 0
+        (val) => departments?.indexOf(val.id) >= 0
       );
     }
     return [];
@@ -308,6 +316,7 @@ function EmployeeListCreateHook({ location }) {
     filteredAssociateJobRole,
     empFlag,
     defaultImg,
+    isSubmitting
   };
 }
 

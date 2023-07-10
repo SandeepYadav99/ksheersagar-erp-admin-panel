@@ -25,7 +25,7 @@ const initialForm = {
   is_active: true,
 };
 
-const useDepartmentDetail = ({handleToggleSidePannel}) => {
+const useDepartmentDetail = ({handleToggleSidePannel,isSidePanel}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -51,6 +51,12 @@ const useDepartmentDetail = ({handleToggleSidePannel}) => {
     }
   }, [id]);
 
+  useEffect(() => {
+    if (!isSidePanel) {
+      handleReset();
+    }
+  }, [isSidePanel]);
+  
   const checkCodeValidation = useCallback(() => {
     serviceDepartmentCheck({ code: form?.code }).then(
       (res) => {

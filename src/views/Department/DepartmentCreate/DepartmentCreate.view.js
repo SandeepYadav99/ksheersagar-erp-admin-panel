@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UnitCreateView = ({handleToggleSidePannel}) => {
+const UnitCreateView = ({handleToggleSidePannel,isSidePanel}) => {
   const {
     form,
     errorData,
@@ -29,7 +29,7 @@ const UnitCreateView = ({handleToggleSidePannel}) => {
     onBlurHandler,
     changeTextData,
     id,
-  } = useDepartmentDetail({handleToggleSidePannel});
+  } = useDepartmentDetail({handleToggleSidePannel,isSidePanel});
   const classes = useStyles();
   return (
     <div className={styles.departmentWrap}>
@@ -38,7 +38,7 @@ const UnitCreateView = ({handleToggleSidePannel}) => {
             <CustomTextField
               isError={errorData?.name}
               errorText={errorData?.name}
-              label={"Sub-Department Name"}
+              label={"Department Name"}
               value={form?.name}
               onTextChange={(text) => {
                 changeTextData(text, "name");
@@ -52,7 +52,7 @@ const UnitCreateView = ({handleToggleSidePannel}) => {
             <CustomTextField
               isError={errorData?.code}
               errorText={errorData?.code}
-              label={"Sub-Department Code"}
+              label={"Department Code"}
               value={form?.code}
               onTextChange={(text) => {
                 changeTextData(text, "code");

@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DepartmentCreateView = ({ handleToggleSidePannel }) => {
+const DepartmentCreateView = ({ handleToggleSidePannel,isSidePanel ,empId}) => {
   const {
     form,
     errorData,
@@ -28,8 +28,7 @@ const DepartmentCreateView = ({ handleToggleSidePannel }) => {
     removeError,
     onBlurHandler,
     changeTextData,
-    id,
-  } = useDepartmentDetail({ handleToggleSidePannel });
+  } = useDepartmentDetail({ handleToggleSidePannel,isSidePanel ,empId});
   const classes = useStyles();
   return (
     <div className={styles.departmentWrap}>
@@ -93,7 +92,7 @@ const DepartmentCreateView = ({ handleToggleSidePannel }) => {
           onClick={handleSubmit}
           className={styles.createBtn}
         >
-          {id ? "Update" : "Create"}
+          {empId ? "Update" : "Create"}
         </ButtonBase>
       </div>
     </div>

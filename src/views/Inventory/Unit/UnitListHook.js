@@ -127,9 +127,10 @@ const useUnitList = ({}) => {
     [setEditData, setSidePanel]
   );
 
-  const handleToggleSidePannel = useCallback(() => {
+  const handleToggleSidePannel = useCallback((data) => {
     setSidePanel((e) => !e);
-  }, [setSidePanel]);
+    setEditData(data?.id);
+  }, [setSidePanel,setEditData]);
 
   const handleSideToggle = useCallback(
     (data) => {
@@ -147,7 +148,17 @@ const useUnitList = ({}) => {
   }, []);
 
   const configFilter = useMemo(() => {
-    return [];
+    return [
+      {
+        label: "Status",
+        name: "status",
+        type: "select",
+        fields: [
+          "ACTIVE",
+          "INACTIVE"
+        ],
+      },
+    ];
   }, []);
 
   return {
@@ -166,7 +177,7 @@ const useUnitList = ({}) => {
     isSidePanel,
     configFilter,
     handleCreate,
-    handleToggleSidePannel
+    handleToggleSidePannel,
   };
 };
 
