@@ -2,11 +2,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   actionCreateProduct,
-  // actionDeleteUnit,
   actionFetchProduct, actionSetPageProduct,
   actionUpdateId
-  // actionSetPageUnit,
-  // actionUpdateUnit,
+
 } from "../../../actions/Product.action";
 import historyUtils from "../../../libs/history.utils";
 import LogUtils from "../../../libs/LogUtils";
@@ -169,17 +167,13 @@ const useProductList = ({ }) => {
     handleSearchValueChange,
     handleRowSize,
     handleSortOrderChange,
-    // handleDelete,
     handleEdit,
-    // handleSideToggle,
     handleViewDetails,
     isCalling,
     editData,
     isSidePanel,
     configFilter,
     handleCreate,
-    // handleToggleSidePannel,
-    // handleSubCategory,
 
   };
 };

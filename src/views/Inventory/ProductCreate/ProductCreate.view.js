@@ -26,85 +26,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// const DepartmentCreateView = ({ handleToggleSidePannel }) => {
-//   const {
-//     form,
-//     errorData,
-//     isSubmitting,
-//     isLoading,
-//     handleSubmit,
-//     removeError,
-//     onBlurHandler,
-//     changeTextData,
-//     id,
-//     category_id
-//   } = useDepartmentDetail({ handleToggleSidePannel });
-//   const classes = useStyles();
-//   return (
-//     <div className={styles.departmentWrap}>
-//       {/* <div className={"formFlex"}>
-//         <div className={"formGroup"}>
-//           <CustomTextField
-//             isError={errorData?.name}
-//             errorText={errorData?.name}
-//             label={"Category Name"}
-//             value={form?.name}
-//             onTextChange={(text) => {
-//               changeTextData(text, "name");
-//             }}
-//             onBlur={() => {
-//               onBlurHandler("name");
-//             }}
-//           />
-//         </div>
-//       </div> */}
-//       <div className={"formFlex"}>
-//         <div className={"formGroup"}>
-//             <CustomTextField
-//             isError={errorData?.name}
-//             errorText={errorData?.name}
-//             label={"Category Name"}
-//             value={form?.name}
-//             onTextChange={(text) => {
-//               changeTextData(text, "name");
-//             }}
-//             onBlur={() => {
-//               onBlurHandler("name");
-//             }}
-//           />
-//         </div>
-//       </div>
-//       <div className={"headerFlex"}>
-//         <h4 className={"infoTitle"}>
-//           <div className={"heading"}>Status</div>
-//         </h4>
-//       </div>
-
-//       <div className={"formFlex"}>
-//         <div className={"formGroup"}>
-//           <CustomSwitch
-//             value={form?.is_active}
-//             handleChange={() => {
-//               changeTextData(!form?.is_active, "is_active");
-//             }}
-//             label={`Active`}
-//           />
-//         </div>
-//       </div>
-
-//       <div className={styles.btnCont}>
-//         <ButtonBase
-//           disabled={isSubmitting}
-//           type={"button"}
-//           onClick={handleSubmit}
-//           className={styles.createBtn}
-//         >
-//           {category_id ? "Update" : "Create"}
-//         </ButtonBase>
-//       </div>
-//     </div>
-//   );
-// };
 const ProductCreate = ({ location }) => {
   const {
     form,
@@ -125,7 +46,7 @@ const ProductCreate = ({ location }) => {
   } = ProductCreateHook({ location });
 
   const image = useMemo(() => {
-    console.log('data image',form?.image)
+    console.log('data image', form?.image)
     return (
       <File
         default_image={defaultImg ? defaultImg : ""}
@@ -147,7 +68,7 @@ const ProductCreate = ({ location }) => {
       />
     );
   }, [form?.image, changeTextData]);
-  console.log('form',form)
+  console.log('form', form)
   return (
     <><>
       <div>
@@ -156,7 +77,7 @@ const ProductCreate = ({ location }) => {
             <ButtonBase onClick={() => history.goBack()}>
               <ArrowBackIosIcon fontSize={"small"} />{" "}
               <span>
-                <b>{id?"Update":"New"} Product</b>
+                <b>{id ? "Update" : "New"} Product</b>
               </span>
             </ButtonBase>
             <div className={styles.newLines} />
@@ -183,10 +104,10 @@ const ProductCreate = ({ location }) => {
                     value={form?.name_en}
                     onTextChange={(text) => {
                       changeTextData(text, "name_en");
-                    } }
+                    }}
                     onBlur={() => {
                       onBlurHandler("name_en");
-                    } } />
+                    }} />
                 </div>
                 <div className={"formGroup"}>
                   <CustomTextField
@@ -196,10 +117,10 @@ const ProductCreate = ({ location }) => {
                     value={form?.name_hi}
                     onTextChange={(text) => {
                       changeTextData(text, "name_hi");
-                    } }
+                    }}
                     onBlur={() => {
                       onBlurHandler("name_hi");
-                    } } />
+                    }} />
                 </div>
               </div>
               <div className={"formFlex"}>
@@ -211,188 +132,180 @@ const ProductCreate = ({ location }) => {
                     value={form?.code}
                     onTextChange={(text) => {
                       changeTextData(text, "code");
-                    } }
+                    }}
                     onBlur={() => {
                       onBlurHandler("code");
-                    } } />
+                    }} />
                 </div>
 
                 <div className={"formGroup"}>
-                <CustomSelectField
-              isError={errorData?.category_id}
-              errorText={errorData?.category_id}
-              label={"Category"}
-              value={form?.category_id}
-              handleChange={(value) => {
-                changeTextData(value, "category_id");
-              }}
-            >
-              {listData?.CATEGORIES?.map((dT) => {
-                return (
-                  <MenuItem value={dT?.id} key={dT?.id}>
-                    {dT?.label}
-                  </MenuItem>
-                );
-              })}
-            </CustomSelectField>
+                  <CustomSelectField
+                    isError={errorData?.category_id}
+                    errorText={errorData?.category_id}
+                    label={"Category"}
+                    value={form?.category_id}
+                    handleChange={(value) => {
+                      changeTextData(value, "category_id");
+                    }}
+                  >
+                    {listData?.CATEGORIES?.map((dT) => {
+                      return (
+                        <MenuItem value={dT?.id} key={dT?.id}>
+                          {dT?.label}
+                        </MenuItem>
+                      );
+                    })}
+                  </CustomSelectField>
                 </div>
               </div>
             </div>
           </div>
           <div className={"formFlex"}>
             <div className={"formGroup"}>
-            <CustomSelectField
-              isError={errorData?.sub_category_id}
-              errorText={errorData?.sub_category_id}
-              label={"Subcategory"}
-              value={form?.sub_category_id}
-              handleChange={(value) => {
-                changeTextData(value, "sub_category_id");
-              }}
-            >
-              {listData?.SUB_CATEGORIES?.map((dT) => {
-                return (
-                  <MenuItem value={dT?.id} key={dT?.id}>
-                    {dT?.label}
-                  </MenuItem>
-                );
-              })}
-            </CustomSelectField>
+              <CustomSelectField
+                isError={errorData?.sub_category_id}
+                errorText={errorData?.sub_category_id}
+                label={"Subcategory"}
+                value={form?.sub_category_id}
+                handleChange={(value) => {
+                  changeTextData(value, "sub_category_id");
+                }}
+              >
+                {listData?.SUB_CATEGORIES?.map((dT) => {
+                  return (
+                    <MenuItem value={dT?.id} key={dT?.id}>
+                      {dT?.label}
+                    </MenuItem>
+                  );
+                })}
+              </CustomSelectField>
             </div>
 
-        <div className={"formGroup"}>
-          <CustomSelectField
-            isError={errorData?.type}
-            errorText={errorData?.type}
-            label={"Type"}
-            value={form?.tpe}
-            handleChange={(value) => {
-              changeTextData(value, "type");
-            }}
-          >
-            <MenuItem value="RAW_MATERIAL">RAW_MATERIAL</MenuItem>
-              <MenuItem value="FINISHED_GOODS">FINISHED_GOODS</MenuItem>
-              <MenuItem value="SERVICE">SERVICE</MenuItem>
-              <MenuItem value="CONTAINER">CONTAINER</MenuItem>
-              <MenuItem value="ASSETS">ASSETS</MenuItem>
-
-          {/* {listData?.SUB_CATEGORIES?.map((dT) => {
-                return (
-                  <MenuItem value={dT?.label} key={dT?.label}>
-                    {dT?.label}
-                  </MenuItem>
-                );
-              })} */}
+            <div className={"formGroup"}>
+              <CustomSelectField
+                isError={errorData?.type}
+                errorText={errorData?.type}
+                label={"Type"}
+                value={form?.tpe}
+                handleChange={(value) => {
+                  changeTextData(value, "type");
+                }}
+              >
+                <MenuItem value="RAW_MATERIAL">RAW_MATERIAL</MenuItem>
+                <MenuItem value="FINISHED_GOODS">FINISHED_GOODS</MenuItem>
+                <MenuItem value="SERVICE">SERVICE</MenuItem>
+                <MenuItem value="CONTAINER">CONTAINER</MenuItem>
+                <MenuItem value="ASSETS">ASSETS</MenuItem>
               </CustomSelectField>
-        </div>
+            </div>
           </div>
           <div className={"formFlex"}>
-          <div className={"formGroup"}>
-        <CustomSelectField
-            multiple
-              isError={errorData?.unit_ids}
-              errorText={errorData?.unit_ids}
-              label={"Units"}
-              value={form?.unit_ids}
-              handleChange={(value) => {
-                changeTextData(value, "unit_ids");
-              }}
-            >
-              {listData?.UNITS?.map((dT) => {
-                return (
-                  <MenuItem value={dT?.id} key={dT?.id}>
-                    {dT?.label}
-                  </MenuItem>
-                );
-              })}
-            </CustomSelectField>
-        </div>
+            <div className={"formGroup"}>
+              <CustomSelectField
+                multiple
+                isError={errorData?.unit_ids}
+                errorText={errorData?.unit_ids}
+                label={"Units"}
+                value={form?.unit_ids}
+                handleChange={(value) => {
+                  changeTextData(value, "unit_ids");
+                }}
+              >
+                {listData?.UNITS?.map((dT) => {
+                  return (
+                    <MenuItem value={dT?.id} key={dT?.id}>
+                      {dT?.label}
+                    </MenuItem>
+                  );
+                })}
+              </CustomSelectField>
+            </div>
 
-        <div className={"formGroup"}>
-          <CustomTextField
-            isError={errorData?.min_qty}
-            errorText={errorData?.min_qty}
-            label={"Min Quantity"}
-            value={form?.min_qty}
-            onTextChange={(text) => {
-              changeTextData(text, "min_qty");
-            } }
-            onBlur={() => {
-              onBlurHandler("min_qty");
-            } }
-          />
-        </div>
-        </div>
-        <div className={"formFlex"}>
+            <div className={"formGroup"}>
+              <CustomTextField
+                isError={errorData?.min_qty}
+                errorText={errorData?.min_qty}
+                label={"Min Quantity"}
+                value={form?.min_qty}
+                onTextChange={(text) => {
+                  changeTextData(text, "min_qty");
+                }}
+                onBlur={() => {
+                  onBlurHandler("min_qty");
+                }}
+              />
+            </div>
+          </div>
+          <div className={"formFlex"}>
 
-        <div className={"formGroup"}>
-          <CustomTextField
-            isError={errorData?.max_qty}
-            errorText={errorData?.max_qty}
-            label={"Max Quantity"}
-            value={form?.max_qty}
-            onTextChange={(text) => {
-              changeTextData(text, "max_qty");
-            } }
-            onBlur={() => {
-              onBlurHandler("max_qty");
-            } }
-            />
-        </div>
-      </div>
-      <div className={"formFlex"}>
-        <div className={"formGroup"}>
-          <div className={styles.checkBox}>
-            <input
-              type="checkbox"
-              name={"is_negative_allowed"}
-              value={"is_negative_allowed"}
-              onClick={() => {
-                changeTextData(!form?.is_negative_allowed, "is_negative_allowed");
-              } }
-              id="vehicle1"
-              checked={form?.is_negative_allowed} />{" "}
-            <label htmlFor="vehicle1"> Is negative stock allowed?</label>
-            {/* <br /> */}
+            <div className={"formGroup"}>
+              <CustomTextField
+                isError={errorData?.max_qty}
+                errorText={errorData?.max_qty}
+                label={"Max Quantity"}
+                value={form?.max_qty}
+                onTextChange={(text) => {
+                  changeTextData(text, "max_qty");
+                }}
+                onBlur={() => {
+                  onBlurHandler("max_qty");
+                }}
+              />
+            </div>
           </div>
-        </div>
-        <div className={"formGroup"}>
-          <div className={styles.checkBox}>
-            <input
-              type="checkbox"
-              name={"is_batch_wise"}
-              value={"is_batch_wise"}
-              onClick={() => {
-                changeTextData(!form?.is_batch_wise, "is_batch_wise");
-              } }
-              id="vehicle1"
-              checked={form?.is_batch_wise} />{" "}
-            <label htmlFor="vehicle1"> Batch-wise stock?</label>
-            {/* <br /> */}
+          <div className={"formFlex"}>
+            <div className={"formGroup"}>
+              <div className={styles.checkBox}>
+                <input
+                  type="checkbox"
+                  name={"is_negative_allowed"}
+                  value={"is_negative_allowed"}
+                  onClick={() => {
+                    changeTextData(!form?.is_negative_allowed, "is_negative_allowed");
+                  }}
+                  id="vehicle1"
+                  checked={form?.is_negative_allowed} />{" "}
+                <label htmlFor="vehicle1"> Is negative stock allowed?</label>
+                {/* <br /> */}
+              </div>
+            </div>
+            <div className={"formGroup"}>
+              <div className={styles.checkBox}>
+                <input
+                  type="checkbox"
+                  name={"is_batch_wise"}
+                  value={"is_batch_wise"}
+                  onClick={() => {
+                    changeTextData(!form?.is_batch_wise, "is_batch_wise");
+                  }}
+                  id="vehicle1"
+                  checked={form?.is_batch_wise} />{" "}
+                <label htmlFor="vehicle1"> Batch-wise stock?</label>
+                {/* <br /> */}
+              </div>
+            </div>
+            <div className={"formGroup"}>
+              <div className={styles.checkBox}>
+                <input
+                  type="checkbox"
+                  name={"is_first_in_first_out"}
+                  value={"is_first_in_first_out"}
+                  onClick={() => {
+                    changeTextData(!form?.is_first_in_first_out, "is_first_in_first_out");
+                  }}
+                  id="vehicle1"
+                  checked={form?.is_first_in_first_out} />{" "}
+                <label htmlFor="vehicle1"> First-in, First-out?</label>
+                {/* <br /> */}
+              </div>
+            </div>
           </div>
-        </div>
-        <div className={"formGroup"}>
-          <div className={styles.checkBox}>
-            <input
-              type="checkbox"
-              name={"is_first_in_first_out"}
-              value={"is_first_in_first_out"}
-              onClick={() => {
-                changeTextData(!form?.is_first_in_first_out, "is_first_in_first_out");
-              } }
-              id="vehicle1"
-              checked={form?.is_first_in_first_out} />{" "}
-            <label htmlFor="vehicle1"> First-in, First-out?</label>
-            {/* <br /> */}
-          </div>
-        </div>
-      </div>
         </div>
       </div>
 
     </><div className={"plainPaper"}>
         <div className={"headerFlex wrapper"}>
-        <div className={"infoTitle inner"}>
+          <div className={"infoTitle inner"}>
             <div className="info_Status">
               <h4 className={"heading_stats"}>Status</h4>
               <div className={"slider_wrap "}>
@@ -408,26 +321,25 @@ const ProductCreate = ({ location }) => {
             </div>
           </div>
           <div className={styles.buttonContainer}>
-          <ButtonBase
-            type={"button"}
-            className={styles.deleteBtn}
-            onClick={handleDelete}
-          >
-            {id&&"DELETE"}
-          </ButtonBase>
-          <ButtonBase
-            type={"button"}
-            className={styles.createBtn}
-            onClick={handleSubmit}
-          >
-            {id?"UPDATE":"CREATE"}
-          </ButtonBase>
+            <ButtonBase
+              type={"button"}
+              className={styles.deleteBtn}
+              onClick={handleDelete}
+            >
+              {id && "DELETE"}
+            </ButtonBase>
+            <ButtonBase
+              type={"button"}
+              className={styles.createBtn}
+              onClick={handleSubmit}
+            >
+              {id ? "UPDATE" : "CREATE"}
+            </ButtonBase>
           </div>
-          
+
         </div>
       </div></>
-    // </div >
-    // </>
+
 
   );
 };

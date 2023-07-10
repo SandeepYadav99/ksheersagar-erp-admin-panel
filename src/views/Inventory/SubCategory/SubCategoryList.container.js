@@ -2,7 +2,7 @@ import React, { Component, useCallback, useEffect, useMemo } from "react";
 import { IconButton, MenuItem, ButtonBase } from "@material-ui/core";
 import classNames from "classnames";
 import { connect, useSelector } from "react-redux";
-import { Add, InfoOutlined, PrintOutlined,OpenInNew } from "@material-ui/icons";
+import { Add, InfoOutlined, PrintOutlined, OpenInNew } from "@material-ui/icons";
 import PageBox from "../../../components/PageBox/PageBox.component";
 import SidePanelComponent from "../../../components/SidePanel/SidePanel.component";
 import styles from "./Style.module.css";
@@ -15,7 +15,7 @@ import useSubCategoryList from "./SubCategoryListHook";
 import StatusPill from "../../../components/Status/StatusPill.component";
 import SubcategoryCreateView from "../SubcategoryCreate/SubcategoryCreate.view";
 
-const SubCategoryList = ({}) => {
+const SubCategoryList = ({ }) => {
   const {
     handleSortOrderChange,
     handleRowSize,
@@ -73,7 +73,7 @@ const SubCategoryList = ({}) => {
         key: "productsCount",
         label: "Products",
         sortable: false,
-        render: (temp, all) => <div>{all?.productsCount !==0 ? 'Yes' : 'No'}</div>,
+        render: (temp, all) => <div>{all?.productsCount !== 0 ? 'Yes' : 'No'}</div>,
       },
 
       {
@@ -86,12 +86,12 @@ const SubCategoryList = ({}) => {
         key: "_id",
         label: "Action",
         render: (temp, all) => (
-          
+
           <div>
             <IconButton onClick={() => { handleEdit(all) }} className={'tableActionBtn'} color='secondary' disabled={isCalling}><Edit fontSize={'small'} /></IconButton>
-            <IconButton className={'tableActionBtn'} color='secondary' disabled={isCalling}  onClick={() => {handleProduct(all)}}>
-                        <OpenInNew fontSize={'small'} className={styles.openIcon}/> <span className={styles.subText}>Products</span>
-                    </IconButton >
+            <IconButton className={'tableActionBtn'} color='secondary' disabled={isCalling} onClick={() => { handleProduct(all) }}>
+              <OpenInNew fontSize={'small'} className={styles.openIcon} /> <span className={styles.subText}>Products</span>
+            </IconButton >
             {/* <IconButton
               className={"tableActionBtn"}
               color="secondary"
@@ -172,11 +172,11 @@ const SubCategoryList = ({}) => {
         </div>
         <SidePanelComponent
           handleToggle={handleToggleSidePannel}
-          title={subcategory_id===0?"Create Subcategory":"Update Subcategory"}
+          title={subcategory_id === 0 ? "Create Subcategory" : "Update Subcategory"}
           open={isSidePanel}
           side={"right"}
         >
-          <SubcategoryCreateView handleToggleSidePannel={handleToggleSidePannel}/>
+          <SubcategoryCreateView handleToggleSidePannel={handleToggleSidePannel} />
         </SidePanelComponent>
       </PageBox>
     </div>

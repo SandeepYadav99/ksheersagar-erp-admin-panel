@@ -13,7 +13,6 @@ import {
   serviceCreateProduct,
   serviceGetProductDetails,
   serviceUpdateProduct,
-  // serviceGetUnitDetails, serviceUpdateUnit
 } from "../../../services/Product.service";
 import {
   actionDeleteProduct,
@@ -54,27 +53,30 @@ const useProductDetail = ({ handleToggleSidePannel, data }) => {
     if (id) {
       serviceGetProductDetails({ id: id }).then((res) => {
         if (!res.error) {
-          const data = res?.data?.details;
-          console.log('data', data)
-          setDefaultImg(data?.image);
-          setForm({
-            // ...data,
-            is_negative_allowed: data?.is_negative_allowed,
-            is_batch_wise: data?.is_batch_wise,
-            is_first_in_first_out: data?.is_first_in_first_out,
-            name_en: data?.name_en,
-            name_hi: data?.name_hi,
-            code: data?.code,
-            category_id: data?.category_id,
-            sub_category_id: data?.sub_category_id,
-            type: data?.type,
-            min_qty: data?.min_qty,
-            max_qty: data?.max_qty,
-            id: data?.id,
-            image: data?.image,
-            unit_ids: data?.unit_ids,
-            is_active: data?.status === Constants.GENERAL_STATUS.ACTIVE,
+          const dataVal = res?.data?.details;
+          console.log('data', dataVal)
+          setDefaultImg(dataVal?.image);
+          // Object.keys({ ...initialForm }).forEach((key) => {
+          //   if (key in initialForm && key !== "image") {
+          //     data[key] = dataVal[key];
+          //   }
+          // });
+          // Object.keys({ ...dataVal }).forEach((key) => {
+          //   if (key in initialForm && key !== "image" ) {
+          //       data[key] = dataVal[key];
+          //   }
+          // });
+          // setForm({...data});
+          const data = { image: "" };
+          Object.keys({ ...initialForm }).forEach((key) => {
+            if (key in initialForm && key !== "image" & key!="is_active") {
+              data[key] = dataVal[key];
+            }
           });
+          setForm({ ...initialForm, ...data,
+          id:dataVal?.id,
+          is_active: data?.status === Constants.GENERAL_STATUS.ACTIVE,
+        });
         } else {
           SnackbarUtils.error(res?.message);
         }
@@ -114,11 +116,8 @@ const useProductDetail = ({ handleToggleSidePannel, data }) => {
     console.log('jenekfnek')
     if (!isSubmitting) {
       setIsSubmitting(true);
-      // setDefaultImg(empData?.image);
-      // setRemotePath(empData?.remote_image_path);
       const fd = new FormData();
       Object.keys(form).forEach((key) => {
-        // LogUtils.log("key", key);
         if (['unit_ids'].indexOf(key) < 0) {
           fd.append(key, form[key]);
         }
@@ -133,8 +132,6 @@ const useProductDetail = ({ handleToggleSidePannel, data }) => {
             if (!res.error) {
               console.log('idrierei')
               historyUtils.push("/product");
-              // handleToggleSidePannel();
-              // window.location.reload();
             } else {
               SnackbarUtils.error(res.message);
             }
@@ -146,9 +143,6 @@ const useProductDetail = ({ handleToggleSidePannel, data }) => {
             if (!res.error) {
               console.log('idrierei')
               historyUtils.push("/product");
-
-              // handleToggleSidePannel();
-              // window.location.reload();
             } else {
               SnackbarUtils.error(res.message);
             }
