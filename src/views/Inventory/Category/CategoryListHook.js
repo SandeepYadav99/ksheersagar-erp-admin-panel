@@ -44,7 +44,7 @@ const useCategoryList = ({}) => {
 
   const handlePageChange = useCallback((type) => {
     console.log("_handlePageChange", type);
-    // dispatch(actionSetPageUnit(type));
+    dispatch(actionSetPageCategory(type));
   }, []);
   const handleSubCategory = useCallback((data) => {
     console.log('here',data)
@@ -159,6 +159,7 @@ const useCategoryList = ({}) => {
   const handleCreate = useCallback(() => {
     historyUtils.push(RouteName.LOCATIONS_CREATE);
   }, []);
+
 
   const configFilter = useMemo(() => {
     return [

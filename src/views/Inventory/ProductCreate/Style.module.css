@@ -202,3 +202,55 @@
   display:flex;
   column-gap: 37px;
 }
+.createBtn >div>div {
+  width: 21px;
+  height: 35px;
+  margin-right: 19px;
+}
+.InterviewPopUpWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* height: 366px; */
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 20px 80px #00000011;
+  border-radius: 10px;
+  padding: 35px 25px;
+}
+.closeWrap {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+.descriptionStrong{
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+.deleteProductHead{
+  font: normal normal bold 28px/33px Mulish !important;
+
+}
+.deleteProductLine{
+  height: 4px;
+    width: 30px;
+    border-radius: 10px;
+    margin-left: 39%;
+    display: flex;
+    justify-content: center;
+    background-image: linear-gradient(265deg, #7467f0, #2896e9) !important;
+}
+.popupBtnContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 15px;
+}
+.removeImageText{
+  font: normal normal normal 12px/13px Montserrat;
+    letter-spacing: 0px;
+    color: #E92828;
+    opacity: 1;
+    float: right;
+    cursor: pointer;
+
+}

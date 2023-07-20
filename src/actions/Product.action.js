@@ -8,22 +8,22 @@ serviceCreateProduct,
 //   serviceUpdateUnit,
 } from "../services/Product.service";
 
-export const FETCH_INIT = "FETCH_INIT_UNIT";
-export const FETCHED = "FETCHED_UNIT";
-export const FETCHED_FAIL = "FETCHED_FAIL_UNIT";
-export const FETCHED_FILTER = "FETCHED_FILTER_UNIT";
-export const FETCH_NEXT = "FETCH_NEXT_UNIT";
-export const FILTER = "FILTER_UNIT";
-export const RESET_FILTER = "RESET_FILTER_UNIT";
-export const SET_SORTING = "SET_SORTING_UNIT";
-export const SET_FILTER = "SET_FILTER_UNIT";
-export const SET_PAGE = "SET_PAGE_UNIT";
-export const CHANGE_PAGE = "CHANGE_PAGE_UNIT";
-export const CHANGE_STATUS = "CHANGE_STATE_UNIT";
-export const SET_SERVER_PAGE = "SET_SERVER_PAGE_UNIT";
-export const CREATE_DATA = "CREATE_UNIT";
-export const UPDATE_DATA = "UPDATE_UNIT";
-export const DELETE_ITEM = "DELETE_UNIT";
+export const FETCH_INIT = "FETCH_INIT_PRODUCT";
+export const FETCHED = "FETCHED_PRODUCT";
+export const FETCHED_FAIL = "FETCHED_FAIL_PRODUCT";
+export const FETCHED_FILTER = "FETCHED_FILTER_PRODUCT";
+export const FETCH_NEXT = "FETCH_NEXT_PRODUCT";
+export const FILTER = "FILTER_PRODUCT";
+export const RESET_FILTER = "RESET_FILTER_PRODUCT";
+export const SET_SORTING = "SET_SORTING_PRODUCT";
+export const SET_FILTER = "SET_FILTER_PRODUCT";
+export const SET_PAGE = "SET_PAGE_PRODUCT";
+export const CHANGE_PAGE = "CHANGE_PAGE_PRODUCT";
+export const CHANGE_STATUS = "CHANGE_STATE_PRODUCT";
+export const SET_SERVER_PAGE = "SET_SERVER_PAGE_PRODUCT";
+export const CREATE_DATA = "CREATE_PRODUCT";
+export const UPDATE_DATA = "UPDATE_PRODUCT";
+export const DELETE_ITEM = "DELETE_PRODUCT";
 export const UPDATE_DATA_ID="UPDATE_DATA_ID"
 
 export function actionFetchProduct(
@@ -129,7 +129,7 @@ export function actionUpdateId(id){
 }
 
 export function actionSetPageProduct(page) {
-  const stateData = store.getState().unit;
+  const stateData = store.getState().product;
   const currentPage = stateData.currentPage;
   const totalLength = stateData.all.length;
   const sortingData = stateData.sorting_data;

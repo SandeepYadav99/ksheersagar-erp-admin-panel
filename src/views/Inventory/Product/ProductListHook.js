@@ -42,7 +42,7 @@ const useProductList = ({ }) => {
 
   const handlePageChange = useCallback((type) => {
     console.log("_handlePageChange", type);
-    // dispatch(actionSetPageUnit(type));
+    dispatch(actionSetPageProduct(type));
   }, []);
   //   const handleSubCategory = useCallback((data) => {
   //     console.log('here',data)

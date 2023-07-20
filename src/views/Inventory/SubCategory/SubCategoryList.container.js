@@ -9,7 +9,6 @@ import styles from "./Style.module.css";
 import DataTables from "../../../Datatables/Datatable.table";
 import Constants from "../../../config/constants";
 // import FilterComponent from "../../components/Filter/Filter.component";
-
 import FilterComponent from "../../../components/Filter/Filter.component";
 import { Edit, RemoveRedEyeOutlined as ViewIcon } from "@material-ui/icons";
 import useAuthenticate from "../../../hooks/AuthenticateHook";

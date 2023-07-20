@@ -5,7 +5,8 @@ import {
   // actionDeleteUnit,
   actionFetchSubcategory,
   actionSubcategoryId,
-  actionUpdateSubcategory
+  actionUpdateSubcategory,
+  actionSetPageSubcategory
   // actionSetPageUnit,
   // actionUpdateUnit,
 } from "../../../actions/Subcategory.action";
@@ -79,7 +80,7 @@ handleReset
 
   const handlePageChange = useCallback((type) => {
     console.log("_handlePageChange", type);
-    // dispatch(actionSetPageSubcategory(type));
+    dispatch(actionSetPageSubcategory(type));
   }, []);
   const capitalizeFirstLetter=useCallback((string)=> {
     return string.charAt(0).toUpperCase() + string.slice(1);
