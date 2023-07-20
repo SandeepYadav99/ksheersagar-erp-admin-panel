@@ -176,7 +176,7 @@ const CategoryList = ({}) => {
           open={isSidePanel}
           side={"right"}
         >
-          <CategoryCreateView handleToggleSidePannel={handleToggleSidePannel}/>
+          <CategoryCreateView handleToggleSidePannel={handleToggleSidePannel} isSidePanel={isSidePanel}/>
         </SidePanelComponent>
       </PageBox>
     </div>

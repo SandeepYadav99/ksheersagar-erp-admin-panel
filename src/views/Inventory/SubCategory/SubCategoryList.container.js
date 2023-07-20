@@ -8,12 +8,16 @@ import SidePanelComponent from "../../../components/SidePanel/SidePanel.componen
 import styles from "./Style.module.css";
 import DataTables from "../../../Datatables/Datatable.table";
 import Constants from "../../../config/constants";
+// import FilterComponent from "../../components/Filter/Filter.component";
+
 import FilterComponent from "../../../components/Filter/Filter.component";
 import { Edit, RemoveRedEyeOutlined as ViewIcon } from "@material-ui/icons";
 import useAuthenticate from "../../../hooks/AuthenticateHook";
 import useSubCategoryList from "./SubCategoryListHook";
 import StatusPill from "../../../components/Status/StatusPill.component";
 import SubcategoryCreateView from "../SubcategoryCreate/SubcategoryCreate.view";
+import history from "../../../libs/history.utils";
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 
 const SubCategoryList = ({ }) => {
   const {
@@ -32,8 +36,11 @@ const SubCategoryList = ({ }) => {
     configFilter,
     warehouses,
     handleToggleSidePannel,
-    handleProduct
+    handleProduct,
+    categoryName,
+    capitalizeFirstLetter
   } = useSubCategoryList({});
+
 
   const { isCorporateHR } = useAuthenticate();
   const {
@@ -73,7 +80,7 @@ const SubCategoryList = ({ }) => {
         key: "productsCount",
         label: "Products",
         sortable: false,
-        render: (temp, all) => <div>{all?.productsCount !== 0 ? 'Yes' : 'No'}</div>,
+        render: (temp, all) => <div>{all?.productsCount}</div>,
       },
 
       {
@@ -138,10 +145,27 @@ const SubCategoryList = ({ }) => {
     <div>
       <PageBox>
         <div className={styles.headerContainer}>
-          <div>
-            <span className={styles.title}>SubCategory List</span>
+        {/* <div className={styles.outerFlex}> */}
+        <div>
+          <ButtonBase onClick={() => history.goBack()}>
+            <ArrowBackIosIcon fontSize={"small"} />{" "}
+            <span className={styles.title}>{capitalizeFirstLetter(categoryName)} SubCategory List</span>
+
+          </ButtonBase>
+          <div className={styles.newLines} />
+
+        </div>
+        {/* <div className={styles.newLines} /> */}
+
+      {/* </div> */}
+          {/* <div>
+            <ButtonBase onClick={() => history.goBack()}>
+              <ArrowBackIosIcon fontSize={"small"} />{" "}
+              <span className={styles.title}>{capitalizeFirstLetter(categoryName)} SubCategory List</span>
+            </ButtonBase>
             <div className={styles.newLine} />
-          </div>
+          </div> */}
+
           <div>
             <ButtonBase
               onClick={handleToggleSidePannel}
@@ -176,7 +200,7 @@ const SubCategoryList = ({ }) => {
           open={isSidePanel}
           side={"right"}
         >
-          <SubcategoryCreateView handleToggleSidePannel={handleToggleSidePannel} />
+          <SubcategoryCreateView handleToggleSidePannel={handleToggleSidePannel} isSidePanel={isSidePanel} />
         </SidePanelComponent>
       </PageBox>
     </div>

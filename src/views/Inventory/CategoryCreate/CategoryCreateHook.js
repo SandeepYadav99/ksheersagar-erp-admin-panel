@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
-  isAlphaNumChars,
+  isAlphaNum,
 } from "../../../libs/RegexUtils";
 import {useSelector} from "react-redux";
 
@@ -20,7 +20,7 @@ const initialForm = {
   is_active: true,
 };
 
-const useCategoryDetail = ({ handleToggleSidePannel,data }) => {
+const useCategoryDetail = ({ handleToggleSidePannel,data,isSidePanel }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -30,7 +30,11 @@ const useCategoryDetail = ({ handleToggleSidePannel,data }) => {
   const { id } = useParams();
   const {category_id} = useSelector(state => state.category);
   console.log('id',category_id)
-
+  useEffect(() => {
+    if (!isSidePanel) {
+      handleReset();
+    }
+  }, [isSidePanel]);
   useEffect(() => {
     if (category_id !==0) {
       serviceGetCategoryDetails({ id: category_id }).then((res) => {
@@ -113,7 +117,7 @@ const useCategoryDetail = ({ handleToggleSidePannel,data }) => {
       let shouldRemoveError = true;
       const t = { ...form };
       if (fieldName === "name") {
-        if (!text || (isAlphaNumChars(text) && text.toString().length <= 30)) {
+        if (!text || (isAlphaNum(text) && text.toString().length <= 30)) {
           t[fieldName] = text;
         }
       } else {

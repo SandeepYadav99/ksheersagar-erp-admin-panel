@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DepartmentCreateView = ({ handleToggleSidePannel }) => {
+const DepartmentCreateView = ({ handleToggleSidePannel,isSidePanel }) => {
   const {
     form,
     errorData,
@@ -30,7 +30,7 @@ const DepartmentCreateView = ({ handleToggleSidePannel }) => {
     changeTextData,
     id,
     category_id
-  } = useDepartmentDetail({ handleToggleSidePannel });
+  } = useDepartmentDetail({ handleToggleSidePannel,isSidePanel });
   const classes = useStyles();
   return (
     <div className={styles.departmentWrap}>
@@ -55,7 +55,7 @@ const DepartmentCreateView = ({ handleToggleSidePannel }) => {
             <CustomTextField
             isError={errorData?.name}
             errorText={errorData?.name}
-            label={"Category Name"}
+            label={"Category Name*"}
             value={form?.name}
             onTextChange={(text) => {
               changeTextData(text, "name");

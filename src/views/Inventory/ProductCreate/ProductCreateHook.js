@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
-  isAlphaNumChars,
+  isAlphaNumChars,isNum
 } from "../../../libs/RegexUtils";
 import { useSelector,useDispatch } from "react-redux";
 
@@ -33,7 +33,7 @@ const initialForm = {
   max_qty: 0,
   is_negative_allowed: false,
   is_batch_wise: false,
-  is_first_in_first_out: true,
+  is_first_in_first_out: false,
 
 };
 
@@ -184,7 +184,12 @@ const useProductDetail = ({ handleToggleSidePannel, data }) => {
         if (!text || (isAlphaNumChars(text) && text.toString().length <= 30)) {
           t[fieldName] = text;
         }
-      } else {
+      }else if(fieldName ==="max_qty" || fieldName ==="min_qty"){
+        if (!text || (isNum(text) && text.toString().length <= 30)) {
+          t[fieldName] = text;
+        }
+      }
+       else {
         t[fieldName] = text;
       }
       setForm(t);

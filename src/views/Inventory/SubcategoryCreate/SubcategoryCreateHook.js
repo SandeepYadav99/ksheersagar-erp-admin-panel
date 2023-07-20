@@ -21,9 +21,10 @@ const initialForm = {
   category_id: "",
   unit_id: "",
   is_active: true,
+  // id:""
 };
 
-const useSubcategoryDetail = ({ handleToggleSidePannel }) => {
+const useSubcategoryDetail = ({ handleToggleSidePannel, isSidePanel }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -34,14 +35,20 @@ const useSubcategoryDetail = ({ handleToggleSidePannel }) => {
   const [listData, setListData] = useState();
   const { subcategory_id } = useSelector(state => state.subcategory);
 
+  const handleReset = useCallback(() => {
+    setForm({ ...initialForm });
+  }, [form]);
   useEffect(() => {
-    console.log('sjfjsfh')
+    if (!isSidePanel) {
+      handleReset();
+    }
+  }, [isSidePanel]);
+  useEffect(() => {
 
     if (subcategory_id !== 0) {
       serviceGetSubcategoryDetails({ id: subcategory_id }).then((res) => {
         if (!res.error) {
           const data = res?.data?.details;
-          console.log('fgfgfffbf',data)
           setForm({
             // ...data,
             name: data?.name,
@@ -62,11 +69,14 @@ const useSubcategoryDetail = ({ handleToggleSidePannel }) => {
         setListData(res.data);
       }
     });
+    if (subcategory_id == 0) {
+      handleReset()
+    }
   }, []);
   console.log('form', form)
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = ["name"];
+    let required = ["name","unit_id"];
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -97,8 +107,8 @@ const useSubcategoryDetail = ({ handleToggleSidePannel }) => {
         if (!res.error) {
           handleToggleSidePannel();
 
-          console.log('jherjhej')
-          // window.location.reload();
+          // console.log('jherjhej')
+          window.location.reload();
         } else {
           SnackbarUtils.error(res.message);
         }
@@ -153,9 +163,7 @@ const useSubcategoryDetail = ({ handleToggleSidePannel }) => {
 
   const handleDelete = useCallback(() => { }, []);
 
-  const handleReset = useCallback(() => {
-    setForm({ ...initialForm });
-  }, [form]);
+
 
   return {
     form,
@@ -172,7 +180,8 @@ const useSubcategoryDetail = ({ handleToggleSidePannel }) => {
     handleReset,
     id,
     listData,
-    subcategory_id
+    subcategory_id,
+    // handleReset
   };
 };
 

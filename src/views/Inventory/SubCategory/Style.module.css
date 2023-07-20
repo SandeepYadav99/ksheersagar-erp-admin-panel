@@ -116,3 +116,10 @@
     color: #2896E9;
     opacity: 1;
 }
+.newLines {
+    height: 4px;
+    width: 30px;
+    border-radius: 10px;
+    margin-left: 20px;
+    background-image: linear-gradient(265deg, #7467f0, #2896e9) !important;
+  }

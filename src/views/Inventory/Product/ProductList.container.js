@@ -99,7 +99,7 @@ const ProductList = ({}) => {
         // key: "name",
         label: "Unit",
         sortable: true,
-        render: (value, all) => <div>{all?.units[0]?.name}</div>,
+        render: (value, all) => <div>{all?.units?.[0]?.name}</div>,
       },
       {
         // key: "status",
