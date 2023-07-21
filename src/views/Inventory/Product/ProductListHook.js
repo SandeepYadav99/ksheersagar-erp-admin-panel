@@ -10,6 +10,7 @@ import historyUtils from "../../../libs/history.utils";
 import LogUtils from "../../../libs/LogUtils";
 import RouteName from "../../../routes/Route.name";
 import { useParams } from "react-router";
+import { serviceGetList } from "../../../services/Common.service";
 
 const useProductList = ({ }) => {
   const [isSidePanel, setSidePanel] = useState(false);
@@ -17,6 +18,8 @@ const useProductList = ({ }) => {
   const [editData, setEditData] = useState(null);
   const dispatch = useDispatch();
   const isMountRef = useRef(false);
+  const [listData, setListData] = useState()
+
   const {
     sorting_data: sortingData,
     is_fetching: isFetching,
@@ -27,6 +30,11 @@ const useProductList = ({ }) => {
   // const { category_id } = useSelector(state => state.category)
   useEffect(() => {
     // dispatch(actionFetchUnit());
+    serviceGetList(["UNITS", "CATEGORIES"]).then(res => {
+      if (!res.error) {
+        setListData(res.data);
+      }
+    });
   }, []);
 
   useEffect(() => {
@@ -155,10 +163,26 @@ const useProductList = ({ }) => {
   const handleCreate = useCallback(() => {
     historyUtils.push(RouteName.PRODUCT_CREATE);
   }, []);
-
+  console.log('jfhifs',listData?.CATEGORIES)
   const configFilter = useMemo(() => {
-    return [];
-  }, []);
+    return [
+       {
+        label: "Category",
+        name: "category_id",
+        type: "selectObject",
+        custom: { extract: { id: "id", title: "name" } },
+        fields: listData?.CATEGORIES,
+      },
+
+      {
+        label: "Type",
+        name: "type",
+        type: "select",
+        // custom: { extract: { id: "id", title: "name" } },
+        fields: ["RAW_MATERIAL", "FINISHED_GOODS", "SERVICE","CONTAINER","ASSETS"],
+      }
+    ];
+  }, [listData]);
 
   return {
     handlePageChange,
@@ -174,7 +198,7 @@ const useProductList = ({ }) => {
     isSidePanel,
     configFilter,
     handleCreate,
-
+listData
   };
 };
 

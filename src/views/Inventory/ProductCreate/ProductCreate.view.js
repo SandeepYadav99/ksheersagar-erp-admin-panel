@@ -17,6 +17,7 @@ import ProductCreateHook from "./ProductCreateHook";
 import CustomSwitch from "../../../components/FormFields/CustomSwitch";
 import WaitingComponent from "../../../components/Waiting.component";
 import DialogComponent from "./Dialog.component";
+import classNames from "classnames";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -51,31 +52,33 @@ const ProductCreate = ({ location }) => {
     isDialog,
     toggleConfirmDialog,
     dialogText,
-    handleRemoveImage
+    handleRemoveImage,
+    unitSelected,
+    subcategoryId
   } = ProductCreateHook({ location });
 
   const image = useMemo(() => {
     console.log('data image', defaultImg)
     return (
       <>
-      <File
-        default_image={defaultImg ? defaultImg : ""}
-        // imageClass={styles.inputFileUploader}
-        max_size={5 * 1024 * 1024}
-        type={["png", "jpeg", "jpg"]}
-        fullWidth={true}
-        name="document"
-        accept={"image/*"}
-        label="Please Upload Image"
-        show_image={true}
-        error={errorData?.image}
-        value={form?.image}
-        onChange={(file) => {
-          if (file) {
-            changeTextData(file, "image");
-          }
-        }}
-      />
+        <File
+          default_image={defaultImg ? defaultImg : ""}
+          // imageClass={styles.inputFileUploader}
+          max_size={5 * 1024 * 1024}
+          type={["png", "jpeg", "jpg"]}
+          fullWidth={true}
+          name="document"
+          accept={"image/*"}
+          label="Please Upload Image"
+          show_image={true}
+          error={errorData?.image}
+          value={form?.image}
+          onChange={(file) => {
+            if (file) {
+              changeTextData(file, "image");
+            }
+          }}
+        />
       </>
     );
   }, [form?.image, changeTextData]);
@@ -105,12 +108,18 @@ const ProductCreate = ({ location }) => {
           </div>
           <div className={styles.imageContainer}>
             <div>
-            {image}
-            {
-              (image !="" && defaultImg!="") && <span onClick={handleRemoveImage}className={styles.removeImageText}>Remove</span>
-            }
+
+              {image}
+              {
+                console.log('image', defaultImg)}
+
+              {console.log('image form', form?.image)
+              }
+              {
+                (form?.image != "" && defaultImg != "") && <span onClick={handleRemoveImage} className={styles.removeImageText}>Remove</span>
+              }
             </div>
-            
+
             <div className={styles.nameWrapper}>
               <div className={"formFlex"}>
                 <div className={"formGroup"}>
@@ -190,26 +199,27 @@ const ProductCreate = ({ location }) => {
                 isError={errorData?.sub_category_id}
                 errorText={errorData?.sub_category_id}
                 label={"Subcategory"}
-                value={form?.sub_category_id}
+                value={form?.sub_category_id??subcategoryId}
                 handleChange={(value) => {
                   changeTextData(value, "sub_category_id");
                 }}
               >{
-                console.log('fom cat',form?.category_id)
-              }
-              {(form?.category_id != 0) ? (
-                    data?.map((dT) => {
-                      return (
-                        <MenuItem value={dT?.id} key={dT?.id}>
-                          {dT?.name}
-                        </MenuItem>
-                      );
-                    })
-                  ) : (<MenuItem />
-                  )
-              }
-              
-                  
+                  console.log('fom cat', form?.category_id)
+                }
+                {
+                  console.log(form?.category_id)
+                }
+                {/* {(form?.category_id != 0) ? ( */}
+                  {data?.map((dT) => {
+                    return (
+                      <MenuItem value={dT?.id} key={dT?.id}>
+                        {dT?.name}
+                      </MenuItem>
+                    );
+                  })}
+
+
+
 
               </CustomSelectField>
             </div>
@@ -235,11 +245,11 @@ const ProductCreate = ({ location }) => {
           <div className={"formFlex"}>
             <div className={"formGroup"}>
               <CustomSelectField
-                multiple
+                // multiple
                 isError={errorData?.unit_ids}
                 errorText={errorData?.unit_ids}
                 label={"Units"}
-                value={form?.unit_ids}
+                value={form?.unit_ids??unitSelected}
                 handleChange={(value) => {
                   changeTextData(value, "unit_ids");
                 }}
@@ -254,7 +264,7 @@ const ProductCreate = ({ location }) => {
               </CustomSelectField>
             </div>
 
-            <div className={"formGroup"}>
+            <div className={classNames("formGroup",styles.unitWrap)}>
               <CustomTextField
                 isError={errorData?.min_qty}
                 errorText={errorData?.min_qty}
@@ -266,15 +276,15 @@ const ProductCreate = ({ location }) => {
                 onBlur={() => {
                   onBlurHandler("min_qty");
                 }}
-              />
+              />{unitSelected}
             </div>
           </div>
           <div className={"formFlex"}>
 
-            <div className={"formGroup"}>
+            <div className={classNames("formGroup",styles.unitWrap)}>
               <CustomTextField
                 isError={errorData?.max_qty}
-                errorText={(errorData?.max_qty && form?.max_qty != "") &&"Max quantity should be greater than min quantity"}
+                errorText={(errorData?.max_qty && form?.max_qty != "") && "Max quantity should be greater than min quantity"}
                 label={"Max Quantity"}
                 value={form?.max_qty}
                 onTextChange={(text) => {
@@ -283,7 +293,8 @@ const ProductCreate = ({ location }) => {
                 onBlur={() => {
                   onBlurHandler("max_qty");
                 }}
-              />
+
+              />{unitSelected}
             </div>
           </div>
           <div className={"formFlex"}>
@@ -371,15 +382,15 @@ const ProductCreate = ({ location }) => {
               className={styles.createBtn}
               onClick={handleSubmit}
             >
-             {isLoading && <CircularProgress size="1rem" color="inherit" />} <span style={{marginLeft:4}}> {id ? "UPDATE" : "CREATE"}</span>
+              {isLoading && <CircularProgress size="1rem" color="inherit" />} <span style={{ marginLeft: 4 }}> {id ? "UPDATE" : "CREATE"}</span>
             </ButtonBase>
           </div>
           <DialogComponent
-                isOpen={isDialog}
-                handleClose={toggleConfirmDialog}
-                description={dialogText}
-                handleConfirm={handleDelete}
-            />
+            isOpen={isDialog}
+            handleClose={toggleConfirmDialog}
+            description={dialogText}
+            handleConfirm={handleDelete}
+          />
         </div>
       </div></>
 

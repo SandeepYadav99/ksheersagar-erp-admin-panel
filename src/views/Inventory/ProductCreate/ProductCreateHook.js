@@ -13,6 +13,7 @@ import {
   serviceCreateProduct,
   serviceGetProductDetails,
   serviceUpdateProduct,
+  serviceDeleteProductImage
 } from "../../../services/Product.service";
 import {
   actionDeleteProduct,
@@ -30,7 +31,7 @@ const initialForm = {
   code: "",
   category_id: "",
   sub_category_id: "",
-  unit_ids: [],
+  unit_ids: "",
   type: "",
   min_qty: 0,
   max_qty: 0,
@@ -54,7 +55,10 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
   const [listData, setListData] = useState()
   const dispatch = useDispatch();
   const [defaultImg, setDefaultImg] = useState("");
-  const [productDetail, setProductDetail] = useState()
+  const [productDetail, setProductDetail] = useState();
+  const [unitSelected,setUnitSelected] = useState()
+  const [subcategoryId,setSubcategoryId] = useState()
+
   const {
     all, data, sorting_data: sortingData,
 
@@ -66,7 +70,9 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
           const dataVal = res?.data?.details;
           console.log('data', dataVal)
           setDefaultImg(dataVal?.image);
+          setUnitSelected(dataVal?.units[0]?.name)
           setProductDetail(dataVal)
+          setSubcategoryId(dataVal?.sub_category_id)
           // Object.keys({ ...initialForm }).forEach((key) => {
           //   if (key in initialForm && key !== "image") {
           //     data[key] = dataVal[key];
@@ -101,8 +107,6 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
         setListData(res.data);
       }
     });
-    console.log('list', all)
-
   }, []);
   const addSubcatData = useCallback((value) => {
     console.log('value', value)
@@ -163,6 +167,7 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
     return errors;
   }, [form, errorData]);
 
+
   const submitToServer = useCallback(() => {
     console.log('jenekfnek')
     setIsLoading(true)
@@ -175,7 +180,7 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
         }
       });
       fd.append('unit_ids', JSON.stringify(form?.unit_ids));
-      console.log('inital form data', fd)
+
       if (id) {
         console.log('id', id)
         console.log('fd', fd)
@@ -260,7 +265,14 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
         if (!text || (isNum(text) && text.toString().length <= 30)) {
           t[fieldName] = text;
         }
-      }
+    }else if (fieldName ==="unit_ids"){
+      const index = listData?.UNITS?.findIndex((obj) => obj.id === text);
+      setUnitSelected(listData?.UNITS[index]?.name)
+      t[fieldName] = text
+    }else if (fieldName ==="sub_category_id"){
+      setSubcategoryId(text)
+      t[fieldName]=text
+    }
       else {
         t[fieldName] = text;
       }
@@ -297,6 +309,9 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
       ...form,
       image: "",
     });
+    serviceDeleteProductImage({ id: id }).then((res) => {
+      console.log(res)
+    });
   })
 
   return {
@@ -320,7 +335,9 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
     isDialog,
     toggleConfirmDialog,
     dialogText,
-    handleRemoveImage
+    handleRemoveImage,
+    unitSelected,
+    subcategoryId
   };
 };
 

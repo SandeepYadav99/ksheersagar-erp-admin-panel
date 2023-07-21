@@ -254,3 +254,10 @@
     cursor: pointer;
 
 }
+.unitWrap{
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 10px;
+    text-transform: capitalize;
+}
