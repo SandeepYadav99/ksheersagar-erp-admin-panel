@@ -5,7 +5,8 @@ import {
   // actionDeleteUnit,
   actionFetchSubcategory,
   actionSubcategoryId,
-  actionUpdateSubcategory
+  actionUpdateSubcategory,
+  actionSetPageSubcategory
   // actionSetPageUnit,
   // actionUpdateUnit,
 } from "../../../actions/Subcategory.action";
@@ -13,11 +14,18 @@ import historyUtils from "../../../libs/history.utils";
 import LogUtils from "../../../libs/LogUtils";
 import RouteName from "../../../routes/Route.name";
 import { useParams } from "react-router";
+import useSubcategoryDetail from "../SubcategoryCreate/SubcategoryCreateHook";
+import { 
+  serviceGetCategoryDetails,
+} from "../../../services/Category.service";
+
 
 const useSubCategoryList = ({}) => {
+
   const [isSidePanel, setSidePanel] = useState(false);
   const [isCalling, setIsCalling] = useState(false);
   const [editData, setEditData] = useState(null);
+  const [categoryName,setCategoryName]=useState("");
   const dispatch = useDispatch();
   const isMountRef = useRef(false);
   const catId= useParams();
@@ -26,20 +34,45 @@ const useSubCategoryList = ({}) => {
     is_fetching: isFetching,
     query,
     query_data: queryData,
-    subcategory_id
+    subcategory_id,
   } = useSelector((state) => state.subcategory);
-
+  const {
+    data
+  } = useSelector((state) => state.category);
+  const {
+handleReset
+  } = useSubcategoryDetail({  });
   useEffect(() => {
     // dispatch(actionFetchUnit());
   }, []);
-
+  console.log('sc',editData)
   useEffect(() => {
-    console.log(catId)
+    if (catId?.id !==0) {
+      serviceGetCategoryDetails({ id: catId?.id }).then((res) => {
+        if (!res.error) {
+          const data = res?.data?.details;
+          console.log('data set',data)
+          setCategoryName(data?.name)
+          // setForm({
+          //   // ...data,
+          //   id:data?.id,
+          //   name:data?.name,
+          //   is_active: data?.status === Constants.GENERAL_STATUS.ACTIVE,
+          // });
+        } else {
+          // SnackbarUtils.error(res?.message);
+        }
+      });
+    }
+  }, []);
+  useEffect(() => {
+    // console.log('jwhwjhw data',data?.indexOf(catId))
+    // data?.indexOf(catId)
     dispatch(
       actionFetchSubcategory(1, sortingData, {
         query: isMountRef.current ? query : null,
         query_data: isMountRef.current ? queryData : null,
-        // category_id:catId?.id
+        category_id:catId?.id
       })
     );
     isMountRef.current = true;
@@ -47,8 +80,11 @@ const useSubCategoryList = ({}) => {
 
   const handlePageChange = useCallback((type) => {
     console.log("_handlePageChange", type);
-    // dispatch(actionSetPageSubcategory(type));
+    dispatch(actionSetPageSubcategory(type));
   }, []);
+  const capitalizeFirstLetter=useCallback((string)=> {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+},[])
   const handleProduct = useCallback((data) => {
     console.log('here')
     historyUtils.push(RouteName.PRODUCT) //+
@@ -76,6 +112,7 @@ const useSubCategoryList = ({}) => {
         actionFetchSubcategory(1, sortingData, {
           query: key == "SEARCH_TEXT" ? value : query,
           query_data: key == "FILTER_DATA" ? value : queryData,
+          category_id: catId
         })
       );
       // dispatch(actionFetchUnit(1, sortingData))
@@ -110,7 +147,8 @@ const useSubCategoryList = ({}) => {
           {
             query: query,
             query_data: queryData,
-          }
+          },
+          // category_id:catId
         )
       );
     },
@@ -141,6 +179,11 @@ const useSubCategoryList = ({}) => {
 
   const handleToggleSidePannel = useCallback(() => {
     setSidePanel((e) => !e);
+    dispatch(actionSubcategoryId(0))
+    handleReset()
+    // setEditData(null);
+    // handleReset()
+
   }, [setSidePanel]);
 
   const handleSideToggle = useCallback(
@@ -159,8 +202,35 @@ const useSubCategoryList = ({}) => {
   }, []);
 
   const configFilter = useMemo(() => {
-    return [];
+    return [
+      // {label: 'Country', name: 'country', type: 'text'},
+      // {label: 'City', name: 'city', type: 'text'},
+
+      {
+        label: "Location",
+        name: "location_id",
+        type: "selectObject",
+        custom: { extract: { id: "id", title: "name" } },
+        // fields: listData?.LOCATIONS,
+      },
+
+      {
+        label: "Department",
+        name: "department_id",
+        type: "selectObject",
+        custom: { extract: { id: "id", title: "name" } },
+        // fields: listData?.DEPARTMENTS,
+      },
+      {
+        label: "Created Date",
+        options: { maxDate: new Date() },
+        name: "createdAt",
+        type: "date",
+      },
+      // {label: 'Status', name: 'status', type: 'select', fields: ['INACTIVE', 'ACTIVE']},
+    ];
   }, []);
+
 
   return {
     handlePageChange,
@@ -179,7 +249,11 @@ const useSubCategoryList = ({}) => {
     configFilter,
     handleCreate,
     handleToggleSidePannel,
-    handleProduct
+    handleProduct,
+    handleReset,
+    categoryName,
+    capitalizeFirstLetter
+
   };
 };
 

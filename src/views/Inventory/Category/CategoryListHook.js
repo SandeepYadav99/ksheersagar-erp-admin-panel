@@ -11,6 +11,7 @@ import {
 import historyUtils from "../../../libs/history.utils";
 import LogUtils from "../../../libs/LogUtils";
 import RouteName from "../../../routes/Route.name";
+import useCategoryDetail from "../CategoryCreate/CategoryCreateHook";
 
 const useCategoryList = ({}) => {
   const [isSidePanel, setSidePanel] = useState(false);
@@ -28,7 +29,9 @@ const useCategoryList = ({}) => {
   useEffect(() => {
     // dispatch(actionFetchUnit());
   }, []);
-
+  const {
+    handleReset
+      } = useCategoryDetail({  });
   useEffect(() => {
     dispatch(
       actionFetchCategory(1, sortingData, {
@@ -41,7 +44,7 @@ const useCategoryList = ({}) => {
 
   const handlePageChange = useCallback((type) => {
     console.log("_handlePageChange", type);
-    // dispatch(actionSetPageUnit(type));
+    dispatch(actionSetPageCategory(type));
   }, []);
   const handleSubCategory = useCallback((data) => {
     console.log('here',data)
@@ -136,6 +139,10 @@ const useCategoryList = ({}) => {
 
   const handleToggleSidePannel = useCallback(() => {
     setSidePanel((e) => !e);
+    handleReset()
+    dispatch(actionUpdateId(0))
+
+
   }, [setSidePanel]);
 
   const handleSideToggle = useCallback(
@@ -153,8 +160,35 @@ const useCategoryList = ({}) => {
     historyUtils.push(RouteName.LOCATIONS_CREATE);
   }, []);
 
+
   const configFilter = useMemo(() => {
-    return [];
+    return [
+      // {label: 'Country', name: 'country', type: 'text'},
+      // {label: 'City', name: 'city', type: 'text'},
+
+      {
+        label: "Location",
+        name: "location_id",
+        type: "selectObject",
+        custom: { extract: { id: "id", title: "name" } },
+        // fields: listData?.LOCATIONS,
+      },
+
+      {
+        label: "Department",
+        name: "department_id",
+        type: "selectObject",
+        custom: { extract: { id: "id", title: "name" } },
+        // fields: listData?.DEPARTMENTS,
+      },
+      {
+        label: "Created Date",
+        options: { maxDate: new Date() },
+        name: "createdAt",
+        type: "date",
+      },
+      // {label: 'Status', name: 'status', type: 'select', fields: ['INACTIVE', 'ACTIVE']},
+    ];
   }, []);
 
   return {
@@ -175,7 +209,7 @@ const useCategoryList = ({}) => {
     handleCreate,
     handleToggleSidePannel,
     handleSubCategory,
-    
+    handleReset
   };
 };
 

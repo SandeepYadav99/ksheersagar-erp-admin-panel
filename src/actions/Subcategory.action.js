@@ -2,27 +2,26 @@ import store from "../store";
 import Constants from "../config/constants";
 import {
 serviceCreateSubcategory,
-//   serviceDeleteUnit,
   serviceGetSubcategory,
   serviceUpdateSubcategory,
 } from "../services/Subcategory.service";
 
-export const FETCH_INIT = "FETCH_INIT_UNIT";
-export const FETCHED = "FETCHED_UNIT";
-export const FETCHED_FAIL = "FETCHED_FAIL_UNIT";
-export const FETCHED_FILTER = "FETCHED_FILTER_UNIT";
-export const FETCH_NEXT = "FETCH_NEXT_UNIT";
-export const FILTER = "FILTER_UNIT";
-export const RESET_FILTER = "RESET_FILTER_UNIT";
-export const SET_SORTING = "SET_SORTING_UNIT";
-export const SET_FILTER = "SET_FILTER_UNIT";
-export const SET_PAGE = "SET_PAGE_UNIT";
-export const CHANGE_PAGE = "CHANGE_PAGE_UNIT";
-export const CHANGE_STATUS = "CHANGE_STATE_UNIT";
-export const SET_SERVER_PAGE = "SET_SERVER_PAGE_UNIT";
-export const CREATE_DATA = "CREATE_UNIT";
-export const UPDATE_DATA = "UPDATE_UNIT";
-export const DELETE_ITEM = "DELETE_UNIT";
+export const FETCH_INIT = "FETCH_INIT_SUBCATEGORY";
+export const FETCHED = "FETCHED_SUBCATEGORY";
+export const FETCHED_FAIL = "FETCHED_FAIL_SUBCATEGORY";
+export const FETCHED_FILTER = "FETCHED_FILTER_SUBCATEGORY";
+export const FETCH_NEXT = "FETCH_NEXT_SUBCATEGORY";
+export const FILTER = "FILTER_SUBCATEGORY";
+export const RESET_FILTER = "RESET_FILTER_SUBCATEGORY";
+export const SET_SORTING = "SET_SORTING_SUBCATEGORY";
+export const SET_FILTER = "SET_FILTER_SUBCATEGORY";
+export const SET_PAGE = "SET_PAGE_SUBCATEGORY";
+export const CHANGE_PAGE = "CHANGE_PAGE_SUBCATEGORY";
+export const CHANGE_STATUS = "CHANGE_STATE_SUBCATEGORY";
+export const SET_SERVER_PAGE = "SET_SERVER_PAGE_SUBCATEGORY";
+export const CREATE_DATA = "CREATE_SUBCATEGORY";
+export const UPDATE_DATA = "UPDATE_SUBCATEGORY";
+export const DELETE_ITEM = "DELETE_SUBCATEGORY";
 export const UPDATE_SUBCATEGORY_ID="UPDATE_SUBCATEGORY_ID"
 
 export function actionFetchSubcategory(
@@ -36,7 +35,7 @@ export function actionFetchSubcategory(
     row: sorting.row,
     order: sorting.order,
     ...filter,
-  }); // GetUnit
+  }); // GetSUBCATEGORY
   return (dispatch) => {
     if (shouldReset) {
       dispatch({
@@ -83,20 +82,20 @@ export function actionUpdateSubcategory(data) {
   };
 }
 
-// export function actionDeleteUnit(id) {
-//   const request = serviceDeleteUnit({ id: id });
+// export function actionDeleteSUBCATEGORY(id) {
+//   const request = serviceDeleteSUBCATEGORY({ id: id });
 //   return (dispatch) => {
 //     dispatch({ type: DELETE_ITEM, payload: id });
 //   };
 // }
 
-export function actionChangePageUnit(page) {
+export function actionChangePageSUBCATEGORY(page) {
   return (dispatch) => {
     dispatch({ type: CHANGE_PAGE, payload: page });
   };
 }
 
-export function actionFilterUnit(value) {
+export function actionFilterSUBCATEGORY(value) {
   const request = null; ////serviceFetchProviderRequests(value);
   return (dispatch) => {
     dispatch({ type: FETCH_INIT, payload: null });
@@ -107,22 +106,22 @@ export function actionFilterUnit(value) {
   };
 }
 
-export function actionChangeStatusUnit(id, status) {
-  //const request = serviceUpdateUnit({ id: params.id, status: params.type});
+export function actionChangeStatusSUBCATEGORY(id, status) {
+  //const request = serviceUpdateSUBCATEGORY({ id: params.id, status: params.type});
   return (dispatch) => {
     dispatch({ type: CHANGE_STATUS, payload: { id, status } });
   };
 }
 
-export function actionResetFilterUnit() {
+export function actionResetFilterSUBCATEGORY() {
   return {
     type: RESET_FILTER,
     payload: null,
   };
 }
 
-export function actionSetPageCategory(page) {
-  const stateData = store.getState().unit;
+export function actionSetPageSubcategory(page) {
+  const stateData = store.getState().subcategory;
   const currentPage = stateData.currentPage;
   const totalLength = stateData.all.length;
   const sortingData = stateData.sorting_data;

@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DepartmentCreateView = ({ handleToggleSidePannel }) => {
+const DepartmentCreateView = ({ handleToggleSidePannel,isSidePanel }) => {
   const {
     form,
     errorData,
@@ -33,9 +33,9 @@ const DepartmentCreateView = ({ handleToggleSidePannel }) => {
     id,
     listData,
     subcategory_id
-  } = useDepartmentDetail({ handleToggleSidePannel });
+  } = useDepartmentDetail({ handleToggleSidePannel,isSidePanel });
   const classes = useStyles();
-  console.log('list',listData)
+  console.log('list',subcategory_id)
   return (
     <div className={styles.departmentWrap}>
       <div className={"formFlex"}>

@@ -73,7 +73,7 @@ const CategoryList = ({}) => {
         key: "subCategoryCount",
         label: "Subcategory",
         sortable: false,
-        render: (temp, all) => <div>{all?.subCategoryCount !==0 ? 'Yes' : 'No'}</div>,
+        render: (temp, all) => <div>{all?.subCategoryCount}</div>,
       },
 
       {
@@ -176,7 +176,7 @@ const CategoryList = ({}) => {
           open={isSidePanel}
           side={"right"}
         >
-          <CategoryCreateView handleToggleSidePannel={handleToggleSidePannel}/>
+          <CategoryCreateView handleToggleSidePannel={handleToggleSidePannel} isSidePanel={isSidePanel}/>
         </SidePanelComponent>
       </PageBox>
     </div>

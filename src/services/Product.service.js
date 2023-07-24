@@ -15,7 +15,9 @@ export async function serviceDeleteProduct(params) {
 export async function serviceGetProduct (params) {
     return await postRequest('products', params);
 }
-
+export async function serviceDeleteProductImage (params) {
+    return await postRequest('products/remove/image', params);
+}
 // export async function serviceGetUnitList (params) {
 //     return await postRequest('units/list', params);
 // }

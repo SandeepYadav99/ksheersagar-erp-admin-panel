@@ -2,27 +2,27 @@ import store from "../store";
 import Constants from "../config/constants";
 import {
 serviceCreateCategory,
-//   serviceDeleteUnit,
+//   serviceDeleteCATEGORY,
   serviceGetCategory,
-//   serviceUpdateUnit,
+//   serviceUpdateCATEGORY,
 } from "../services/Category.service";
 
-export const FETCH_INIT = "FETCH_INIT_UNIT";
-export const FETCHED = "FETCHED_UNIT";
-export const FETCHED_FAIL = "FETCHED_FAIL_UNIT";
-export const FETCHED_FILTER = "FETCHED_FILTER_UNIT";
-export const FETCH_NEXT = "FETCH_NEXT_UNIT";
-export const FILTER = "FILTER_UNIT";
-export const RESET_FILTER = "RESET_FILTER_UNIT";
-export const SET_SORTING = "SET_SORTING_UNIT";
-export const SET_FILTER = "SET_FILTER_UNIT";
-export const SET_PAGE = "SET_PAGE_UNIT";
-export const CHANGE_PAGE = "CHANGE_PAGE_UNIT";
-export const CHANGE_STATUS = "CHANGE_STATE_UNIT";
-export const SET_SERVER_PAGE = "SET_SERVER_PAGE_UNIT";
-export const CREATE_DATA = "CREATE_UNIT";
-export const UPDATE_DATA = "UPDATE_UNIT";
-export const DELETE_ITEM = "DELETE_UNIT";
+export const FETCH_INIT = "FETCH_INIT_CATEGORY";
+export const FETCHED = "FETCHED_CATEGORY";
+export const FETCHED_FAIL = "FETCHED_FAIL_CATEGORY";
+export const FETCHED_FILTER = "FETCHED_FILTER_CATEGORY";
+export const FETCH_NEXT = "FETCH_NEXT_CATEGORY";
+export const FILTER = "FILTER_CATEGORY";
+export const RESET_FILTER = "RESET_FILTER_CATEGORY";
+export const SET_SORTING = "SET_SORTING_CATEGORY";
+export const SET_FILTER = "SET_FILTER_CATEGORY";
+export const SET_PAGE = "SET_PAGE_CATEGORY";
+export const CHANGE_PAGE = "CHANGE_PAGE_CATEGORY";
+export const CHANGE_STATUS = "CHANGE_STATE_CATEGORY";
+export const SET_SERVER_PAGE = "SET_SERVER_PAGE_CATEGORY";
+export const CREATE_DATA = "CREATE_CATEGORY";
+export const UPDATE_DATA = "UPDATE_CATEGORY";
+export const DELETE_ITEM = "DELETE_CATEGORY";
 export const UPDATE_DATA_ID="UPDATE_DATA_ID"
 
 export function actionFetchCategory(
@@ -36,7 +36,7 @@ export function actionFetchCategory(
     row: sorting.row,
     order: sorting.order,
     ...filter,
-  }); // GetUnit
+  }); // GetCATEGORY
   return (dispatch) => {
     if (shouldReset) {
       dispatch({
@@ -72,8 +72,8 @@ export function actionCreateCategory(data) {
   };
 }
 
-// export function actionUpdateUnit(data) {
-//   const request = serviceUpdateUnit(data);
+// export function actionUpdateCATEGORY(data) {
+//   const request = serviceUpdateCATEGORY(data);
 //   return (dispatch) => {
 //     request.then((data) => {
 //       if (!data.error) {
@@ -83,20 +83,20 @@ export function actionCreateCategory(data) {
 //   };
 // }
 
-// export function actionDeleteUnit(id) {
-//   const request = serviceDeleteUnit({ id: id });
+// export function actionDeleteCATEGORY(id) {
+//   const request = serviceDeleteCATEGORY({ id: id });
 //   return (dispatch) => {
 //     dispatch({ type: DELETE_ITEM, payload: id });
 //   };
 // }
 
-export function actionChangePageUnit(page) {
+export function actionChangePageCATEGORY(page) {
   return (dispatch) => {
     dispatch({ type: CHANGE_PAGE, payload: page });
   };
 }
 
-export function actionFilterUnit(value) {
+export function actionFilterCATEGORY(value) {
   const request = null; ////serviceFetchProviderRequests(value);
   return (dispatch) => {
     dispatch({ type: FETCH_INIT, payload: null });
@@ -107,14 +107,14 @@ export function actionFilterUnit(value) {
   };
 }
 
-export function actionChangeStatusUnit(id, status) {
-  //const request = serviceUpdateUnit({ id: params.id, status: params.type});
+export function actionChangeStatusCATEGORY(id, status) {
+  //const request = serviceUpdateCATEGORY({ id: params.id, status: params.type});
   return (dispatch) => {
     dispatch({ type: CHANGE_STATUS, payload: { id, status } });
   };
 }
 
-export function actionResetFilterUnit() {
+export function actionResetFilterCATEGORY() {
   return {
     type: RESET_FILTER,
     payload: null,
@@ -128,7 +128,7 @@ export function actionUpdateId(id){
 }
 
 export function actionSetPageCategory(page) {
-  const stateData = store.getState().unit;
+  const stateData = store.getState().category;
   const currentPage = stateData.currentPage;
   const totalLength = stateData.all.length;
   const sortingData = stateData.sorting_data;
