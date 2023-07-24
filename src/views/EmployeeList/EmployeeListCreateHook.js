@@ -33,7 +33,7 @@ function EmployeeListCreateHook({ location }) {
     name_en: "",
     name_hi: "",
     doj: "",
-    age: "32",
+    age: "",
     location_id: "",
     department_id: "",
     role_id: "",
