@@ -137,20 +137,17 @@ const useLocationDetail = ({}) => {
     setGeoLocation(data);
   };
   const submitToServer = useCallback(() => {
-    console.log("geoLocation", geoLocation);
     if (!isSubmitting) {
       setIsSubmitting(true);
       let req = null;
       if (id) {
         req = serviceUpdateLocation({
           ...form,
-          head_id: form?.head_id?.id,
         });
       } else {
         req = serviceCreateLocation({
           ...form,
-          head_id: form?.head_id?.id,
-          coordinates: JSON.stringify(geoLocation),
+          coordinates: geoLocation,
         });
       }
       req.then((res) => {

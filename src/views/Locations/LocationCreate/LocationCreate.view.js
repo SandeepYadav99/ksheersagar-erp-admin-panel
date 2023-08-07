@@ -104,7 +104,7 @@ const LocationCreateView = ({}) => {
 
         <div className={"formFlex"}>
           <div className={"formGroup"}>
-            <CustomAutoComplete
+            {/* <CustomAutoComplete
               autoCompleteProps={{
                 freeSolo: false,
                 getOptionLabel: (option) => option.label,
@@ -119,7 +119,22 @@ const LocationCreateView = ({}) => {
               name={"head_id"}
               isError={errorData?.head_id}
               value={form?.head_id}
-            />
+            /> */}
+            <CustomSelectField
+              isError={errorData?.head_id}
+              errorText={errorData?.head_id}
+              label={"Location Manager"}
+              value={form?.head_id}
+              handleChange={(value) => {
+                changeTextData(value, "head_id");
+              }}
+            >
+              {listData?.EMPLOYEES?.map((item, index) => (
+                <MenuItem value={item?.id} key={`emp_${index}`}>
+                  {`${item?.name} - (${item?.code})`}
+                </MenuItem>
+              ))}
+            </CustomSelectField>
           </div>
           <div className={"formGroup"}>
             <CustomSelectField

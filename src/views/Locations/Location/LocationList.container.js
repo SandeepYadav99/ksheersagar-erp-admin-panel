@@ -51,7 +51,7 @@ const LocationList = ({}) => {
       return (
         <div className={styles.firstCellFlex}>
           <div className={classNames(styles.firstCellInfo, "openSans")}>
-            <span className={styles.productName}>{obj?.address}</span> <br />
+            <span className={styles.productName}>{obj?.name_en}</span> <br />
           </div>
         </div>
       );

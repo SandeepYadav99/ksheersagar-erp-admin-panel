@@ -307,7 +307,7 @@ const EmployeeListCreate = ({ location }) => {
                 changeTextData(value, "location_id");
               }}
             >
-              {listData?.LOCATION_DEPARTMENTS?.map((dT) => {
+              {listData?.LOCATIONS?.map((dT) => {
                 return (
                   <MenuItem value={dT?.id} key={dT?.id}>
                     {dT?.name}
