@@ -37,7 +37,7 @@ const initialForm = {
 };
 const useLocationDetail = ({}) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [geoLocation, setGeoLocation] = useState([]);
+  const [geoLocation, setGeoLocation] = useState(null);
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({ ...initialForm });
@@ -136,6 +136,7 @@ const useLocationDetail = ({}) => {
   const handleCoordinate = (data) => {
     setGeoLocation(data);
   };
+  console.log("loc", geoLocation);
   const submitToServer = useCallback(() => {
     if (!isSubmitting) {
       setIsSubmitting(true);
@@ -147,12 +148,12 @@ const useLocationDetail = ({}) => {
       } else {
         req = serviceCreateLocation({
           ...form,
-          coordinates: geoLocation,
+          coordinates: geoLocation?.length ? geoLocation[0] : [],
         });
       }
       req.then((res) => {
         if (!res.error) {
-          historyUtils.push(RouteName.LOCATIONS);
+          window.location.reload();
         } else {
           SnackbarUtils.error(res.message);
         }
