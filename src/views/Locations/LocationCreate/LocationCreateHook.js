@@ -37,9 +37,14 @@ const initialForm = {
 };
 const useLocationDetail = ({}) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [geofence,setGeoFence]=useState([])
   const [geoLocation, setGeoLocation] = useState(null);
+  const [isDialog, setIsDialog] = useState(false);
   const [errorData, setErrorData] = useState({});
+  const [mapAddress, setMapAddress] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [lat, setLat] = useState(0);
+  const [lng, setLng] = useState(0);
   const [form, setForm] = useState({ ...initialForm });
   const [listData, setListData] = useState({
     EMPLOYEES: [],
@@ -56,6 +61,14 @@ const useLocationDetail = ({}) => {
       }
     });
   }, []);
+
+  const toggleConfirmDialog = useCallback(
+    (type) => {
+      setIsDialog((e) => !e);
+    },
+    [setIsDialog]
+  );
+
   useEffect(() => {
     if (id) {
       serviceGetLocationDetails({ id: id }).then((res) => {
@@ -72,6 +85,11 @@ const useLocationDetail = ({}) => {
     }
   }, [id]);
 
+  useEffect(() => {
+    if (mapAddress) {
+      setForm({ ...form, address: mapAddress });
+    }
+  }, [mapAddress]);
   const checkCodeValidation = useCallback(() => {
     if (form?.code) {
       serviceLocationCheck({ code: form?.code, id: id ? id : null }).then(
@@ -136,7 +154,6 @@ const useLocationDetail = ({}) => {
   const handleCoordinate = (data) => {
     setGeoLocation(data);
   };
-  console.log("loc", geoLocation);
   const submitToServer = useCallback(() => {
     if (!isSubmitting) {
       setIsSubmitting(true);
@@ -148,7 +165,8 @@ const useLocationDetail = ({}) => {
       } else {
         req = serviceCreateLocation({
           ...form,
-          coordinates: geoLocation?.length ? geoLocation[0] : [],
+          coordinates: [lat, lng],
+          geofence_coordinates: geoLocation ? geoLocation : [],
         });
       }
       req.then((res) => {
@@ -185,11 +203,7 @@ const useLocationDetail = ({}) => {
     (text, fieldName) => {
       let shouldRemoveError = true;
       const t = { ...form };
-      if (fieldName === "address") {
-        if (!text || (isAlphaNumChars(text) && text.toString().length <= 50)) {
-          t[fieldName] = text;
-        }
-      } else if (fieldName === "type") {
+      if (fieldName === "type") {
         if (!text || (isAlpha(text) && text.toString().length <= 30)) {
           t[fieldName] = text;
         }
@@ -226,6 +240,20 @@ const useLocationDetail = ({}) => {
     setForm({ ...initialForm });
   }, [form]);
 
+  const handleMapAddress = useCallback(
+    (lat, lng, address) => {
+      console.log("handleMapAddress", lat, lng, address);
+      setLat(lat);
+      setLng(lng);
+      setMapAddress(address);
+    },
+    [lat, lng]
+  );
+
+  const handleCityCountry = (cityCountyObj) => {
+    console.log("handleCityCountry", cityCountyObj);
+  };
+
   return {
     form,
     changeTextData,
@@ -242,6 +270,13 @@ const useLocationDetail = ({}) => {
     listData,
     id,
     handleCoordinate,
+    isDialog,
+    toggleConfirmDialog,
+    handleMapAddress,
+    handleCityCountry,
+    lat,
+    lng,
+    geofence
   };
 };
 

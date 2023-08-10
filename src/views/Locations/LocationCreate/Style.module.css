@@ -1,66 +1,77 @@
 .btnCont {
-    display: flex;
-    justify-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
 }
-.formContainer{
-    flex: 1;
+.formContainer {
+  flex: 1;
 }
-.locationWeap{
-    margin-top: 30px;
+.locationWeap {
+  margin-top: 30px;
 }
-.imgField{
-    margin-left: 10px;
+.imgField {
+  margin-left: 10px;
 }
-.nameField{
-    margin-left: 10px;
-}
-
-.outerFlex{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-bottom: 30px;
-}
-.inputWrap{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-left: 5px;
-    font-size: .8rem;
-    font-weight: 600;
-}
-.inputWrap > input{
-    cursor: pointer;
-}
-.resetBtn{
-    background: #F7A728 !important;
-    padding: 20px 50px !important;
-    color: white !important;
-    border-radius: 5px !important;
+.nameField {
+  margin-left: 10px;
 }
 
-.enter{
-    font-size: 0.8rem;
-    margin-left: 10px;
-    font-weight: 600;
-    /*padding-bottom: 10px;*/
-    display: block;
+.outerFlex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 30px;
+}
+.edit {
+  color: #29cb97 !important;
+  border: 2px solid #29cb97 !important;
+  padding: 10px 40px !important;
+  border-radius: 30px !important;
+  font-weight: 600 !important;
+}
+.btnWrapMap {
+  display: flex;
+  align-items: center;
+}
+.inputWrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 5px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.inputWrap > input {
+  cursor: pointer;
+}
+.resetBtn {
+  background: #f7a728 !important;
+  padding: 20px 50px !important;
+  color: white !important;
+  border-radius: 5px !important;
 }
 
-.createBtn{
-    background-color: #29CB97 !important;
-    color: #ffffff !important;
-    padding: 12px 35px !important;
-    font-size: 0.8rem !important;
-    border-radius: 30px !important;
-    text-transform: uppercase !important;
-    font-weight: 600 !important;
+.enter {
+  font-size: 0.8rem;
+  margin-left: 10px;
+  font-weight: 600;
+  /*padding-bottom: 10px;*/
+  display: block;
 }
 
-.newLine{
-    height: 4px;
-    width: 30px;
-    border-radius: 10px;
-    margin-left: 20px;
-    background-image: linear-gradient(265deg , #7467F0,#2896E9) !important;
+.createBtn {
+  background-color: #29cb97 !important;
+  color: #ffffff !important;
+  padding: 12px 35px !important;
+  font-size: 0.8rem !important;
+  border-radius: 30px !important;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+}
+
+.newLine {
+  height: 4px;
+  width: 30px;
+  border-radius: 10px;
+  margin-left: 20px;
+  background-image: linear-gradient(265deg, #7467f0, #2896e9) !important;
 }

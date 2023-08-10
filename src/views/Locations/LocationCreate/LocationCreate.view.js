@@ -10,6 +10,7 @@ import useLocationDetail from "./LocationCreateHook";
 import CustomAutoComplete from "../../../components/FormFields/AutoCompleteText/CustomAutoComplete";
 import Geofencing from "./component/Geofencing/Geofencing.component";
 import { CheckBox } from "@material-ui/icons";
+import DialogIncComponent from "./component/confirmDialogInc";
 
 const useStyles = makeStyles((theme) => ({
   iconBtnError: {
@@ -35,11 +36,29 @@ const LocationCreateView = ({}) => {
     isEdit,
     id,
     handleCoordinate,
+    isDialog,
+    toggleConfirmDialog,
+    handleMapAddress,
+    handleCityCountry,
+    lat,
+    lng,
+    geofence
   } = useLocationDetail({});
-  const geofence = [];
+  // const geofence = [];
 
   return (
     <div className={styles.locationWeap}>
+      {isDialog && (
+        <DialogIncComponent
+          lat={lat}
+          lng={lng}
+          isOpen={isDialog}
+          handleClose={toggleConfirmDialog}
+          handleMapAddress={handleMapAddress}
+          handleCityCountry={handleCityCountry}
+          handleDialogToggle={toggleConfirmDialog}
+        />
+      )}
       <div>
         <div className={"formFlex"}>
           <div className={"formGroup"}>
@@ -104,22 +123,6 @@ const LocationCreateView = ({}) => {
 
         <div className={"formFlex"}>
           <div className={"formGroup"}>
-            {/* <CustomAutoComplete
-              autoCompleteProps={{
-                freeSolo: false,
-                getOptionLabel: (option) => option.label,
-              }}
-              dataset={listData?.EMPLOYEES}
-              datasetKey={"label"}
-              onTextChange={(text, value) => {
-                changeTextData(text, "head_id");
-              }}
-              variant={"outlined"}
-              label={"Location Manager"}
-              name={"head_id"}
-              isError={errorData?.head_id}
-              value={form?.head_id}
-            /> */}
             <CustomSelectField
               isError={errorData?.head_id}
               errorText={errorData?.head_id}
@@ -183,6 +186,16 @@ const LocationCreateView = ({}) => {
               onBlurHandler("address");
             }}
           />
+        </div>
+        <div className={styles.btnWrapMap}>
+          <ButtonBase
+            className={styles.edit}
+            onClick={() => {
+              toggleConfirmDialog();
+            }}
+          >
+            View on Map
+          </ButtonBase>
         </div>
       </div>
       <div className={"formFlex"}>
