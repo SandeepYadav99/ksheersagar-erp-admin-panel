@@ -62,7 +62,7 @@ const useDepartmentDetail = ({
   }, [isSidePanel]);
 
   const checkCodeValidation = useCallback(() => {
-    serviceDepartmentCheck({ code: form?.code, id: empId ? empId : null }).then(
+    serviceDepartmentCheck({ code: form?.code, id: empId ? empId : "" }).then(
       (res) => {
         if (!res.error) {
           const errors = JSON.parse(JSON.stringify(errorData));
