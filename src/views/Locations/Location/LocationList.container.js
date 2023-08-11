@@ -86,7 +86,7 @@ const LocationList = ({}) => {
         render: (temp, all) => <div>{all?.type}</div>,
       },
       {
-        key: "type",
+        key: "manager",
         label: "Location Manager",
         sortable: false,
         render: (temp, all) => <div>{all?.head?.name}</div>,
