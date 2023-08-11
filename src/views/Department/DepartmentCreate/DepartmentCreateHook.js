@@ -15,7 +15,6 @@ import {
   serviceUpdateDepartment,
 } from "../../../services/Department.service";
 import SnackbarUtils from "../../../libs/SnackbarUtils";
-import { useParams } from "react-router";
 import Constants from "../../../config/constants";
 import RouteName from "../../../routes/Route.name";
 
@@ -25,7 +24,11 @@ const initialForm = {
   is_active: true,
 };
 
-const useDepartmentDetail = ({handleToggleSidePannel,isSidePanel}) => {
+const useDepartmentDetail = ({
+  handleToggleSidePannel,
+  isSidePanel,
+  empId,
+}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -33,15 +36,16 @@ const useDepartmentDetail = ({handleToggleSidePannel,isSidePanel}) => {
   const [isEdit, setIsEdit] = useState(false);
   const includeRef = useRef(null);
   const codeDebouncer = useDebounce(form?.code, 500);
-  const { id } = useParams();
 
   useEffect(() => {
-    if (id) {
-      serviceGetDepartmentDetails({ id: id }).then((res) => {
+    if (empId) {
+      serviceGetDepartmentDetails({ id: empId }).then((res) => {
         if (!res.error) {
           const data = res?.data?.details;
           setForm({
-            ...data,
+            ...form,
+            code: data?.code,
+            name: data?.name,
             is_active: data?.status === Constants.GENERAL_STATUS.ACTIVE,
           });
         } else {
@@ -49,16 +53,16 @@ const useDepartmentDetail = ({handleToggleSidePannel,isSidePanel}) => {
         }
       });
     }
-  }, [id]);
+  }, [empId]);
 
   useEffect(() => {
     if (!isSidePanel) {
       handleReset();
     }
   }, [isSidePanel]);
-  
+
   const checkCodeValidation = useCallback(() => {
-    serviceDepartmentCheck({ code: form?.code }).then(
+    serviceDepartmentCheck({ code: form?.code, id: empId ? empId : null }).then(
       (res) => {
         if (!res.error) {
           const errors = JSON.parse(JSON.stringify(errorData));
@@ -72,7 +76,7 @@ const useDepartmentDetail = ({handleToggleSidePannel,isSidePanel}) => {
         }
       }
     );
-  }, [errorData, setErrorData, form?.code, id]);
+  }, [errorData, setErrorData, form?.code]);
 
   useEffect(() => {
     if (codeDebouncer) {
@@ -104,23 +108,23 @@ const useDepartmentDetail = ({handleToggleSidePannel,isSidePanel}) => {
   const submitToServer = useCallback(() => {
     if (!isSubmitting) {
       setIsSubmitting(true);
-      let req = serviceCreateDepartment;
-      if (id) {
-        req = serviceUpdateDepartment;
+      let req;
+      if (empId) {
+        req = serviceUpdateDepartment({ ...form, id: empId ? empId : "" });
+      } else {
+        req = serviceCreateDepartment({ ...form });
       }
-      req({
-        ...form,
-      }).then((res) => {
+      req.then((res) => {
         if (!res.error) {
-            handleToggleSidePannel()
-            window.location.reload();
+          handleToggleSidePannel();
+          window.location.reload();
         } else {
           SnackbarUtils.error(res.message);
         }
         setIsSubmitting(false);
       });
     }
-  }, [form, isSubmitting, setIsSubmitting, id]);
+  }, [form, isSubmitting, setIsSubmitting, empId]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
@@ -190,7 +194,7 @@ const useDepartmentDetail = ({handleToggleSidePannel,isSidePanel}) => {
     handleDelete,
     includeRef,
     handleReset,
-    id,
+    empId,
   };
 };
 

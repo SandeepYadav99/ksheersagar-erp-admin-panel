@@ -127,9 +127,10 @@ const useDepartmentList = ({}) => {
     [setEditData, setSidePanel]
   );
 
-  const handleToggleSidePannel = useCallback(() => {
+  const handleToggleSidePannel = useCallback((data) => {
     setSidePanel((e) => !e);
-  }, [setSidePanel]);
+    setEditData(data?.id);
+  }, [setSidePanel,setEditData]);
 
   const handleSideToggle = useCallback(
     (data) => {

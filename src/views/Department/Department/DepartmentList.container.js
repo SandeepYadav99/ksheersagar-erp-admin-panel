@@ -90,9 +90,9 @@ const DepartmentList = ({}) => {
               className={"tableActionBtn"}
               color="secondary"
               disabled={isCalling}
-              // onClick={() => {
-              //   handleViewDetails(all);
-              // }}
+              onClick={() => {
+                handleToggleSidePannel(all);
+              }}
             >
               <Edit fontSize={"small"} />
             </IconButton>
@@ -166,11 +166,11 @@ const DepartmentList = ({}) => {
         </div>
         <SidePanelComponent
           handleToggle={handleToggleSidePannel}
-          title={"Create Department"}
+          title={editData ? "Update Department": "Create Department"}
           open={isSidePanel}
           side={"right"}
         >
-          <DepartmentCreateView handleToggleSidePannel={handleToggleSidePannel} isSidePanel={isSidePanel}/>
+          <DepartmentCreateView handleToggleSidePannel={handleToggleSidePannel} isSidePanel={isSidePanel} empId={editData}/>
         </SidePanelComponent>
       </PageBox>
     </div>
