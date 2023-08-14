@@ -44,6 +44,7 @@ function EmployeeListCreateHook({ location }) {
     permanent_address: "",
     current_address: "",
     password: "",
+    pin:"",
     aadhar_no: "",
     is_address_same: false,
     aadhaar_back: "",
@@ -114,6 +115,7 @@ function EmployeeListCreateHook({ location }) {
       // "doj",
       "location_id",
       "password",
+      "pin",
       // "department_id",
       // "role_id",
       "gender",
@@ -147,6 +149,9 @@ function EmployeeListCreateHook({ location }) {
     }
     if (form?.aadhar_no && !isAadhar(form?.aadhar_no)) {
       errors["aadhar_no"] = true;
+    }
+    if (form?.pin && form?.pin.length !== 4){
+      errors['pin'] = true
     }
 
     Object.keys(errors).forEach((key) => {
@@ -190,6 +195,10 @@ function EmployeeListCreateHook({ location }) {
         }
       } else if (fieldName === "contact") {
         if (text >= 0 && text?.length <= 10) {
+          t[fieldName] = text;
+        }
+      }else if (fieldName === 'pin'){
+        if(text >= 0 &&  text?.length <5){
           t[fieldName] = text;
         }
       } else {

@@ -390,6 +390,25 @@ const EmployeeListCreate = ({ location }) => {
           </div>
         </div>
         <div className={"formFlex"}>
+          <div className={"formGroup"}>
+            <CustomTextField
+              type="number"
+              isError={errorData?.pin}
+              errorText={errorData?.pin}
+              label={"Pin*"}
+              value={form?.pin}
+              onTextChange={(text) => {
+                changeTextData(text, "pin");
+              }}
+              onBlur={() => {
+                onBlurHandler("pin");
+              }}
+            />
+          </div>
+          <div className={"formGroup"}>
+          </div>
+        </div>
+        <div className={"formFlex"}>
           <div className={styles.adharBack}>
             <div className={styles.adharWrap}>
               <File
