@@ -2,6 +2,7 @@ import { lazy } from "react";
 import {
   DashboardOutlined,
   EventNote,
+  LocalOffer,
   PeopleOutlined,
 } from "@material-ui/icons";
 import Constants from "../config/constants";
@@ -14,6 +15,7 @@ import CategoryList from "../views/Inventory/Category/CategoryList.container";
 import SubCategoryList from "../views/Inventory/SubCategory/SubCategoryList.container";
 import ProductList from "../views/Inventory/Product/ProductList.container";
 import ProductCreate from "../views/Inventory/ProductCreate/ProductCreate.view";
+import LocationDetail from "../views/Locations/LocationDetail/LocationDetail.view";
 
 const NewDashboard = lazy(() => import("../views/dashboard/NewDashboard.view"));
 const LocationList = lazy(() =>
@@ -72,6 +74,16 @@ const dashboardRoutes = [
     parent: "masters",
     // roles: [Roles.ADMIN, Roles.CORPORATE_HR],
   },
+  {
+    path: `${RouteName.LOCATIONS_DETAILS}:id`,
+    sidebarName: "Location Detail",
+    navbarName: "Location Detail",
+    icon: LocalOffer,
+    component: LocationDetail,
+    is_sidebar: false,
+    is_protect: true,
+    // roles: [Roles.ADMIN, Roles.CORPORATE_HR],
+},
   {
     path: RouteName.DEPARTMENT,
     sidebarName: "Departments",
