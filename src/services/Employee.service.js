@@ -60,3 +60,6 @@ export async function serviceGetEmployeeTraineeInfo(params) {
 export async function serviceCreateEmployees(params) {
     return await formDataRequest('employees/create', params);
 }
+export async function serviceGetEmployeeDetails(params) {
+    return await postRequest('employees/detail', params);
+}

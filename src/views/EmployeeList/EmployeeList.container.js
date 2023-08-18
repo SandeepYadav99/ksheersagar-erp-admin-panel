@@ -2,7 +2,7 @@ import React, { Component, useCallback, useEffect, useMemo } from "react";
 import { IconButton, MenuItem, ButtonBase, Menu } from "@material-ui/core";
 import classNames from "classnames";
 import { connect, useSelector } from "react-redux";
-import { Add } from "@material-ui/icons";
+import { Add, InfoOutlined, PrintOutlined } from "@material-ui/icons";
 import PageBox from "../../components/PageBox/PageBox.component";
 import SidePanelComponent from "../../components/SidePanel/SidePanel.component";
 import styles from "./Style.module.css";
@@ -148,7 +148,7 @@ const EmployeeList = ({}) => {
         style: { width: "15%" },
         render: (temp, all) => (
           <div>
-            {/* <IconButton
+            <IconButton
               className={"tableActionBtn"}
               color="secondary"
               disabled={isCalling}
@@ -157,7 +157,7 @@ const EmployeeList = ({}) => {
               }}
             >
               <InfoOutlined fontSize={"small"} />
-            </IconButton> */}
+            </IconButton>
             <IconButton
               className={"tableActionBtn"}
               color="secondary"

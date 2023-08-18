@@ -166,17 +166,15 @@ const useEmployeeList = ({}) => {
   );
 
   const handleViewDetails = useCallback((data) => {
-    historyUtils.push(`/employees/details/${data.emp_code}`);
+    // console.log('>data',data)
+    historyUtils.push(`${RouteName.EMPLOYEE_DETAILS}${data?.id}`);
   }, []);
   const handleViewUpdate = useCallback((data) => {
-    historyUtils.push(`${RouteName.EMPLOYEE_UPDATE}${data?.id}`);
+    // historyUtils.push(`${RouteName.EMPLOYEE_UPDATE}${data?.id}`);
   }, []);
 
   const configFilter = useMemo(() => {
     return [
-      // {label: 'Country', name: 'country', type: 'text'},
-      // {label: 'City', name: 'city', type: 'text'},
-
       {
         label: "Location",
         name: "location_id",

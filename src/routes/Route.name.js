@@ -2,6 +2,7 @@ export default {
   LOGIN: "/login",
   EMPLOYEES:'/employees',
   EMPLOYEE_CREATE:'/employee/create',
+  EMPLOYEE_DETAILS:'/employee/details/',
 
   LOCATIONS: "/locations",
   LOCATIONS_CREATE: "/locations/create",
