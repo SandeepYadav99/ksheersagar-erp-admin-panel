@@ -89,6 +89,7 @@ function LocationDetail() {
         isOpen={isApprovalPopUp}
         handleToggle={toggleApprovalDialog}
         empId={id}
+        data={allData}
       />
       <div className={styles.plainPaper}>
         <div className={styles.newContainer}>

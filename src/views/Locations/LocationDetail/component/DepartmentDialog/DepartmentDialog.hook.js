@@ -9,7 +9,7 @@ const initialForm = {
   department: [],
 };
 
-const useDepartmentDialogHook = ({ isOpen, handleToggle, empId }) => {
+const useDepartmentDialogHook = ({ isOpen, handleToggle, empId, data }) => {
   const [form, setForm] = useState(
     JSON.parse(JSON.stringify({ ...initialForm }))
   );
@@ -27,9 +27,17 @@ const useDepartmentDialogHook = ({ isOpen, handleToggle, empId }) => {
       }
     });
   }, []);
+  
+  useEffect(() => {
+    if (data?.length > 0) {
+      const departmentArray = data?.map((item) => item?.department);
+      setForm({ ...form, department: departmentArray });
+    }
+  }, [data]);
+
   useEffect(() => {
     if (isOpen) {
-      setForm({ ...initialForm });
+      // setForm({ ...initialForm });
       setResData([]);
       setIsSubmitted(false);
       setErrorData({});
