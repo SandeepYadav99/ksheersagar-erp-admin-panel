@@ -182,7 +182,7 @@ const LocationList = ({}) => {
           open={isSidePanel}
           side={"right"}
         >
-          <LocationCreateView/>
+          <LocationCreateView isSidePanel={isSidePanel}/>
         </SidePanelComponent>
       </PageBox>
     </div>

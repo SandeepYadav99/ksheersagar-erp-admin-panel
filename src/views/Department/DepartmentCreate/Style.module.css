@@ -123,6 +123,7 @@
 .btnCont {
   display: flex;
   justify-content: flex-end;
+  margin-right: 20px;
 }
 .formContainer {
   flex: 1;

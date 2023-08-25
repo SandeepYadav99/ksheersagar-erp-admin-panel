@@ -36,6 +36,7 @@ const useDepartmentDetail = ({
   const [isEdit, setIsEdit] = useState(false);
   const includeRef = useRef(null);
   const codeDebouncer = useDebounce(form?.code, 500);
+  const nameDebouncer = useDebounce(form?.name, 500);
 
   useEffect(() => {
     if (empId) {
@@ -77,6 +78,29 @@ const useDepartmentDetail = ({
       }
     );
   }, [errorData, setErrorData, form?.code]);
+
+  const checkNameValidation = useCallback(() => {
+    serviceDepartmentCheck({ name: form?.name, id: empId ? empId : "" }).then(
+      (res) => {
+        if (!res.error) {
+          const errors = JSON.parse(JSON.stringify(errorData));
+          if (res.data.is_exists) {
+            errors["name"] = "Department Name Exists";
+            setErrorData(errors);
+          } else {
+            delete errors.code;
+            setErrorData(errors);
+          }
+        }
+      }
+    );
+  }, [errorData, setErrorData, form?.code]);
+
+  useEffect(() => {
+    if (nameDebouncer) {
+      checkNameValidation();
+    }
+  }, [nameDebouncer]);
 
   useEffect(() => {
     if (codeDebouncer) {
@@ -149,7 +173,7 @@ const useDepartmentDetail = ({
       let shouldRemoveError = true;
       const t = { ...form };
       if (fieldName === "name") {
-        if (!text || (isAlphaNumChars(text) && text.toString().length <= 30)) {
+        if (!text || (isAlpha(text) && text.toString().length <= 30)) {
           t[fieldName] = text;
         }
       } else if (fieldName === "code") {
@@ -179,6 +203,7 @@ const useDepartmentDetail = ({
 
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });
+    setErrorData({});
   }, [form]);
 
   return {

@@ -35,9 +35,9 @@ const initialForm = {
   google_page_url: "",
   contact: "",
 };
-const useLocationDetail = ({}) => {
+const useLocationDetail = ({isSidePanel}) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [geofence,setGeoFence]=useState([])
+  const [geofence, setGeoFence] = useState([]);
   const [geoLocation, setGeoLocation] = useState(null);
   const [isDialog, setIsDialog] = useState(false);
   const [errorData, setErrorData] = useState({});
@@ -61,6 +61,12 @@ const useLocationDetail = ({}) => {
       }
     });
   }, []);
+
+  useEffect(() => {
+    if (!isSidePanel) {
+      handleReset();
+    }
+  }, [isSidePanel]);
 
   const toggleConfirmDialog = useCallback(
     (type) => {
@@ -121,11 +127,11 @@ const useLocationDetail = ({}) => {
       "name_hi",
       "code",
       "city",
-      "head_id",
+      // "head_id",
       "address",
       "type",
-      "google_page_url",
-      "contact",
+      // "google_page_url",
+      // "contact",
     ];
     required.forEach((val) => {
       if (
@@ -238,6 +244,7 @@ const useLocationDetail = ({}) => {
 
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });
+    setErrorData({});
   }, [form]);
 
   const handleMapAddress = useCallback(
@@ -276,7 +283,7 @@ const useLocationDetail = ({}) => {
     handleCityCountry,
     lat,
     lng,
-    geofence
+    geofence,
   };
 };
 

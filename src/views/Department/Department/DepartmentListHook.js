@@ -148,7 +148,14 @@ const useDepartmentList = ({}) => {
   }, []);
 
   const configFilter = useMemo(() => {
-    return [];
+    return [
+      {
+        label: "Status",
+        name: "status",
+        type: "select",
+        fields: ["ACTIVE","INACTIVE"],
+      },
+    ];
   }, []);
 
   return {

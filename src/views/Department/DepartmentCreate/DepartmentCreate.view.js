@@ -38,21 +38,21 @@ const UnitCreateView = ({handleToggleSidePannel,isSidePanel,empId}) => {
             <CustomTextField
               isError={errorData?.name}
               errorText={errorData?.name}
-              label={"Department Name"}
+              label={"Department Name*"}
               value={form?.name}
               onTextChange={(text) => {
                 changeTextData(text, "name");
               }}
-              onBlur={() => {
-                onBlurHandler("name");
-              }}
+              // onBlur={() => {
+              //   onBlurHandler("name");
+              // }}
             />
           </div>
           <div className={"formGroup"}>
             <CustomTextField
               isError={errorData?.code}
               errorText={errorData?.code}
-              label={"Department Code"}
+              label={"Department Code*"}
               value={form?.code}
               onTextChange={(text) => {
                 changeTextData(text, "code");

@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LocationCreateView = ({}) => {
+const LocationCreateView = ({isSidePanel}) => {
   const {
     form,
     errorData,
@@ -43,7 +43,7 @@ const LocationCreateView = ({}) => {
     lat,
     lng,
     geofence
-  } = useLocationDetail({});
+  } = useLocationDetail({isSidePanel});
   // const geofence = [];
 
   return (
@@ -160,7 +160,7 @@ const LocationCreateView = ({}) => {
             <CustomTextField
               isError={errorData?.contact}
               errorText={errorData?.contact}
-              label={"Phone Number*"}
+              label={"Phone Number"}
               value={form?.contact}
               onTextChange={(text) => {
                 changeTextData(text, "contact");
@@ -194,7 +194,7 @@ const LocationCreateView = ({}) => {
               toggleConfirmDialog();
             }}
           >
-            View on Map
+            Locate on Map
           </ButtonBase>
         </div>
       </div>
