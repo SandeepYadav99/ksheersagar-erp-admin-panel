@@ -17,6 +17,7 @@ import {
 import SnackbarUtils from "../../../libs/SnackbarUtils";
 import Constants from "../../../config/constants";
 import RouteName from "../../../routes/Route.name";
+import debounce from "lodash.debounce";
 
 const initialForm = {
   name: "",
@@ -35,8 +36,6 @@ const useDepartmentDetail = ({
   const [form, setForm] = useState({ ...initialForm });
   const [isEdit, setIsEdit] = useState(false);
   const includeRef = useRef(null);
-  const codeDebouncer = useDebounce(form?.code, 500);
-  const nameDebouncer = useDebounce(form?.name, 500);
 
   useEffect(() => {
     if (empId) {
@@ -62,51 +61,33 @@ const useDepartmentDetail = ({
     }
   }, [isSidePanel]);
 
-  const checkCodeValidation = useCallback(() => {
-    serviceDepartmentCheck({ code: form?.code, id: empId ? empId : "" }).then(
-      (res) => {
+  const checkSalaryInfoDebouncer = useMemo(() => {
+    return debounce((e, fieldName, errorArr) => {
+      checkForSalaryInfo(e, fieldName, errorArr);
+    }, 1000);
+  }, []);
+
+  const checkForSalaryInfo = (data, fieldName, errorArr) => {
+    if (data) {
+      let filteredForm = { id: empId ? empId : "" };
+      filteredForm[fieldName] = data;
+      let req = serviceDepartmentCheck({
+        ...filteredForm,
+      });
+      req.then((res) => {
         if (!res.error) {
-          const errors = JSON.parse(JSON.stringify(errorData));
+          const errors = JSON.parse(JSON.stringify(errorArr));
           if (res.data.is_exists) {
-            errors["code"] = "Department Code Exists";
+            errors[fieldName] = `Department ${fieldName} Exist`;
             setErrorData(errors);
           } else {
-            delete errors.code;
+            delete errors[fieldName];
             setErrorData(errors);
           }
         }
-      }
-    );
-  }, [errorData, setErrorData, form?.code]);
-
-  const checkNameValidation = useCallback(() => {
-    serviceDepartmentCheck({ name: form?.name, id: empId ? empId : "" }).then(
-      (res) => {
-        if (!res.error) {
-          const errors = JSON.parse(JSON.stringify(errorData));
-          if (res.data.is_exists) {
-            errors["name"] = "Department Name Exists";
-            setErrorData(errors);
-          } else {
-            delete errors.code;
-            setErrorData(errors);
-          }
-        }
-      }
-    );
-  }, [errorData, setErrorData, form?.code]);
-
-  useEffect(() => {
-    if (nameDebouncer) {
-      checkNameValidation();
+      });
     }
-  }, [nameDebouncer]);
-
-  useEffect(() => {
-    if (codeDebouncer) {
-      checkCodeValidation();
-    }
-  }, [codeDebouncer]);
+  };
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
@@ -117,7 +98,7 @@ const useDepartmentDetail = ({
         (Array.isArray(form?.[val]) && form?.[val].length === 0)
       ) {
         errors[val] = true;
-      } else if (["code"].indexOf(val) < 0) {
+      } else if (["code", "name"].indexOf(val) < 0) {
         delete errors[val];
       }
     });
@@ -148,10 +129,11 @@ const useDepartmentDetail = ({
         setIsSubmitting(false);
       });
     }
-  }, [form, isSubmitting, setIsSubmitting, empId]);
+  }, [form, isSubmitting, setIsSubmitting, empId, errorData, setErrorData]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
+    console.log("validation", errors);
     if (Object.keys(errors).length > 0) {
       setErrorData(errors);
       return true;
@@ -184,10 +166,22 @@ const useDepartmentDetail = ({
       } else {
         t[fieldName] = text;
       }
+      checkSalaryInfoDebouncer(
+        fieldName === "code" ? text.toUpperCase() : text,
+        fieldName,
+        errorData
+      );
       setForm(t);
       shouldRemoveError && removeError(fieldName);
     },
-    [removeError, form, setForm]
+    [
+      removeError,
+      form,
+      setForm,
+      checkSalaryInfoDebouncer,
+      errorData,
+      setErrorData,
+    ]
   );
 
   const onBlurHandler = useCallback(
@@ -196,7 +190,7 @@ const useDepartmentDetail = ({
         changeTextData(form?.[type].trim(), type);
       }
     },
-    [changeTextData, checkCodeValidation]
+    [changeTextData]
   );
 
   const handleDelete = useCallback(() => {}, []);
