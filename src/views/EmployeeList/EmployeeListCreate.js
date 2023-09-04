@@ -347,13 +347,16 @@ const EmployeeListCreate = ({ location }) => {
                 changeTextData(value, "role_id");
               }}
             >
-              {filteredSubDepartments?.map((dT) => {
+              <MenuItem value="OWNER">OWNER</MenuItem>
+              <MenuItem value="SHOWROOM_MANAGER">SHOWROOM MANAGER</MenuItem>
+              <MenuItem value="OTHERS">OTHERS</MenuItem>
+              {/* {filteredSubDepartments?.map((dT) => {
                 return (
                   <MenuItem value={dT?.id} key={dT?.id}>
                     {dT?.name}
                   </MenuItem>
                 );
-              })}
+              })} */}
             </CustomSelectField>
           </div>
         </div>

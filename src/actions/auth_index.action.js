@@ -29,7 +29,8 @@ export function actionLoginUser(data, isKeepLogin = null) {
             dispatch({ type: AUTH_USER, payload: { ...data, token: data.token,  } });
             // dispatch(actionGetProfile());
             if (data?.should_reset_password) {
-                history.push(RouteName.RESET_PASSWORD_FIRST);
+                history.push(`/`);
+                // history.push(RouteName.RESET_PASSWORD_FIRST);
             } else {
                 history.push(`/`);
             }
