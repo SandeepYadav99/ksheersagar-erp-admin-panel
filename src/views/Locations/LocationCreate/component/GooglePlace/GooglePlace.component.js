@@ -8,6 +8,7 @@ import PlacesAutocomplete, {
 import "./GoogolePlace.module.css";
 import Constants from "../../../../../config/constants";
 import GoogleMapsUtils from "../../../../../libs/GoogleMapsUtils";
+import LogUtils from "../../../../../libs/LogUtils";
 
 class GooglePlaceComponent extends Component {
   constructor(props) {
@@ -23,7 +24,7 @@ class GooglePlaceComponent extends Component {
     this.map = null;
     this.marker = null;
     this._smoothZoom = this._smoothZoom.bind(this);
-    this.initMap = this.initMap.bind(this);
+    this.initializeMap = this.initializeMap.bind(this);
     this.geoCodePosition = this.geoCodePosition.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
   }
@@ -39,15 +40,13 @@ class GooglePlaceComponent extends Component {
 
   componentDidMount() {
     console.log("googlemap mounted");
-    loadScript(
-      `https://maps.googleapis.com/maps/api/js?key=${Constants.GOOGLE_MAP_KEY}&libraries=places&callback=initMap&region=IN`
-    );
-    window.initMap = this.initMap;
+    window.initializeMap = this.initializeMap;
+    loadScript(`https://maps.googleapis.com/maps/api/js?key=${Constants.GOOGLE_MAP_KEY}&libraries=places&callback=initializeMap&region=IN`);
   }
 
-  componentWillUnmount() {
-    removeScript();
-  }
+  // componentWillUnmount() {
+  //   removeScript();
+  // }
 
   _smoothZoom(map, max, cnt) {
     const prop = this;
@@ -78,7 +77,7 @@ class GooglePlaceComponent extends Component {
     }
   }
 
-  initMap() {
+  initializeMap() {
     const { latitude, longitude } = this.state;
     if (!this.state.map_loaded) {
       this.setState(
@@ -315,15 +314,16 @@ function loadScript(url) {
     // script.defer = true
     index.parentNode.insertBefore(script, index);
   } else {
-    window.initMap();
+    LogUtils.log('google script not found')
+    window.initializeMap();
   }
 }
 
-function removeScript() {
-  var index = window.document.getElementsByTagName("script")[0];
-  if (index.getAttribute("src").indexOf("google") >= 0) {
-    index.remove();
-  }
-}
+// function removeScript() {
+//   var index = window.document.getElementsByTagName("script")[0];
+//   if (index.getAttribute("src").indexOf("google") >= 0) {
+//     index.remove();
+//   }
+// }
 
 export default GooglePlaceComponent;
