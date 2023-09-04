@@ -24,7 +24,9 @@
     display: flex;
     align-items: center;
 }
-
+.imgQr{
+    width: 30px;
+}
 .firstCellFlex .driverImgCont {
     width: 40px;
     height: 40px;

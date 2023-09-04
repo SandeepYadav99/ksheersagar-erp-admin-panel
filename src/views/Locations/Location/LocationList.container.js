@@ -110,7 +110,8 @@ const LocationList = ({}) => {
                 handleViewDetails(all);
               }}
             >
-              <InfoOutlined fontSize={"small"} />
+              <img src={all?.qr_code} className={styles.imgQr}/>
+              {/* <InfoOutlined fontSize={"small"} /> */}
             </IconButton>
           </div>
         ),
