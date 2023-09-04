@@ -7,7 +7,7 @@ import {connect, useSelector} from "react-redux";
 import {Header, Sidebar} from '../../components/index.component';
 import dashboardRoutes from '../../routes/dashboard';
 import appStyle from '../../assets/jss/material-dashboard-react/appStyle';
-import logo from '../../assets/img/indswift logo@2x.png';
+import logo from '../../assets/img/favicon.png';
 import CustomRouter from '../../libs/CustomRouter.utils';
 import DashboardSnackbar from '../../components/Snackbar.component';
 import {makeStyles} from "@material-ui/styles";

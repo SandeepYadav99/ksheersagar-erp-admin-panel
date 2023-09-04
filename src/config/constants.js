@@ -17,7 +17,7 @@ export default {
   is_development: (process.env.NODE_ENV === 'development' || !isProduction),
   TIME_ZONE: -(tempDate.getTimezoneOffset() / 60),
   DEFAULT_TIME_FORMAT: "DD-MM-YYYY, HH:mm",
-  APP_NAME: "Ksheer Sagar",
+  APP_NAME: "KsheerSagar ERP - Admin",
   DEFAULT_APP_URL: tempLevel ? url : "http://localhost:8111/api/admin/",
   SOCKET_URL: tempLevel ? socketUrl : "http://91.205.173.97:8586/",
   // DEFAULT_APP_URL: 'http://35.154.147.169:5055/api/',

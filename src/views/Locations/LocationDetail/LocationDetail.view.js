@@ -156,16 +156,16 @@ function LocationDetail() {
                     </div>
                     <div className={styles.key}>
                       <span className={styles.value}>Location Type:</span>
-                      {data?.head?.code}
+                      {data?.type}
                     </div>
                     <div className={styles.key}>
                       <span className={styles.value}>Location Address:</span>
                       {data?.address}
                     </div>
-                    <div className={styles.key}>
+                    {/* <div className={styles.key}>
                       <span className={styles.value}>Email:</span>
                       {data?.head?.email}
-                    </div>
+                    </div> */}
                     <div className={styles.imgKey}>
                       <img
                         className={styles.imgClass}

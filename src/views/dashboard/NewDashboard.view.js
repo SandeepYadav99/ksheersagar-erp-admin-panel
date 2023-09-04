@@ -10,7 +10,7 @@ const NewDashboard = () => {
     <div>
       <div className={styles.tableFlex21}>
         <div className={styles.dashboardFlex} style={{ width: "100%" }}>
-          jdksj
+          DashBoard
         </div>
       </div>
     </div>
