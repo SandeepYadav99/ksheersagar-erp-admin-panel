@@ -162,13 +162,12 @@ const EmployeeList = ({}) => {
               className={"tableActionBtn"}
               color="secondary"
               disabled={isCalling}
-              // onClick={() => {
-              //   handleViewUpdate(all);
-              // }}
+              onClick={() => {
+                handleViewUpdate(all);
+              }}
             >
               <Edit fontSize={"small"} />
             </IconButton>
-            {/* onClick={() => { handleEdit(all) }} */}
           </div>
         ),
       },

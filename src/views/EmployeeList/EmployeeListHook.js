@@ -154,8 +154,6 @@ const useEmployeeList = ({}) => {
 
   const handleSideToggle = useCallback(() => {
     historyUtils.push(RouteName.EMPLOYEE_CREATE);
-    // setSidePanel(e => !e);
-    // setEditData(null);
   }, [setEditData, setSidePanel]);
 
   const handleAddCandidate = useCallback(
@@ -170,7 +168,7 @@ const useEmployeeList = ({}) => {
     historyUtils.push(`${RouteName.EMPLOYEE_DETAILS}${data?.id}`);
   }, []);
   const handleViewUpdate = useCallback((data) => {
-    // historyUtils.push(`${RouteName.EMPLOYEE_UPDATE}${data?.id}`);
+    historyUtils.push(`${RouteName.EMPLOYEE_UPDATE}${data?.id}`);
   }, []);
 
   const configFilter = useMemo(() => {

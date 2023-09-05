@@ -15,9 +15,8 @@ import { useParams } from "react-router";
 import { serviceGetList } from "../../services/Common.service";
 import {
   serviceCheckEmployeeExists,
-  serviceGetEmployeeConversionInfo,
-  serviceGetEmployeeEditInfo,
-  serviceCreateEmployees,
+  serviceGetEmployeeDetails,
+  serviceUpdateEmployees,
 } from "../../services/Employee.service";
 import useDebounce from "../../hooks/DebounceHook";
 import { useMemo } from "react";
@@ -25,7 +24,7 @@ import SnackbarUtils from "../../libs/SnackbarUtils";
 import historyUtils from "../../libs/history.utils";
 import LogUtils from "../../libs/LogUtils";
 
-function EmployeeListCreateHook({ location }) {
+function EmployeeEditHook({ location }) {
   const initialForm = {
     emp_code: "",
     image: "",
@@ -43,8 +42,8 @@ function EmployeeListCreateHook({ location }) {
     father_name: "",
     permanent_address: "",
     current_address: "",
-    password: "",
-    pin:"",
+    // password: "",
+    pin: "",
     aadhar_no: "",
     is_address_same: false,
     aadhaar_back: "",
@@ -54,10 +53,11 @@ function EmployeeListCreateHook({ location }) {
   const [errorData, setErrorData] = useState({});
   const { id } = useParams();
   const [defaultImg, setDefaultImg] = useState("");
+  const [frontImg, setFrontImg] = useState("");
+  const [backImg, setBackImg] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [remotePath, setRemotePath] = useState("");
   const codeDebouncer = useDebounce(form?.emp_code, 500);
-  const candidateId = location?.state?.empId;
   const empFlag = location?.state?.isOnboard;
   const [listData, setListData] = useState({
     LOCATION_DEPARTMENTS: [],
@@ -69,44 +69,57 @@ function EmployeeListCreateHook({ location }) {
     DESIGNATIONS: [],
     LEVEL: [],
     LOCATIONS: [],
-    ROLES:[]
+    ROLES: [],
   });
   useEffect(() => {
-    serviceGetList([
-      "LOCATION_DEPARTMENTS",
-      "EMPLOYEES",
-      "DEPARTMENTS",
-      "SUB_DEPARTMENTS",
-      "JOB_ROLES",
-      "DESIGNATIONS",
-      "LOCATIONS",
-      'ROLES'
-    ]).then((res) => {
-      if (!res.error) {
-        setListData(res.data);
-      }
-    });
-  }, []);
-  useEffect(() => {
-    if (listData?.EMPLOYEES?.length > 0 && candidateId) {
-      let req;
-      if (candidateId) {
-        req = serviceGetEmployeeConversionInfo({ candidate_id: candidateId });
-      }
-      req.then((res) => {
-        const empData = res?.data;
-        setDefaultImg(empData?.image);
-        setRemotePath(empData?.remote_image_path);
-        const data = { image: "" };
-        Object.keys({ ...initialForm }).forEach((key) => {
-          if (key in initialForm && key !== "image") {
-            data[key] = empData[key];
-          }
-        });
-        setForm({ ...initialForm, ...data });
+    Promise.allSettled([
+      serviceGetList([
+        "LOCATION_DEPARTMENTS",
+        "EMPLOYEES",
+        "DEPARTMENTS",
+        "HR",
+        "SUB_DEPARTMENTS",
+        "JOB_ROLES",
+        "DESIGNATIONS",
+        "GRADES",
+        "CADRES",
+        "LEVEL",
+        "LOCATIONS",
+        "ROLES",
+      ]),
+      serviceGetEmployeeDetails({ id: id }),
+    ]).then((promises) => {
+      const listData = promises[0]?.value?.data;
+      const empData = promises[1]?.value?.data?.details;
+      //   listData.EMPLOYEES = listData.EMPLOYEES.filter((emp) => emp.id !== id);
+      setListData(listData);
+      const data = { image: "", aadhaar_back: "", aadhaar_front: "" };
+      Object.keys({ ...empData }).forEach((key) => {
+        if (key === "location") {
+          data.location_id = empData[key]?.id;
+        }
+        if (key === "department") {
+          data.department_id = empData[key]?.id;
+        }
+        if (key === "role") {
+          data.role_id = empData[key]?.id;
+        }
+        if (
+          key in initialForm &&
+          !["image", "aadhaar_back", "aadhaar_front"].includes(key)
+        ) {
+          data[key] = empData[key];
+        }
       });
-    }
-  }, [candidateId, listData]);
+      setDefaultImg(empData?.image);
+      setBackImg(empData?.aadhaar_back);
+      setFrontImg(empData?.aadhaar_front);
+      setForm({
+        ...initialForm,
+        ...data,
+      });
+    });
+  }, [id]);
   LogUtils.log("formLLL", form, remotePath);
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
@@ -114,21 +127,12 @@ function EmployeeListCreateHook({ location }) {
       "emp_code",
       "name_en",
       "name_hi",
-      // "doj",
       "location_id",
-      "password",
       "pin",
       "department_id",
-      // "role_id",
       "gender",
       "status",
-      // "age",
-      // "contact",
       "father_name",
-      // "permanent_address",
-      // "current_address",
-      // "aadhar_no",
-      // "email",
     ];
     required.forEach((val) => {
       if (
@@ -152,8 +156,8 @@ function EmployeeListCreateHook({ location }) {
     if (form?.aadhar_no && !isAadhar(form?.aadhar_no)) {
       errors["aadhar_no"] = true;
     }
-    if (form?.pin && form?.pin.length !== 4){
-      errors['pin'] = true
+    if (form?.pin && form?.pin.length !== 4) {
+      errors["pin"] = true;
     }
 
     Object.keys(errors).forEach((key) => {
@@ -199,8 +203,8 @@ function EmployeeListCreateHook({ location }) {
         if (text >= 0 && text?.length <= 10) {
           t[fieldName] = text;
         }
-      }else if (fieldName === 'pin'){
-        if(text >= 0 &&  text?.length <5){
+      } else if (fieldName === "pin") {
+        if (text >= 0 && text?.length < 5) {
           t[fieldName] = text;
         }
       } else {
@@ -214,6 +218,7 @@ function EmployeeListCreateHook({ location }) {
   const checkCodeValidation = useCallback(() => {
     if (form?.emp_code) {
       serviceCheckEmployeeExists({
+        id: id ? id : null,
         code: form?.emp_code,
       }).then((res) => {
         if (!res.error) {
@@ -253,10 +258,11 @@ function EmployeeListCreateHook({ location }) {
           fd.append(key, form[key]);
         }
       });
+      fd.append("id", id);
       if (remotePath?.length > 0) {
         fd.append("remote_image_path", remotePath);
       }
-      serviceCreateEmployees(fd).then((res) => {
+      serviceUpdateEmployees(fd).then((res) => {
         if (!res.error) {
           historyUtils.push("/employees");
         } else {
@@ -327,8 +333,10 @@ function EmployeeListCreateHook({ location }) {
     filteredAssociateJobRole,
     empFlag,
     defaultImg,
-    isSubmitting
+    frontImg,
+    backImg,
+    isSubmitting,
   };
 }
 
-export default EmployeeListCreateHook;
+export default EmployeeEditHook;

@@ -3,6 +3,8 @@ export default {
   EMPLOYEES:'/employees',
   EMPLOYEE_CREATE:'/employee/create',
   EMPLOYEE_DETAILS:'/employee/details/',
+  EMPLOYEE_UPDATE:'/employee/update/',
+
 
   LOCATIONS: "/locations",
   LOCATIONS_CREATE: "/locations/create",
