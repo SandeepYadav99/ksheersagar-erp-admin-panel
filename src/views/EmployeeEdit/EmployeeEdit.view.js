@@ -14,8 +14,9 @@ import history from "../../libs/history.utils";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import CustomDatePicker from "../../components/FormFields/DatePicker/CustomDatePicker";
 import File from "../../components/FileComponent/FileComponent.component";
-import EmployeeListCreateHook from "./EmployeeListCreateHook";
 import constants from "../../config/constants";
+import EmployeeEditHook from "./EmployeeEdit.hook";
+
 const useStyles = makeStyles((theme) => ({
   iconBtnError: {
     color: theme.palette.error.dark,
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const EmployeeListCreate = ({ location }) => {
+const EmployeeEdit = ({ location }) => {
   const {
     form,
     errorData,
@@ -38,12 +39,12 @@ const EmployeeListCreate = ({ location }) => {
     filteredSubDepartments,
     filteredEmployees,
     defaultImg,
-    empFlag,
+    frontImg,
+    backImg,
     isSubmitting,
-  } = EmployeeListCreateHook({ location });
+  } = EmployeeEditHook({ location });
 
   const image = useMemo(() => {
-    console.log(defaultImg)
     return (
       <File
         default_image={defaultImg ? defaultImg : ""}
@@ -72,7 +73,7 @@ const EmployeeListCreate = ({ location }) => {
           <ButtonBase onClick={() => history.goBack()}>
             <ArrowBackIosIcon fontSize={"small"} />{" "}
             <span>
-              <b>{"New"} Employee</b>
+              <b> Employee Update</b>
             </span>
           </ButtonBase>
           <div className={styles.newLines} />
@@ -347,6 +348,9 @@ const EmployeeListCreate = ({ location }) => {
                 changeTextData(value, "role_id");
               }}
             >
+              {/* <MenuItem value="OWNER">OWNER</MenuItem>
+              <MenuItem value="SHOWROOM_MANAGER">SHOWROOM MANAGER</MenuItem>
+              <MenuItem value="OTHERS">OTHERS</MenuItem> */}
               {listData?.ROLES?.map((dT) => {
                 return (
                   <MenuItem value={dT?.id} key={dT?.id}>
@@ -360,15 +364,16 @@ const EmployeeListCreate = ({ location }) => {
         <div className={"formFlex"}>
           <div className={"formGroup"}>
             <CustomTextField
-              isError={errorData?.password}
-              errorText={errorData?.password}
-              label={"Password*"}
-              value={form?.password}
+              type="number"
+              isError={errorData?.pin}
+              errorText={errorData?.pin}
+              label={"Pin*"}
+              value={form?.pin}
               onTextChange={(text) => {
-                changeTextData(text, "password");
+                changeTextData(text, "pin");
               }}
               onBlur={() => {
-                onBlurHandler("password");
+                onBlurHandler("pin");
               }}
             />
           </div>
@@ -390,29 +395,10 @@ const EmployeeListCreate = ({ location }) => {
           </div>
         </div>
         <div className={"formFlex"}>
-          <div className={"formGroup"}>
-            <CustomTextField
-              type="number"
-              isError={errorData?.pin}
-              errorText={errorData?.pin}
-              label={"Pin*"}
-              value={form?.pin}
-              onTextChange={(text) => {
-                changeTextData(text, "pin");
-              }}
-              onBlur={() => {
-                onBlurHandler("pin");
-              }}
-            />
-          </div>
-          <div className={"formGroup"}>
-          </div>
-        </div>
-        <div className={"formFlex"}>
           <div className={styles.adharBack}>
             <div className={styles.adharWrap}>
               <File
-                default_image={defaultImg ? defaultImg : ""}
+                default_image={frontImg ? frontImg : ""}
                 // imageClass={styles.inputFileUploader}
                 max_size={5 * 1024 * 1024}
                 type={["png", "jpeg", "jpg"]}
@@ -433,7 +419,7 @@ const EmployeeListCreate = ({ location }) => {
             </div>
             <div className={styles.adharWrap}>
               <File
-                default_image={defaultImg ? defaultImg : ""}
+                default_image={backImg ? backImg : ""}
                 // imageClass={styles.inputFileUploader}
                 max_size={5 * 1024 * 1024}
                 type={["png", "jpeg", "jpg"]}
@@ -467,7 +453,7 @@ const EmployeeListCreate = ({ location }) => {
             {isSubmitting ? (
               <CircularProgress color="success" size="20px" />
             ) : (
-              "CREATE"
+              "Update"
             )}
           </ButtonBase>
         </div>
@@ -476,4 +462,4 @@ const EmployeeListCreate = ({ location }) => {
   );
 };
 
-export default EmployeeListCreate;
+export default EmployeeEdit;

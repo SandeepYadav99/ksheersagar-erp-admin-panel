@@ -63,3 +63,6 @@ export async function serviceCreateEmployees(params) {
 export async function serviceGetEmployeeDetails(params) {
     return await postRequest('employees/detail', params);
 }
+export async function serviceUpdateEmployees(params) {
+    return await formDataRequest('employees/update', params);
+}
