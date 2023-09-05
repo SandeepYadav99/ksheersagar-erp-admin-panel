@@ -21,6 +21,7 @@ import { useParams } from "react-router";
 import Constants from "../../../config/constants";
 import RouteName from "../../../routes/Route.name";
 import { serviceGetList } from "../../../services/index.services";
+import debounce from "lodash.debounce";
 
 const initialForm = {
   name_en: "",
@@ -35,7 +36,7 @@ const initialForm = {
   google_page_url: "",
   contact: "",
 };
-const useLocationDetail = ({isSidePanel}) => {
+const useLocationDetail = ({ isSidePanel }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [geofence, setGeoFence] = useState([]);
   const [geoLocation, setGeoLocation] = useState(null);
@@ -93,53 +94,48 @@ const useLocationDetail = ({isSidePanel}) => {
 
   useEffect(() => {
     if (mapAddress) {
+      checkSalaryInfoDebouncer(mapAddress, "address", errorData);
       setForm({ ...form, address: mapAddress });
     }
   }, [mapAddress]);
-  const checkCodeValidation = useCallback(() => {
-    if (form?.code) {
-      serviceLocationCheck({ code: form?.code, id: id ? id : null }).then(
-        (res) => {
-          if (!res.error) {
-            const errors = JSON.parse(JSON.stringify(errorData));
-            if (res.data.is_exists) {
-              errors["code"] = "Location Code Exists";
-              setErrorData(errors);
-            } else {
-              delete errors.code;
-              setErrorData(errors);
-            }
+
+  const checkForSalaryInfo = (data, fieldName, errorArr) => {
+    if (data) {
+      let filteredForm = { id: id ? id : "" };
+      filteredForm[fieldName] = data;
+      let req = serviceLocationCheck({
+        ...filteredForm,
+      });
+      req.then((res) => {
+        if (!res.error) {
+          const errors = JSON.parse(JSON.stringify(errorArr));
+          if (res.data.is_exists) {
+            errors[fieldName] = `Location ${fieldName} Exist`;
+            setErrorData(errors);
+          } else {
+            delete errors[fieldName];
+            setErrorData(errors);
           }
         }
-      );
+      });
     }
-  }, [errorData, setErrorData, form, id]);
-  useEffect(() => {
-    if (codeDebouncer) {
-      checkCodeValidation();
-    }
-  }, [codeDebouncer]);
+  };
+  const checkSalaryInfoDebouncer = useMemo(() => {
+    return debounce((e, fieldName, errorArr) => {
+      checkForSalaryInfo(e, fieldName, errorArr);
+    }, 1000);
+  }, []);
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = [
-      "name_en",
-      "name_hi",
-      "code",
-      "city",
-      // "head_id",
-      "address",
-      "type",
-      // "google_page_url",
-      // "contact",
-    ];
+    let required = ["name_en", "name_hi", "code", "city", "address", "type"];
     required.forEach((val) => {
       if (
         !form?.[val] ||
         (Array.isArray(form?.[val]) && form?.[val].length === 0)
       ) {
         errors[val] = true;
-      } else if (["code"].indexOf(val) < 0) {
+      } else if (["code", "name_en", "name_hi", "address"].indexOf(val) < 0) {
         delete errors[val];
       }
     });
@@ -157,6 +153,7 @@ const useLocationDetail = ({isSidePanel}) => {
     return errors;
   }, [form, errorData]);
 
+  console.log("errorData", errorData);
   const handleCoordinate = (data) => {
     setGeoLocation(data);
   };
@@ -225,6 +222,14 @@ const useLocationDetail = ({isSidePanel}) => {
       } else {
         t[fieldName] = text;
       }
+      if (["code", "name_en", "name_hi", "address"]) {
+        checkSalaryInfoDebouncer(
+          fieldName === "code" ? text.toUpperCase() : text,
+          fieldName,
+          errorData
+        );
+      }
+
       setForm(t);
       shouldRemoveError && removeError(fieldName);
     },
@@ -237,7 +242,7 @@ const useLocationDetail = ({isSidePanel}) => {
         changeTextData(form?.[type].trim(), type);
       }
     },
-    [changeTextData, checkCodeValidation]
+    [changeTextData]
   );
 
   const handleDelete = useCallback(() => {}, []);

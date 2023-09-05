@@ -70,9 +70,9 @@ const LocationCreateView = ({isSidePanel}) => {
               onTextChange={(text) => {
                 changeTextData(text, "name_en");
               }}
-              onBlur={() => {
-                onBlurHandler("name_en");
-              }}
+              // onBlur={() => {
+              //   onBlurHandler("name_en");
+              // }}
             />
           </div>
           <div className={"formGroup"}>
@@ -84,9 +84,9 @@ const LocationCreateView = ({isSidePanel}) => {
               onTextChange={(text) => {
                 changeTextData(text, "name_hi");
               }}
-              onBlur={() => {
-                onBlurHandler("name_hi");
-              }}
+              // onBlur={() => {
+              //   onBlurHandler("name_hi");
+              // }}
             />
           </div>
         </div>
@@ -114,9 +114,9 @@ const LocationCreateView = ({isSidePanel}) => {
               onTextChange={(text) => {
                 changeTextData(text, "code");
               }}
-              onBlur={() => {
-                onBlurHandler("code");
-              }}
+              // onBlur={() => {
+              //   onBlurHandler("code");
+              // }}
             />
           </div>
         </div>
@@ -182,9 +182,9 @@ const LocationCreateView = ({isSidePanel}) => {
             onTextChange={(text) => {
               changeTextData(text, "address");
             }}
-            onBlur={() => {
-              onBlurHandler("address");
-            }}
+            // onBlur={() => {
+            //   onBlurHandler("address");
+            // }}
           />
         </div>
         <div className={styles.btnWrapMap}>
