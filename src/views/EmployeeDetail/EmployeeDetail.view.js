@@ -7,7 +7,9 @@ import history from "../../libs/history.utils";
 import useEmployeeDetails from "./EmployeeDetail.hook";
 
 function EmployeeDetail() {
-  const { data, id } = useEmployeeDetails({});
+  const { data, id , handleEditBtn, handleEmpInfoPage} = useEmployeeDetails({});
+  console.log(data)
+
   return (
     <div>
       <div className={styles.outerFlex}>
@@ -21,10 +23,7 @@ function EmployeeDetail() {
           <div className={styles.newLine} />
         </div>
         <div className={styles.editBtn}>
-          <ButtonBase
-            //   onClick={handleEditBtn}
-            className={styles.edit}
-          >
+          <ButtonBase onClick={handleEditBtn} className={styles.edit}>
             EDIT PROFILE
           </ButtonBase>
         </div>
@@ -44,6 +43,16 @@ function EmployeeDetail() {
             <span>{data?.department?.name}</span>
             <img src={data?.qr_code} />
           </div>
+          <div className={styles.btnCont}>
+            <ButtonBase
+              // disabled={isSubmitting}
+              type={"button"}
+              onClick={()=>handleEmpInfoPage(data)}
+              className={styles.createProfile_Detail}
+            >
+              DOWNLOAD ID CARD
+            </ButtonBase>
+          </div>
         </div>
         <div className={styles.plainPaperRight}>
           <div className={styles.newContainer}>
@@ -55,7 +64,7 @@ function EmployeeDetail() {
               <div className={styles.left}>
                 <div className={styles.key}>
                   <span className={styles.value}>Age:</span>
-                  {data?.age}
+                  {data?.age ? `${data?.age} Years` : " "}
                 </div>
                 <div className={styles.key}>
                   <span className={styles.value}>Gender:</span>
@@ -82,19 +91,23 @@ function EmployeeDetail() {
                     {data?.aadhaar_front && (
                       <div className={styles.wrapadhar}>
                         <span className={styles.value}>Aadhar Card Front</span>
-                        <img
-                          src={data?.aadhaar_front}
-                          className={styles.aadharView}
-                        />
+                        <a href={data?.aadhaar_front} target="_blank">
+                          <img
+                            src={data?.aadhaar_front}
+                            className={styles.aadharView}
+                          />
+                        </a>
                       </div>
                     )}
                     {data?.aadhaar_back && (
                       <div className={styles.wrapadhar}>
                         <span className={styles.value}>Aadhar Card Back</span>
-                        <img
-                          src={data?.aadhaar_back}
-                          className={styles.aadharView}
-                        />
+                        <a href={data?.aadhaar_back} target="_blank">
+                          <img
+                            src={data?.aadhaar_back}
+                            className={styles.aadharView}
+                          />
+                        </a>
                       </div>
                     )}
                   </div>
@@ -107,7 +120,7 @@ function EmployeeDetail() {
                     <div className={styles.info}>
                       <div className={styles.key}>
                         <span className={styles.value}>Role:</span>{" "}
-                        {data?.head?.name}
+                        {data?.role?.name}
                       </div>
                       <div className={styles.key}>
                         <span className={styles.value}>D.O.J:</span>

@@ -3,6 +3,7 @@ import {
   Button,
   ButtonBase,
   CircularProgress,
+  IconButton,
   InputAdornment,
   MenuItem,
 } from "@material-ui/core";
@@ -16,6 +17,7 @@ import CustomDatePicker from "../../components/FormFields/DatePicker/CustomDateP
 import File from "../../components/FileComponent/FileComponent.component";
 import EmployeeListCreateHook from "./EmployeeListCreateHook";
 import constants from "../../config/constants";
+import { Visibility, VisibilityOff } from "@material-ui/icons";
 const useStyles = makeStyles((theme) => ({
   iconBtnError: {
     color: theme.palette.error.dark,
@@ -40,10 +42,12 @@ const EmployeeListCreate = ({ location }) => {
     defaultImg,
     empFlag,
     isSubmitting,
+    showPasswordCurrent,
+    setShowPasswordCurrent,
   } = EmployeeListCreateHook({ location });
 
   const image = useMemo(() => {
-    console.log(defaultImg)
+    console.log(defaultImg);
     return (
       <File
         default_image={defaultImg ? defaultImg : ""}
@@ -320,7 +324,7 @@ const EmployeeListCreate = ({ location }) => {
         <div className={"formFlex"}>
           <div className={"formGroup"}>
             <CustomSelectField
-              isError={errorData?.department_id}
+              // isError={errorData?.department_id}
               errorText={errorData?.department_id}
               label={"Department*"}
               value={form?.department_id}
@@ -360,6 +364,7 @@ const EmployeeListCreate = ({ location }) => {
         <div className={"formFlex"}>
           <div className={"formGroup"}>
             <CustomTextField
+              type={showPasswordCurrent ? "text" : "password"}
               isError={errorData?.password}
               errorText={errorData?.password}
               label={"Password*"}
@@ -369,6 +374,20 @@ const EmployeeListCreate = ({ location }) => {
               }}
               onBlur={() => {
                 onBlurHandler("password");
+              }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={() =>
+                        setShowPasswordCurrent(!showPasswordCurrent)
+                      }
+                    >
+                      {showPasswordCurrent ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
               }}
             />
           </div>
@@ -405,8 +424,7 @@ const EmployeeListCreate = ({ location }) => {
               }}
             />
           </div>
-          <div className={"formGroup"}>
-          </div>
+          <div className={"formGroup"}></div>
         </div>
         <div className={"formFlex"}>
           <div className={styles.adharBack}>
@@ -456,21 +474,28 @@ const EmployeeListCreate = ({ location }) => {
         </div>
       </div>
 
-      <div className={"plainPaper"}>
-        <div className={"headerFlex wrapper"}>
-          <ButtonBase
-            disabled={isSubmitting ? true : false}
-            type={"button"}
-            className={styles.createBtn}
-            onClick={handleSubmit}
-          >
-            {isSubmitting ? (
-              <CircularProgress color="success" size="20px" />
-            ) : (
-              "CREATE"
-            )}
-          </ButtonBase>
-        </div>
+      <div className={styles.btnCont}>
+        <ButtonBase
+          disabled={isSubmitting}
+          type={"button"}
+          onClick={() => {}}
+          className={styles.createCancel}
+        >
+          CANCEL
+        </ButtonBase>
+        <div style={{ marginLeft: "2rem" }}></div>
+        <ButtonBase
+          disabled={isSubmitting ? true : false}
+          type={"button"}
+          onClick={handleSubmit}
+          className={styles.createBtn}
+        >
+          {isSubmitting ? (
+            <CircularProgress color="success" size="20px" />
+          ) : (
+            "SAVE"
+          )}
+        </ButtonBase>
       </div>
     </div>
   );
