@@ -129,6 +129,7 @@ const useLocationDetail = ({ isSidePanel }) => {
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
     let required = ["name_en", "name_hi", "code", "city", "address", "type"];
+    
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -139,6 +140,7 @@ const useLocationDetail = ({ isSidePanel }) => {
         delete errors[val];
       }
     });
+   
     if (
       form?.contact &&
       (!isNum(form?.contact) || form?.contact?.length !== 10)

@@ -133,6 +133,7 @@ function EmployeeEditHook({ location }) {
       "gender",
       "status",
       "father_name",
+      "doj"
     ];
     required.forEach((val) => {
       if (
