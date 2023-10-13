@@ -61,6 +61,8 @@ class Geofencing extends Component {
     }
 
 
+
+
     renderMap = () => {
         loadScript("https://maps.googleapis.com/maps/api/js?key=" + constants.GOOGLE_MAP_KEY + "&libraries=geometry,drawing,places&callback=initMap");
         window.initMap = this.initMap
