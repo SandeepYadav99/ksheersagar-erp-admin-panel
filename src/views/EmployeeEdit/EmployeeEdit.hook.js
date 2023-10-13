@@ -207,6 +207,10 @@ function EmployeeEditHook({ location }) {
         if (text >= 0 && text?.length < 5) {
           t[fieldName] = text;
         }
+      }else if (fieldName === "aadhar_no") {
+        if (text >= 0 && text?.length <= 12) {
+          t[fieldName] = text;
+        }
       } else {
         t[fieldName] = text;
       }

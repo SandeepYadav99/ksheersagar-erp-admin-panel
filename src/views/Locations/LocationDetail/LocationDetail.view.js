@@ -171,6 +171,7 @@ function LocationDetail() {
                         className={styles.imgClass}
                         src={data?.qr_code}
                         alt="qr_scanner"
+                      
                       />
                       <span
                         className={styles.addBtn}

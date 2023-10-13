@@ -442,7 +442,7 @@ const EmployeeEdit = ({ location }) => {
         </div>
       </div>
 
-      <div className={"plainPaper"}>
+      <div className={styles.btnCont}>
         <div className={"headerFlex wrapper"}>
           <ButtonBase
             disabled={isSubmitting ? true : false}
