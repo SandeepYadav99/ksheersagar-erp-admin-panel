@@ -188,11 +188,13 @@ function LocationDetail() {
                       </span>
                     </div>
                     <div className={styles.imgKey}>
-                      <img
-                        className={styles.imgClass}
-                        src={data?.qr_code}
-                        alt="qr_scanner"
-                      />
+                      <div className={styles.imageKey}>
+                        <img
+                          className={styles.imgClass}
+                          src={data?.qr_code}
+                          alt="qr_scanner"
+                        />
+                      </div>
                       <span
                         className={styles.addBtndownload}
                         onClick={() => handleDownload(data)}

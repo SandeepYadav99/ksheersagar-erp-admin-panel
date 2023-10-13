@@ -438,6 +438,7 @@ const EmployeeListCreate = ({ location }) => {
                 name="document"
                 accept={"image/*"}
                 label="Please Upload Image"
+                bannerLabel="Up"
                 show_image={true}
                 error={errorData?.aadhaar_front}
                 value={form?.aadhaar_front}
