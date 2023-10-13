@@ -430,16 +430,16 @@ const EmployeeListCreate = ({ location }) => {
           <div className={styles.adharBack}>
             <div className={styles.adharWrap}>
               <File
-                default_image={defaultImg ? defaultImg : ""}
-                // imageClass={styles.inputFileUploader}
+                 default_image={defaultImg ? defaultImg : ""}
+                bannerLabel="Upload Aadhar Front"
+                //imageClass={styles.inputFileUploader}
                 max_size={5 * 1024 * 1024}
                 type={["png", "jpeg", "jpg"]}
                 fullWidth={true}
                 name="document"
                 accept={"image/*"}
-                label="Please Upload Image"
-                bannerLabel="Up"
-                show_image={true}
+                 label="Please Upload Image"
+                 show_image={true}
                 error={errorData?.aadhaar_front}
                 value={form?.aadhaar_front}
                 onChange={(file) => {
@@ -448,12 +448,14 @@ const EmployeeListCreate = ({ location }) => {
                   }
                 }}
               />
-              <div>Upload Aadhar Front</div>
+              {/* <div>Upload Aadhar Front</div> */}
             </div>
+            
             <div className={styles.adharWrap}>
               <File
                 default_image={defaultImg ? defaultImg : ""}
                 // imageClass={styles.inputFileUploader}
+                bannerLabel="Upload Aadhar Back"
                 max_size={5 * 1024 * 1024}
                 type={["png", "jpeg", "jpg"]}
                 fullWidth={true}
@@ -469,7 +471,7 @@ const EmployeeListCreate = ({ location }) => {
                   }
                 }}
               />
-              <div>Upload Aadhar Back</div>
+              {/* <div>Upload Aadhar Back</div> */}
             </div>
           </div>
         </div>

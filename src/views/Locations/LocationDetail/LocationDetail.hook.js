@@ -4,8 +4,9 @@ import {
   serviceLocationDepartments,
 } from "../../../services/Location.service";
 import { useParams } from "react-router";
-import EmpInfo_Qr from "./component/EmpInfo_Qr/EmpInfo_Qr";
+
 import ReactDOM from 'react-dom';
+import EmpInfo_Qr from "./component/QrDownload/EmpInfo_Qr";
 function useLocationDetail() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isApprovalPopUp, setIsApprovalPopUp] = useState(false);
