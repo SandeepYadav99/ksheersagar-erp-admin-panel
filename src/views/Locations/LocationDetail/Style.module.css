@@ -115,11 +115,17 @@
   font-weight: 600 !important;
 }
 .imgClass{
-    width: 200px;
+    width: 180px;
+   
+    
 }
 .tableQr{
     width: 40px;
     
+}
+.tableDownload{
+  cursor: pointer;
+  width: 40px;
 }
 .addBtn {
   color: #2896e9 !important;
@@ -127,13 +133,24 @@
   font-size: 0.7rem !important;
   text-decoration: underline;
   cursor: pointer;
-  text-align: center;
+  text-align: left;
 }
+
 .imgKey{
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
-
+.addBtndownload {
+  color: #2896e9 !important;
+  font-weight: 600 !important;
+  font-size: 0.7rem !important;
+  text-decoration: underline;
+  cursor: pointer;
+  /* text-align: left; */
+  margin-top: -15px;
+}
 .detailFlex {
   display: flex;
 }

@@ -110,7 +110,7 @@ const useLocationDetail = ({ isSidePanel }) => {
         if (!res.error) {
           const errors = JSON.parse(JSON.stringify(errorArr));
           if (res.data.is_exists) {
-            errors[fieldName] = `Location ${fieldName} Exist`;
+            errors[fieldName] = `Location ${data} is Exist`;
             setErrorData(errors);
           } else {
             delete errors[fieldName];

@@ -4,7 +4,8 @@ import {
   serviceLocationDepartments,
 } from "../../../services/Location.service";
 import { useParams } from "react-router";
-
+import EmpInfo_Qr from "./component/EmpInfo_Qr/EmpInfo_Qr";
+import ReactDOM from 'react-dom';
 function useLocationDetail() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isApprovalPopUp, setIsApprovalPopUp] = useState(false);
@@ -43,9 +44,13 @@ function useLocationDetail() {
     initData();
   }, [id]);
 
-  const handleDownload = (imageUrl) => {
-    const newTab = window.open(imageUrl, "_blank");
-    newTab.focus();
+  const handleDownload = (data) => {
+    const newWindow = window.open('', '_blank');
+    if (newWindow) {
+      ReactDOM.render(<EmpInfo_Qr data={data}/>, newWindow.document.body);
+    } 
+    // const newTab = window.open(imageUrl, "_blank");
+    // newTab.focus();
   };
   
   return {

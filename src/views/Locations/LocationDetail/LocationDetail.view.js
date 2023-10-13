@@ -8,7 +8,7 @@ import StatusPill from "../../../components/Status/StatusPill.component";
 import DepartmentDialog from "./component/DepartmentDialog/DepartmentDialog.view";
 import Constants from "../../../config/constants";
 import DataTables from "../../../Datatables/Datatable.table";
-
+import downloadImage from "../../../assets/img/ic_download.png";
 function LocationDetail() {
   const {
     isSubmitting,
@@ -22,7 +22,7 @@ function LocationDetail() {
     handleRowSize,
     handlePageChange,
   } = useLocationDetail({});
-
+  console.log(allData);
   const tableStructure = useMemo(() => {
     return [
       {
@@ -30,9 +30,7 @@ function LocationDetail() {
         label: "DEPARTMENT CODE",
         sortable: false,
         render: (temp, all) => (
-          <div className={styles.squareDiv}>
-            {all?.department?.code}
-          </div>
+          <div className={styles.squareDiv}>{all?.department?.code}</div>
         ),
       },
       {
@@ -45,7 +43,22 @@ function LocationDetail() {
         key: "qr",
         label: "DEPARTMENT QR",
         sortable: false,
-        render: (value, all) => <div>{<img className={styles.tableQr} src={all?.department?.qr_code}/>}</div>,
+        render: (value, all) => (
+          <div>
+            {console.log(all)}
+            <img
+              className={styles.tableQr}
+              src={all?.department?.qr_code}
+              alt="Ksheer Sager qr code"
+            />
+            <img
+              className={styles.tableDownload}
+              onClick={() => handleDownload(all?.department)}
+              src={downloadImage}
+              alt="Ksheer Sager qr code"
+            />
+          </div>
+        ),
       },
     ];
   }, []);
@@ -166,16 +179,23 @@ function LocationDetail() {
                       <span className={styles.value}>Email:</span>
                       {data?.head?.email}
                     </div> */}
+                    <div>
+                      <span
+                        className={styles.addBtndownload}
+                        // onClick={() => handleDownload(data?.qr_code)}
+                      >
+                        Open Geo Location
+                      </span>
+                    </div>
                     <div className={styles.imgKey}>
                       <img
                         className={styles.imgClass}
                         src={data?.qr_code}
                         alt="qr_scanner"
-                      
                       />
                       <span
-                        className={styles.addBtn}
-                        onClick={() => handleDownload(data?.qr_code)}
+                        className={styles.addBtndownload}
+                        onClick={() => handleDownload(data)}
                       >
                         Download
                       </span>
@@ -200,7 +220,7 @@ function LocationDetail() {
             </ButtonBase>
           </div>
         </div>
-        <br/>
+        <br />
         <div style={{ width: "100%" }}>
           <DataTables
             {...tableData.datatable}
