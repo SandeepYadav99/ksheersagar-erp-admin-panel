@@ -54,7 +54,7 @@ const EmployeeList = ({}) => {
         <div className={styles.firstCellFlex}>
           <div className={classNames(styles.firstCellInfo, "openSans")}>
             <div>
-              <img src={obj?.image} />
+              <img src={obj?.image} style={{borderRadius:"50%"}}  height={"100px"} width={"100px"}/>
             </div>
             <div>
               <span className={styles.productName}>{obj?.name_en}</span><br/>

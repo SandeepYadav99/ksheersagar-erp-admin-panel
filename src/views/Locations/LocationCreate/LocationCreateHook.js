@@ -53,6 +53,8 @@ const useLocationDetail = ({ isSidePanel }) => {
   const [isEdit, setIsEdit] = useState(false);
   const includeRef = useRef(null);
   const codeDebouncer = useDebounce(form?.code, 500);
+  const [geofencingSelected, setGeofencingSelected] = useState(false);
+
   const { id } = useParams();
 
   useEffect(() => {
@@ -129,7 +131,13 @@ const useLocationDetail = ({ isSidePanel }) => {
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
     let required = ["name_en", "name_hi", "code", "city", "address", "type"];
-    
+
+    if (!geofencingSelected) {
+      errors['geofencing'] = true;
+      SnackbarUtils.error("Please select the geo-fencing boundary on the Map");
+    } else {
+      delete errors['geofencing'];
+    }
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -140,7 +148,14 @@ const useLocationDetail = ({ isSidePanel }) => {
         delete errors[val];
       }
     });
-   
+    if (form?.google_page_url) {
+      if (!form.google_page_url.startsWith("https://")) {
+        errors["google_page_url"] = true;
+        SnackbarUtils.error("Please Enter Google Page URL With https://");
+      } else {
+        delete errors["google_page_url"];
+      }
+    }
     if (
       form?.contact &&
       (!isNum(form?.contact) || form?.contact?.length !== 10)
@@ -158,6 +173,7 @@ const useLocationDetail = ({ isSidePanel }) => {
   console.log("errorData", errorData);
   const handleCoordinate = (data) => {
     setGeoLocation(data);
+    setGeofencingSelected(true);
   };
   const submitToServer = useCallback(() => {
     if (!isSubmitting) {
