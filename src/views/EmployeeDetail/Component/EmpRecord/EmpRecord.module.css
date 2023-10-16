@@ -5,6 +5,9 @@
     background-color: #fff;
     box-shadow: 0px 20px 80px #00000011;
   }
+  .status_absendt{
+    background-color: "red";
+  }
 .headerContainer {
     display: flex;
     justify-content: space-between;

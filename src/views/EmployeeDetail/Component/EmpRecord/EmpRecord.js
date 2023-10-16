@@ -44,11 +44,12 @@ const JobCalendarComponent = ({ id }) => {
   const eventPropGetter = (e) => {
     if (e.type === "ABSENT") {
       return {
-        className: "deliveredSlot",
+        className: "status_absendt",
         style: {
           backgroundColor: "#FCE6FE",
           color: "#8E0E97",
           fontSize: "10px",
+          border: "none"
         },
       };
     } else if (e.type === "PRESENT") {
@@ -58,6 +59,7 @@ const JobCalendarComponent = ({ id }) => {
           backgroundColor: "#EDFCED",
           color: "#0E9717",
           fontSize: "10px",
+          border: "none"
         },
       };
     }
