@@ -56,7 +56,7 @@ const useLocationDetail = ({ isSidePanel }) => {
   const [geofencingSelected, setGeofencingSelected] = useState(false);
 
   const { id } = useParams();
-
+console.log(form?.location?.coordinates)
   useEffect(() => {
     serviceGetList(["EMPLOYEES"]).then((res) => {
       if (!res.error) {
@@ -175,13 +175,31 @@ const useLocationDetail = ({ isSidePanel }) => {
     setGeoLocation(data);
     setGeofencingSelected(true);
   };
+ 
   const submitToServer = useCallback(() => {
     if (!isSubmitting) {
       setIsSubmitting(true);
       let req = null;
+     
       if (id) {
+        const updateData = {
+          id: form?.id,
+          name_en: form?.name_en,
+          name_hi: form?.name_hi,
+          code: form?.code,
+          city: form?.city,
+          type: form?.type,
+          contact: form?.contact,
+          head_id: form?.head_id,
+          address: form?.address,
+          coordinates:form?.location?.coordinates,
+          google_page_url: form?.google_page_url,
+          is_department_attendance: form?.is_department_attendance,
+          is_active: form?.is_active,
+        };
+        console.log(updateData, "UPDATED")
         req = serviceUpdateLocation({
-          ...form,
+          ...updateData,
         });
       } else {
         req = serviceCreateLocation({
@@ -284,6 +302,12 @@ const useLocationDetail = ({ isSidePanel }) => {
     console.log("handleCityCountry", cityCountyObj);
   };
 
+  const openGoogleMaps = useCallback(() => {
+    const url = `https://www.google.com/maps/place?q=${lat},${lng}`;
+    console.log(lat, lng)
+    window.open(url, "_blank");
+  },[lat, lng]);
+  
   return {
     form,
     changeTextData,
@@ -307,6 +331,8 @@ const useLocationDetail = ({ isSidePanel }) => {
     lat,
     lng,
     geofence,
+    openGoogleMaps
+  
   };
 };
 

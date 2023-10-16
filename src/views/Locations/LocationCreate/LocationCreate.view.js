@@ -11,6 +11,7 @@ import CustomAutoComplete from "../../../components/FormFields/AutoCompleteText/
 import Geofencing from "./component/Geofencing/Geofencing.component";
 import { CheckBox } from "@material-ui/icons";
 import DialogIncComponent from "./component/confirmDialogInc";
+import SidePanelComponent from "../../../components/SidePanel/SidePanel.component";
 
 const useStyles = makeStyles((theme) => ({
   iconBtnError: {
@@ -42,7 +43,8 @@ const LocationCreateView = ({isSidePanel}) => {
     handleCityCountry,
     lat,
     lng,
-    geofence
+    geofence,
+    handleToggleSidePannel
   } = useLocationDetail({isSidePanel});
   // const geofence = [];
 
@@ -259,6 +261,7 @@ const LocationCreateView = ({isSidePanel}) => {
           {id ? "Update" : "Create"}
         </ButtonBase>
       </div>
+   
     </div>
     // </div>
   );

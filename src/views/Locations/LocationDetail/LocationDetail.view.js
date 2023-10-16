@@ -9,6 +9,8 @@ import DepartmentDialog from "./component/DepartmentDialog/DepartmentDialog.view
 import Constants from "../../../config/constants";
 import DataTables from "../../../Datatables/Datatable.table";
 import downloadImage from "../../../assets/img/ic_download.png";
+import LocationCreateView from "../LocationCreate/LocationCreate.view";
+import SidePanelComponent from "../../../components/SidePanel/SidePanel.component";
 function LocationDetail() {
   const {
     isSubmitting,
@@ -21,8 +23,12 @@ function LocationDetail() {
     handleSortOrderChange,
     handleRowSize,
     handlePageChange,
+    handleEditBtn,
+    isSidePanel,
+    handleToggleSidePannel,
+    openGoogleMaps
   } = useLocationDetail({});
-  console.log(allData);
+  console.log(allData, data);
   const tableStructure = useMemo(() => {
     return [
       {
@@ -111,7 +117,7 @@ function LocationDetail() {
 
             <div className={styles.editBtn}>
               <ButtonBase
-                //   onClick={handleEditBtn}
+                   onClick={handleEditBtn}
                 className={styles.edit}
               >
                 EDIT
@@ -182,7 +188,7 @@ function LocationDetail() {
                     <div>
                       <span
                         className={styles.addBtndownload}
-                        // onClick={() => handleDownload(data?.qr_code)}
+                         onClick={()=>openGoogleMaps(data?.location?.coordinates)}
                       >
                         Open Geo Location
                       </span>
@@ -230,6 +236,15 @@ function LocationDetail() {
           />
         </div>
       </div>
+
+      <SidePanelComponent
+          handleToggle={handleEditBtn}
+          title={"Create Location"}
+          open={isSidePanel}
+          side={"right"}
+        >
+          <LocationCreateView isSidePanel={isSidePanel}/>
+        </SidePanelComponent>
     </div>
   );
 }
