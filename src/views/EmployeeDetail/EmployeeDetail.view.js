@@ -8,7 +8,7 @@ import useEmployeeDetails from "./EmployeeDetail.hook";
 import EmpRecord from "./Component/EmpRecord/EmpRecord"
 function EmployeeDetail() {
   const { data, id , handleEditBtn, handleEmpInfoPage} = useEmployeeDetails({});
-  console.log(data)
+ 
 
   return (
     <div>
@@ -148,7 +148,7 @@ function EmployeeDetail() {
           </div>
         </div>
       </div>
-     <EmpRecord/>
+     <EmpRecord id={id}/>
     </div>
   );
 }

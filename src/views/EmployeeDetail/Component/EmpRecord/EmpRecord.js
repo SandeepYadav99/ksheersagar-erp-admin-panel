@@ -1,108 +1,94 @@
-import React, { Component } from 'react';
-import { Calendar, momentLocalizer, Views  } from 'react-big-calendar'
-import moment from 'moment'
+import React, { useState, useEffect } from "react";
+import { Calendar, momentLocalizer, Views } from "react-big-calendar";
+import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import {serviceCustomerGetMonthOrders} from "../../../../services/CustomersRequest.service";
-// import {serviceGetDriverMonthJobs} from "../../../../services/Driver.service";
-import styles from "./EmpRecord.module.css"
-let allViews = Object.keys(Views).map(k => Views[k])
+import { serviceGetEmployMonthData } from "../../../../services/Employee.service";
+import styles from "./EmpRecord.module.css";
+
+const allViews = Object.keys(Views).map((k) => Views[k]);
 
 const ColoredDateCellWrapper = ({ children }) =>
-    React.cloneElement(React.Children.only(children), {
+  React.cloneElement(React.Children.only(children), {
+    style: {
+      backgroundColor: "lightblue",
+    },
+  });
+
+const JobCalendarComponent = ({ id }) => {
+  const [events, setEvents] = useState([]);
+
+  const getData = async (date = new Date()) => {
+    const month = moment(new Date(date)).format("MM");
+    const year = moment(new Date(date)).format("YYYY");
+    const req = await serviceGetEmployMonthData({
+      employee_id: id,
+      month,
+      year,
+    });
+    if (!req?.error) {
+      const data = req.data.month_data;
+      const newEvents = data?.map((val) => ({
+        start: moment(val.date),
+        end: moment(val.date),
+        type: val.status,
+        title: val.status,
+      }));
+      setEvents(newEvents);
+    }
+  };
+
+  const handleNavigation = (d, c, e, f) => {
+    getData(d);
+  };
+
+  const eventPropGetter = (e) => {
+    if (e.type === "ABSENT") {
+      return {
+        className: "deliveredSlot",
         style: {
-            backgroundColor: 'lightblue',
+          backgroundColor: "#FCE6FE",
+          color: "#8E0E97",
+          fontSize: "10px",
         },
-    })
-
-class JobCalendarComponent extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            events: [],
-        };
-        this._handleNavigation = this._handleNavigation.bind(this);
-        this._getData = this._getData.bind(this);
+      };
+    } else if (e.type === "PRESENT") {
+      return {
+        className: "deliverySlot",
+        style: {
+          backgroundColor: "#EDFCED",
+          color: "#0E9717",
+          fontSize: "10px",
+        },
+      };
     }
-    componentDidMount() {
-       this._getData();
-    }
+    return {};
+  };
 
-    async _getData(date = new Date()) {
-        const { driverId } = this.props;
-        const month = moment(new Date(date)).format('MM');
-        const year = moment(new Date(date)).format('YYYY');
-        // const req = await serviceGetDriverMonthJobs({ driver_id: driverId, month, year });
-        if (!true) {
-            // const data = req.data;
-            const events = [];
-            ["data"].forEach((val) => {
-                events.push( {
-                    start: moment(val.date),
-                    end: moment(val.date),
-                    type: val.status,
-                    title: val.status + ' ' + val.distance  + ' K.m.'
-                });
-            })
+  useEffect(() => {
+    getData();
+  }, [id]);
 
+  const localizer = momentLocalizer(moment);
 
-            this.setState({
-                events: events
-            })
-        }
-    }
-
-    _handleNavigation(d, c, e, f) {
-        this._getData(d);
-    }
-
-    _eventPropGetter(e) {
-        if (e.type == 'COMPLETED') {
-            return {
-                className: 'deliveredSlot',
-                style: {
-
-                },
-            }
-        } else if (e.type == 'PENDING') {
-            return {
-                className: 'deliverySlot',
-                style: {
-
-                },
-            }
-        } else if (e.type == 'IN_PROCESS') {
-            return {
-                className: 'vacationSlot',
-                style: {
-
-                },
-            }
-        }
-        return {};
-    }
-    render () {
-        const { events } = this.state;
-        const localizer = momentLocalizer(moment);
-        return (
-            <div className={styles.plainPaper}>
-                <div>Attendonce Record</div>
-                <div style={{marginTop:"20px"}}/>
-                <Calendar
-                    views={[Views.MONTH]}
-                    components={{
-                        timeSlotWrapper: ColoredDateCellWrapper,
-                    }}
-                    onNavigate={this._handleNavigation}
-                    localizer={localizer}
-                    defaultDate={new Date()}
-                    eventPropGetter={this._eventPropGetter}
-                    defaultView="month"
-                    events={events}
-                    style={{ padding: '20px', height: "90vh" }}
-                />
-            </div>
-        )
-    }
-}
+  return (
+    <div className={styles.plainPaper}>
+      <div>Attendance Record</div>
+      <div style={{ marginTop: "20px" }} />
+      <Calendar
+        views={[Views.MONTH]}
+        components={{
+          timeSlotWrapper: ColoredDateCellWrapper,
+        }}
+        onNavigate={handleNavigation}
+        localizer={localizer}
+        defaultDate={new Date()}
+        eventPropGetter={eventPropGetter}
+        defaultView="month"
+        events={events}
+        style={{ padding: "20px", height: "90vh" }}
+      />
+    </div>
+  );
+};
 
 export default JobCalendarComponent;
