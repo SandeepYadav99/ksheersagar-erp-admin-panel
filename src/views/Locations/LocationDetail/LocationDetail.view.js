@@ -26,9 +26,9 @@ function LocationDetail() {
     handleEditBtn,
     isSidePanel,
     handleToggleSidePannel,
-    openGoogleMaps
+    openGoogleMaps,
   } = useLocationDetail({});
-  console.log(allData, data);
+
   const tableStructure = useMemo(() => {
     return [
       {
@@ -116,10 +116,7 @@ function LocationDetail() {
             <div className={styles.heading}>Location Information</div>
 
             <div className={styles.editBtn}>
-              <ButtonBase
-                   onClick={handleEditBtn}
-                className={styles.edit}
-              >
+              <ButtonBase onClick={handleEditBtn} className={styles.edit}>
                 EDIT
               </ButtonBase>
             </div>
@@ -188,7 +185,9 @@ function LocationDetail() {
                     <div>
                       <span
                         className={styles.addBtndownload}
-                         onClick={()=>openGoogleMaps(data?.location?.coordinates)}
+                        onClick={() =>
+                          openGoogleMaps(data?.location?.coordinates)
+                        }
                       >
                         Open Geo Location
                       </span>
@@ -238,13 +237,13 @@ function LocationDetail() {
       </div>
 
       <SidePanelComponent
-          handleToggle={handleEditBtn}
-          title={"Create Location"}
-          open={isSidePanel}
-          side={"right"}
-        >
-          <LocationCreateView isSidePanel={isSidePanel}/>
-        </SidePanelComponent>
+        handleToggle={handleEditBtn}
+        title={"Create Location"}
+        open={isSidePanel}
+        side={"right"}
+      >
+        <LocationCreateView isSidePanel={isSidePanel} />
+      </SidePanelComponent>
     </div>
   );
 }
