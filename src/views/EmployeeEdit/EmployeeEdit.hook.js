@@ -133,6 +133,7 @@ function EmployeeEditHook({ location }) {
       "gender",
       "status",
       "father_name",
+      "doj"
     ];
     required.forEach((val) => {
       if (
@@ -205,6 +206,10 @@ function EmployeeEditHook({ location }) {
         }
       } else if (fieldName === "pin") {
         if (text >= 0 && text?.length < 5) {
+          t[fieldName] = text;
+        }
+      }else if (fieldName === "aadhar_no") {
+        if (text >= 0 && text?.length <= 12) {
           t[fieldName] = text;
         }
       } else {

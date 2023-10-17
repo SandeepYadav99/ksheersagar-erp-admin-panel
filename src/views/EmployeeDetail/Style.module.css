@@ -186,3 +186,23 @@
 .info {
   margin-left: 10px;
 }
+.btnCont {
+  display: flex;
+  justify-content: center;
+  text-align: justify;
+  
+}
+.createProfile_Detail{
+  border: 1.5px solid #29cb97 !important;
+  color: #29cb97 !important;
+  padding: 5px 8px !important;
+  font-size: 0.8rem !important;
+  border-radius: 20px !important;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+
+}
+
+.qr_code_is{
+  width: 400px;
+}

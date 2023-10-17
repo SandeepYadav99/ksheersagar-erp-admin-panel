@@ -401,6 +401,7 @@ const EmployeeEdit = ({ location }) => {
                 default_image={frontImg ? frontImg : ""}
                 // imageClass={styles.inputFileUploader}
                 max_size={5 * 1024 * 1024}
+                bannerLabel="Upload Aadhar Front"
                 type={["png", "jpeg", "jpg"]}
                 fullWidth={true}
                 name="document"
@@ -415,12 +416,13 @@ const EmployeeEdit = ({ location }) => {
                   }
                 }}
               />
-              <div>Upload Aadhar Front</div>
+              {/* <div>Upload Aadhar Front</div> */}
             </div>
             <div className={styles.adharWrap}>
               <File
                 default_image={backImg ? backImg : ""}
                 // imageClass={styles.inputFileUploader}
+                bannerLabel="Upload Aadhar Back"
                 max_size={5 * 1024 * 1024}
                 type={["png", "jpeg", "jpg"]}
                 fullWidth={true}
@@ -436,13 +438,13 @@ const EmployeeEdit = ({ location }) => {
                   }
                 }}
               />
-              <div>Upload Aadhar Back</div>
+              {/*<div>Upload Aadhar Back</div>*/}
             </div>
           </div>
         </div>
       </div>
 
-      <div className={"plainPaper"}>
+      <div className={styles.btnCont}>
         <div className={"headerFlex wrapper"}>
           <ButtonBase
             disabled={isSubmitting ? true : false}

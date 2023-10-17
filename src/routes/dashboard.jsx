@@ -18,6 +18,7 @@ import ProductCreate from "../views/Inventory/ProductCreate/ProductCreate.view";
 import LocationDetail from "../views/Locations/LocationDetail/LocationDetail.view";
 import EmployeeDetail from "../views/EmployeeDetail/EmployeeDetail.view";
 import EmployeeEdit from "../views/EmployeeEdit/EmployeeEdit.view";
+import EmpInfo from "../views/EmployeeDetail/Component/EmpInfo";
 
 const NewDashboard = lazy(() => import("../views/dashboard/NewDashboard.view"));
 const LocationList = lazy(() =>
@@ -43,6 +44,10 @@ const dashboardRoutes = [
     icon: DashboardOutlined,
     component: EmployeeList,
     is_sidebar: true,
+    is_protect: true,
+
+
+
     // roles: [Roles.ADMIN, Roles.RECRUITER, Roles.CORPORATE_HR],
   },
   {
@@ -62,6 +67,7 @@ const dashboardRoutes = [
     icon: DashboardOutlined,
     component: EmployeeListCreate,
     is_sidebar: false,
+     is_protect: true
     // roles: [Roles.ADMIN, Roles.RECRUITER, Roles.CORPORATE_HR],
   },
   {
@@ -74,6 +80,17 @@ const dashboardRoutes = [
     is_protect: true,
     // roles: [Roles.ADMIN, Roles.RECRUITER, Roles.CORPORATE_HR],
   },
+  {
+    path: `${RouteName.EMPLOYEE_UPDATE}:id`,
+    sidebarName: "Employee Update",
+    navbarName: "Employee Update",
+    icon: DashboardOutlined,
+    component: EmployeeEdit,
+    is_sidebar: false,
+    is_protect: true,
+    // roles: [Roles.ADMIN, Roles.RECRUITER, Roles.CORPORATE_HR],
+  },
+
   {
     path: "null",
     sidebarName: "Masters",

@@ -44,7 +44,7 @@ function EmployeeListCreateHook({ location }) {
     permanent_address: "",
     current_address: "",
     password: "",
-    pin:"",
+    pin: "",
     aadhar_no: "",
     is_address_same: false,
     aadhaar_back: "",
@@ -71,6 +71,7 @@ function EmployeeListCreateHook({ location }) {
     LOCATIONS: [],
     ROLES:[]
   });
+  const [showPasswordCurrent, setShowPasswordCurrent] = useState(false);
   useEffect(() => {
     serviceGetList([
       "LOCATION_DEPARTMENTS",
@@ -80,7 +81,7 @@ function EmployeeListCreateHook({ location }) {
       "JOB_ROLES",
       "DESIGNATIONS",
       "LOCATIONS",
-      'ROLES'
+      "ROLES",
     ]).then((res) => {
       if (!res.error) {
         setListData(res.data);
@@ -119,7 +120,7 @@ function EmployeeListCreateHook({ location }) {
       "password",
       "pin",
       "department_id",
-      // "role_id",
+       "role_id",
       "gender",
       "status",
       // "age",
@@ -152,8 +153,8 @@ function EmployeeListCreateHook({ location }) {
     if (form?.aadhar_no && !isAadhar(form?.aadhar_no)) {
       errors["aadhar_no"] = true;
     }
-    if (form?.pin && form?.pin.length !== 4){
-      errors['pin'] = true
+    if (form?.pin && form?.pin.length !== 4) {
+      errors["pin"] = true;
     }
 
     Object.keys(errors).forEach((key) => {
@@ -199,8 +200,12 @@ function EmployeeListCreateHook({ location }) {
         if (text >= 0 && text?.length <= 10) {
           t[fieldName] = text;
         }
-      }else if (fieldName === 'pin'){
-        if(text >= 0 &&  text?.length <5){
+      } else if (fieldName === "pin") {
+        if (text >= 0 && text?.length < 5) {
+          t[fieldName] = text;
+        }
+      } else if (fieldName === "aadhar_no") {
+        if (text >= 0 && text?.length <= 12) {
           t[fieldName] = text;
         }
       } else {
@@ -327,7 +332,9 @@ function EmployeeListCreateHook({ location }) {
     filteredAssociateJobRole,
     empFlag,
     defaultImg,
-    isSubmitting
+    isSubmitting,
+    showPasswordCurrent,
+    setShowPasswordCurrent,
   };
 }
 

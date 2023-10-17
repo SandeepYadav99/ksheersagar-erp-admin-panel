@@ -53,6 +53,8 @@ const useLocationDetail = ({ isSidePanel }) => {
   const [isEdit, setIsEdit] = useState(false);
   const includeRef = useRef(null);
   const codeDebouncer = useDebounce(form?.code, 500);
+  const [geofencingSelected, setGeofencingSelected] = useState(false);
+
   const { id } = useParams();
 
   useEffect(() => {
@@ -110,7 +112,7 @@ const useLocationDetail = ({ isSidePanel }) => {
         if (!res.error) {
           const errors = JSON.parse(JSON.stringify(errorArr));
           if (res.data.is_exists) {
-            errors[fieldName] = `Location ${fieldName} Exist`;
+            errors[fieldName] = `Location ${data} Exist`;
             setErrorData(errors);
           } else {
             delete errors[fieldName];
@@ -129,6 +131,13 @@ const useLocationDetail = ({ isSidePanel }) => {
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
     let required = ["name_en", "name_hi", "code", "city", "address", "type"];
+
+    if (!geofencingSelected) {
+      errors['geofencing'] = true;
+      SnackbarUtils.error("Please select the geo-fencing boundary on the Map");
+    } else {
+      delete errors['geofencing'];
+    }
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -139,6 +148,14 @@ const useLocationDetail = ({ isSidePanel }) => {
         delete errors[val];
       }
     });
+    if (form?.google_page_url) {
+      if (!form.google_page_url.startsWith("https://")) {
+        errors["google_page_url"] = true;
+        SnackbarUtils.error("Please Enter Google Page URL With https://");
+      } else {
+        delete errors["google_page_url"];
+      }
+    }
     if (
       form?.contact &&
       (!isNum(form?.contact) || form?.contact?.length !== 10)
@@ -156,14 +173,33 @@ const useLocationDetail = ({ isSidePanel }) => {
   console.log("errorData", errorData);
   const handleCoordinate = (data) => {
     setGeoLocation(data);
+    setGeofencingSelected(true);
   };
+
   const submitToServer = useCallback(() => {
     if (!isSubmitting) {
       setIsSubmitting(true);
       let req = null;
+
       if (id) {
+        const updateData = {
+          id: form?.id,
+          name_en: form?.name_en,
+          name_hi: form?.name_hi,
+          code: form?.code,
+          city: form?.city,
+          type: form?.type,
+          contact: form?.contact,
+          head_id: form?.head_id,
+          address: form?.address,
+          coordinates:form?.location?.coordinates,
+          google_page_url: form?.google_page_url,
+          is_department_attendance: form?.is_department_attendance,
+          is_active: form?.is_active,
+        };
+        console.log(updateData, "UPDATED")
         req = serviceUpdateLocation({
-          ...form,
+          ...updateData,
         });
       } else {
         req = serviceCreateLocation({
@@ -266,6 +302,12 @@ const useLocationDetail = ({ isSidePanel }) => {
     console.log("handleCityCountry", cityCountyObj);
   };
 
+  const openGoogleMaps = useCallback(() => {
+    const url = `https://www.google.com/maps/place?q=${lat},${lng}`;
+    console.log(lat, lng)
+    window.open(url, "_blank");
+  },[lat, lng]);
+
   return {
     form,
     changeTextData,
@@ -289,6 +331,8 @@ const useLocationDetail = ({ isSidePanel }) => {
     lat,
     lng,
     geofence,
+    openGoogleMaps
+
   };
 };
 
