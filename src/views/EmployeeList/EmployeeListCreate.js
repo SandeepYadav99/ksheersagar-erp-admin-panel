@@ -451,6 +451,7 @@ const EmployeeListCreate = ({ location }) => {
               {/* <div>Upload Aadhar Front</div> */}
             </div>
             
+            
             <div className={styles.adharWrap}>
               <File
                 default_image={defaultImg ? defaultImg : ""}

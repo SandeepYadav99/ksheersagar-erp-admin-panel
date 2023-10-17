@@ -110,6 +110,7 @@ const DepartmentDialog = ({ isOpen, handleToggle, empId ,data}) => {
           </div>
         </div>
       </Dialog>
+      
     </div>
   );
 };

@@ -243,6 +243,7 @@ const EmployeeList = ({}) => {
           </div>
         </div>
       </PageBox>
+      
       <SidePanelComponent
         handleToggle={handleSideToggle}
         title={"New Employee"}

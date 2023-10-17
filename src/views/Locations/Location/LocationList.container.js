@@ -176,6 +176,7 @@ const LocationList = ({}) => {
               />
             </div>
           </div>
+          
         </div>
         <SidePanelComponent
           handleToggle={handleToggleSidePannel}

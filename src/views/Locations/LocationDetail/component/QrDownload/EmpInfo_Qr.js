@@ -25,6 +25,7 @@ const EmpInfo_Qr = ({ data }) => {
               textAlign: "center",
             }}
           >
+            
             <img src={image} style={{ width: "200px", margin: "20px auto" }} />
           </div>
           <div style={{display:"flex", flexDirection:"column"}}>

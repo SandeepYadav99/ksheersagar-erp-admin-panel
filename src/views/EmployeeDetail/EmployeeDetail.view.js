@@ -60,7 +60,9 @@ function EmployeeDetail() {
               <div className={styles.heading}>Location Information</div>
             </div>
 
+
             <div className={styles.mainFlex}>
+              
               <div className={styles.left}>
                 <div className={styles.key}>
                   <span className={styles.value}>Age:</span>

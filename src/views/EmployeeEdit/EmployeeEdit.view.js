@@ -437,6 +437,7 @@ const EmployeeEdit = ({ location }) => {
                     changeTextData(file, "aadhaar_back");
                   }
                 }}
+                
               />
               {/*<div>Upload Aadhar Back</div>*/}
             </div>

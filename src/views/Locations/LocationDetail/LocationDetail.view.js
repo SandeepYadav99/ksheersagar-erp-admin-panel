@@ -242,6 +242,7 @@ function LocationDetail() {
         open={isSidePanel}
         side={"right"}
       >
+        
         <LocationCreateView isSidePanel={isSidePanel} />
       </SidePanelComponent>
     </div>

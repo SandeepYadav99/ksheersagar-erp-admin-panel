@@ -174,6 +174,7 @@ const LocationCreateView = ({isSidePanel}) => {
           </div>
         </div>
       </div>
+      
       <div className={"formFlex"}>
         <div className={"formGroup"}>
           <CustomTextField

@@ -13,8 +13,10 @@ const ColoredDateCellWrapper = ({ children }) =>
       backgroundColor: "lightblue",
     },
   });
+  
 
 const JobCalendarComponent = ({ id }) => {
+
   const [events, setEvents] = useState([]);
 
   const getData = async (date = new Date()) => {
