@@ -149,7 +149,7 @@ function LocationDetail() {
 
               <div className={styles.key}>
                 <span className={styles.value}>Attendance Type:</span>
-                {data?.is_department_attendance ? "Department Wise" : "-"}
+                {data?.is_department_attendance ? "Department Wise" : "location only"}
               </div>
               <div className={styles.key}>
                 <span className={styles.value}>Phone Number:</span>

@@ -1,23 +1,21 @@
-import React, { Component, useCallback, useEffect, useMemo } from "react";
+import React, {  useEffect, useMemo } from "react";
 import {
-  IconButton,
-  MenuItem,
+
   ButtonBase,
-  Menu,
+
   Dialog,
   Slide,
   makeStyles,
 } from "@material-ui/core";
-import classNames from "classnames";
-import { connect, useSelector } from "react-redux";
-import { Add, Close, InfoOutlined, PrintOutlined } from "@material-ui/icons";
+
 import DataTables from "../../../../Datatables/Datatable.table";
 import styles from "./Style.module.css";
 import PageBox from "../../../../components/PageBox/PageBox.component";
-import { Edit, RemoveRedEyeOutlined as ViewIcon } from "@material-ui/icons";
-import useAddUserDialogHook from "./AddEmployRecord_hook";
-import StatusPill from "../../../../components/Status/StatusPill.component";
+
 import Constants from "../../../../config/constants";
+import { useState } from "react";
+import { serviceGetEmployLogs } from "../../../../services/Employee.service";
+import { Close } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   flex: {
@@ -36,83 +34,25 @@ const useStyles = makeStyles((theme) => ({
     right: "10px",
     top: "10px",
   },
+  container:{
+    overflow: "auto"
+  }
 }));
 
-const AddEmployRecord_Dilog = ({ isOpen, handleToggle, formValue }) => {
+const AddEmployRecord_Dilog = ({ isOpen, handleToggle, formValue, id , date}) => {
   const classes = useStyles();
   const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
-  const {
-    handleSortOrderChange,
-    handleRowSize,
-    handlePageChange,
-    handleDataSave,
-    handleDelete,
-    handleEdit,
-    handleFilterDataChange,
-    handleSearchValueChange,
-    handleSideToggle,
-    handleViewDetails,
-    handleViewUpdate,
-    editData,
-    isSidePanel,
-    isCalling,
-    configFilter,
-    handleAddCandidate,
-    createDD,
-    handleCreate,
-  } = useAddUserDialogHook({});
 
-  const {
-    data,
-    all: allData,
-    currentPage,
-    total,
-    is_fetching: isFetching,
-  } = useSelector((state) => state.employee);
+const [details, setDetails] = useState([]); 
 
-  const renderStatus = useCallback((status) => {
-    return <StatusPill status={status} />;
-  }, []);
+useEffect(() => {
+  serviceGetEmployLogs({ employee_id: id ,date: date}).then((res) => {
+    setDetails(res?.data);
+  });
+}, [id]);
 
-  const renderFirstCell = useCallback((obj) => {
-    if (obj) {
-      return (
-        <div className={styles.firstCellFlex}>
-          <div className={classNames(styles.firstCellInfo, "openSans")}>
-            <div>
-              <img
-                src={obj?.image}
-                style={{ borderRadius: "50%" }}
-                height={"100px"}
-                width={"100px"}
-              />
-            </div>
-            <div>
-              <span className={styles.productName}>{obj?.name_en}</span>
-              <br />
-              <span>{obj?.emp_code}</span>
-            </div>
-          </div>
-        </div>
-      );
-    }
-    return null;
-  }, []);
-
-  const renderContact = useCallback((obj) => {
-    return (
-      <div>
-        {obj?.contact && (
-          <div>
-            <strong>{obj?.contact} </strong>
-          </div>
-        )}
-        {obj?.email && <div>{obj?.email}</div>}
-      </div>
-    );
-  }, []);
 
   const tableStructure = useMemo(() => {
     return [
@@ -120,22 +60,22 @@ const AddEmployRecord_Dilog = ({ isOpen, handleToggle, formValue }) => {
         key: "punch date",
         label: "PUNCH DATE",
         sortable: false,
-        render: (value, all) => <div>{renderFirstCell(all)}</div>,
+        render: (value, all) => <div>{all?.punchDate}</div>,
       },
       {
         key: "punch time",
         label: "PUNCH TIME",
         sortable: false,
         style: { width: "18%" },
-        render: (temp, all) => <div>{renderContact(all)}</div>,
+        render: (temp, all) => <div>{all?.punchTime}</div>,
       },
       {
         key: "punch type",
         label: "PUNCH TYPE",
         sortable: false,
         render: (temp, all) => (
-          <div className={styles.captialize}>
-            {all?.gender} <br /> {all?.age && `${all?.age} years`}
+          <div >
+            {all?.punch_type} 
           </div>
         ),
       },
@@ -146,8 +86,8 @@ const AddEmployRecord_Dilog = ({ isOpen, handleToggle, formValue }) => {
         sortable: false,
         style: { width: "12%" },
         render: (temp, all) => (
-          <div className={styles.captialize}>
-            {all?.department?.name}/{all?.sub_department?.name}
+          <div >
+            {all?.type}
           </div>
         ),
       },
@@ -156,52 +96,49 @@ const AddEmployRecord_Dilog = ({ isOpen, handleToggle, formValue }) => {
         key: "user pic",
         label: "USER PIC",
         sortable: false,
-        render: (temp, all) => <div>{renderStatus(all.status)}</div>,
+        render: (temp, all) => <img src={all?.employee?.image} style={{width:"50px", height:"50px", borderRadius:"50px"}}/>,
       },
     ];
-  }, [renderStatus, renderFirstCell, handleViewDetails, handleEdit, isCalling]);
+  }, []);
 
   const tableData = useMemo(() => {
     const datatableFunctions = {
-      onSortOrderChange: handleSortOrderChange,
-      onPageChange: handlePageChange,
-      onRowSizeChange: handleRowSize,
+     
     };
 
     const datatable = {
       ...Constants.DATATABLE_PROPERTIES,
       columns: tableStructure,
-      data: data,
-      count: allData.length,
-      page: currentPage,
+      data: details,
+      count: details.length,
+      
     };
 
     return { datatableFunctions, datatable };
   }, [
-    allData,
+    details,
     tableStructure,
-    handleSortOrderChange,
-    handlePageChange,
-    handleRowSize,
-    data,
-    currentPage,
+  
+    details,
+    
   ]);
 
   return (
-    <div>
+    <div  >
       <Dialog
         onBackdropClick={() => {}}
         keepMounted
         fullWidth={true}
-        maxWidth={"sm"}
+        maxWidth={"md"}
         TransitionComponent={Transition}
         open={isOpen}
         onClose={() => {}}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        
       >
-        <PageBox>
-          <div className={styles.headerContainer}>
+        <>
+          <div className={styles.headerContainer} >
             <div className={styles.btnWrapperGap}>
               <div className={styles.resetWrapper}>
                 <ButtonBase
@@ -217,19 +154,13 @@ const AddEmployRecord_Dilog = ({ isOpen, handleToggle, formValue }) => {
               </div>
             </div>
           </div>
-
-          <div>
-            <div>
-              <br />
-              <div style={{ width: "100%" }}>
+              <div className={styles.upperWrap}>
                 <DataTables
                   {...tableData.datatable}
                   {...tableData.datatableFunctions}
                 />
-              </div>
-            </div>
           </div>
-        </PageBox>
+        </>
       </Dialog>
     </div>
   );

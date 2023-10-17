@@ -70,3 +70,7 @@ export async function serviceUpdateEmployees(params) {
 export async function serviceGetEmployMonthData(params) {
     return await postRequest('attendance/monthly/data', params);
 }
+
+export async function serviceGetEmployLogs(params) {
+    return await postRequest('/attendance/logs', params);
+}

@@ -197,7 +197,7 @@ const useLocationDetail = ({ isSidePanel }) => {
           is_department_attendance: form?.is_department_attendance,
           is_active: form?.is_active,
         };
-        console.log(updateData, "UPDATED")
+      
         req = serviceUpdateLocation({
           ...updateData,
         });

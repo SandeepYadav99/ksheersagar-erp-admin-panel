@@ -17,6 +17,7 @@ const EmpInfo = ({ data }) => {
       }}
     >
       <div>
+  
         <div>
           <div
             style={{

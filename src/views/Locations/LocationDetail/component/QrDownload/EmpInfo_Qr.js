@@ -1,6 +1,6 @@
 import React from "react";
 import image from "../../../../../assets/img/KS_logo.png";
-
+import downloadImage from "../../../../../assets/img/ic_download.png";
 const EmpInfo_Qr = ({ data }) => {
   return (
     <div
@@ -16,6 +16,15 @@ const EmpInfo_Qr = ({ data }) => {
       }}
     >
       <div>
+        <div style={{ textAlign: "end" }}>
+          <a
+            style={{cursor:"pointer", outline:"none"}}
+            // onClick={handleDownload}
+          >
+            <img src={downloadImage}/>
+         
+          </a>
+        </div>
         <div>
           <div
             style={{
@@ -25,17 +34,30 @@ const EmpInfo_Qr = ({ data }) => {
               textAlign: "center",
             }}
           >
-            
             <img src={image} style={{ width: "200px", margin: "20px auto" }} />
           </div>
-          <div style={{display:"flex", flexDirection:"column"}}>
-            <span style={{ textAlign: "center" , fontWeight:"bold", fontSize:"1.3rem"}}>
+
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <span
+              style={{
+                textAlign: "center",
+                fontWeight: "bold",
+                fontSize: "1.3rem",
+              }}
+            >
               {data?.name_en || data?.name}
             </span>
-            <span style={{  textAlign: "center" , fontWeight:"bold", fontSize:"1rem"}}>
+            <span
+              style={{
+                textAlign: "center",
+                fontWeight: "bold",
+                fontSize: "1rem",
+              }}
+            >
               {data?.name_hi}
             </span>
           </div>
+
           <div style={{ textAlign: "center" }}>
             <img src={data?.qr_code} />
           </div>

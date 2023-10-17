@@ -17,9 +17,10 @@ const ColoredDateCellWrapper = ({ children }) =>
 
 const JobCalendarComponent = ({ id }) => {
   const [events, setEvents] = useState([]);
-  const [isRejectPopUp, setIsRejectPopUp] = useState(false);
   const [isApprovalPopUp, setIsApprovalPopUp] = useState(false);
   const [formValue, setFormValue] = useState({});
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   const toggleApprovalDialog = useCallback(
     (obj) => {
@@ -33,14 +34,22 @@ const JobCalendarComponent = ({ id }) => {
     [isApprovalPopUp, formValue]
   );
 
-
   const getData = async (date = new Date()) => {
     const month = moment(new Date(date)).format("MM");
     const year = moment(new Date(date)).format("YYYY");
+    console.log("API Request Payload:", {
+      employee_id: id,
+      month,
+      year,
+      start_date: startDate,
+      end_date: endDate,
+    });
     const req = await serviceGetEmployMonthData({
       employee_id: id,
       month,
       year,
+      start_date: startDate,
+      end_date: endDate,
     });
     if (!req?.error) {
       const data = req.data.month_data;
@@ -52,6 +61,18 @@ const JobCalendarComponent = ({ id }) => {
       }));
       setEvents(newEvents);
     }
+  };
+
+  const handleSelectSlot = ({ start, end }) => {
+    console.log("Selected date range:", start, end);
+  const formattedStartDate = moment(start).format("YYYY-MM-DD");
+  const formattedEndDate = moment(end).format("YYYY-MM-DD");
+
+  setStartDate(formattedStartDate);
+  setEndDate(formattedEndDate);
+
+  getData(start);
+  
   };
 
   const handleNavigation = (d, c, e, f) => {
@@ -77,8 +98,9 @@ const JobCalendarComponent = ({ id }) => {
           backgroundColor: "#EDFCED",
           color: "#0E9717",
           fontSize: "10px",
-
-          padding: "10px",
+          marginTop: "50px",
+          outline: "none",
+       
         },
       };
     } else if (e.type === "HALF_DAY") {
@@ -88,6 +110,8 @@ const JobCalendarComponent = ({ id }) => {
           backgroundColor: "#EDFCED",
           color: "#0E9717",
           fontSize: "10px",
+          marginTop: "50px",
+          outline: "none",
         },
       };
     }
@@ -96,11 +120,11 @@ const JobCalendarComponent = ({ id }) => {
 
   useEffect(() => {
     getData();
-  }, [id]);
+  }, [id, startDate, endDate]);
 
-  const handleEventClick=()=>{
-    setIsApprovalPopUp(true)
-  }
+  const handleEventClick = () => {
+    setIsApprovalPopUp(true);
+  };
   const localizer = momentLocalizer(moment);
 
   return (
@@ -119,12 +143,15 @@ const JobCalendarComponent = ({ id }) => {
         defaultView="month"
         events={events}
         style={{ padding: "20px", height: "90vh" }}
-         onSelectEvent={handleEventClick}
+        onSelectEvent={handleEventClick}
+        onSelectSlot={handleSelectSlot}
       />
       <AddEmployRecord_Dilog
         isOpen={isApprovalPopUp}
         handleToggle={toggleApprovalDialog}
         formValue={"formValue"}
+        id={id}
+        date={startDate}
       />
     </div>
   );
