@@ -61,8 +61,6 @@ const EmpInfo = ({ data }) => {
           </ul>
           <div style={{ textAlign: "right" }}>
             <img src={data?.qr_code} />
-
-            
           </div>
         </div>
       </div>

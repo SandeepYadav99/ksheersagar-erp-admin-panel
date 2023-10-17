@@ -1,76 +1,189 @@
-.upperFlex {
+.mainContainer {
+    padding: 10px;
+  }
+  .headerContainer {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+  }
+  .headerContainer .title {
+    font-size: 0.8rem;
     font-weight: 600;
-    margin-top: 15px;
-    /* margin-left: 20px; */
+  }
+  .bottomLine {
+    opacity: 0.4;
+    color: grey;
+    margin-bottom: 5px;
+  }
+  .headerContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .firstCellFlex {
+    display: flex;
+    align-items: center;
   }
   
-  .printFlex {
+  .firstCellFlex .driverImgCont {
+    width: 40px;
+    height: 40px;
+  }
+  .adharBack{
+    display: flex;
+    gap: 40px;
+    margin-left: 10px;
+    margin-top: 20px;
+  }
+  .firstCellFlex img {
+    width: 40px;
+    height: 40px;
+  }
+  .firstCellInfo {
+    margin-left: 10px;
+    display: flex;
+    gap: 15px;
+  }
+  
+  .headerFlex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .productName {
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .productCat {
+    text-transform: capitalize;
+    font-size: 12px;
+  }
+  .HODUpperCase{
+    text-transform: uppercase;
+  }
+  .belowLabel {
+    font-weight: bold;
+    margin-left: 10px;
+  }
+  
+  .infoTitle {
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    margin-left: 15px;
+    border-bottom: 1px solid;
+    width: 100%;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+  }
+  
+  .heading {
+    margin-right: 5px;
+  }
+  
+  .featured {
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-transform: capitalize;
+    background-color: rgba(250, 139, 12, 0.082);
+    color: rgb(250, 139, 12);
+  }
+  
+  .industry {
+    font-size: 0.7rem;
+    font-weight: 600;
+  }
+  
+  .userForm {
+    margin: 0 30%;
+  }
+  
+  .paperBackground {
+    box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%),
+      0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+    background-color: white;
+  }
+  
+  .lhs {
+    flex: 0.5;
+  }
+  
+  .newLine {
+    height: 4px;
+    width: 30px;
+    border-radius: 10px;
+    margin-left: 1px;
+    background-image: linear-gradient(265deg, #7467f0, #2896e9) !important;
+  }
+  .captialize {
+    text-transform: capitalize;
+  }
+  
+  /* create */
+  .btnCont {
+    display: flex;
+    justify-content: flex-end;
+    
+  }
+  
+  .formContainer {
+    flex: 1;
+  }
+  
+  .imgField {
+    margin-left: 10px;
+  }
+  .nameField {
+    margin-left: 10px;
+  }
+  
+  .outerFlex {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding-bottom: 30px;
-    padding-top: 10px;
   }
   
-  .btmBtn {
-    background-color: #29cb97 !important;
-    padding: 15px 50px !important;
+  .resetBtn {
+    background: #f7a728 !important;
+    padding: 20px 50px !important;
     color: white !important;
     border-radius: 5px !important;
   }
-  .tableCont {
-    padding: 10px 10px;
-    max-height: 200px;
-    overflow: scroll;
+  
+  .enter {
+    font-size: 0.8rem;
+    margin-left: 10px;
+    font-weight: 600;
+    /*padding-bottom: 10px;*/
+    display: block;
   }
-  .resetWrapper {
+  
+  
+  
+  .newLines {
+    height: 4px;
+    width: 30px;
+    border-radius: 10px;
+    margin-left: 20px;
+    background-image: linear-gradient(265deg, #7467f0, #2896e9) !important;
+  }
+  .imageContainer {
     display: flex;
+    align-items: center;
+    flex-wrap: wrap;
   }
-  .resetPasswordWrapper {
-    padding: 1.2rem;
-  }
-  .fieldWrapper {
-    display: flex;
-    flex-direction: column;
-    /* gap: 10px; */
-    margin-top: 10px;
-  }
-  .checkBox > label {
-    font-size: 0.75rem;
+  .nameWrapper {
+    flex: 1;
   }
   .checkBox {
     display: flex;
+    justify-content: flex-end;
+    font-size: 0.6rem;
     align-items: center;
-  }
-  .newLine {
-    height: 5px;
-    width: 30px;
-    border-radius: 10px;
-    text-align: center;
-    margin: auto;
-    background-image: linear-gradient(265deg, #ab183d, #e56056) !important;
-  }
-  .heading {
-    font-weight: 600;
-    font-size: 1.2rem;
-  }
-  .headingWrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 0.875rem;
-  }
-  .des {
-    margin-top: 15px;
-    text-align: center;
-  }
-  .cleckboxWrapper {
-    margin-top: 20px;
-    display: flex;
-    font-size: 0.75rem;
+    color: #2896e9;
+    font-weight: 500;
   }
   .createBtn {
     background-color: #29cb97 !important;
@@ -81,32 +194,30 @@
     text-transform: uppercase !important;
     font-weight: 600 !important;
   }
-  .removeBtn {
-    border: 1.5px solid #E92828 !important;
-    /* background-color: #29cb97 !important; */
-    color: #E92828 !important;
+   .createCancel{
+    border: 1px solid #29cb97 !important;
+    color: #29cb97 !important;
     padding: 12px 35px !important;
     font-size: 0.8rem !important;
     border-radius: 30px !important;
     text-transform: uppercase !important;
     font-weight: 600 !important;
-  }
-  .disabledCreatebtn {
-    background-color: #bec0bf !important;
-    color: #ffffff !important;
-    padding: 12px 35px !important;
-    font-size: 0.8rem !important;
-    border-radius: 30px !important;
-    text-transform: uppercase !important;
-    font-weight: 600 !important;
-  }
-  .checkBox {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    color: #161616;
-  }
-  .checkBox > input {
-    cursor: pointer;
   }
   
+  .redField {
+    color: #e92828;
+    font-weight: bold;
+  
+  }
+  .btnWrapperGap{
+    display: flex;
+    gap: 15px;
+  }
+  .adharWrap{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: .75rem;
+    font-weight: 600;
+    
+  }
