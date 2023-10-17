@@ -254,25 +254,5 @@ const EmployeeList = ({}) => {
     </div>
   );
 };
-{
-  /*<ButtonBase onClick={toggleCPCDialog} className={"createBtn"}>*/
-}
-{
-  /*  Upload{" "}*/
-}
-{
-  /*  <CloudUpload*/
-}
-{
-  /*      fontSize={"small"}*/
-}
-{
-  /*      className={"plusIcon"}*/
-}
-{
-  /*  ></CloudUpload>*/
-}
-{
-  /*</ButtonBase>*/
-}
+
 export default EmployeeList;

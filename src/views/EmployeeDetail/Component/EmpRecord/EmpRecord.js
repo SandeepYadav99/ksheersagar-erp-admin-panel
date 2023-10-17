@@ -49,7 +49,8 @@ const JobCalendarComponent = ({ id }) => {
           backgroundColor: "#FCE6FE",
           color: "#8E0E97",
           fontSize: "10px",
-          border: "none"
+         marginTop:'50px',
+          outline:'none'
         },
       };
     } else if (e.type === "PRESENT") {
@@ -59,7 +60,18 @@ const JobCalendarComponent = ({ id }) => {
           backgroundColor: "#EDFCED",
           color: "#0E9717",
           fontSize: "10px",
-          border: "none"
+         
+          padding:"10px"
+        },
+      };
+    }else if (e.type === "HALF_DAY") {
+      return {
+        className: "deliverySlot",
+        style: {
+          backgroundColor: "#EDFCED",
+          color: "#0E9717",
+          fontSize: "10px",
+       
         },
       };
     }
@@ -88,7 +100,9 @@ const JobCalendarComponent = ({ id }) => {
         defaultView="month"
         events={events}
         style={{ padding: "20px", height: "90vh" }}
+        // onSelectEvent={{"handleEventClick"}}
       />
+
     </div>
   );
 };
