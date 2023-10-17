@@ -89,6 +89,7 @@ const JobCalendarComponent = ({ id }) => {
           fontSize: "10px",
           marginTop: "50px",
           outline: "none",
+         
         },
       };
     } else if (e.type === "PRESENT") {
