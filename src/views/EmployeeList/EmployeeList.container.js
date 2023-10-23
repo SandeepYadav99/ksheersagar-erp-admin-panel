@@ -13,6 +13,7 @@ import { Edit, RemoveRedEyeOutlined as ViewIcon } from "@material-ui/icons";
 import useEmployeeList from "./EmployeeListHook";
 import StatusPill from "../../components/Status/StatusPill.component";
 import CreateView from "./Employee.view";
+import defaultImage from "../../assets/img/ic_user_pic.png";
 
 const EmployeeList = ({}) => {
   const {
@@ -54,10 +55,25 @@ const EmployeeList = ({}) => {
         <div className={styles.firstCellFlex}>
           <div className={classNames(styles.firstCellInfo, "openSans")}>
             <div>
-              <img src={obj?.image} style={{borderRadius:"50%"}}  height={"100px"} width={"100px"}/>
+              {obj?.image ? (
+                <img
+                  src={obj?.image}
+                  style={{ borderRadius: "50%" }}
+                  height={"100px"}
+                  width={"100px"}
+                />
+              ) : (
+                <img
+                  src={defaultImage}
+                  style={{ borderRadius: "50%" }}
+                  height={"100px"}
+                  width={"100px"}
+                />
+              )}
             </div>
             <div>
-              <span className={styles.productName}>{obj?.name_en}</span><br/>
+              <span className={styles.productName}>{obj?.name_en}</span>
+              <br />
               <span>{obj?.emp_code}</span>
             </div>
           </div>
@@ -131,7 +147,7 @@ const EmployeeList = ({}) => {
         style: { width: "12%" },
         render: (temp, all) => (
           <div className={styles.captialize}>
-            {all?.department?.name}/{all?.sub_department?.name}
+            {all?.department?.name}/{all?.role?.name}
           </div>
         ),
       },
@@ -243,7 +259,7 @@ const EmployeeList = ({}) => {
           </div>
         </div>
       </PageBox>
-      
+
       <SidePanelComponent
         handleToggle={handleSideToggle}
         title={"New Employee"}

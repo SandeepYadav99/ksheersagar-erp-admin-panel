@@ -11,7 +11,7 @@ import {
 import DataTables from "../../../../Datatables/Datatable.table";
 import styles from "./Style.module.css";
 import PageBox from "../../../../components/PageBox/PageBox.component";
-
+import defaultImage from "../../../../assets/img/ic_user_pic.png"
 import Constants from "../../../../config/constants";
 import { useState } from "react";
 import { serviceGetEmployLogs } from "../../../../services/Employee.service";
@@ -96,7 +96,10 @@ useEffect(() => {
         key: "user pic",
         label: "USER PIC",
         sortable: false,
-        render: (temp, all) => <img src={all?.employee?.image} style={{width:"50px", height:"50px", borderRadius:"50px"}}/>,
+        render: (temp, all) =><>
+        {all?.employee?.image ? <img src={all?.employee?.image} style={{width:"50px", height:"50px", borderRadius:"50px"}}/>: <img src={defaultImage} style={{width:"50px", height:"50px", borderRadius:"50px"}}/>}
+        ,
+        </>
       },
     ];
   }, []);

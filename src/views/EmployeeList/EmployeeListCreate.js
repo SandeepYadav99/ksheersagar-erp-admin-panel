@@ -324,8 +324,8 @@ const EmployeeListCreate = ({ location }) => {
         <div className={"formFlex"}>
           <div className={"formGroup"}>
             <CustomSelectField
-              // isError={errorData?.department_id}
-              errorText={errorData?.department_id}
+              //  isError={errorData?.department_id}
+              // errorText={errorData?.department_id}
               label={"Department*"}
               value={form?.department_id}
               handleChange={(value) => {
