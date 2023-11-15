@@ -4,13 +4,8 @@ const tempLevel = true;
 const tempDate = new Date();
 const isProduction = false;
 
-let url = "http://91.205.173.97:8586/api/admin/";
-let socketUrl = "http://91.205.173.97:8586";
-
-if (isProduction) {
-  url = "https://api.indswiftlabs.com/api/admin/";
-  socketUrl = "https://api.indswiftlabs.com";
-}
+const apiUrl = process.env.REACT_APP_API_URL;
+const socketUrl = process.env.REACT_APP_SOCKET_URL;
 
 
 export default {
@@ -18,8 +13,8 @@ export default {
   TIME_ZONE: -(tempDate.getTimezoneOffset() / 60),
   DEFAULT_TIME_FORMAT: "DD-MM-YYYY, HH:mm",
   APP_NAME: "KsheerSagar ERP - Admin",
-  DEFAULT_APP_URL: tempLevel ? url : "http://localhost:8111/api/admin/",
-  SOCKET_URL: tempLevel ? socketUrl : "http://91.205.173.97:8586/",
+  DEFAULT_APP_URL: apiUrl,
+  SOCKET_URL: socketUrl,
   // DEFAULT_APP_URL: 'http://35.154.147.169:5055/api/',
   DEFAULT_PAGE_VALUE: TABLE_LIMIT,
   GOOGLE_LOGIN_KEY: "1027293586426-qg6lv2vsp57m05tn32m9stku2ljsd1uh.apps.googleusercontent.com",
@@ -434,5 +429,5 @@ export default {
     CONTAINER: 'CONTAINER',
     ASSETS: 'ASSETS',
   },
-  
+
 };

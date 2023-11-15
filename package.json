@@ -51,8 +51,15 @@
     "tinycolor2": "^1.4.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "env-cmd -e local react-scripts start",
+    "start_development": "env-cmd -e development react-scripts --max_old_space_size=4096 start",
+    "start_production": "env-cmd -e production react-scripts --max_old_space_size=4096 start",
+    "start_stage": "env-cmd -e stage react-scripts --max_old_space_size=4096 start",
+    "build_cmd": "react-scripts build",
+    "build_production": "env-cmd -e production npm run build_cmd",
+    "build_development": "env-cmd -e development  react-scripts build",
+    "build_stage": "env-cmd -e stage  react-scripts build",
+    "build_demo": "env-cmd -e demo  react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
