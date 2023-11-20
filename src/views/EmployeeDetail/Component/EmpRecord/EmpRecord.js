@@ -35,15 +35,10 @@ const JobCalendarComponent = ({ id }) => {
   );
 
   const getData = async (date = new Date()) => {
+    
     const month = moment(new Date(date)).format("MM");
     const year = moment(new Date(date)).format("YYYY");
-    console.log("API Request Payload:", {
-      employee_id: id,
-      month,
-      year,
-      start_date: startDate,
-      end_date: endDate,
-    });
+
     const req = await serviceGetEmployMonthData({
       employee_id: id,
       month,
@@ -64,32 +59,30 @@ const JobCalendarComponent = ({ id }) => {
   };
 
   const handleSelectSlot = ({ start, end }) => {
-    console.log("Selected date range:", start, end);
-  const formattedStartDate = moment(start).format("YYYY-MM-DD");
-  const formattedEndDate = moment(end).format("YYYY-MM-DD");
+ 
+    const formattedStartDate = moment(start).format("YYYY-MM-DD");
+    const formattedEndDate = moment(end).format("YYYY-MM-DD");
 
-  setStartDate(formattedStartDate);
-  setEndDate(formattedEndDate);
-
-  getData(start);
-  
+    setStartDate(formattedStartDate);
+    setEndDate(formattedEndDate);
+ 
+    getData(start);
   };
 
   const handleNavigation = (d, c, e, f) => {
     getData(d);
   };
 
+ 
+
   const eventPropGetter = (e) => {
     if (e.type === "ABSENT") {
       return {
         className: "status_absendt",
         style: {
-          backgroundColor: "#FCE6FE",
-          color: "#8E0E97",
-          fontSize: "10px",
-          marginTop: "50px",
-          outline: "none",
-         
+          backgroundColor: "#FFE4E2",
+          color: "#FF493F",
+          marginTop: "50px", outline: "none", fontSize: "10px" , 
         },
       };
     } else if (e.type === "PRESENT") {
@@ -98,10 +91,7 @@ const JobCalendarComponent = ({ id }) => {
         style: {
           backgroundColor: "#EDFCED",
           color: "#0E9717",
-          fontSize: "10px",
-          marginTop: "50px",
-          outline: "none",
-       
+          marginTop: "50px", outline: "none", fontSize: "10px" , 
         },
       };
     } else if (e.type === "HALF_DAY") {
@@ -110,13 +100,62 @@ const JobCalendarComponent = ({ id }) => {
         style: {
           backgroundColor: "#EDFCED",
           color: "#0E9717",
-          fontSize: "10px",
           marginTop: "50px",
           outline: "none",
+          fontSize: "10px",
+        },
+      };
+    } else if (e.type === "OFF_DUTY") {
+      return {
+        className: "deliverySlot",
+        style: {
+          backgroundColor: "#EDFCED",
+          color: "#0E9717",
+          marginTop: "50px",
+          outline: "none",
+          fontSize: "10px",
+        },
+      };
+    } else if (e.type === "LEAVE") {
+      return {
+        className: "deliverySlot",
+        style: {
+          backgroundColor: "#EDFCED",
+          color: "#0E9717",
+          marginTop: "50px",
+          outline: "none",
+          fontSize: "10px",
+        },
+      };
+    }else if (e.type === "ON_DUTY") {
+      return {
+        className: "deliverySlot",
+        style: {
+          backgroundColor: "#EDFCED",
+          color: "#0E9717",
+          marginTop: "50px",
+          outline: "none",
+          fontSize: "10px",
         },
       };
     }
-    return {};
+    else if (e.type === "N/A") {
+      return {
+        className: "deliverySlot",
+        style: {
+          backgroundColor: "#EDFCED",
+          color: "#0E9717",
+          marginTop: "50px",
+          outline: "none",
+          fontSize: "10px",
+        },
+      };
+    }
+    return {
+      style: {
+        border:"none"
+      },
+    };
   };
 
   useEffect(() => {
@@ -150,7 +189,7 @@ const JobCalendarComponent = ({ id }) => {
       <AddEmployRecord_Dilog
         isOpen={isApprovalPopUp}
         handleToggle={toggleApprovalDialog}
-        formValue={"formValue"}
+        formValue={formValue}
         id={id}
         date={startDate}
       />

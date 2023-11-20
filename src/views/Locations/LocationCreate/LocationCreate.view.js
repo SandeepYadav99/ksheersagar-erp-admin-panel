@@ -209,8 +209,8 @@ const LocationCreateView = ({isSidePanel}) => {
       <div className={"formFlex"}>
         <div className={"formGroup"}>
           <CustomTextField
-            isError={errorData?.google_page_url}
-            errorText={errorData?.google_page_url}
+            // isError={errorData?.google_page_url}
+            // errorText={errorData?.google_page_url}
             label={"Google Page URL"}
             value={form?.google_page_url}
             onTextChange={(text) => {

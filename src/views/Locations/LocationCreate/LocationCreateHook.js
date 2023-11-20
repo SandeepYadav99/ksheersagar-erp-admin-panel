@@ -83,10 +83,13 @@ const useLocationDetail = ({ isSidePanel }) => {
       serviceGetLocationDetails({ id: id }).then((res) => {
         if (!res.error) {
           const data = res?.data?.details;
+          
           setForm({
             ...data,
             is_active: data?.status === Constants.GENERAL_STATUS.ACTIVE,
           });
+         
+          setGeoFence(data?.location?.coordinates)
         } else {
           SnackbarUtils.error(res?.message);
         }
@@ -172,7 +175,9 @@ const useLocationDetail = ({ isSidePanel }) => {
 
   console.log("errorData", errorData);
   const handleCoordinate = (data) => {
+    console.log(data)
     setGeoLocation(data);
+    
     setGeofencingSelected(true);
   };
 
@@ -210,7 +215,8 @@ const useLocationDetail = ({ isSidePanel }) => {
       }
       req.then((res) => {
         if (!res.error) {
-          window.location.reload();
+          // window.location.reload();
+          historyUtils.goBack()
         } else {
           SnackbarUtils.error(res.message);
         }
@@ -304,7 +310,7 @@ const useLocationDetail = ({ isSidePanel }) => {
 
   const openGoogleMaps = useCallback(() => {
     const url = `https://www.google.com/maps/place?q=${lat},${lng}`;
-    console.log(lat, lng)
+  
     window.open(url, "_blank");
   },[lat, lng]);
 

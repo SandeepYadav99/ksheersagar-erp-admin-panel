@@ -1,17 +1,10 @@
-import React, {  useEffect, useMemo } from "react";
-import {
-
-  ButtonBase,
-
-  Dialog,
-  Slide,
-  makeStyles,
-} from "@material-ui/core";
+import React, { useEffect, useMemo } from "react";
+import { ButtonBase, Dialog, Slide, makeStyles } from "@material-ui/core";
 
 import DataTables from "../../../../Datatables/Datatable.table";
 import styles from "./Style.module.css";
 import PageBox from "../../../../components/PageBox/PageBox.component";
-import defaultImage from "../../../../assets/img/ic_user_pic.png"
+import defaultImage from "../../../../assets/img/ic_user_pic.png";
 import Constants from "../../../../config/constants";
 import { useState } from "react";
 import { serviceGetEmployLogs } from "../../../../services/Employee.service";
@@ -34,25 +27,30 @@ const useStyles = makeStyles((theme) => ({
     right: "10px",
     top: "10px",
   },
-  container:{
-    overflow: "auto"
-  }
+  container: {
+    overflow: "auto",
+  },
 }));
 
-const AddEmployRecord_Dilog = ({ isOpen, handleToggle, formValue, id , date}) => {
+const AddEmployRecord_Dilog = ({
+  isOpen,
+  handleToggle,
+  formValue,
+  id,
+  date,
+}) => {
   const classes = useStyles();
   const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
 
-const [details, setDetails] = useState([]); 
+  const [details, setDetails] = useState([]);
 
-useEffect(() => {
-  serviceGetEmployLogs({ employee_id: id ,date: date}).then((res) => {
-    setDetails(res?.data);
-  });
-}, [id]);
-
+  useEffect(() => {
+    serviceGetEmployLogs({ employee_id: id, date: date }).then((res) => {
+      setDetails(res?.data);
+    });
+  }, [id]);
 
   const tableStructure = useMemo(() => {
     return [
@@ -73,11 +71,7 @@ useEffect(() => {
         key: "punch type",
         label: "PUNCH TYPE",
         sortable: false,
-        render: (temp, all) => (
-          <div >
-            {all?.punch_type} 
-          </div>
-        ),
+        render: (temp, all) => <div>{all?.punch_type}</div>,
       },
 
       {
@@ -85,49 +79,48 @@ useEffect(() => {
         label: "ATTENDANCE TYPE",
         sortable: false,
         style: { width: "12%" },
-        render: (temp, all) => (
-          <div >
-            {all?.type}
-          </div>
-        ),
+        render: (temp, all) => <div>{all?.type}</div>,
       },
 
       {
         key: "user pic",
         label: "USER PIC",
         sortable: false,
-        render: (temp, all) =><>
-        {all?.employee?.image ? <img src={all?.employee?.image} style={{width:"50px", height:"50px", borderRadius:"50px"}}/>: <img src={defaultImage} style={{width:"50px", height:"50px", borderRadius:"50px"}}/>}
-        ,
-        </>
+        render: (temp, all) => (
+          <>
+            {all?.employee?.image ? (
+              <img
+                src={all?.employee?.image}
+                style={{ width: "50px", height: "50px", borderRadius: "50px" }}
+              />
+            ) : (
+              <img
+                src={defaultImage}
+                style={{ width: "50px", height: "50px", borderRadius: "50px" }}
+              />
+            )}
+            ,
+          </>
+        ),
       },
     ];
   }, []);
 
   const tableData = useMemo(() => {
-    const datatableFunctions = {
-     
-    };
+    const datatableFunctions = {};
 
     const datatable = {
       ...Constants.DATATABLE_PROPERTIES,
       columns: tableStructure,
       data: details,
       count: details.length,
-      
     };
 
     return { datatableFunctions, datatable };
-  }, [
-    details,
-    tableStructure,
-  
-    details,
-    
-  ]);
+  }, [details, tableStructure, details]);
 
   return (
-    <div  >
+    <div>
       <Dialog
         onBackdropClick={() => {}}
         keepMounted
@@ -138,15 +131,17 @@ useEffect(() => {
         onClose={() => {}}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        
       >
         <>
-          <div className={styles.headerContainer} >
+          <div className={styles.headerContainer}>
             <div className={styles.btnWrapperGap}>
               <div className={styles.resetWrapper}>
                 <ButtonBase
                   classes={{ root: classes.closeBtn }}
-                  onClick={()=>{handleToggle(); window.location.reload()}}
+                  onClick={() => {
+                    handleToggle();
+                    window.location.reload();
+                  }}
                 >
                   <Close />
                 </ButtonBase>
@@ -157,11 +152,11 @@ useEffect(() => {
               </div>
             </div>
           </div>
-              <div className={styles.upperWrap}>
-                <DataTables
-                  {...tableData.datatable}
-                  {...tableData.datatableFunctions}
-                />
+          <div className={styles.upperWrap}>
+            <DataTables
+              {...tableData.datatable}
+              {...tableData.datatableFunctions}
+            />
           </div>
         </>
       </Dialog>
