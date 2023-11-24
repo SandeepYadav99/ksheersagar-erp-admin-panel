@@ -99,8 +99,8 @@ const JobCalendarComponent = ({ id }) => {
       return {
         className: "deliverySlot",
         style: {
-          backgroundColor: "#EDFCED",
-          color: "#0E9717",
+          backgroundColor: "#F3EDFE",
+          color: "#7848CB",
           marginTop: "50px",
           outline: "none",
           fontSize: "10px",
@@ -110,8 +110,8 @@ const JobCalendarComponent = ({ id }) => {
       return {
         className: "deliverySlot",
         style: {
-          backgroundColor: "#EDFCED",
-          color: "#0E9717",
+          backgroundColor: "#FFE4E2",
+          color: "#FF493F",
           marginTop: "50px",
           outline: "none",
           fontSize: "10px",
@@ -150,12 +150,34 @@ const JobCalendarComponent = ({ id }) => {
           fontSize: "10px",
         },
       };
+    }else if (e.type === "HOLIDAY") {
+      return {
+        className: "deliverySlot",
+        style: {
+          backgroundColor: "#FCFAED",
+          color: "#D6B820",
+          marginTop: "50px",
+          outline: "none",
+          fontSize: "10px",
+        },
+      };
+    }else if (e.type === "WEEKEND") {
+      return {
+        className: "deliverySlot",
+        style: {
+          backgroundColor: "#EBFCFC",
+          color: "#0D9191",
+          marginTop: "50px",
+          outline: "none",
+          fontSize: "10px",
+        },
+      };
     } else if (e.type === "N/A") {
       return {
         className: "deliverySlot",
         style: {
-          backgroundColor: "#EDFCED",
-          color: "#0E9717",
+          backgroundColor: "#EEF3FF",
+          color: "#919BB0",
           marginTop: "50px",
           outline: "none",
           fontSize: "10px",
