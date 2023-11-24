@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Calendar, momentLocalizer, Views } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+
 import { serviceGetEmployMonthData } from "../../../../services/Employee.service";
 import styles from "./EmpRecord.module.css";
 import AddEmployRecord_Dilog from "../AddEmployRecord_Dilog/AddEmployRecord_Dilog";
@@ -35,7 +36,6 @@ const JobCalendarComponent = ({ id }) => {
   );
 
   const getData = async (date = new Date()) => {
-    
     const month = moment(new Date(date)).format("MM");
     const year = moment(new Date(date)).format("YYYY");
 
@@ -59,21 +59,18 @@ const JobCalendarComponent = ({ id }) => {
   };
 
   const handleSelectSlot = ({ start, end }) => {
- 
     const formattedStartDate = moment(start).format("YYYY-MM-DD");
     const formattedEndDate = moment(end).format("YYYY-MM-DD");
 
     setStartDate(formattedStartDate);
     setEndDate(formattedEndDate);
- 
+
     getData(start);
   };
 
   const handleNavigation = (d, c, e, f) => {
     getData(d);
   };
-
- 
 
   const eventPropGetter = (e) => {
     if (e.type === "ABSENT") {
@@ -82,7 +79,9 @@ const JobCalendarComponent = ({ id }) => {
         style: {
           backgroundColor: "#FFE4E2",
           color: "#FF493F",
-          marginTop: "50px", outline: "none", fontSize: "10px" , 
+          marginTop: "50px",
+          outline: "none",
+          fontSize: "10px",
         },
       };
     } else if (e.type === "PRESENT") {
@@ -91,7 +90,9 @@ const JobCalendarComponent = ({ id }) => {
         style: {
           backgroundColor: "#EDFCED",
           color: "#0E9717",
-          marginTop: "50px", outline: "none", fontSize: "10px" , 
+          marginTop: "50px",
+          outline: "none",
+          fontSize: "10px",
         },
       };
     } else if (e.type === "HALF_DAY") {
@@ -127,7 +128,18 @@ const JobCalendarComponent = ({ id }) => {
           fontSize: "10px",
         },
       };
-    }else if (e.type === "ON_DUTY") {
+    } else if (e.type === "Full_Day") {
+      return {
+        className: "deliverySlot",
+        style: {
+          backgroundColor: "#FCEDFB",
+          color: "#CB48B7",
+          marginTop: "50px",
+          outline: "none",
+          fontSize: "10px",
+        },
+      };
+    } else if (e.type === "ON_DUTY") {
       return {
         className: "deliverySlot",
         style: {
@@ -138,8 +150,7 @@ const JobCalendarComponent = ({ id }) => {
           fontSize: "10px",
         },
       };
-    }
-    else if (e.type === "N/A") {
+    } else if (e.type === "N/A") {
       return {
         className: "deliverySlot",
         style: {
@@ -153,7 +164,7 @@ const JobCalendarComponent = ({ id }) => {
     }
     return {
       style: {
-        border:"none"
+        border: "none",
       },
     };
   };

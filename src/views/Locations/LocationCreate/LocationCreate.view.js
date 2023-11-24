@@ -47,7 +47,7 @@ const LocationCreateView = ({isSidePanel}) => {
     handleToggleSidePannel
   } = useLocationDetail({isSidePanel});
   // const geofence = [];
-
+console.log(geofence)
   return (
     <div className={styles.locationWeap}>
       {isDialog && (

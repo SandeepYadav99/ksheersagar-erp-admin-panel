@@ -175,12 +175,13 @@ const useLocationDetail = ({ isSidePanel }) => {
 
   console.log("errorData", errorData);
   const handleCoordinate = (data) => {
+    
     console.log(data)
     setGeoLocation(data);
     
     setGeofencingSelected(true);
   };
-
+console.log(lat, lng, form)
   const submitToServer = useCallback(() => {
     if (!isSubmitting) {
       setIsSubmitting(true);

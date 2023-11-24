@@ -28,7 +28,7 @@ function LocationDetail() {
     handleToggleSidePannel,
     openGoogleMaps,
   } = useLocationDetail({});
-
+console.log(data)
   const tableStructure = useMemo(() => {
     return [
       {

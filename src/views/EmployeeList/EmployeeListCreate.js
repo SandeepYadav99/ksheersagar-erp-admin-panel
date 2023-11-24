@@ -460,10 +460,10 @@ const EmployeeListCreate = ({ location }) => {
                 max_size={5 * 1024 * 1024}
                 type={["png", "jpeg", "jpg"]}
                 fullWidth={true}
+                show_image={true}
                 name="document"
                 accept={"image/*"}
                 label="Aadhar Back"
-                show_image={true}
                 error={errorData?.aadhaar_back}
                 value={form?.aadhaar_back}
                 onChange={(file) => {

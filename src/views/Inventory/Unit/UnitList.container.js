@@ -62,7 +62,7 @@ const UnitList = ({}) => {
   const tableStructure = useMemo(() => {
     return [
       {
-        key: "code",
+        key: "name",
         label: "Unit Name",
         sortable: true,
         render: (value, all) => <div>{renderFirstCell(all)}</div>,
