@@ -46,7 +46,7 @@ function useLocationDetail() {
 
   useEffect(() => {
     initData();
-  }, [id]);
+  }, []);
 
   const handleDownload = (data) => {
     const newWindow = window.open('', '_blank');

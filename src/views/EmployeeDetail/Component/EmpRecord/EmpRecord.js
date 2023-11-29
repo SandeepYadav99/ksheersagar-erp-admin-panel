@@ -72,16 +72,20 @@ const JobCalendarComponent = ({ id }) => {
     getData(d);
   };
 
+  
   const eventPropGetter = (e) => {
+
+
     if (e.type === "ABSENT") {
       return {
         className: "status_absendt",
         style: {
           backgroundColor: "#FFE4E2",
           color: "#FF493F",
-          marginTop: "50px",
           outline: "none",
           fontSize: "10px",
+         textAlign:"bottom",
+          padding:"30px"
         },
       };
     } else if (e.type === "PRESENT") {
@@ -90,7 +94,8 @@ const JobCalendarComponent = ({ id }) => {
         style: {
           backgroundColor: "#EDFCED",
           color: "#0E9717",
-          marginTop: "50px",
+          
+          padding:"30px",
           outline: "none",
           fontSize: "10px",
         },
@@ -101,7 +106,8 @@ const JobCalendarComponent = ({ id }) => {
         style: {
           backgroundColor: "#F3EDFE",
           color: "#7848CB",
-          marginTop: "50px",
+          
+          padding:"30px",
           outline: "none",
           fontSize: "10px",
         },
@@ -112,7 +118,8 @@ const JobCalendarComponent = ({ id }) => {
         style: {
           backgroundColor: "#FFE4E2",
           color: "#FF493F",
-          marginTop: "50px",
+          
+          padding:"30px",
           outline: "none",
           fontSize: "10px",
         },
@@ -123,7 +130,8 @@ const JobCalendarComponent = ({ id }) => {
         style: {
           backgroundColor: "#EDFCED",
           color: "#0E9717",
-          marginTop: "50px",
+          
+          padding:"30px",
           outline: "none",
           fontSize: "10px",
         },
@@ -134,7 +142,8 @@ const JobCalendarComponent = ({ id }) => {
         style: {
           backgroundColor: "#FCEDFB",
           color: "#CB48B7",
-          marginTop: "50px",
+         
+          padding:"30px",
           outline: "none",
           fontSize: "10px",
         },
@@ -145,7 +154,8 @@ const JobCalendarComponent = ({ id }) => {
         style: {
           backgroundColor: "#EDFCED",
           color: "#0E9717",
-          marginTop: "50px",
+         
+          padding:"30px",
           outline: "none",
           fontSize: "10px",
         },
@@ -156,7 +166,8 @@ const JobCalendarComponent = ({ id }) => {
         style: {
           backgroundColor: "#FCFAED",
           color: "#D6B820",
-          marginTop: "50px",
+         
+          padding:"30px",
           outline: "none",
           fontSize: "10px",
         },
@@ -167,7 +178,8 @@ const JobCalendarComponent = ({ id }) => {
         style: {
           backgroundColor: "#EBFCFC",
           color: "#0D9191",
-          marginTop: "50px",
+         
+          padding:"30px",
           outline: "none",
           fontSize: "10px",
         },
@@ -178,10 +190,12 @@ const JobCalendarComponent = ({ id }) => {
         style: {
           backgroundColor: "#EEF3FF",
           color: "#919BB0",
-          marginTop: "50px",
+         
+          padding:"30px",
           outline: "none",
           fontSize: "10px",
         },
+      
       };
     }
     return {
@@ -198,7 +212,15 @@ const JobCalendarComponent = ({ id }) => {
   const handleEventClick = () => {
     setIsApprovalPopUp(true);
   };
+  
   const localizer = momentLocalizer(moment);
+
+  const CustomEventComponent = ({ event }) => (
+    <div className="custom-event">
+      <div className={styles.event_status}>{event.title}</div>
+      {/* <div className="event-date">{moment(event.start).format("DD")}</div> */}
+    </div>
+  );
 
   return (
     <div className={styles.plainPaper}>
@@ -206,16 +228,20 @@ const JobCalendarComponent = ({ id }) => {
       <div style={{ marginTop: "20px" }} />
       <Calendar
         views={[Views.MONTH]}
+        
         components={{
           timeSlotWrapper: ColoredDateCellWrapper,
+          event: CustomEventComponent,
         }}
         onNavigate={handleNavigation}
         localizer={localizer}
         defaultDate={new Date()}
+       
+      
         eventPropGetter={eventPropGetter}
         defaultView="month"
         events={events}
-        style={{ padding: "20px", height: "90vh" }}
+        style={{ padding: "20px", height: "90vh"  }}
         onSelectEvent={handleEventClick}
         onSelectSlot={handleSelectSlot}
       />

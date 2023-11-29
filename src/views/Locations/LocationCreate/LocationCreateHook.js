@@ -38,8 +38,10 @@ const initialForm = {
 };
 const useLocationDetail = ({ isSidePanel }) => {
   const [isLoading, setIsLoading] = useState(false);
+
   const [geofence, setGeoFence] = useState([]);
   const [geoLocation, setGeoLocation] = useState(null);
+
   const [isDialog, setIsDialog] = useState(false);
   const [errorData, setErrorData] = useState({});
   const [mapAddress, setMapAddress] = useState("");
@@ -52,9 +54,8 @@ const useLocationDetail = ({ isSidePanel }) => {
   });
   const [isEdit, setIsEdit] = useState(false);
   const includeRef = useRef(null);
-  const codeDebouncer = useDebounce(form?.code, 500);
+console.log(geofence)
   const [geofencingSelected, setGeofencingSelected] = useState(false);
-
   const { id } = useParams();
 
   useEffect(() => {
@@ -83,7 +84,7 @@ const useLocationDetail = ({ isSidePanel }) => {
       serviceGetLocationDetails({ id: id }).then((res) => {
         if (!res.error) {
           const data = res?.data?.details;
-          
+      
           setForm({
             ...data,
             is_active: data?.status === Constants.GENERAL_STATUS.ACTIVE,
@@ -104,6 +105,7 @@ const useLocationDetail = ({ isSidePanel }) => {
     }
   }, [mapAddress]);
 
+  console.log(form)
   const checkForSalaryInfo = (data, fieldName, errorArr) => {
     if (data) {
       let filteredForm = { id: id ? id : "" };
@@ -173,15 +175,16 @@ const useLocationDetail = ({ isSidePanel }) => {
     return errors;
   }, [form, errorData]);
 
-  console.log("errorData", errorData);
-  const handleCoordinate = (data) => {
-    
-    console.log(data)
-    setGeoLocation(data);
-    
+ 
+  const handleCoordinate = useCallback((data) => {
+  
+    setGeoLocation(data);   
+    setGeoFence(data)
     setGeofencingSelected(true);
-  };
-console.log(lat, lng, form)
+    
+  },[setGeoFence, setGeoLocation]);
+
+
   const submitToServer = useCallback(() => {
     if (!isSubmitting) {
       setIsSubmitting(true);
@@ -198,7 +201,7 @@ console.log(lat, lng, form)
           contact: form?.contact,
           head_id: form?.head_id,
           address: form?.address,
-          coordinates:form?.location?.coordinates,
+          coordinates:form?.location?.coordinates,// 
           google_page_url: form?.google_page_url,
           is_department_attendance: form?.is_department_attendance,
           is_active: form?.is_active,
@@ -295,9 +298,10 @@ console.log(lat, lng, form)
     setErrorData({});
   }, [form]);
 
+
   const handleMapAddress = useCallback(
     (lat, lng, address) => {
-      console.log("handleMapAddress", lat, lng, address);
+      console.log(address, lat, lng)
       setLat(lat);
       setLng(lng);
       setMapAddress(address);
@@ -338,7 +342,8 @@ console.log(lat, lng, form)
     lat,
     lng,
     geofence,
-    openGoogleMaps
+    openGoogleMaps,
+    geoLocation
 
   };
 };
