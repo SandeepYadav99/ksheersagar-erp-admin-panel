@@ -101,6 +101,7 @@ class SidePanelComponent extends Component {
 
     _handleOpen() {
         this.props.handleToggle();
+       // window.location.reload()
     }
 
     render() {

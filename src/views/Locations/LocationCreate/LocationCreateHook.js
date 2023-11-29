@@ -13,13 +13,13 @@ import {
   serviceLocationCheck,
   serviceUpdateLocation,
 } from "../../../services/Location.service";
-import useDebounce from "../../../hooks/DebounceHook";
+
 import SnackbarUtils from "../../../libs/SnackbarUtils";
 import historyUtils from "../../../libs/history.utils";
-import LogUtils from "../../../libs/LogUtils";
+
 import { useParams } from "react-router";
 import Constants from "../../../config/constants";
-import RouteName from "../../../routes/Route.name";
+
 import { serviceGetList } from "../../../services/index.services";
 import debounce from "lodash.debounce";
 
@@ -54,7 +54,7 @@ const useLocationDetail = ({ isSidePanel }) => {
   });
   const [isEdit, setIsEdit] = useState(false);
   const includeRef = useRef(null);
-console.log(geofence)
+
   const [geofencingSelected, setGeofencingSelected] = useState(false);
   const { id } = useParams();
 
@@ -213,13 +213,13 @@ console.log(geofence)
       } else {
         req = serviceCreateLocation({
           ...form,
-          coordinates: [lat, lng],
+           coordinates: [25, 28],
           geofence_coordinates: geoLocation ? geoLocation : [],
         });
       }
       req.then((res) => {
         if (!res.error) {
-          // window.location.reload();
+           window.location.reload();
           historyUtils.goBack()
         } else {
           SnackbarUtils.error(res.message);
@@ -227,7 +227,7 @@ console.log(geofence)
         setIsSubmitting(false);
       });
     }
-  }, [form, isSubmitting, setIsSubmitting, id, geoLocation]);
+  }, [form, isSubmitting, setIsSubmitting, id, geoLocation, lat, lng]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
