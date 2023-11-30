@@ -22,6 +22,7 @@ import Constants from "../../../config/constants";
 
 import { serviceGetList } from "../../../services/index.services";
 import debounce from "lodash.debounce";
+import RouteName from "../../../routes/Route.name";
 
 const initialForm = {
   name_en: "",
@@ -57,7 +58,7 @@ const useLocationDetail = ({ isSidePanel }) => {
 
   const [geofencingSelected, setGeofencingSelected] = useState(false);
   const { id } = useParams();
-
+console.log(id, )
   useEffect(() => {
     serviceGetList(["EMPLOYEES"]).then((res) => {
       if (!res.error) {
@@ -79,6 +80,7 @@ const useLocationDetail = ({ isSidePanel }) => {
     [setIsDialog]
   );
 
+
   useEffect(() => {
     if (id) {
       serviceGetLocationDetails({ id: id }).then((res) => {
@@ -90,7 +92,7 @@ const useLocationDetail = ({ isSidePanel }) => {
             is_active: data?.status === Constants.GENERAL_STATUS.ACTIVE,
           });
          
-          setGeoFence(data?.location?.coordinates)
+           setGeoFence(data?.geofence?.coordinates)
         } else {
           SnackbarUtils.error(res?.message);
         }
@@ -100,14 +102,16 @@ const useLocationDetail = ({ isSidePanel }) => {
 
   useEffect(() => {
     if (mapAddress) {
+      console.log("map Address")
       checkSalaryInfoDebouncer(mapAddress, "address", errorData);
       setForm({ ...form, address: mapAddress });
     }
   }, [mapAddress]);
 
-  console.log(form)
+  
   const checkForSalaryInfo = (data, fieldName, errorArr) => {
     if (data) {
+      if(!id) return;
       let filteredForm = { id: id ? id : "" };
       filteredForm[fieldName] = data;
       let req = serviceLocationCheck({
@@ -128,10 +132,11 @@ const useLocationDetail = ({ isSidePanel }) => {
     }
   };
   const checkSalaryInfoDebouncer = useMemo(() => {
+    console.log("DEBOUNCE")
     return debounce((e, fieldName, errorArr) => {
       checkForSalaryInfo(e, fieldName, errorArr);
     }, 1000);
-  }, []);
+  }, [checkForSalaryInfo]);
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
@@ -179,16 +184,17 @@ const useLocationDetail = ({ isSidePanel }) => {
   const handleCoordinate = useCallback((data) => {
   
     setGeoLocation(data);   
-    setGeoFence(data)
+    //  setGeoFence(data)
     setGeofencingSelected(true);
     
-  },[setGeoFence, setGeoLocation]);
+  },[ setGeoLocation]);
 
 
   const submitToServer = useCallback(() => {
     if (!isSubmitting) {
+      console.log("submitToServer called");
       setIsSubmitting(true);
-      let req = null;
+      let req;
 
       if (id) {
         const updateData = {
@@ -201,7 +207,7 @@ const useLocationDetail = ({ isSidePanel }) => {
           contact: form?.contact,
           head_id: form?.head_id,
           address: form?.address,
-          coordinates:form?.location?.coordinates,// 
+          coordinates:form?.location?.coordinates,
           google_page_url: form?.google_page_url,
           is_department_attendance: form?.is_department_attendance,
           is_active: form?.is_active,
@@ -211,33 +217,47 @@ const useLocationDetail = ({ isSidePanel }) => {
           ...updateData,
         });
       } else {
+ 
         req = serviceCreateLocation({
-          ...form,
-           coordinates: [25, 28],
+          // ...form,
+          name_en: form?.name_en,
+          name_hi: form?.name_hi,
+          code: form?.code,
+          city: form?.city,
+          type: form?.type,
+          contact: form?.contact,
+          head_id: form?.head_id,
+          address: form?.address,
+          google_page_url: form?.google_page_url,
+          is_department_attendance: form?.is_department_attendance,
+          is_active: form?.is_active,
+
+          coordinates: [lat, lng],
           geofence_coordinates: geoLocation ? geoLocation : [],
         });
       }
       req.then((res) => {
         if (!res.error) {
-           window.location.reload();
-          historyUtils.goBack()
+             window.location.reload();
+           historyUtils.goBack()
+        
         } else {
           SnackbarUtils.error(res.message);
         }
         setIsSubmitting(false);
       });
     }
-  }, [form, isSubmitting, setIsSubmitting, id, geoLocation, lat, lng]);
+  }, [form, isSubmitting, setIsSubmitting, id]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
-    console.log("erros", errors);
+    console.log("Component mounted or updated");
     if (Object.keys(errors).length > 0) {
       setErrorData(errors);
       return true;
     }
     submitToServer();
-  }, [checkFormValidation, setErrorData, form, submitToServer, geoLocation]);
+  }, [checkFormValidation, setErrorData, form, submitToServer]);
 
   const removeError = useCallback(
     (title) => {

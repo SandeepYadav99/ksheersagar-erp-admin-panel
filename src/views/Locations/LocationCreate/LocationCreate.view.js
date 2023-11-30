@@ -56,6 +56,7 @@ const LocationCreateView = ({isSidePanel}) => {
         <DialogIncComponent
           lat={lat}
           lng={lng}
+         
           isOpen={isDialog}
           handleClose={toggleConfirmDialog}
           handleMapAddress={handleMapAddress}
@@ -258,7 +259,7 @@ const LocationCreateView = ({isSidePanel}) => {
         <ButtonBase
           disabled={isSubmitting}
           type={"button"}
-          onClick={handleSubmit}
+          onClick={()=>handleSubmit()}
           className={styles.createBtn}
         >
           {id ? "Update" : "Create"}
