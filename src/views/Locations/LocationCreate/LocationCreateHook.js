@@ -42,7 +42,7 @@ const useLocationDetail = ({ isSidePanel }) => {
 
   const [geofence, setGeoFence] = useState([]);
   const [geoLocation, setGeoLocation] = useState(null);
-
+  console.log(geofence, "GEO");
   const [isDialog, setIsDialog] = useState(false);
   const [errorData, setErrorData] = useState({});
   const [mapAddress, setMapAddress] = useState("");
@@ -58,7 +58,7 @@ const useLocationDetail = ({ isSidePanel }) => {
 
   const [geofencingSelected, setGeofencingSelected] = useState(false);
   const { id } = useParams();
-console.log(id, )
+  console.log(id);
   useEffect(() => {
     serviceGetList(["EMPLOYEES"]).then((res) => {
       if (!res.error) {
@@ -80,19 +80,23 @@ console.log(id, )
     [setIsDialog]
   );
 
-
   useEffect(() => {
     if (id) {
       serviceGetLocationDetails({ id: id }).then((res) => {
         if (!res.error) {
           const data = res?.data?.details;
-      
+
           setForm({
             ...data,
+            name_en: data?.name_en,
             is_active: data?.status === Constants.GENERAL_STATUS.ACTIVE,
           });
-         
-           setGeoFence(data?.geofence?.coordinates)
+
+          setGeoFence(
+            data?.geofence?.coordinates
+              ? data.geofence.coordinates.map((coordinate) => [...coordinate])
+              : []
+          );
         } else {
           SnackbarUtils.error(res?.message);
         }
@@ -102,16 +106,15 @@ console.log(id, )
 
   useEffect(() => {
     if (mapAddress) {
-      console.log("map Address")
+      console.log("map Address");
       checkSalaryInfoDebouncer(mapAddress, "address", errorData);
       setForm({ ...form, address: mapAddress });
     }
   }, [mapAddress]);
 
-  
   const checkForSalaryInfo = (data, fieldName, errorArr) => {
     if (data) {
-      if(!id) return;
+      if (!id) return;
       let filteredForm = { id: id ? id : "" };
       filteredForm[fieldName] = data;
       let req = serviceLocationCheck({
@@ -132,7 +135,7 @@ console.log(id, )
     }
   };
   const checkSalaryInfoDebouncer = useMemo(() => {
-    console.log("DEBOUNCE")
+    console.log("DEBOUNCE");
     return debounce((e, fieldName, errorArr) => {
       checkForSalaryInfo(e, fieldName, errorArr);
     }, 1000);
@@ -143,10 +146,10 @@ console.log(id, )
     let required = ["name_en", "name_hi", "code", "city", "address", "type"];
 
     if (!geofencingSelected) {
-      errors['geofencing'] = true;
+      errors["geofencing"] = true;
       SnackbarUtils.error("Please select the geo-fencing boundary on the Map");
     } else {
-      delete errors['geofencing'];
+      delete errors["geofencing"];
     }
     required.forEach((val) => {
       if (
@@ -180,19 +183,20 @@ console.log(id, )
     return errors;
   }, [form, errorData]);
 
- 
-  const handleCoordinate = useCallback((data) => {
-  
-    setGeoLocation(data);   
-    //  setGeoFence(data)
-    setGeofencingSelected(true);
-    
-  },[ setGeoLocation]);
+  const handleCoordinate = useCallback(
+    (data) => {
+      console.log(data);
+      setGeoLocation(data);
 
+      setGeofencingSelected(true);
+    },
+    [setGeoLocation, setGeoFence]
+  );
 
   const submitToServer = useCallback(() => {
+    console.log(isSubmitting);
     if (!isSubmitting) {
-      console.log("submitToServer called");
+      console.log("submitToServer called", isSubmitting);
       setIsSubmitting(true);
       let req;
 
@@ -207,17 +211,16 @@ console.log(id, )
           contact: form?.contact,
           head_id: form?.head_id,
           address: form?.address,
-          coordinates:form?.location?.coordinates,
+          coordinates: form?.location?.coordinates,
           google_page_url: form?.google_page_url,
           is_department_attendance: form?.is_department_attendance,
           is_active: form?.is_active,
         };
-      
+
         req = serviceUpdateLocation({
           ...updateData,
         });
       } else {
- 
         req = serviceCreateLocation({
           // ...form,
           name_en: form?.name_en,
@@ -238,16 +241,16 @@ console.log(id, )
       }
       req.then((res) => {
         if (!res.error) {
-             window.location.reload();
-           historyUtils.goBack()
-        
+          window.location.reload();
+          //  historyUtils.goBack()
+          historyUtils.push(RouteName.LOCATIONS);
         } else {
           SnackbarUtils.error(res.message);
         }
         setIsSubmitting(false);
       });
     }
-  }, [form, isSubmitting, setIsSubmitting, id]);
+  }, [form, isSubmitting, setIsSubmitting, id, geoLocation, setGeoFence]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
@@ -272,6 +275,7 @@ console.log(id, )
     (text, fieldName) => {
       let shouldRemoveError = true;
       const t = { ...form };
+
       if (fieldName === "type") {
         if (!text || (isAlpha(text) && text.toString().length <= 30)) {
           t[fieldName] = text;
@@ -318,10 +322,9 @@ console.log(id, )
     setErrorData({});
   }, [form]);
 
-
   const handleMapAddress = useCallback(
     (lat, lng, address) => {
-      console.log(address, lat, lng)
+      console.log(address, lat, lng);
       setLat(lat);
       setLng(lng);
       setMapAddress(address);
@@ -335,9 +338,9 @@ console.log(id, )
 
   const openGoogleMaps = useCallback(() => {
     const url = `https://www.google.com/maps/place?q=${lat},${lng}`;
-  
+
     window.open(url, "_blank");
-  },[lat, lng]);
+  }, [lat, lng]);
 
   return {
     form,
@@ -363,8 +366,7 @@ console.log(id, )
     lng,
     geofence,
     openGoogleMaps,
-    geoLocation
-
+    geoLocation,
   };
 };
 

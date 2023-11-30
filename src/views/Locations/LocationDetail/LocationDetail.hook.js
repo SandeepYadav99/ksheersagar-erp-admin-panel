@@ -7,8 +7,7 @@ import { useParams } from "react-router";
 
 import ReactDOM from 'react-dom';
 import EmpInfo_Qr from "./component/QrDownload/EmpInfo_Qr";
-import historyUtils from "../../../libs/history.utils";
-import RouteName from "../../../routes/Route.name";
+
 function useLocationDetail() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isApprovalPopUp, setIsApprovalPopUp] = useState(false);
@@ -17,6 +16,7 @@ function useLocationDetail() {
   const { id } = useParams();
   const [isSidePanel, setSidePanel] = useState(false);
   const [editData, setEditData] = useState(null);
+  
   const toggleApprovalDialog = useCallback(() => {
     setIsApprovalPopUp((e) => !e);
   }, [isApprovalPopUp]);

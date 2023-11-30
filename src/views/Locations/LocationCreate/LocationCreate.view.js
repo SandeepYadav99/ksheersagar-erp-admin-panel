@@ -12,6 +12,7 @@ import Geofencing from "./component/Geofencing/Geofencing.component";
 import { CheckBox } from "@material-ui/icons";
 import DialogIncComponent from "./component/confirmDialogInc";
 import SidePanelComponent from "../../../components/SidePanel/SidePanel.component";
+import { useEffect } from "react";
 
 const useStyles = makeStyles((theme) => ({
   iconBtnError: {
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LocationCreateView = ({isSidePanel}) => {
+const LocationCreateView = ({ isSidePanel }) => {
   const {
     form,
     errorData,
@@ -45,10 +46,10 @@ const LocationCreateView = ({isSidePanel}) => {
     lng,
     geofence,
     handleToggleSidePannel,
-    geoLocation
-  } = useLocationDetail({isSidePanel});
+    geoLocation,
+  } = useLocationDetail({ isSidePanel });
   // const geofence = [];
-  console.log(geofence, "GEOFENCE")
+  console.log(geofence, "GEOFENCE");
 
   return (
     <div className={styles.locationWeap}>
@@ -56,7 +57,6 @@ const LocationCreateView = ({isSidePanel}) => {
         <DialogIncComponent
           lat={lat}
           lng={lng}
-         
           isOpen={isDialog}
           handleClose={toggleConfirmDialog}
           handleMapAddress={handleMapAddress}
@@ -177,7 +177,7 @@ const LocationCreateView = ({isSidePanel}) => {
           </div>
         </div>
       </div>
-      
+
       <div className={"formFlex"}>
         <div className={"formGroup"}>
           <CustomTextField
@@ -206,6 +206,7 @@ const LocationCreateView = ({isSidePanel}) => {
       </div>
       <div className={"formFlex"}>
         <div className="formGroup">
+        
           <Geofencing polygon={geofence} handleSave={handleCoordinate} />
         </div>
       </div>
@@ -259,13 +260,12 @@ const LocationCreateView = ({isSidePanel}) => {
         <ButtonBase
           disabled={isSubmitting}
           type={"button"}
-          onClick={()=>handleSubmit()}
+          onClick={() => handleSubmit()}
           className={styles.createBtn}
         >
           {id ? "Update" : "Create"}
         </ButtonBase>
       </div>
-   
     </div>
     // </div>
   );

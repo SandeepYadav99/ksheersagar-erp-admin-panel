@@ -24,6 +24,7 @@ class Geofencing extends Component {
         const {order_id} = this.props;
 
         this.renderMap();
+        
     }
 
 
@@ -32,6 +33,8 @@ class Geofencing extends Component {
         if (!is_error) {
 
         }
+    
+       
     }
 
 
@@ -48,6 +51,7 @@ class Geofencing extends Component {
                 map.setZoom(cnt)
             }, 80); // 80ms is what I found to work well on my system -- it might not work well on all systems
         }
+       
     }
 
     callCenter(data) {
@@ -68,7 +72,7 @@ class Geofencing extends Component {
         window.initMap = this.initMap
     }
 
-
+    
     _updatePolygon(data) {
         const { handleSave } = this.props;
         this.setState({
@@ -257,6 +261,7 @@ class Geofencing extends Component {
 
 
     render() {
+        
         return (
             <div>
                 <main style={{height: '400px', width: '100%'}}>
