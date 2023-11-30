@@ -324,8 +324,8 @@ const EmployeeListCreate = ({ location }) => {
         <div className={"formFlex"}>
           <div className={"formGroup"}>
             <CustomSelectField
-              // isError={errorData?.department_id}
-              errorText={errorData?.department_id}
+              //  isError={errorData?.department_id}
+              // errorText={errorData?.department_id}
               label={"Department*"}
               value={form?.department_id}
               handleChange={(value) => {
@@ -430,15 +430,16 @@ const EmployeeListCreate = ({ location }) => {
           <div className={styles.adharBack}>
             <div className={styles.adharWrap}>
               <File
-                default_image={defaultImg ? defaultImg : ""}
-                // imageClass={styles.inputFileUploader}
+                 default_image={defaultImg ? defaultImg : ""}
+                bannerLabel="Upload Aadhar Front"
+                //imageClass={styles.inputFileUploader}
                 max_size={5 * 1024 * 1024}
                 type={["png", "jpeg", "jpg"]}
                 fullWidth={true}
                 name="document"
                 accept={"image/*"}
-                label="Please Upload Image"
-                show_image={true}
+                 label="Please Upload Image"
+                 show_image={true}
                 error={errorData?.aadhaar_front}
                 value={form?.aadhaar_front}
                 onChange={(file) => {
@@ -447,19 +448,22 @@ const EmployeeListCreate = ({ location }) => {
                   }
                 }}
               />
-              <div>Upload Aadhar Front</div>
+              {/* <div>Upload Aadhar Front</div> */}
             </div>
+            
+            
             <div className={styles.adharWrap}>
               <File
                 default_image={defaultImg ? defaultImg : ""}
                 // imageClass={styles.inputFileUploader}
+                bannerLabel="Upload Aadhar Back"
                 max_size={5 * 1024 * 1024}
                 type={["png", "jpeg", "jpg"]}
                 fullWidth={true}
+                show_image={true}
                 name="document"
                 accept={"image/*"}
                 label="Aadhar Back"
-                show_image={true}
                 error={errorData?.aadhaar_back}
                 value={form?.aadhaar_back}
                 onChange={(file) => {
@@ -468,7 +472,7 @@ const EmployeeListCreate = ({ location }) => {
                   }
                 }}
               />
-              <div>Upload Aadhar Back</div>
+              {/* <div>Upload Aadhar Back</div> */}
             </div>
           </div>
         </div>

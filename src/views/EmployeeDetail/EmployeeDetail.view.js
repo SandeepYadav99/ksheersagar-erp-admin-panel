@@ -5,10 +5,10 @@ import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import styles from "./Style.module.css";
 import history from "../../libs/history.utils";
 import useEmployeeDetails from "./EmployeeDetail.hook";
-
+import EmpRecord from "./Component/EmpRecord/EmpRecord"
 function EmployeeDetail() {
   const { data, id , handleEditBtn, handleEmpInfoPage} = useEmployeeDetails({});
-  console.log(data)
+ 
 
   return (
     <div>
@@ -60,7 +60,9 @@ function EmployeeDetail() {
               <div className={styles.heading}>Location Information</div>
             </div>
 
+
             <div className={styles.mainFlex}>
+              
               <div className={styles.left}>
                 <div className={styles.key}>
                   <span className={styles.value}>Age:</span>
@@ -148,6 +150,7 @@ function EmployeeDetail() {
           </div>
         </div>
       </div>
+     <EmpRecord id={id}/>
     </div>
   );
 }

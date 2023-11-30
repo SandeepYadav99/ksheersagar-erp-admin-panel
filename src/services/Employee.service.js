@@ -66,3 +66,11 @@ export async function serviceGetEmployeeDetails(params) {
 export async function serviceUpdateEmployees(params) {
     return await formDataRequest('employees/update', params);
 }
+
+export async function serviceGetEmployMonthData(params) {
+    return await postRequest('attendance/monthly/data', params);
+}
+
+export async function serviceGetEmployLogs(params) {
+    return await postRequest('/attendance/logs', params);
+}

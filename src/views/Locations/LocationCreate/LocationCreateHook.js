@@ -13,15 +13,16 @@ import {
   serviceLocationCheck,
   serviceUpdateLocation,
 } from "../../../services/Location.service";
-import useDebounce from "../../../hooks/DebounceHook";
+
 import SnackbarUtils from "../../../libs/SnackbarUtils";
 import historyUtils from "../../../libs/history.utils";
-import LogUtils from "../../../libs/LogUtils";
+
 import { useParams } from "react-router";
 import Constants from "../../../config/constants";
-import RouteName from "../../../routes/Route.name";
+
 import { serviceGetList } from "../../../services/index.services";
 import debounce from "lodash.debounce";
+import RouteName from "../../../routes/Route.name";
 
 const initialForm = {
   name_en: "",
@@ -38,8 +39,10 @@ const initialForm = {
 };
 const useLocationDetail = ({ isSidePanel }) => {
   const [isLoading, setIsLoading] = useState(false);
+
   const [geofence, setGeoFence] = useState([]);
   const [geoLocation, setGeoLocation] = useState(null);
+  console.log(geofence, "GEO");
   const [isDialog, setIsDialog] = useState(false);
   const [errorData, setErrorData] = useState({});
   const [mapAddress, setMapAddress] = useState("");
@@ -52,9 +55,10 @@ const useLocationDetail = ({ isSidePanel }) => {
   });
   const [isEdit, setIsEdit] = useState(false);
   const includeRef = useRef(null);
-  const codeDebouncer = useDebounce(form?.code, 500);
-  const { id } = useParams();
 
+  const [geofencingSelected, setGeofencingSelected] = useState(false);
+  const { id } = useParams();
+  console.log(id);
   useEffect(() => {
     serviceGetList(["EMPLOYEES"]).then((res) => {
       if (!res.error) {
@@ -81,10 +85,18 @@ const useLocationDetail = ({ isSidePanel }) => {
       serviceGetLocationDetails({ id: id }).then((res) => {
         if (!res.error) {
           const data = res?.data?.details;
+
           setForm({
             ...data,
+            name_en: data?.name_en,
             is_active: data?.status === Constants.GENERAL_STATUS.ACTIVE,
           });
+
+          setGeoFence(
+            data?.geofence?.coordinates
+              ? data.geofence.coordinates.map((coordinate) => [...coordinate])
+              : []
+          );
         } else {
           SnackbarUtils.error(res?.message);
         }
@@ -94,6 +106,7 @@ const useLocationDetail = ({ isSidePanel }) => {
 
   useEffect(() => {
     if (mapAddress) {
+      console.log("map Address");
       checkSalaryInfoDebouncer(mapAddress, "address", errorData);
       setForm({ ...form, address: mapAddress });
     }
@@ -101,6 +114,7 @@ const useLocationDetail = ({ isSidePanel }) => {
 
   const checkForSalaryInfo = (data, fieldName, errorArr) => {
     if (data) {
+      if (!id) return;
       let filteredForm = { id: id ? id : "" };
       filteredForm[fieldName] = data;
       let req = serviceLocationCheck({
@@ -110,7 +124,7 @@ const useLocationDetail = ({ isSidePanel }) => {
         if (!res.error) {
           const errors = JSON.parse(JSON.stringify(errorArr));
           if (res.data.is_exists) {
-            errors[fieldName] = `Location ${fieldName} Exist`;
+            errors[fieldName] = `Location ${data} Exist`;
             setErrorData(errors);
           } else {
             delete errors[fieldName];
@@ -121,14 +135,22 @@ const useLocationDetail = ({ isSidePanel }) => {
     }
   };
   const checkSalaryInfoDebouncer = useMemo(() => {
+    console.log("DEBOUNCE");
     return debounce((e, fieldName, errorArr) => {
       checkForSalaryInfo(e, fieldName, errorArr);
     }, 1000);
-  }, []);
+  }, [checkForSalaryInfo]);
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
     let required = ["name_en", "name_hi", "code", "city", "address", "type"];
+
+    if (!geofencingSelected) {
+      errors["geofencing"] = true;
+      SnackbarUtils.error("Please select the geo-fencing boundary on the Map");
+    } else {
+      delete errors["geofencing"];
+    }
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -139,6 +161,14 @@ const useLocationDetail = ({ isSidePanel }) => {
         delete errors[val];
       }
     });
+    if (form?.google_page_url) {
+      if (!form.google_page_url.startsWith("https://")) {
+        errors["google_page_url"] = true;
+        SnackbarUtils.error("Please Enter Google Page URL With https://");
+      } else {
+        delete errors["google_page_url"];
+      }
+    }
     if (
       form?.contact &&
       (!isNum(form?.contact) || form?.contact?.length !== 10)
@@ -153,21 +183,58 @@ const useLocationDetail = ({ isSidePanel }) => {
     return errors;
   }, [form, errorData]);
 
-  console.log("errorData", errorData);
-  const handleCoordinate = (data) => {
-    setGeoLocation(data);
-  };
+  const handleCoordinate = useCallback(
+    (data) => {
+      console.log(data);
+      setGeoLocation(data);
+
+      setGeofencingSelected(true);
+    },
+    [setGeoLocation, setGeoFence]
+  );
+
   const submitToServer = useCallback(() => {
+    console.log(isSubmitting);
     if (!isSubmitting) {
+      console.log("submitToServer called", isSubmitting);
       setIsSubmitting(true);
-      let req = null;
+      let req;
+
       if (id) {
+        const updateData = {
+          id: form?.id,
+          name_en: form?.name_en,
+          name_hi: form?.name_hi,
+          code: form?.code,
+          city: form?.city,
+          type: form?.type,
+          contact: form?.contact,
+          head_id: form?.head_id,
+          address: form?.address,
+          coordinates: form?.location?.coordinates,
+          google_page_url: form?.google_page_url,
+          is_department_attendance: form?.is_department_attendance,
+          is_active: form?.is_active,
+        };
+
         req = serviceUpdateLocation({
-          ...form,
+          ...updateData,
         });
       } else {
         req = serviceCreateLocation({
-          ...form,
+          // ...form,
+          name_en: form?.name_en,
+          name_hi: form?.name_hi,
+          code: form?.code,
+          city: form?.city,
+          type: form?.type,
+          contact: form?.contact,
+          head_id: form?.head_id,
+          address: form?.address,
+          google_page_url: form?.google_page_url,
+          is_department_attendance: form?.is_department_attendance,
+          is_active: form?.is_active,
+
           coordinates: [lat, lng],
           geofence_coordinates: geoLocation ? geoLocation : [],
         });
@@ -175,23 +242,25 @@ const useLocationDetail = ({ isSidePanel }) => {
       req.then((res) => {
         if (!res.error) {
           window.location.reload();
+          //  historyUtils.goBack()
+          historyUtils.push(RouteName.LOCATIONS);
         } else {
           SnackbarUtils.error(res.message);
         }
         setIsSubmitting(false);
       });
     }
-  }, [form, isSubmitting, setIsSubmitting, id, geoLocation]);
+  }, [form, isSubmitting, setIsSubmitting, id, geoLocation, setGeoFence]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
-    console.log("erros", errors);
+    console.log("Component mounted or updated");
     if (Object.keys(errors).length > 0) {
       setErrorData(errors);
       return true;
     }
     submitToServer();
-  }, [checkFormValidation, setErrorData, form, submitToServer, geoLocation]);
+  }, [checkFormValidation, setErrorData, form, submitToServer]);
 
   const removeError = useCallback(
     (title) => {
@@ -206,6 +275,7 @@ const useLocationDetail = ({ isSidePanel }) => {
     (text, fieldName) => {
       let shouldRemoveError = true;
       const t = { ...form };
+
       if (fieldName === "type") {
         if (!text || (isAlpha(text) && text.toString().length <= 30)) {
           t[fieldName] = text;
@@ -254,7 +324,7 @@ const useLocationDetail = ({ isSidePanel }) => {
 
   const handleMapAddress = useCallback(
     (lat, lng, address) => {
-      console.log("handleMapAddress", lat, lng, address);
+      console.log(address, lat, lng);
       setLat(lat);
       setLng(lng);
       setMapAddress(address);
@@ -265,6 +335,12 @@ const useLocationDetail = ({ isSidePanel }) => {
   const handleCityCountry = (cityCountyObj) => {
     console.log("handleCityCountry", cityCountyObj);
   };
+
+  const openGoogleMaps = useCallback(() => {
+    const url = `https://www.google.com/maps/place?q=${lat},${lng}`;
+
+    window.open(url, "_blank");
+  }, [lat, lng]);
 
   return {
     form,
@@ -289,6 +365,8 @@ const useLocationDetail = ({ isSidePanel }) => {
     lat,
     lng,
     geofence,
+    openGoogleMaps,
+    geoLocation,
   };
 };
 

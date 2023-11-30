@@ -11,6 +11,8 @@ import CustomAutoComplete from "../../../components/FormFields/AutoCompleteText/
 import Geofencing from "./component/Geofencing/Geofencing.component";
 import { CheckBox } from "@material-ui/icons";
 import DialogIncComponent from "./component/confirmDialogInc";
+import SidePanelComponent from "../../../components/SidePanel/SidePanel.component";
+import { useEffect } from "react";
 
 const useStyles = makeStyles((theme) => ({
   iconBtnError: {
@@ -22,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LocationCreateView = ({isSidePanel}) => {
+const LocationCreateView = ({ isSidePanel }) => {
   const {
     form,
     errorData,
@@ -42,9 +44,12 @@ const LocationCreateView = ({isSidePanel}) => {
     handleCityCountry,
     lat,
     lng,
-    geofence
-  } = useLocationDetail({isSidePanel});
+    geofence,
+    handleToggleSidePannel,
+    geoLocation,
+  } = useLocationDetail({ isSidePanel });
   // const geofence = [];
+  console.log(geofence, "GEOFENCE");
 
   return (
     <div className={styles.locationWeap}>
@@ -172,6 +177,7 @@ const LocationCreateView = ({isSidePanel}) => {
           </div>
         </div>
       </div>
+
       <div className={"formFlex"}>
         <div className={"formGroup"}>
           <CustomTextField
@@ -200,14 +206,15 @@ const LocationCreateView = ({isSidePanel}) => {
       </div>
       <div className={"formFlex"}>
         <div className="formGroup">
+        
           <Geofencing polygon={geofence} handleSave={handleCoordinate} />
         </div>
       </div>
       <div className={"formFlex"}>
         <div className={"formGroup"}>
           <CustomTextField
-            isError={errorData?.google_page_url}
-            errorText={errorData?.google_page_url}
+            // isError={errorData?.google_page_url}
+            // errorText={errorData?.google_page_url}
             label={"Google Page URL"}
             value={form?.google_page_url}
             onTextChange={(text) => {
@@ -253,7 +260,7 @@ const LocationCreateView = ({isSidePanel}) => {
         <ButtonBase
           disabled={isSubmitting}
           type={"button"}
-          onClick={handleSubmit}
+          onClick={() => handleSubmit()}
           className={styles.createBtn}
         >
           {id ? "Update" : "Create"}
