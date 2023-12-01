@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LocationCreateView = ({ isSidePanel }) => {
+const LocationCreateView = ({ isSidePanel , setSidePanel}) => {
   const {
     form,
     errorData,
@@ -48,7 +48,7 @@ const LocationCreateView = ({ isSidePanel }) => {
     handleToggleSidePannel,
     geoLocation,
     setGeoFence
-  } = useLocationDetail({ isSidePanel });
+  } = useLocationDetail({ isSidePanel , setSidePanel});
   // const geofence = [];
   console.log(geofence, "GEOFENCE");
 

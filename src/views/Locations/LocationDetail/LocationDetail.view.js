@@ -27,6 +27,7 @@ function LocationDetail() {
     isSidePanel,
     handleToggleSidePannel,
     openGoogleMaps,
+    setSidePanel
   } = useLocationDetail({});
 console.log(data)
   const tableStructure = useMemo(() => {
@@ -243,7 +244,7 @@ console.log(data)
         side={"right"}
       >
         
-        <LocationCreateView isSidePanel={isSidePanel} />
+        <LocationCreateView isSidePanel={isSidePanel} setSidePanel={setSidePanel}/>
       </SidePanelComponent>
     </div>
   );

@@ -81,6 +81,7 @@ function useLocationDetail() {
     isSidePanel,
     // handleToggleSidePannel,
     openGoogleMaps,
+    setSidePanel
   };
 }
 

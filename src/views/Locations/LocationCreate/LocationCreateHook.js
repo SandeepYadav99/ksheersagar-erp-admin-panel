@@ -37,7 +37,7 @@ const initialForm = {
   google_page_url: "",
   contact: "",
 };
-const useLocationDetail = ({ isSidePanel }) => {
+const useLocationDetail = ({ isSidePanel, setSidePanel }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [geofence, setGeoFence] = useState([]);
@@ -238,7 +238,13 @@ const useLocationDetail = ({ isSidePanel }) => {
       req.then((res) => {
         if (!res.error) {
           window.location.reload();
-          historyUtils.goBack();
+          if (!id) {
+            historyUtils.push(RouteName.LOCATIONS);
+          } else {
+             setSidePanel();
+
+            // historyUtils.push(RouteName.LOCATIONS_DETAILS + id);
+          }
           // historyUtils.push(RouteName.LOCATIONS);
         } else {
           SnackbarUtils.error(res.message);
@@ -246,7 +252,7 @@ const useLocationDetail = ({ isSidePanel }) => {
         setIsSubmitting(false);
       });
     }
-  }, [form, isSubmitting, setIsSubmitting, id, geoLocation, setGeoFence]);
+  }, [form, isSubmitting, setIsSubmitting, id, geoLocation, setGeoFence, setSidePanel]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
