@@ -144,12 +144,12 @@ const useLocationDetail = ({ isSidePanel }) => {
     const errors = { ...errorData };
     let required = ["name_en", "name_hi", "code", "city", "address", "type"];
 
-    // if (!geofencingSelected) {
-    //   errors["geofencing"] = true;
-    //   SnackbarUtils.error("Please select the geo-fencing boundary on the Map");
-    // } else {
-    //   delete errors["geofencing"];
-    // }
+    if (!geofencingSelected) {
+      errors["geofencing"] = true;
+      SnackbarUtils.error("Please select the geo-fencing boundary on the Map");
+    } else {
+      delete errors["geofencing"];
+    }
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -180,27 +180,29 @@ const useLocationDetail = ({ isSidePanel }) => {
       }
     });
     return errors;
-  }, [form, errorData]);
+  }, [form, errorData, setGeofencingSelected, geofencingSelected]);
 
   const handleCoordinate = useCallback(
     (data) => {
       console.log(data);
       setGeoLocation(data);
-setGeoFence(data)
+      setGeoFence(data);
       setGeofencingSelected(true);
     },
-    [setGeoLocation, setGeoFence]
+    [setGeoLocation, setGeoFence, setGeofencingSelected]
   );
-  
+
   const submitToServer = useCallback(() => {
     console.log(isSubmitting);
     if (!isSubmitting) {
-      
       setIsSubmitting(true);
       // if (geofence.length >= 0) {
-      //   SnackbarUtils.error("Please select the geo-fencing boundary on the Map");
+      //   setGeofencingSelected(false);
+      //   SnackbarUtils.error(
+      //     "Please select the geo-fencing boundary on the Map"
+      //   );
       //   setIsSubmitting(false);
-      
+      //   return
       // }
       let req;
 
@@ -235,9 +237,9 @@ setGeoFence(data)
       }
       req.then((res) => {
         if (!res.error) {
-          // window.location.reload();
-          //  historyUtils.goBack()
-          historyUtils.push(RouteName.LOCATIONS);
+          window.location.reload();
+          historyUtils.goBack();
+          // historyUtils.push(RouteName.LOCATIONS);
         } else {
           SnackbarUtils.error(res.message);
         }
