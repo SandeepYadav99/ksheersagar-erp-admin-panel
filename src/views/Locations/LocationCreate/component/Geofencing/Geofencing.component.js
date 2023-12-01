@@ -26,7 +26,14 @@ class Geofencing extends Component {
         this.renderMap();
         
     }
-
+    componentDidUpdate(prevProps) {
+        console.log('Updated Polygon:', this.props.polygon, prevProps);
+        if (this.props.polygon !== prevProps.polygon) {
+            this._updatePolygon(this.props.polygon);
+            this._renderUpdatePolygon(); // Add this line to re-render the map with updated polygon
+        }
+    }
+    
 
     componentWillUnmount() {
         const {is_error, booking_id} = this.state;
@@ -75,62 +82,68 @@ class Geofencing extends Component {
     
     _updatePolygon(data) {
         const { handleSave } = this.props;
+        console.log('Updated Polygon:', this.props.polygon);
         this.setState({
             polygon: data,
         });
         handleSave(data);
+       
     }
 
     _renderUpdatePolygon() {
         const google = window.google;
-        const {polygon} = this.props;
+        const { polygon } = this.props;
+    
+        // Check if the polygon array is empty or undefined
+        if (!polygon || polygon.length === 0) {
+            // Handle the case where the polygon is empty
+            console.warn('Polygon data is empty or undefined.');
+            return;
+        }
+    
         const subArea = new window.google.maps.Polygon({
-            paths: polygon.map((val) => { return { lat: val[0], lng: val[1] } }),
+            paths: polygon.map((val) => ({ lat: val[0], lng: val[1] })),
             fillOpacity: 0.5,
             strokeWeight: 2,
             strokeColor: '#57ACF9',
             clickable: true,
             editable: true,
             draggable: true,
-            zIndex: 1
+            zIndex: 1,
         });
-
+    
         subArea.setMap(this.map);
-        // this.map.setOptions({ maxZoom: 15 });
-        // map.fitBounds(bounds);
-
-
+    
         const prop = this;
-
-
+    
         google.maps.event.addListener(subArea, 'click', function () {
             // console.log(this.id + ' ' + this.getPath().getArray().toString());
         });
-
+    
         google.maps.event.addListener(subArea, 'dragend', function () {
             const tempArray = [];
             this.getPath().getArray().forEach((val) => {
                 tempArray.push([val.lat(), val.lng()]);
-            })
+            });
             prop._updatePolygon(tempArray);
         });
-
-        google.maps.event.addListener(subArea.getPath(), "insert_at", getPath);
-        google.maps.event.addListener(subArea.getPath(), "remove_at", getPath);
-        google.maps.event.addListener(subArea.getPath(), "set_at", getPath);
-
+    
+        google.maps.event.addListener(subArea.getPath(), 'insert_at', getPath);
+        google.maps.event.addListener(subArea.getPath(), 'remove_at', getPath);
+        google.maps.event.addListener(subArea.getPath(), 'set_at', getPath);
+    
         function getPath() {
-            var path = subArea.getPath();
-            var len = path.getLength();
+            const path = subArea.getPath();
+            const len = path.getLength();
             const tempArray = [];
-            for (var i = 0; i < len; i++) {
+            for (let i = 0; i < len; i++) {
                 const temp = this.getAt(i);
                 tempArray.push([temp.lat(), temp.lng()]);
-                // tempArray.push(this.getAt(i).toUrlValue(6));
             }
             prop._updatePolygon(tempArray);
         }
     }
+    
 
     _renderNewPolygon(drawingManager) {
         const polygonArray = [];

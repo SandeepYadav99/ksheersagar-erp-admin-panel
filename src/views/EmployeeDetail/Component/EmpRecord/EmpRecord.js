@@ -38,13 +38,16 @@ const JobCalendarComponent = ({ id }) => {
   const getData = async (date = new Date()) => {
     const month = moment(new Date(date)).format("MM");
     const year = moment(new Date(date)).format("YYYY");
-
+  
+    const start_date = moment(date).format("YYYY-MM-DD");
+    const end_date = moment(date).format("YYYY-MM-DD");
+    
     const req = await serviceGetEmployMonthData({
       employee_id: id,
       month,
       year,
-      start_date: startDate,
-      end_date: endDate,
+      start_date,
+      end_date
     });
     if (!req?.error) {
       const data = req.data.month_data;

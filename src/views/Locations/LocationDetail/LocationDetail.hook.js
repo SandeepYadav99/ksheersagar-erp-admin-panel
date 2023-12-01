@@ -5,7 +5,7 @@ import {
 } from "../../../services/Location.service";
 import { useParams } from "react-router";
 
-import ReactDOM from 'react-dom';
+import ReactDOM from "react-dom";
 import EmpInfo_Qr from "./component/QrDownload/EmpInfo_Qr";
 
 function useLocationDetail() {
@@ -16,7 +16,7 @@ function useLocationDetail() {
   const { id } = useParams();
   const [isSidePanel, setSidePanel] = useState(false);
   const [editData, setEditData] = useState(null);
-  
+
   const toggleApprovalDialog = useCallback(() => {
     setIsApprovalPopUp((e) => !e);
   }, [isApprovalPopUp]);
@@ -49,27 +49,27 @@ function useLocationDetail() {
   }, []);
 
   const handleDownload = (data) => {
-    const newWindow = window.open('', '_blank');
+    const newWindow = window.open("", "_blank");
     if (newWindow) {
-      ReactDOM.render(<EmpInfo_Qr data={data}/>, newWindow.document.body);
-    } 
+      ReactDOM.render(<EmpInfo_Qr data={data} />, newWindow.document.body);
+    }
     // const newTab = window.open(imageUrl, "_blank");
     // newTab.focus();
   };
   const handleEditBtn = useCallback(
     (data) => {
-       setEditData(data);
+      setEditData(data);
       setSidePanel((e) => !e);
     },
     [setEditData, setSidePanel]
   );
-  
+
   const openGoogleMaps = useCallback((data) => {
     const url = `https://www.google.com/maps/place?q=${data[0]},${data[1]}`;
-   
+
     window.open(url, "_blank");
-  },[]);
-  
+  }, []);
+
   return {
     data,
     id,
@@ -80,7 +80,8 @@ function useLocationDetail() {
     handleEditBtn,
     isSidePanel,
     // handleToggleSidePannel,
-    openGoogleMaps
+    openGoogleMaps,
+    setSidePanel
   };
 }
 
