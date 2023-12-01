@@ -186,18 +186,22 @@ const useLocationDetail = ({ isSidePanel }) => {
     (data) => {
       console.log(data);
       setGeoLocation(data);
-
+setGeoFence(data)
       setGeofencingSelected(true);
     },
     [setGeoLocation, setGeoFence]
   );
-  console.log(form);
+  
   const submitToServer = useCallback(() => {
     console.log(isSubmitting);
     if (!isSubmitting) {
-      console.log("submitToServer called", isSubmitting);
+      
       setIsSubmitting(true);
-
+      // if (geofence.length >= 0) {
+      //   SnackbarUtils.error("Please select the geo-fencing boundary on the Map");
+      //   setIsSubmitting(false);
+      
+      // }
       let req;
 
       if (id) {
@@ -231,7 +235,7 @@ const useLocationDetail = ({ isSidePanel }) => {
       }
       req.then((res) => {
         if (!res.error) {
-          window.location.reload();
+          // window.location.reload();
           //  historyUtils.goBack()
           historyUtils.push(RouteName.LOCATIONS);
         } else {
