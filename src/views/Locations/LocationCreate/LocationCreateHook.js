@@ -42,7 +42,7 @@ const useLocationDetail = ({ isSidePanel }) => {
 
   const [geofence, setGeoFence] = useState([]);
   const [geoLocation, setGeoLocation] = useState(null);
-  
+
   const [isDialog, setIsDialog] = useState(false);
   const [errorData, setErrorData] = useState({});
   const [mapAddress, setMapAddress] = useState("");
@@ -106,7 +106,6 @@ const useLocationDetail = ({ isSidePanel }) => {
 
   useEffect(() => {
     if (mapAddress) {
-  
       checkSalaryInfoDebouncer(mapAddress, "address", errorData);
       setForm({ ...form, address: mapAddress });
     }
@@ -145,12 +144,12 @@ const useLocationDetail = ({ isSidePanel }) => {
     const errors = { ...errorData };
     let required = ["name_en", "name_hi", "code", "city", "address", "type"];
 
-    if (!geofencingSelected) {
-      errors["geofencing"] = true;
-      SnackbarUtils.error("Please select the geo-fencing boundary on the Map");
-    } else {
-      delete errors["geofencing"];
-    }
+    // if (!geofencingSelected) {
+    //   errors["geofencing"] = true;
+    //   SnackbarUtils.error("Please select the geo-fencing boundary on the Map");
+    // } else {
+    //   delete errors["geofencing"];
+    // }
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -192,12 +191,13 @@ const useLocationDetail = ({ isSidePanel }) => {
     },
     [setGeoLocation, setGeoFence]
   );
-
+  console.log(form);
   const submitToServer = useCallback(() => {
     console.log(isSubmitting);
     if (!isSubmitting) {
       console.log("submitToServer called", isSubmitting);
       setIsSubmitting(true);
+
       let req;
 
       if (id) {
@@ -215,6 +215,7 @@ const useLocationDetail = ({ isSidePanel }) => {
           google_page_url: form?.google_page_url,
           is_department_attendance: form?.is_department_attendance,
           is_active: form?.is_active,
+          geofence_coordinates: geoLocation ? geoLocation : [],
         };
 
         req = serviceUpdateLocation({
@@ -222,18 +223,7 @@ const useLocationDetail = ({ isSidePanel }) => {
         });
       } else {
         req = serviceCreateLocation({
-          // ...form,
-          name_en: form?.name_en,
-          name_hi: form?.name_hi,
-          code: form?.code,
-          city: form?.city,
-          type: form?.type,
-          contact: form?.contact,
-          head_id: form?.head_id,
-          address: form?.address,
-          google_page_url: form?.google_page_url,
-          is_department_attendance: form?.is_department_attendance,
-          is_active: form?.is_active,
+          ...form,
 
           coordinates: [lat, lng],
           geofence_coordinates: geoLocation ? geoLocation : [],
@@ -367,6 +357,7 @@ const useLocationDetail = ({ isSidePanel }) => {
     geofence,
     openGoogleMaps,
     geoLocation,
+    setGeoFence,
   };
 };
 
