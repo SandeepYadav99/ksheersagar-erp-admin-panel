@@ -42,7 +42,7 @@ const useLocationDetail = ({ isSidePanel }) => {
 
   const [geofence, setGeoFence] = useState([]);
   const [geoLocation, setGeoLocation] = useState(null);
-  console.log(geofence, "GEO");
+  
   const [isDialog, setIsDialog] = useState(false);
   const [errorData, setErrorData] = useState({});
   const [mapAddress, setMapAddress] = useState("");
@@ -106,7 +106,7 @@ const useLocationDetail = ({ isSidePanel }) => {
 
   useEffect(() => {
     if (mapAddress) {
-      console.log("map Address");
+  
       checkSalaryInfoDebouncer(mapAddress, "address", errorData);
       setForm({ ...form, address: mapAddress });
     }
