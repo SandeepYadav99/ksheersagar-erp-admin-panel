@@ -241,9 +241,9 @@ const useLocationDetail = ({ isSidePanel, setSidePanel }) => {
           if (!id) {
             historyUtils.push(RouteName.LOCATIONS);
           } else {
-             setSidePanel();
+            //  setSidePanel();
 
-            // historyUtils.push(RouteName.LOCATIONS_DETAILS + id);
+             historyUtils.push(RouteName.LOCATIONS_DETAILS + id);
           }
           // historyUtils.push(RouteName.LOCATIONS);
         } else {
