@@ -38,16 +38,16 @@ const JobCalendarComponent = ({ id }) => {
   const getData = async (date = new Date()) => {
     const month = moment(new Date(date)).format("MM");
     const year = moment(new Date(date)).format("YYYY");
-  
+
     const start_date = moment(date).format("YYYY-MM-DD");
     const end_date = moment(date).format("YYYY-MM-DD");
-    
+
     const req = await serviceGetEmployMonthData({
       employee_id: id,
       month,
       year,
-      start_date,
-      end_date
+      // start_date,
+      // end_date
     });
     if (!req?.error) {
       const data = req.data.month_data;
@@ -75,7 +75,7 @@ const JobCalendarComponent = ({ id }) => {
     getData(d);
   };
 
-  
+
   const eventPropGetter = (e) => {
 
 
@@ -97,7 +97,7 @@ const JobCalendarComponent = ({ id }) => {
         style: {
           backgroundColor: "#EDFCED",
           color: "#0E9717",
-          
+
           padding:"30px",
           outline: "none",
           fontSize: "10px",
@@ -109,7 +109,7 @@ const JobCalendarComponent = ({ id }) => {
         style: {
           backgroundColor: "#F3EDFE",
           color: "#7848CB",
-          
+
           padding:"30px",
           outline: "none",
           fontSize: "10px",
@@ -121,7 +121,7 @@ const JobCalendarComponent = ({ id }) => {
         style: {
           backgroundColor: "#FFE4E2",
           color: "#FF493F",
-          
+
           padding:"30px",
           outline: "none",
           fontSize: "10px",
@@ -133,7 +133,7 @@ const JobCalendarComponent = ({ id }) => {
         style: {
           backgroundColor: "#EDFCED",
           color: "#0E9717",
-          
+
           padding:"30px",
           outline: "none",
           fontSize: "10px",
@@ -145,7 +145,7 @@ const JobCalendarComponent = ({ id }) => {
         style: {
           backgroundColor: "#FCEDFB",
           color: "#CB48B7",
-         
+
           padding:"30px",
           outline: "none",
           fontSize: "10px",
@@ -157,7 +157,7 @@ const JobCalendarComponent = ({ id }) => {
         style: {
           backgroundColor: "#EDFCED",
           color: "#0E9717",
-         
+
           padding:"30px",
           outline: "none",
           fontSize: "10px",
@@ -169,7 +169,7 @@ const JobCalendarComponent = ({ id }) => {
         style: {
           backgroundColor: "#FCFAED",
           color: "#D6B820",
-         
+
           padding:"30px",
           outline: "none",
           fontSize: "10px",
@@ -181,7 +181,7 @@ const JobCalendarComponent = ({ id }) => {
         style: {
           backgroundColor: "#EBFCFC",
           color: "#0D9191",
-         
+
           padding:"30px",
           outline: "none",
           fontSize: "10px",
@@ -193,12 +193,12 @@ const JobCalendarComponent = ({ id }) => {
         style: {
           backgroundColor: "#EEF3FF",
           color: "#919BB0",
-         
+
           padding:"30px",
           outline: "none",
           fontSize: "10px",
         },
-      
+
       };
     }
     return {
@@ -215,7 +215,7 @@ const JobCalendarComponent = ({ id }) => {
   const handleEventClick = () => {
     setIsApprovalPopUp(true);
   };
-  
+
   const localizer = momentLocalizer(moment);
 
   const CustomEventComponent = ({ event }) => (
@@ -231,7 +231,7 @@ const JobCalendarComponent = ({ id }) => {
       <div style={{ marginTop: "20px" }} />
       <Calendar
         views={[Views.MONTH]}
-        
+
         components={{
           timeSlotWrapper: ColoredDateCellWrapper,
           event: CustomEventComponent,
@@ -239,8 +239,8 @@ const JobCalendarComponent = ({ id }) => {
         onNavigate={handleNavigation}
         localizer={localizer}
         defaultDate={new Date()}
-       
-      
+
+
         eventPropGetter={eventPropGetter}
         defaultView="month"
         events={events}
