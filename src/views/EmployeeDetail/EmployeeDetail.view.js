@@ -155,4 +155,4 @@ function EmployeeDetail() {
   );
 }
 
-export default EmployeeDetail;
+export default React.memo(EmployeeDetail);

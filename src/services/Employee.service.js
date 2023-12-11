@@ -72,5 +72,5 @@ export async function serviceGetEmployMonthData(params) {
 }
 
 export async function serviceGetEmployLogs(params) {
-    return await postRequest('/attendance/logs', params);
+    return await postRequest('attendance/logs', params);
 }

@@ -235,3 +235,8 @@
     margin-left: 20px;
  
   }
+
+  .modal-open {
+    overflow: hidden;
+    z-index: 0;
+  }

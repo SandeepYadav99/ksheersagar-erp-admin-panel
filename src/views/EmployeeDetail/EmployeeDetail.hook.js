@@ -18,6 +18,7 @@ function useEmployeeDetails() {
         if (!res.error) {
           const data = res?.data?.details;
           setData(data);
+          
         }
         setIsSubmitting(false);
       });

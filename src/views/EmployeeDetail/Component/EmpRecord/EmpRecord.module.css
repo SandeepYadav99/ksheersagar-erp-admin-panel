@@ -72,3 +72,8 @@
 .event_status{
   margin-top: 25px;
 }
+
+.modal-open {
+  overflow: hidden;
+  z-index: 0;
+}
