@@ -256,15 +256,16 @@ const JobCalendarComponent = ({ id }) => {
         onSelectEvent={handleEventClick}
        
       />
-
-      <AddEmployRecord_Dilog
-        isOpen={isApprovalPopUp}
-        handleToggle={toggleApprovalDialog}
-        formValue={formValue}
-        id={id}
-        date={startDate}
-        handleClose={handleClose}
-      />
+      {isApprovalPopUp && (
+        <AddEmployRecord_Dilog
+          isOpen={isApprovalPopUp}
+          handleToggle={toggleApprovalDialog}
+          formValue={formValue}
+          id={id}
+          date={startDate}
+          handleClose={handleClose}
+        />
+      )}
     </div>
   );
 };
