@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-pascal-case */
 import React, { useState, useEffect, useCallback } from "react";
 import { Calendar, momentLocalizer, Views } from "react-big-calendar";
 import moment from "moment";
@@ -22,20 +23,20 @@ const JobCalendarComponent = ({ id }) => {
   const [formValue, setFormValue] = useState({});
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [currentDate, setCurrentDate] = useState(new Date());
 
   const toggleApprovalDialog = useCallback(
     (obj) => {
-      setIsApprovalPopUp((e) => !e);
       if (obj?.id) {
         setFormValue(obj);
-      } else {
-        setFormValue({});
+        setIsApprovalPopUp(true);
       }
     },
+
     [isApprovalPopUp, formValue]
   );
 
-  const getData = async (date = new Date()) => {
+  const getData = async (date ) => { // date = new Date()
     const month = moment(new Date(date)).format("MM");
     const year = moment(new Date(date)).format("YYYY");
 
@@ -61,24 +62,12 @@ const JobCalendarComponent = ({ id }) => {
     }
   };
 
-  const handleSelectSlot = ({ start, end }) => {
-    const formattedStartDate = moment(start).format("YYYY-MM-DD");
-    const formattedEndDate = moment(end).format("YYYY-MM-DD");
-
-    setStartDate(formattedStartDate);
-    setEndDate(formattedEndDate);
-
-    getData(start);
-  };
-
-  const handleNavigation = (d, c, e, f) => {
+  const handleNavigation = useCallback((d, c, e, f) => {
     getData(d);
-  };
+    setCurrentDate(d);
+  }, []);
 
-
-  const eventPropGetter = (e) => {
-
-
+  const eventPropGetter = useCallback((e) => {
     if (e.type === "ABSENT") {
       return {
         className: "status_absendt",
@@ -87,8 +76,8 @@ const JobCalendarComponent = ({ id }) => {
           color: "#FF493F",
           outline: "none",
           fontSize: "10px",
-         textAlign:"bottom",
-          padding:"30px"
+          textAlign: "bottom",
+          padding: "20px",
         },
       };
     } else if (e.type === "PRESENT") {
@@ -98,7 +87,7 @@ const JobCalendarComponent = ({ id }) => {
           backgroundColor: "#EDFCED",
           color: "#0E9717",
 
-          padding:"30px",
+          padding: "20px",
           outline: "none",
           fontSize: "10px",
         },
@@ -110,7 +99,7 @@ const JobCalendarComponent = ({ id }) => {
           backgroundColor: "#F3EDFE",
           color: "#7848CB",
 
-          padding:"30px",
+          padding: "20px",
           outline: "none",
           fontSize: "10px",
         },
@@ -122,7 +111,7 @@ const JobCalendarComponent = ({ id }) => {
           backgroundColor: "#FFE4E2",
           color: "#FF493F",
 
-          padding:"30px",
+          padding: "20px",
           outline: "none",
           fontSize: "10px",
         },
@@ -134,7 +123,7 @@ const JobCalendarComponent = ({ id }) => {
           backgroundColor: "#EDFCED",
           color: "#0E9717",
 
-          padding:"30px",
+          padding: "20px",
           outline: "none",
           fontSize: "10px",
         },
@@ -146,7 +135,7 @@ const JobCalendarComponent = ({ id }) => {
           backgroundColor: "#FCEDFB",
           color: "#CB48B7",
 
-          padding:"30px",
+          padding: "20px",
           outline: "none",
           fontSize: "10px",
         },
@@ -158,31 +147,31 @@ const JobCalendarComponent = ({ id }) => {
           backgroundColor: "#EDFCED",
           color: "#0E9717",
 
-          padding:"30px",
+          padding: "20px",
           outline: "none",
           fontSize: "10px",
         },
       };
-    }else if (e.type === "HOLIDAY") {
+    } else if (e.type === "HOLIDAY") {
       return {
         className: "deliverySlot",
         style: {
           backgroundColor: "#FCFAED",
           color: "#D6B820",
 
-          padding:"30px",
+          padding: "20px",
           outline: "none",
           fontSize: "10px",
         },
       };
-    }else if (e.type === "WEEKEND") {
+    } else if (e.type === "WEEKEND") {
       return {
         className: "deliverySlot",
         style: {
           backgroundColor: "#EBFCFC",
           color: "#0D9191",
 
-          padding:"30px",
+          padding: "20px",
           outline: "none",
           fontSize: "10px",
         },
@@ -194,11 +183,22 @@ const JobCalendarComponent = ({ id }) => {
           backgroundColor: "#EEF3FF",
           color: "#919BB0",
 
-          padding:"30px",
+          padding: "20px",
           outline: "none",
           fontSize: "10px",
         },
+      };
+    } else if (e.type === "ON_BREAK") {
+      return {
+        className: "deliverySlot",
+        style: {
+          backgroundColor: "#FCF5ED",
+          color: "#FFA60C",
 
+          padding: "20px",
+          outline: "none",
+          fontSize: "10px",
+        },
       };
     }
     return {
@@ -206,23 +206,34 @@ const JobCalendarComponent = ({ id }) => {
         border: "none",
       },
     };
-  };
+  }, []);
 
   useEffect(() => {
-    getData();
-  }, [id, startDate, endDate]);
+    getData(currentDate);
+  }, [id, currentDate]);
 
-  const handleEventClick = () => {
+  const handleEventClick = useCallback((event) => {
     setIsApprovalPopUp(true);
-  };
+    setStartDate(moment(event.start).format("YYYY-MM-DD"));
+  }, []);
+
+  const handleClose = useCallback(() => {
+    setFormValue(null);
+    setIsApprovalPopUp(false);
+    // window.location.reload();
+    getData(startDate);
+  }, [startDate]);
 
   const localizer = momentLocalizer(moment);
 
-  const CustomEventComponent = ({ event }) => (
-    <div className="custom-event">
-      <div className={styles.event_status}>{event.title}</div>
-      {/* <div className="event-date">{moment(event.start).format("DD")}</div> */}
-    </div>
+  const CustomEventComponent = useCallback(
+    ({ event }) => (
+      <div className="custom-event">
+        <div className={styles.event_status}>{event.title}</div>
+        {/* <div className="event-date">{moment(event.start).format("DD")}</div> */}
+      </div>
+    ),
+    []
   );
 
   return (
@@ -231,7 +242,6 @@ const JobCalendarComponent = ({ id }) => {
       <div style={{ marginTop: "20px" }} />
       <Calendar
         views={[Views.MONTH]}
-
         components={{
           timeSlotWrapper: ColoredDateCellWrapper,
           event: CustomEventComponent,
@@ -239,24 +249,25 @@ const JobCalendarComponent = ({ id }) => {
         onNavigate={handleNavigation}
         localizer={localizer}
         defaultDate={new Date()}
-
-
         eventPropGetter={eventPropGetter}
         defaultView="month"
         events={events}
-        style={{ padding: "20px", height: "90vh"  }}
+        style={{ padding: "20px", height: "90vh" }}
         onSelectEvent={handleEventClick}
-        onSelectSlot={handleSelectSlot}
+       
       />
-      <AddEmployRecord_Dilog
-        isOpen={isApprovalPopUp}
-        handleToggle={toggleApprovalDialog}
-        formValue={formValue}
-        id={id}
-        date={startDate}
-      />
+      {isApprovalPopUp && (
+        <AddEmployRecord_Dilog
+          isOpen={isApprovalPopUp}
+          handleToggle={toggleApprovalDialog}
+          formValue={formValue}
+          id={id}
+          date={startDate}
+          handleClose={handleClose}
+        />
+      )}
     </div>
   );
 };
 
-export default JobCalendarComponent;
+export default React.memo(JobCalendarComponent);

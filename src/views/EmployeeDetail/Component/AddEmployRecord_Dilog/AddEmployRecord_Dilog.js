@@ -1,9 +1,7 @@
 import React, { useEffect, useMemo } from "react";
 import { ButtonBase, Dialog, Slide, makeStyles } from "@material-ui/core";
-
 import DataTables from "../../../../Datatables/Datatable.table";
 import styles from "./Style.module.css";
-import PageBox from "../../../../components/PageBox/PageBox.component";
 import defaultImage from "../../../../assets/img/ic_user_pic.png";
 import Constants from "../../../../config/constants";
 import { useState } from "react";
@@ -38,6 +36,7 @@ const AddEmployRecord_Dilog = ({
   formValue,
   id,
   date,
+  handleClose,
 }) => {
   const classes = useStyles();
   const Transition = React.forwardRef(function Transition(props, ref) {
@@ -47,10 +46,11 @@ const AddEmployRecord_Dilog = ({
   const [details, setDetails] = useState([]);
 
   useEffect(() => {
+    if (!date || !id) return;
     serviceGetEmployLogs({ employee_id: id, date: date }).then((res) => {
       setDetails(res?.data);
     });
-  }, [id]);
+  }, [date]);
 
   const tableStructure = useMemo(() => {
     return [
@@ -108,7 +108,7 @@ const AddEmployRecord_Dilog = ({
 
   const tableData = useMemo(() => {
     const datatableFunctions = {};
-
+   
     const datatable = {
       ...Constants.DATATABLE_PROPERTIES,
       columns: tableStructure,
@@ -117,7 +117,7 @@ const AddEmployRecord_Dilog = ({
     };
 
     return { datatableFunctions, datatable };
-  }, [details, tableStructure, details]);
+  }, [details, tableStructure]);
 
   return (
     <div>
@@ -128,7 +128,9 @@ const AddEmployRecord_Dilog = ({
         maxWidth={"md"}
         TransitionComponent={Transition}
         open={isOpen}
-        onClose={() => {}}
+        onClose={() => {
+          handleClose();
+        }}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
@@ -139,8 +141,7 @@ const AddEmployRecord_Dilog = ({
                 <ButtonBase
                   classes={{ root: classes.closeBtn }}
                   onClick={() => {
-                    handleToggle();
-                    window.location.reload();
+                    handleClose();
                   }}
                 >
                   <Close />
@@ -152,13 +153,25 @@ const AddEmployRecord_Dilog = ({
               </div>
             </div>
           </div>
-          <div className={styles.upperWrap}>
+        
+     
+     
+        <div className={styles.upperWrap}>
+          {details.length === 0 ? (
+          
+            <p className={styles.loader}>No Found Data</p>
+          ) : (
+           
             <DataTables
               {...tableData.datatable}
               {...tableData.datatableFunctions}
             />
-          </div>
-        </>
+          )}
+        </div>
+      </>
+            
+           
+          
       </Dialog>
     </div>
   );
