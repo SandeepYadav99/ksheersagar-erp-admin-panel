@@ -220,7 +220,7 @@ const JobCalendarComponent = ({ id }) => {
   const handleClose = useCallback(() => {
     setFormValue(null);
     setIsApprovalPopUp(false);
-    window.location.reload();
+    // window.location.reload();
     getData(startDate);
   }, [startDate]);
 
@@ -256,15 +256,16 @@ const JobCalendarComponent = ({ id }) => {
         onSelectEvent={handleEventClick}
         // onSelectSlot={handleSelectSlot}
       />
-
-      <AddEmployRecord_Dilog
-        isOpen={isApprovalPopUp}
-        handleToggle={toggleApprovalDialog}
-        formValue={formValue}
-        id={id}
-        date={startDate}
-        handleClose={handleClose}
-      />
+      {isApprovalPopUp && (
+        <AddEmployRecord_Dilog
+          isOpen={isApprovalPopUp}
+          handleToggle={toggleApprovalDialog}
+          formValue={formValue}
+          id={id}
+          date={startDate}
+          handleClose={handleClose}
+        />
+      )}
     </div>
   );
 };
