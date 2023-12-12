@@ -159,7 +159,7 @@ const AddEmployRecord_Dilog = ({
         <div className={styles.upperWrap}>
           {details.length === 0 ? (
           
-            <p className={styles.loader}>Not Found Attendance Record</p>
+            <p className={styles.loader}>No Found Data</p>
           ) : (
            
             <DataTables
