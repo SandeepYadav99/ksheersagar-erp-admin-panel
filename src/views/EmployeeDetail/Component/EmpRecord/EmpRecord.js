@@ -36,7 +36,7 @@ const JobCalendarComponent = ({ id }) => {
     [isApprovalPopUp, formValue]
   );
 
-  const getData = async (date) => {
+  const getData = async (date ) => { // date = new Date()
     const month = moment(new Date(date)).format("MM");
     const year = moment(new Date(date)).format("YYYY");
 
@@ -220,7 +220,7 @@ const JobCalendarComponent = ({ id }) => {
   const handleClose = useCallback(() => {
     setFormValue(null);
     setIsApprovalPopUp(false);
-    window.location.reload();
+    // window.location.reload();
     getData(startDate);
   }, [startDate]);
 
@@ -254,7 +254,7 @@ const JobCalendarComponent = ({ id }) => {
         events={events}
         style={{ padding: "20px", height: "90vh" }}
         onSelectEvent={handleEventClick}
-        // onSelectSlot={handleSelectSlot}
+       
       />
 
       <AddEmployRecord_Dilog
