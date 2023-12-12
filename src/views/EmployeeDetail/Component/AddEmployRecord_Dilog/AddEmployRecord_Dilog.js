@@ -28,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
   container: {
     overflow: "auto",
   },
- 
 }));
 
 const AddEmployRecord_Dilog = ({
@@ -37,7 +36,7 @@ const AddEmployRecord_Dilog = ({
   formValue,
   id,
   date,
-  handleClose
+  handleClose,
 }) => {
   const classes = useStyles();
   const Transition = React.forwardRef(function Transition(props, ref) {
@@ -47,22 +46,11 @@ const AddEmployRecord_Dilog = ({
   const [details, setDetails] = useState([]);
 
   useEffect(() => {
-    if (handleClose) {
-      document.body.classList.add("modal-open");
-    } else {
-      document.body.classList.remove("modal-open");
-    }
-  }, [handleClose]);
-  
-
-  useEffect(() => {
-    if (!date || !id ) return;
+    if (!date || !id) return;
     serviceGetEmployLogs({ employee_id: id, date: date }).then((res) => {
       setDetails(res?.data);
     });
-  }, [date, id]);
-
-  
+  }, [date]);
 
   const tableStructure = useMemo(() => {
     return [
@@ -120,7 +108,7 @@ const AddEmployRecord_Dilog = ({
 
   const tableData = useMemo(() => {
     const datatableFunctions = {};
-
+   
     const datatable = {
       ...Constants.DATATABLE_PROPERTIES,
       columns: tableStructure,
@@ -129,7 +117,7 @@ const AddEmployRecord_Dilog = ({
     };
 
     return { datatableFunctions, datatable };
-  }, [details, tableStructure, details]);
+  }, [details, tableStructure]);
 
   return (
     <div>
@@ -140,10 +128,8 @@ const AddEmployRecord_Dilog = ({
         maxWidth={"md"}
         TransitionComponent={Transition}
         open={isOpen}
-       
         onClose={() => {
-          handleClose()
-        
+          handleClose();
         }}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -156,7 +142,6 @@ const AddEmployRecord_Dilog = ({
                   classes={{ root: classes.closeBtn }}
                   onClick={() => {
                     handleClose();
-                  
                   }}
                 >
                   <Close />
@@ -168,14 +153,25 @@ const AddEmployRecord_Dilog = ({
               </div>
             </div>
           </div>
-          <div className={styles.upperWrap}>
         
-             <DataTables
+     
+     
+        <div className={styles.upperWrap}>
+          {details.length === 0 ? (
+          
+            <p className={styles.loader}>Not Found Attendance Record</p>
+          ) : (
+           
+            <DataTables
               {...tableData.datatable}
               {...tableData.datatableFunctions}
-            /> 
-          </div>
-        </>
+            />
+          )}
+        </div>
+      </>
+            
+           
+          
       </Dialog>
     </div>
   );

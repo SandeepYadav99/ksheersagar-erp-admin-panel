@@ -240,3 +240,6 @@
     overflow: hidden;
     z-index: 0;
   }
+  .loader{
+    text-align: center;
+  }
