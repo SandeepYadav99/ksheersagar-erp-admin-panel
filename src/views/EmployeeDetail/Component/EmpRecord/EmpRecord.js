@@ -64,16 +64,8 @@ const JobCalendarComponent = ({ id }) => {
 
   const handleNavigation = useCallback((d, c, e, f) => {
     getData(d);
-<<<<<<< HEAD
     setCurrentDate(d);
   }, []);
-=======
-  };
-
-
-  const eventPropGetter = (e) => {
-
->>>>>>> 94c0cb133b185eed23edd491c581f07dd3f48b04
 
   const eventPropGetter = useCallback((e) => {
     if (e.type === "ABSENT") {
@@ -95,11 +87,7 @@ const JobCalendarComponent = ({ id }) => {
           backgroundColor: "#EDFCED",
           color: "#0E9717",
 
-<<<<<<< HEAD
           padding: "20px",
-=======
-          padding:"30px",
->>>>>>> 94c0cb133b185eed23edd491c581f07dd3f48b04
           outline: "none",
           fontSize: "10px",
         },
@@ -111,11 +99,7 @@ const JobCalendarComponent = ({ id }) => {
           backgroundColor: "#F3EDFE",
           color: "#7848CB",
 
-<<<<<<< HEAD
           padding: "20px",
-=======
-          padding:"30px",
->>>>>>> 94c0cb133b185eed23edd491c581f07dd3f48b04
           outline: "none",
           fontSize: "10px",
         },
@@ -127,11 +111,7 @@ const JobCalendarComponent = ({ id }) => {
           backgroundColor: "#FFE4E2",
           color: "#FF493F",
 
-<<<<<<< HEAD
           padding: "20px",
-=======
-          padding:"30px",
->>>>>>> 94c0cb133b185eed23edd491c581f07dd3f48b04
           outline: "none",
           fontSize: "10px",
         },
@@ -143,11 +123,7 @@ const JobCalendarComponent = ({ id }) => {
           backgroundColor: "#EDFCED",
           color: "#0E9717",
 
-<<<<<<< HEAD
           padding: "20px",
-=======
-          padding:"30px",
->>>>>>> 94c0cb133b185eed23edd491c581f07dd3f48b04
           outline: "none",
           fontSize: "10px",
         },
@@ -159,11 +135,7 @@ const JobCalendarComponent = ({ id }) => {
           backgroundColor: "#FCEDFB",
           color: "#CB48B7",
 
-<<<<<<< HEAD
           padding: "20px",
-=======
-          padding:"30px",
->>>>>>> 94c0cb133b185eed23edd491c581f07dd3f48b04
           outline: "none",
           fontSize: "10px",
         },
@@ -175,11 +147,7 @@ const JobCalendarComponent = ({ id }) => {
           backgroundColor: "#EDFCED",
           color: "#0E9717",
 
-<<<<<<< HEAD
           padding: "20px",
-=======
-          padding:"30px",
->>>>>>> 94c0cb133b185eed23edd491c581f07dd3f48b04
           outline: "none",
           fontSize: "10px",
         },
@@ -191,11 +159,7 @@ const JobCalendarComponent = ({ id }) => {
           backgroundColor: "#FCFAED",
           color: "#D6B820",
 
-<<<<<<< HEAD
           padding: "20px",
-=======
-          padding:"30px",
->>>>>>> 94c0cb133b185eed23edd491c581f07dd3f48b04
           outline: "none",
           fontSize: "10px",
         },
@@ -207,11 +171,7 @@ const JobCalendarComponent = ({ id }) => {
           backgroundColor: "#EBFCFC",
           color: "#0D9191",
 
-<<<<<<< HEAD
           padding: "20px",
-=======
-          padding:"30px",
->>>>>>> 94c0cb133b185eed23edd491c581f07dd3f48b04
           outline: "none",
           fontSize: "10px",
         },
@@ -223,7 +183,6 @@ const JobCalendarComponent = ({ id }) => {
           backgroundColor: "#EEF3FF",
           color: "#919BB0",
 
-<<<<<<< HEAD
           padding: "20px",
           outline: "none",
           fontSize: "10px",
@@ -240,13 +199,6 @@ const JobCalendarComponent = ({ id }) => {
           outline: "none",
           fontSize: "10px",
         },
-=======
-          padding:"30px",
-          outline: "none",
-          fontSize: "10px",
-        },
-
->>>>>>> 94c0cb133b185eed23edd491c581f07dd3f48b04
       };
     }
     return {
@@ -262,7 +214,6 @@ const JobCalendarComponent = ({ id }) => {
 
   const handleEventClick = useCallback((event) => {
     setIsApprovalPopUp(true);
-<<<<<<< HEAD
     setStartDate(moment(event.start).format("YYYY-MM-DD"));
   }, []);
 
@@ -272,9 +223,6 @@ const JobCalendarComponent = ({ id }) => {
     window.location.reload();
     getData(startDate);
   }, [startDate]);
-=======
-  };
->>>>>>> 94c0cb133b185eed23edd491c581f07dd3f48b04
 
   const localizer = momentLocalizer(moment);
 
@@ -294,10 +242,6 @@ const JobCalendarComponent = ({ id }) => {
       <div style={{ marginTop: "20px" }} />
       <Calendar
         views={[Views.MONTH]}
-<<<<<<< HEAD
-=======
-
->>>>>>> 94c0cb133b185eed23edd491c581f07dd3f48b04
         components={{
           timeSlotWrapper: ColoredDateCellWrapper,
           event: CustomEventComponent,
@@ -305,11 +249,6 @@ const JobCalendarComponent = ({ id }) => {
         onNavigate={handleNavigation}
         localizer={localizer}
         defaultDate={new Date()}
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 94c0cb133b185eed23edd491c581f07dd3f48b04
         eventPropGetter={eventPropGetter}
         defaultView="month"
         events={events}
