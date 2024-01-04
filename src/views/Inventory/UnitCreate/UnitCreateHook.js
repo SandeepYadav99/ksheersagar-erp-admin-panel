@@ -12,6 +12,7 @@ import {
 
 const initialForm = {
   name: "",
+  full_name:"",
   is_general: false,
   is_active: true,
 };
@@ -54,7 +55,7 @@ const useUnitDetail = ({ handleToggleSidePannel, isSidePanel, empId }) => {
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = ["name"];
+    let required = ["name","full_name"];
     required.forEach((val) => {
       if (
         !form?.[val] ||
