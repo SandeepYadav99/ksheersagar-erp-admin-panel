@@ -166,7 +166,29 @@ const ProductCreate = ({ location }) => {
                 </div>
 
                 <div className={"formGroup"}>
-                  <CustomSelectField
+                <CustomSelectField
+                isError={errorData?.type}
+                errorText={errorData?.type}
+                label={"Type"}
+                value={form?.type}
+                handleChange={(value) => {
+                  changeTextData(value, "type");
+                }}
+              >
+                <MenuItem value="RAW_MATERIAL">RAW MATERIAL</MenuItem>
+                <MenuItem value="FINISHED_GOODS">FINISHED GOODS</MenuItem>
+                <MenuItem value="SERVICE">SERVICE</MenuItem>
+                <MenuItem value="CONTAINER">CONTAINER</MenuItem>
+                <MenuItem value="ASSETS">ASSETS</MenuItem>
+              </CustomSelectField>
+                 
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className={"formFlex"}>
+            <div className={"formGroup"}>
+            <CustomSelectField
                     isError={errorData?.category_id}
                     errorText={errorData?.category_id}
                     label={"Category"}
@@ -189,13 +211,11 @@ const ProductCreate = ({ location }) => {
                       );
                     })}
                   </CustomSelectField>
-                </div>
-              </div>
+              
             </div>
-          </div>
-          <div className={"formFlex"}>
+
             <div className={"formGroup"}>
-              <CustomSelectField
+            <CustomSelectField
                 isError={errorData?.sub_category_id}
                 errorText={errorData?.sub_category_id}
                 label={"Subcategory"}
@@ -221,24 +241,6 @@ const ProductCreate = ({ location }) => {
 
 
 
-              </CustomSelectField>
-            </div>
-
-            <div className={"formGroup"}>
-              <CustomSelectField
-                isError={errorData?.type}
-                errorText={errorData?.type}
-                label={"Type"}
-                value={form?.type}
-                handleChange={(value) => {
-                  changeTextData(value, "type");
-                }}
-              >
-                <MenuItem value="RAW_MATERIAL">RAW MATERIAL</MenuItem>
-                <MenuItem value="FINISHED_GOODS">FINISHED GOODS</MenuItem>
-                <MenuItem value="SERVICE">SERVICE</MenuItem>
-                <MenuItem value="CONTAINER">CONTAINER</MenuItem>
-                <MenuItem value="ASSETS">ASSETS</MenuItem>
               </CustomSelectField>
             </div>
           </div>
