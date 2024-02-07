@@ -162,18 +162,32 @@ const LocationCreateView = ({ isSidePanel , setSidePanel}) => {
             </CustomSelectField>
           </div>
         </div>
-        <div className={"formFlex"} style={{ width: "50%" }}>
+        <div className={"formFlex"}>
           <div className={"formGroup"}>
             <CustomTextField
               isError={errorData?.contact}
               errorText={errorData?.contact}
-              label={"Phone Number"}
+              label={"Mobile Number"}
               value={form?.contact}
               onTextChange={(text) => {
                 changeTextData(text, "contact");
               }}
               onBlur={() => {
                 onBlurHandler("contact");
+              }}
+            />
+          </div>
+          <div className={"formGroup"}>
+            <CustomTextField
+              isError={errorData?.landline_number}
+              errorText={errorData?.landline_number}
+              label={"Landline Number"}
+              value={form?.landline_number}
+              onTextChange={(text) => {
+                changeTextData(text, "landline_number");
+              }}
+              onBlur={() => {
+                onBlurHandler("landline_number");
               }}
             />
           </div>

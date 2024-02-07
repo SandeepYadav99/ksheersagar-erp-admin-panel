@@ -37,13 +37,29 @@ const DepartmentCreateView = ({ handleToggleSidePannel,isSidePanel ,empId}) => {
           <CustomTextField
             isError={errorData?.name}
             errorText={errorData?.name}
-            label={"Unit Name"}
+            label={"Display Name"}
             value={form?.name}
             onTextChange={(text) => {
               changeTextData(text, "name");
             }}
             onBlur={() => {
               onBlurHandler("name");
+            }}
+          />
+        </div>
+      </div>
+      <div className={"formFlex"}>
+        <div className={"formGroup"}>
+          <CustomTextField
+            isError={errorData?.full_name}
+            errorText={errorData?.full_name}
+            label={"Unit Name"}
+            value={form?.full_name}
+            onTextChange={(text) => {
+              changeTextData(text, "full_name");
+            }}
+            onBlur={() => {
+              onBlurHandler("full_name");
             }}
           />
         </div>

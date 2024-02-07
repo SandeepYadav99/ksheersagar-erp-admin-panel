@@ -36,6 +36,7 @@ const initialForm = {
   is_department_attendance: false,
   google_page_url: "",
   contact: "",
+  landline_number:""
 };
 const useLocationDetail = ({ isSidePanel, setSidePanel }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -215,6 +216,7 @@ const useLocationDetail = ({ isSidePanel, setSidePanel }) => {
           city: form?.city,
           type: form?.type,
           contact: form?.contact,
+          landline_number:form?.landline_number,
           head_id: form?.head_id,
           address: form?.address,
           coordinates: form?.location?.coordinates,
