@@ -1,0 +1,204 @@
+/* Common Css  */
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+.headerContainer {
+  /* margin: 5rem auto !important; */
+  box-shadow: 2rem !important;
+  background-color: #fff !important;
+  border: "20px solid #00000011" !important;
+  padding: 20px !important;
+  width: 375px !important;
+  height: 798px !important;
+  align-items: center;
+}
+.logo {
+  text-align: center;
+}
+.title {
+  text-align: center;
+  color: #007aff;
+  margin: 20px 0px 20px 0px;
+  font-weight: bold;
+}
+
+.gaps {
+  margin-top: 10px;
+}
+/*End Common Css  */
+
+.paragraph {
+  font-size: 14px;
+  text-align: center;
+}
+.ic_Google_img {
+  font-size: 14px;
+  text-align: center;
+}
+.subParagraph {
+  text-align: center;
+  font-size: 14px;
+  color: #212125;
+}
+.subTitle {
+  text-align: center;
+  font-size: 16px;
+  color: #212125;
+  font-weight: bold;
+  margin: 20px 0px 20px 0px;
+}
+.subReview {
+  text-align: center;
+  font-size: 16px;
+  color: #212125;
+  font-weight: bold;
+  margin: 10px 0px 20px 0px;
+}
+.actionContainer {
+  /* text-align: justify; */
+  width: 375px !important;
+}
+.action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: justify;
+}
+.createBtn {
+  background-color: #007aff !important;
+  color: #ffffff !important;
+  padding: 12px 35px !important;
+  font-size: 0.8rem !important;
+  border-radius: 5px !important;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+  width: 375px !important;
+}
+.createBtnDisable {
+  background-color: #f5f5f5 !important;
+  color: #000 !important;
+  padding: 12px 35px !important;
+  font-size: 0.8rem !important;
+  border-radius: 5px !important;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+  width: 375px !important;
+  text-align: justify;
+}
+.submitContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.createBtnSubmit {
+  background-color: #007aff !important;
+  color: #ffffff !important;
+  padding: 12px 35px !important;
+  font-size: 0.8rem !important;
+  border-radius: 30px !important;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+  width: 275px !important;
+}
+.feedbackContainer {
+  display: flex !important;
+  /* justify-content: space-between !important; */
+  align-items: center !important;
+  font-size: 14px !important;
+  gap: 20px;
+  width: 375px !important;
+}
+.submit {
+  text-align: center;
+}
+.feedback {
+  text-align: justify;
+  display: flex;
+  align-items: center;
+}
+.feedback1 {
+  text-align: justify;
+  margin-left: 60px;
+  display: flex;
+  align-items: center;
+  
+}
+
+.language {
+  text-align: center;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 40px;
+}
+.english {
+  color: #007aff;
+}
+.hindi {
+  text-decoration: none;
+}
+
+/* Negative Feeedback Css */
+.emojiContainer{
+  display: flex;
+  justify-content: space-between;
+  width: 375px !important;
+  
+}
+.negTitle{
+  font-size: 14px;
+  color: #212125;
+  font-weight: bold;
+
+}
+.negFeedBack{
+  font-size: 12px;
+  color: #007AFF;
+  font-weight: bold;
+}
+.negativeFeedback {
+  display: flex;
+  flex-direction: column;
+}
+.ngEmoji {
+  display: flex;
+  flex-direction: column;
+  background-color: #F5F5F5;
+  color: black;
+  border-radius: 5px;
+  padding: 2px;
+
+}
+.ngEmoji img {
+  width: 37px;
+  height: 37px;
+}
+.ngEmoji span {
+ margin-left: 15px;
+ font-size: 12px;
+}
+.ngEmojiActive{
+  display: flex;
+  flex-direction: column;
+  background-color: #007AFF;
+  color: white;
+  border-radius: 5px;
+  padding: 2px;
+}
+.ngEmojiActive img {
+  width: 37px;
+  height: 37px;
+}
+.ngEmojiActive span {
+ margin-left: 15px;
+ font-size: 12px;
+}
+.footerTitle{
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20px;
+}
+/* End Negative Feeedback Css */
