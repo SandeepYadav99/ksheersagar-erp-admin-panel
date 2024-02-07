@@ -3,7 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import ReactDOM from "react-dom";
 
-const CustomTextField = ({isError, errorText, icon, label, onChange, onTextChange, inputProps, ...rest }) => {
+const StanduredTextField = ({isError, errorText, icon, label, onChange, onTextChange, inputProps, ...rest }) => {
 
     const handleChange = useCallback((e) => {
         onChange && onChange(e);
@@ -24,7 +24,7 @@ const CustomTextField = ({isError, errorText, icon, label, onChange, onTextChang
                ...(inputProps ? inputProps : {})
            }}
            onChange={handleChange}
-           variant={ 'outlined'}
+           variant={ 'standard'}
            margin={"dense"}
            fullWidth={true}
            {...rest}
@@ -32,4 +32,4 @@ const CustomTextField = ({isError, errorText, icon, label, onChange, onTextChang
    )
 }
 
-export default CustomTextField;
+export default StanduredTextField;

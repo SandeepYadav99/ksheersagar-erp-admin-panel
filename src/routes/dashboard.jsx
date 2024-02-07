@@ -11,14 +11,18 @@ import DepartmentList from "../views/Department/Department/DepartmentList.contai
 import EmployeeList from "../views/EmployeeList/EmployeeList.container";
 import EmployeeListCreate from "../views/EmployeeList/EmployeeListCreate";
 import UnitList from "../views/Inventory/Unit/UnitList.container";
-import CategoryList from "../views/Inventory/Category/CategoryList.container";
+
 import SubCategoryList from "../views/Inventory/SubCategory/SubCategoryList.container";
 import ProductList from "../views/Inventory/Product/ProductList.container";
 import ProductCreate from "../views/Inventory/ProductCreate/ProductCreate.view";
 import LocationDetail from "../views/Locations/LocationDetail/LocationDetail.view";
 import EmployeeDetail from "../views/EmployeeDetail/EmployeeDetail.view";
 import EmployeeEdit from "../views/EmployeeEdit/EmployeeEdit.view";
-import EmpInfo from "../views/EmployeeDetail/Component/EmpInfo";
+
+import OverAllFeedbackForm from "../views/FeedbackForm/OverAllFeedbackForm";
+import PositiveCustomerFeedback from "../views/FeedbackForm/PositiveCustomerFeedback";
+import NegativeFeedback from "../views/FeedbackForm/NegativeFeedback";
+import CompletionScreen from "../views/FeedbackForm/CompletionScreen";
 
 const NewDashboard = lazy(() => import("../views/dashboard/NewDashboard.view"));
 const LocationList = lazy(() =>
@@ -210,6 +214,9 @@ const dashboardRoutes = [
     component: ProductCreate,
     is_sidebar: false,
   },
+
+
+
   // {
   //   path: `${RouteName.PRODUCT_LIST}:id`,
   //   sidebarName: "Products",
