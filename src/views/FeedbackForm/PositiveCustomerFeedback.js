@@ -8,7 +8,9 @@ import StanduredTextField from "../../components/FormFields/TextField/StanduredT
 import ic_person from "../../assets/img/feedback/ic_personal_selected.png";
 import RouteName from "../../routes/Route.name";
 import historyUtils from "../../libs/history.utils";
-import ic_topnav_logo from "../../assets/img/feedback/ic_topnav_logo.png"
+import ic_topnav_logo from "../../assets/img/feedback/ic_topnav_logo.png";
+import ic_vendor from "../../assets/img/feedback/ic_vendor.png";
+import ic_number from "../../assets/img/feedback/ic_number.png"
 const PositiveCustomerFeedback = () => {
   return (
     <div className={styles.container}>
@@ -30,7 +32,11 @@ const PositiveCustomerFeedback = () => {
 
         <div>
           <div className={"formFlex"}>
+          <div style={{marginTop:"40px"}}>
+                <img src={ic_vendor} width={20} height={20}/>
+              </div>
             <div className={"formGroup"}>
+           
               <StanduredTextField
                 // isError={errorData?.name_en}
                 // errorText={errorData?.name_en}
@@ -50,6 +56,9 @@ const PositiveCustomerFeedback = () => {
                   <img src={ic_person}/>
                 </div> */}
           <div className={"formFlex"}>
+          <div style={{marginTop:"40px"}}>
+                <img src={ic_number} width={20} height={20}/>
+              </div>
             <div className={"formGroup"}>
               <StanduredTextField
                 // isError={errorData?.name_en}

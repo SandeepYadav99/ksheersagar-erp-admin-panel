@@ -14,6 +14,8 @@ import ic_5_inactive from "../../assets/img/feedback/ic_5_inactive.png";
 import ic_topnav_logo from "../../assets/img/feedback/ic_topnav_logo.png"
 import historyUtils from "../../libs/history.utils";
 import RouteName from "../../routes/Route.name";
+import ic_vendor from "../../assets/img/feedback/ic_vendor.png";
+import ic_number from "../../assets/img/feedback/ic_number.png"
 const NegativeFeedback = () => {
   return (
     <div className={styles.container}>
@@ -32,6 +34,9 @@ const NegativeFeedback = () => {
 
         <div>
           <div className={"formFlex"}>
+          <div style={{marginTop:"40px"}}>
+                <img src={ic_vendor} width={20} height={20}/>
+              </div>
             <div className={"formGroup"}>
               <StanduredTextField
                 // isError={errorData?.name_en}
@@ -52,6 +57,9 @@ const NegativeFeedback = () => {
                   <img src={ic_person}/>
                 </div> */}
           <div className={"formFlex"}>
+          <div style={{marginTop:"40px"}}>
+                <img src={ic_number} width={20} height={20}/>
+              </div>
             <div className={"formGroup"}>
               <StanduredTextField
                 // isError={errorData?.name_en}
@@ -69,6 +77,7 @@ const NegativeFeedback = () => {
             </div>
           </div>
         </div>
+        <div className={styles.gaps} />
         {/* Row one  */}
         <div className={styles.negativeFeedback}>
           <div className={styles.negTitle}>Staff Attitude</div>

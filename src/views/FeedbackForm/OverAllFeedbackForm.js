@@ -37,7 +37,7 @@ const OverAllFeedbackForm = () => {
 
                 <div className={styles.feedback1}>
                   <img src={ic_5} height={37} width={37} alt="" />
-                  <div style={{ fontSize: "14px" }}>Very Good</div>
+                  <div style={{ fontSize: "14px", marginLeft:"5px" }}>Very Good</div>
                 </div>
               </div>
             </ButtonBase>
@@ -52,7 +52,7 @@ const OverAllFeedbackForm = () => {
                 </div>
                 <div className={styles.feedback1}>
                   <img src={ic_4_inactive} height={37} width={37} />
-                  <div style={{ fontSize: "14px" }}>Good</div>
+                  <div style={{ fontSize: "14px", marginLeft:"5px" }}>Good</div>
                 </div>
               </div>
             </ButtonBase>
@@ -67,7 +67,7 @@ const OverAllFeedbackForm = () => {
                 </div>
                 <div className={styles.feedback1}>
                   <img src={ic_3_inactive} height={37} width={37} />
-                  <div style={{ fontSize: "14px" }}>Satisfactory</div>
+                  <div style={{ fontSize: "14px" , marginLeft:"5px"}}>Satisfactory</div>
                 </div>{" "}
               </div>
             </ButtonBase>
@@ -82,7 +82,7 @@ const OverAllFeedbackForm = () => {
                 </div>
                 <div className={styles.feedback1}>
                   <img src={ic_2_inactive} height={37} width={37} />
-                  <div style={{ fontSize: "14px" }}>Below Satisfaction</div>
+                  <div style={{ fontSize: "14px" , marginLeft:"5px"}}>Below Satisfaction</div>
                 </div>
               </div>
             </ButtonBase>
@@ -98,7 +98,7 @@ const OverAllFeedbackForm = () => {
 
                 <div className={styles.feedback1}>
                   <img src={ic_1_inactive} height={37} width={37} />
-                  <div style={{ fontSize: "14px" }}>Bad</div>
+                  <div style={{ fontSize: "14px" , marginLeft:"5px"}}>Bad</div>
                 </div>
               </div>
             </ButtonBase>
