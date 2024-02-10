@@ -134,10 +134,16 @@
   margin-top: 40px;
 }
 .english {
-  color: #007aff;
+  /* color: #007aff; */
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
 }
 .hindi {
-  text-decoration: none;
+  text-decoration: underline;
+  border: none;
+  cursor: pointer;
+  color: #007aff;
 }
 
 /* Negative Feeedback Css */
@@ -169,6 +175,7 @@
   color: black;
   border-radius: 5px;
   padding: 2px;
+  cursor: pointer;
 
 }
 .ngEmoji img {
@@ -186,6 +193,7 @@
   color: white;
   border-radius: 5px;
   padding: 2px;
+  cursor: pointer;
 }
 .ngEmojiActive img {
   width: 37px;
@@ -200,5 +208,11 @@
   font-weight: bold;
   text-align: center;
   margin-top: 20px;
+}
+.underline{
+  color: #007aff;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
 }
 /* End Negative Feeedback Css */

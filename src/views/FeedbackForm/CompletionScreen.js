@@ -3,7 +3,7 @@ import styles from "./FeedbackForm.module.css";
 
 import ic_Google from "../../assets/img/feedback/feedback.png";
 import ic_topnav_logo from "../../assets/img/feedback/ic_topnav_logo.png"
-const CompletionScreen = () => {
+const CompletionScreen = ({language, lng}) => {
   return (
     <div className={styles.container}>
       <div className={styles.headerContainer}>
@@ -14,10 +14,10 @@ const CompletionScreen = () => {
         <div className={styles.ic_Google_img}>
           <img src={ic_Google} alt="" width={221} height={230} />
         </div>
-        <div className={styles.title}>Your Feedback has been recorded!</div>
+        <div className={styles.title}>  {language === lng ? "Your Feedback has been recorded!" : "आपकी प्रतिक्रिया दर्ज कर ली गई है!"}</div>
         <div className={styles.subParagraph}>
-          We appreciate your feedback, and we're dedicated to providing a better
-          experience. Thank you for giving us the opportunity to improve.
+        {language === lng ?
+          "We appreciate your feedback, and we're dedicated to providing a better experience. Thank you for giving us the opportunity to improve. ": "हम आपकी प्रतिक्रिया की सराहना करते हैं, और हम बेहतर प्रदान करने के लिए समर्पित हैं अनुभव। हमें सुधार करने का अवसर देने के लिए धन्यवाद।" }
         </div>
       </div>
     </div>
