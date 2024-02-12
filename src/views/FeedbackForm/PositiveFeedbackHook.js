@@ -3,16 +3,15 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { serviceCreateFeedback } from "../../services/Feedback.service";
 import RouteName from "../../routes/Route.name";
 import historyUtils from "../../libs/history.utils";
+import { useLocation } from "react-router-dom";
 
 const initialForm = {
   name: "",
   contact: "",
-  recommendation:""
+  recommendation: "",
 };
 
-const usePositiveFeedbackHook = ({
-  overAll
-}) => {
+const usePositiveFeedbackHook = ({ overAll }) => {
   const [isLoading] = useState(false);
   const [showPasswordCurrent, setShowPasswordCurrent] = useState(false);
   const [errorData, setErrorData] = useState({});
@@ -20,66 +19,71 @@ const usePositiveFeedbackHook = ({
   const [form, setForm] = useState({ ...initialForm });
   const [isEdit] = useState(false);
   const includeRef = useRef(null);
-/////////////////
+  /////////////////
 
+  const [staffAttitude, setStaffAttitude] = useState(null); // Quality
+  const [quality, setQuality] = useState(null); // Quality
+  const [belowSatisfaction, setBelowSatisfaction] = useState(null); // Quality
+  const [test, setTest] = useState(null);
+  ////////////////
+  const [staffAttitudeFeedback, setStaffAttitudeFeedback] = useState(null); // Quality
+  const [qualityFeedback, setQualityFeedback] = useState(null); // Quality
+  const [belowSatisfactionFeedback, setBelowSatisfactionFeedback] =
+    useState(null); // Quality
+  const [testFeedback, setTestFeedback] = useState(null);
+  ////////////////////
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const lng = params.get("lng") || "english";
 
-const [staffAttitude, setStaffAttitude] = useState(null); // Quality
-const [quality, setQuality] = useState(null); // Quality
-const [belowSatisfaction, setBelowSatisfaction] = useState(null); // Quality
-const [test, setTest] = useState(null);
-////////////////
-const [staffAttitudeFeedback, setStaffAttitudeFeedback] = useState(null); // Quality
-const [qualityFeedback, setQualityFeedback] = useState(null); // Quality
-const [belowSatisfactionFeedback, setBelowSatisfactionFeedback] = useState(null); // Quality
-const [testFeedback, setTestFeedback] = useState(null);
-////////////////////
+  const overAllExperience = useCallback(
+    (rating, feedback) => {
+      setStaffAttitude(rating);
+      // overAllExperience(rating);
+      setStaffAttitudeFeedback(feedback);
+    },
+    [staffAttitude, staffAttitudeFeedback]
+  );
 
-const overAllExperience = useCallback(
-  (rating, feedback) => {
-    setStaffAttitude(rating);
-    // overAllExperience(rating);
-    setStaffAttitudeFeedback(feedback)
-  },
-  [staffAttitude,staffAttitudeFeedback]
-);
+  const handleQuality = useCallback(
+    (rating, feedback) => {
+      setQuality(rating);
+      // overAllExperience(rating);
+      setQualityFeedback(feedback);
+    },
+    [quality, qualityFeedback]
+  );
 
-const handleQuality = useCallback(
-  (rating, feedback) => {
-    setQuality(rating);
-    // overAllExperience(rating);
-    setQualityFeedback(feedback)
-  },
-  [quality, qualityFeedback]
-);
+  const handleBelowSatisfaction = useCallback(
+    (rating, feedback) => {
+      setBelowSatisfaction(rating);
+      // overAllExperience(rating);
+      setBelowSatisfactionFeedback(feedback);
+    },
+    [belowSatisfaction, belowSatisfactionFeedback]
+  );
 
-const handleBelowSatisfaction = useCallback(
-  (rating, feedback) => {
-    setBelowSatisfaction(rating);
-    // overAllExperience(rating);
-    setBelowSatisfactionFeedback(feedback)
-  },
-  [belowSatisfaction, belowSatisfactionFeedback]
-);
-
-const handleTest= useCallback(
-  (rating, feedback) => {
-    setTest(rating);
-    // overAllExperience(rating);
-    setTestFeedback(feedback)
-  },
-  [belowSatisfaction, testFeedback]
-);
+  const handleTest = useCallback(
+    (rating, feedback) => {
+      setTest(rating);
+      // overAllExperience(rating);
+      setTestFeedback(feedback);
+    },
+    [belowSatisfaction, testFeedback]
+  );
 
   // useEffect(() => {
   //   if (!isSidePanel) {
   //     handleReset();
   //   }
   // }, [isSidePanel]);
-
+  console.log(overAll, "OverALL");
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = ["name", "contact", "recommendation"];
-
+    let required = ["name", "contact"];
+    if (!(overAll === "Very_Good" || overAll === "Good")) {
+      required.push("recommendation");
+    }
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -115,19 +119,18 @@ const handleTest= useCallback(
       staff_attitude: staffAttitudeFeedback ? staffAttitudeFeedback : "",
       quality: qualityFeedback ? qualityFeedback : "",
       speed: belowSatisfactionFeedback ? belowSatisfactionFeedback : "",
-      taste:  testFeedback ? testFeedback : "",
+      taste: testFeedback ? testFeedback : "",
       recommendation: form?.recommendation,
     };
     try {
-   
       const res = await serviceCreateFeedback(formData);
 
       if (!res.error) {
         // handleToggleSidePannel();
         // window.location.reload();
-        historyUtils.push(RouteName.COMPLETION_SCREEN);
+        historyUtils.push(`${RouteName.COMPLETION_SCREEN}?lng=${lng}`);
       } else {
-        historyUtils.push(RouteName.COMPLETION_SCREEN);
+        historyUtils.push(`${RouteName.COMPLETION_SCREEN}?lng=${lng}`);
         // SnackbarUtils.error(res.message);
       }
     } catch (error) {
@@ -163,7 +166,10 @@ const handleTest= useCallback(
       if (fieldName === "name") {
         t[fieldName] = text;
       } else if (fieldName === "contact") {
-        t[fieldName] = text;
+        if(text.length <= 10){
+
+          t[fieldName] = text;
+        }
       } else {
         t[fieldName] = text;
       }
@@ -205,7 +211,7 @@ const handleTest= useCallback(
     handleDelete,
     includeRef,
     handleReset,
-  
+
     showPasswordCurrent,
     setShowPasswordCurrent,
     document,
@@ -213,8 +219,10 @@ const handleTest= useCallback(
     handleQuality,
     handleBelowSatisfaction,
     handleTest,
-    staffAttitude, quality, belowSatisfaction,
-  test
+    staffAttitude,
+    quality,
+    belowSatisfaction,
+    test,
   };
 };
 
