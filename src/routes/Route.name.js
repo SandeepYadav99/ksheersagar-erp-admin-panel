@@ -23,8 +23,8 @@ EMPLOYEE_INFORMATION:'/employee/details/',
   PRODUCT_CREATE: "/product/create",
   PRODUCT_UPDATE:"/product/update/",
   FEEDBACK_FORM:"/over/all/feedback",
-  POSITIVE_FEEDBACK_FORM:"/positive/feedback",
-  NEGATIVE_FEEDBACK_FORM:"/negative/feedback",
+  POSITIVE_FEEDBACK_FORM:"/positive/feedback/",
+  NEGATIVE_FEEDBACK_FORM:"/negative/feedback/",
   COMPLETION_SCREEN:"/completion/feedback", // CompletionScreen
   // PRODUCT_LIST:"/product/"
 };
