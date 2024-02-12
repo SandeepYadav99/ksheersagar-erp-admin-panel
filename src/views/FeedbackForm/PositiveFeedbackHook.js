@@ -4,6 +4,7 @@ import { serviceCreateFeedback } from "../../services/Feedback.service";
 import RouteName from "../../routes/Route.name";
 import historyUtils from "../../libs/history.utils";
 import { useLocation } from "react-router-dom";
+import SnackbarUtils from "../../libs/SnackbarUtils";
 
 const initialForm = {
   name: "",
@@ -80,10 +81,10 @@ const usePositiveFeedbackHook = ({ overAll }) => {
   console.log(overAll, "OverALL");
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = ["name", "contact"];
-    if (!(overAll === "Very_Good" || overAll === "Good")) {
-      required.push("recommendation");
-    }
+    let required = [];
+    // if (!(overAll === "Very_Good" || overAll === "Good")) {
+    //   required.push("recommendation");
+    // }
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -116,10 +117,10 @@ const usePositiveFeedbackHook = ({ overAll }) => {
       overall_experience: overAll,
       customer_id: "",
       invoice_id: "",
-      staff_attitude: staffAttitudeFeedback ? staffAttitudeFeedback : "",
-      quality: qualityFeedback ? qualityFeedback : "",
-      speed: belowSatisfactionFeedback ? belowSatisfactionFeedback : "",
-      taste: testFeedback ? testFeedback : "",
+      staff_attitude: staffAttitude ? staffAttitude : "",
+      quality: quality ? quality : "",
+      speed: belowSatisfaction ? belowSatisfaction : "",
+      taste: test ? test : "",
       recommendation: form?.recommendation,
     };
     try {
@@ -130,8 +131,8 @@ const usePositiveFeedbackHook = ({ overAll }) => {
         // window.location.reload();
         historyUtils.push(`${RouteName.COMPLETION_SCREEN}?lng=${lng}`);
       } else {
-        historyUtils.push(`${RouteName.COMPLETION_SCREEN}?lng=${lng}`);
-        // SnackbarUtils.error(res.message);
+       // historyUtils.push(`${RouteName.COMPLETION_SCREEN}?lng=${lng}`);
+         SnackbarUtils.error(res.message);
       }
     } catch (error) {
       console.error("Error submitting data:", error);

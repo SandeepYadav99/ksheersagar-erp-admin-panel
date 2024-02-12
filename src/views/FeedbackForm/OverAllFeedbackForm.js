@@ -210,12 +210,12 @@ const [overAll, setOverAll]=useState("")
                 
                   if(selectedRating === 4 || selectedRating === 5){
                     historyUtils.push(
-                      `${RouteName.POSITIVE_FEEDBACK_FORM}?lng=${language}&f=${overAll}`
+                      `${RouteName.POSITIVE_FEEDBACK_FORM}?lng=${language}&f=${selectedRating}`
                     );
 
                   }else {
                     historyUtils.push(
-                      `${RouteName.NEGATIVE_FEEDBACK_FORM}?lng=${language}&f=${overAll}`
+                      `${RouteName.NEGATIVE_FEEDBACK_FORM}?lng=${language}&f=${selectedRating}`
                     );
                   }
                 }}
