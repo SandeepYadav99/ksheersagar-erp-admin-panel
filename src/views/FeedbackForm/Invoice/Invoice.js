@@ -71,11 +71,9 @@ const Invoice = () => {
 
         <div className={styles.actions}>
           <div className={styles.star}>
-          {[...Array(5)].map((_, index) => (
-            <img key={index} src={ic_star} alt=""  hight={11}
-            width={11}/>
-          ))}
-
+            {[...Array(5)].map((_, index) => (
+              <img key={index} src={ic_star} alt="" hight={11} width={11} />
+            ))}
           </div>
           <div className={styles.gaps} />
           <ButtonBase className={styles.createBtn}>SUBMIT FEEDBACK</ButtonBase>
@@ -97,9 +95,35 @@ const Invoice = () => {
         <div className={styles.gaps} />
         <p className={styles.title}>Sugar</p>
         <div className={styles.sugar}>
-          <p className={styles.subTitle}><img src={ic_rupee} height={14} width={14}/> ₹50/unit</p>
-          <p className={styles.subTitle}><img src={ic_quantity} height={14} width={14}/>10 Units</p>
-          <p className={styles.subTitle}><img src={ic_print} height={14} width={14}/>5% GST</p>
+          <div className={styles.flexbox}>
+            <img src={ic_rupee} height={14} width={14} />
+            <p className={styles.subTitle}> ₹50/unit</p>
+          </div>
+          <div className={styles.flexbox}>
+            <img src={ic_quantity} height={14} width={14} />
+            <p className={styles.subTitle}>10 Units</p>
+          </div>
+          <div className={styles.flexbox}>
+            <img src={ic_print} height={14} width={14} />
+            <p className={styles.subTitle}>5% GST</p>
+          </div>
+        </div>
+        <hr />
+        <div className={styles.gaps} />
+        <p className={styles.title}>Cardamom</p>
+        <div className={styles.sugar}>
+          <div className={styles.flexbox}>
+            <img src={ic_rupee} height={14} width={14} />
+            <p className={styles.subTitle}> ₹50/unit</p>
+          </div>
+          <div className={styles.flexbox}>
+            <img src={ic_quantity} height={14} width={14} />
+            <p className={styles.subTitle}>10 Units</p>
+          </div>
+          <div className={styles.flexbox}>
+            <img src={ic_print} height={14} width={14} />
+            <p className={styles.subTitle}>5% GST</p>
+          </div>
         </div>
         <div className={styles.footer}>
           <p className={styles.subTitle}>Total</p>
@@ -114,9 +138,7 @@ const Invoice = () => {
           </p>
           <a href="#">Download Now</a>
         </div>
-        <div className={styles.language}>
-          <button className={styles.underline}>English</button>
-        </div>
+      
       </div>
     </div>
   );
