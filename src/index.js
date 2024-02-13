@@ -34,6 +34,7 @@ if (localStorage.jwt_token) {
     // connectToSocket();
 }
 ReactDOM.render(
+    
   <Provider store={store}>
     <App />
   </Provider>,
