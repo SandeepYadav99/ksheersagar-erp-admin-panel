@@ -7,12 +7,14 @@ import PositiveCustomerFeedback from "../views/FeedbackForm/PositiveCustomerFeed
 import NegativeFeedback from "../views/FeedbackForm/NegativeFeedback.js";
 import CompletionScreen from "../views/FeedbackForm/CompletionScreen.js";
 import Invoice from "../views/FeedbackForm/Invoice/Invoice.js";
+import DownloadInvoice from "../views/FeedbackForm/Invoice/DownloadInvoice.js";
 
 
 
 const RouteComponent = () => (
   <Switch>
     <Route path={"/invoice"} component={Invoice} />
+    <Route path={"/download/invoice"} component={DownloadInvoice} />
     <Route path={"/over/all/feedback"} component={OverAllFeedbackForm} />
     <Route path={"/positive/feedback"} component={PositiveCustomerFeedback} />
     <Route path={"/negative/feedback"} component={NegativeFeedback} />

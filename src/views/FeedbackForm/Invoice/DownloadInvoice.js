@@ -8,10 +8,11 @@ import ic_print from "../../../assets/img/feedback/ic_print.png";
 import ic_quantity from "../../../assets/img/feedback/ic_quantity.png";
 import ic_topnav_logo from "../../../assets/img/feedback/ic_topnav_logo.png";
 import ic_download from "../../../assets/img/feedback/ic_download.png";
-import historyUtils from "../../../libs/history.utils";
-const Invoice = () => {
+import ItemTable from "./ItemTable";
+const DownloadInvoice = () => {
   const [selectedRating, setSelectedRating] = useState(null);
   const [overAll, setOverAll] = useState("");
+
   const overAllExperience = useCallback(
     (rating, feedback) => {
       setSelectedRating(rating);
@@ -34,20 +35,33 @@ const Invoice = () => {
         <p className={styles.subTitle}>
           GSTIN:<strong>98881091A35</strong>{" "}
         </p>
+        <p className={styles.subTitle}>
+          Phone No.<strong>8762209802</strong>{" "}
+        </p>
+        <p className={styles.subTitle}>
+          CIN: <strong>UI567HH78KL009</strong>{" "}
+        </p>
+        <p className={styles.subTitle}>
+          FSSAI No: <strong>209456880011</strong>{" "}
+        </p>
+        <p className={styles.subTitle}>
+          Website. <a href="https://ksheersagar.com/">https://ksheersagar.com/</a>{" "}
+        </p>
         <div className={styles.gaps} />
         <p className={styles.title}>Summary</p>
         <p className={styles.subTitle}>
           Invoice Number: <strong>INV - BC/2023/08/21</strong>{" "}
         </p>
         <p className={styles.subTitle}>
-          Date: <strong>12/08/2023 | 11:00 AM</strong>{" "}
+        Date:<strong>2/08/2023 | 11:00 AM</strong>{" "}
         </p>
         <p className={styles.subTitle}>
-          Temp Sales Order: <strong>KS/BC/2023/08/200</strong>{" "}
+        Temp Sales Order:<strong>KS/BC/2023/08/200</strong>{" "}
         </p>
         <p className={styles.subTitle}>
-          Cashier: <strong>Abhinav Sharma</strong>{" "}
+        Cashier:<strong>Abhinav Sharma</strong>{" "}
         </p>
+      
         <div className={styles.gaps} />
         <p className={styles.title}>Customer Details</p>
         <p className={styles.subTitle}>
@@ -61,25 +75,7 @@ const Invoice = () => {
         </p>
         <div className={styles.gaps} />
         <hr />
-        <div className={styles.gaps} />
-        <p className={styles.subTitle}>
-          Please take a moment to share your feedback with us. It will help us
-          to improve so we can serve you better!
-        </p>
-        <div>
-          <img src="" alt="" />
-        </div>
-
-        <div className={styles.actions}>
-          <div className={styles.star}>
-            {[...Array(5)].map((_, index) => (
-              <img key={index} src={ic_star} alt="" hight={11} width={11} />
-            ))}
-          </div>
-          <div className={styles.gaps} />
-          <ButtonBase className={styles.createBtn} onClick={()=>historyUtils.push("/over/all/feedback")}>SUBMIT FEEDBACK</ButtonBase>
-        </div>
-        <hr />
+      
         <div className={styles.gaps} />
         <p className={styles.title}>Invoice Details</p>
         <div className={styles.gaps} />
@@ -93,6 +89,10 @@ const Invoice = () => {
             <span className={styles.subTitle}>No. of Boxes: 20</span>
           </p>
         </div>
+{/* Item List Invoice */}
+<ItemTable/>
+{/* Item List Invoice End*/}
+       
         <div className={styles.gaps} />
         <p className={styles.title}>Sugar</p>
         <div className={styles.sugar}>
@@ -138,15 +138,13 @@ const Invoice = () => {
             Now get a digital copy of your invoice
           </p>
           <div className={styles.footerlink}>
-
-          <a href="/download/invoice">Download Now</a>
-          <img src={ic_download} alt="" width={26} height={26}/>
+            <a href="#">Download Now</a>
+            <img src={ic_download} alt="" width={26} height={26} />
           </div>
         </div>
-      
       </div>
     </div>
   );
 };
 
-export default Invoice;
+export default DownloadInvoice;

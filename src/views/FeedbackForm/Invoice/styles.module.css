@@ -68,3 +68,67 @@
   .gaps {
     margin-top: 10px;
   }
+  .footerlink{
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 10px !important;
+    cursor:pointer  !important;
+  }
+
+  /* Table */
+
+  .myTable {
+    border-collapse: collapse !important;
+    width: 400px !important;
+    font-size: 14px;
+    color: #000;
+    overflow-x: auto; 
+    display: block;
+    margin-left: 10px !important;
+    
+  }
+  
+  .myTable th {
+    /* border: 1px solid #B8C5D3; */
+    padding: 8px !important;
+    text-align: center !important;
+   
+    
+  }
+ 
+  .myTable td {
+    border: 1px solid #B8C5D3;
+    padding: 8px;
+    text-align: left;
+    
+  }
+  
+  @media  (max-width: 500px) {
+    .myTable {
+      display: table;
+      overflow-x: inherit;
+    }
+  }
+ 
+  .noBorder {
+    border: none;
+  }
+
+  .bgColor4Cols{
+    background-color: #ECF7FF;
+  }
+  .bgColorRow{
+    background-color: #ECF7FF;
+  }
+  .bgColorRow> td{
+    font-weight: bold;
+  }
+
+  .totalCols{
+    background-color: #2896E9;
+    color: #FFFFFF;
+  }
+  .grayBgColor{
+    background-color: #F7F7F7;
+  }
