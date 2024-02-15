@@ -21,15 +21,18 @@ import useFeedBackHook from "./FeedBackHook";
 const OverAllFeedbackForm = () => {
   const { language, toggleLanguageEnglish, toggleLanguageHindi } =
     useFeedBackHook();
-    
   const [selectedRating, setSelectedRating] = useState(null);
-const [overAll, setOverAll]=useState("")
-  const overAllExperience = useCallback((rating, feedback) => {
-    setSelectedRating(rating);
-    // overAllExperience(rating);
-    setOverAll(feedback)
-  }, [overAll, selectedRating]);
+  const [overAll, setOverAll] = useState("");
   
+  const overAllExperience = useCallback(
+    (rating, feedback) => {
+      setSelectedRating(rating);
+      // overAllExperience(rating);
+      setOverAll(feedback);
+    },
+    [overAll, selectedRating]
+  );
+
   return (
     <div className={styles.container}>
       <div className={styles.headerContainer}>
@@ -71,7 +74,12 @@ const [overAll, setOverAll]=useState("")
                 </div>
 
                 <div className={styles.feedback1}>
-                  <img src={selectedRating === 5 ? ic_5 : ic_5_inactive} height={37} width={37} alt="" />
+                  <img
+                    src={selectedRating === 5 ? ic_5 : ic_5_inactive}
+                    height={37}
+                    width={37}
+                    alt=""
+                  />
                   <div style={{ fontSize: "14px", marginLeft: "5px" }}>
                     {language === "english" ? "Very Good" : "बहुत अच्छा"}
                   </div>
@@ -100,7 +108,11 @@ const [overAll, setOverAll]=useState("")
                   />
                 </div>
                 <div className={styles.feedback1}>
-                  <img src={selectedRating === 4 ? ic_4 : ic_4_inactive} height={37} width={37} />
+                  <img
+                    src={selectedRating === 4 ? ic_4 : ic_4_inactive}
+                    height={37}
+                    width={37}
+                  />
                   <div style={{ fontSize: "14px", marginLeft: "5px" }}>
                     {language === "english" ? "Good" : "अच्छा"}
                   </div>
@@ -129,7 +141,11 @@ const [overAll, setOverAll]=useState("")
                   />
                 </div>
                 <div className={styles.feedback1}>
-                  <img src={selectedRating === 3 ? ic_3 : ic_3_inactive} height={37} width={37} />
+                  <img
+                    src={selectedRating === 3 ? ic_3 : ic_3_inactive}
+                    height={37}
+                    width={37}
+                  />
                   <div style={{ fontSize: "14px", marginLeft: "5px" }}>
                     {language === "english" ? "Satisfactory" : "संतोषजनक"}
                   </div>
@@ -158,7 +174,11 @@ const [overAll, setOverAll]=useState("")
                   />
                 </div>
                 <div className={styles.feedback1}>
-                  <img src={  selectedRating === 2 ? ic_2 : ic_2_inactive} height={37} width={37} />
+                  <img
+                    src={selectedRating === 2 ? ic_2 : ic_2_inactive}
+                    height={37}
+                    width={37}
+                  />
                   <div style={{ fontSize: "14px", marginLeft: "5px" }}>
                     {language === "english"
                       ? "Below Satisfaction"
@@ -191,7 +211,11 @@ const [overAll, setOverAll]=useState("")
                 </div>
 
                 <div className={styles.feedback1}>
-                  <img src={ selectedRating === 1 ? ic_1 : ic_1_inactive} height={37} width={37} />
+                  <img
+                    src={selectedRating === 1 ? ic_1 : ic_1_inactive}
+                    height={37}
+                    width={37}
+                  />
                   <div style={{ fontSize: "14px", marginLeft: "5px" }}>
                     {" "}
                     {language === "english" ? "Bad" : "खराब"}
@@ -207,13 +231,11 @@ const [overAll, setOverAll]=useState("")
               <ButtonBase
                 className={styles.createBtnSubmit}
                 onClick={() => {
-                
-                  if(selectedRating === 4 || selectedRating === 5){
+                  if (selectedRating === 4 || selectedRating === 5) {
                     historyUtils.push(
                       `${RouteName.POSITIVE_FEEDBACK_FORM}?lng=${language}&f=${selectedRating}`
                     );
-
-                  }else {
+                  } else {
                     historyUtils.push(
                       `${RouteName.NEGATIVE_FEEDBACK_FORM}?lng=${language}&f=${selectedRating}`
                     );

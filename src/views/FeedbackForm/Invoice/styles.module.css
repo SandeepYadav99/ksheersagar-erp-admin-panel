@@ -74,61 +74,81 @@
     align-items: center !important;
     gap: 10px !important;
     cursor:pointer  !important;
+   
   }
 
-  /* Table */
+  .footerlinkqr{
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 10px !important;
+    cursor:pointer  !important;
+    flex-direction: column !important;
+  }
 
+  .footertitle{
+    font-size: 10px !important;
+    color: #007AFF !important;
+    font-weight: bold !important;
+    letter-spacing: 0.14px !important;
+    font-style: normal normal bold 12px/15px Mulish;
+    text-align: center !important;
+   width: 181px !important;
+  }
+  .scanTitle{
+    font-size: 10px !important;
+    color: #161616 !important;
+    font-weight: bold !important;
+    letter-spacing: 0.14px !important;
+    font-style: normal normal bold 12px/15px Mulish;
+    text-align: center !important;
+   width: 179px !important;
+  }
+  /* Table */
   .myTable {
     border-collapse: collapse !important;
-    width: 400px !important;
-    font-size: 14px;
-    color: #000;
-    overflow-x: auto; 
-    display: block;
-    margin-left: 10px !important;
-    
+    font-size: 12px !important;
+    color: #161616 !important;
+    width: 375px !important;
+  
+  }
+  
+  .myTable th,
+  .myTable td {
+    padding: 8px;
   }
   
   .myTable th {
-    /* border: 1px solid #B8C5D3; */
-    padding: 8px !important;
-    text-align: center !important;
-   
-    
-  }
- 
-  .myTable td {
-    border: 1px solid #B8C5D3;
-    padding: 8px;
-    text-align: left;
-    
+    text-align: left !important;
   }
   
-  @media  (max-width: 500px) {
-    .myTable {
-      display: table;
-      overflow-x: inherit;
-    }
+  .myTable td {
+    text-align: center !important;
+   
   }
- 
+  
   .noBorder {
     border: none;
   }
-
-  .bgColor4Cols{
+  
+  .bgColor4Cols {
+    background-color: #D6E7FB !important;
+  }
+  
+  .bgColorRow {
     background-color: #ECF7FF;
   }
-  .bgColorRow{
-    background-color: #ECF7FF;
-  }
-  .bgColorRow> td{
+  
+  .bgColorRow > td {
     font-weight: bold;
   }
-
-  .totalCols{
+  
+  .totalCols {
     background-color: #2896E9;
     color: #FFFFFF;
   }
-  .grayBgColor{
+  
+  .grayBgColor {
     background-color: #F7F7F7;
   }
+  

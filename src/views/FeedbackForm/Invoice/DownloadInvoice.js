@@ -3,7 +3,7 @@ import styles from "./styles.module.css";
 
 import { ButtonBase } from "@material-ui/core";
 import ic_star from "../../../assets/img/feedback/ic_star.png";
-import ic_rupee from "../../../assets/img/feedback/ic_rupee.png";
+import dummy_qr from "../../../assets/img/feedback/dummy qr.png";
 import ic_print from "../../../assets/img/feedback/ic_print.png";
 import ic_quantity from "../../../assets/img/feedback/ic_quantity.png";
 import ic_topnav_logo from "../../../assets/img/feedback/ic_topnav_logo.png";
@@ -90,56 +90,43 @@ const DownloadInvoice = () => {
           </p>
         </div>
 {/* Item List Invoice */}
+<div >
+
 <ItemTable/>
+</div>
 {/* Item List Invoice End*/}
        
         <div className={styles.gaps} />
-        <p className={styles.title}>Sugar</p>
-        <div className={styles.sugar}>
-          <div className={styles.flexbox}>
-            <img src={ic_rupee} height={14} width={14} />
-            <p className={styles.subTitle}> ₹50/unit</p>
-          </div>
-          <div className={styles.flexbox}>
-            <img src={ic_quantity} height={14} width={14} />
-            <p className={styles.subTitle}>10 Units</p>
-          </div>
-          <div className={styles.flexbox}>
-            <img src={ic_print} height={14} width={14} />
-            <p className={styles.subTitle}>5% GST</p>
-          </div>
-        </div>
-        <hr />
-        <div className={styles.gaps} />
-        <p className={styles.title}>Cardamom</p>
-        <div className={styles.sugar}>
-          <div className={styles.flexbox}>
-            <img src={ic_rupee} height={14} width={14} />
-            <p className={styles.subTitle}> ₹50/unit</p>
-          </div>
-          <div className={styles.flexbox}>
-            <img src={ic_quantity} height={14} width={14} />
-            <p className={styles.subTitle}>10 Units</p>
-          </div>
-          <div className={styles.flexbox}>
-            <img src={ic_print} height={14} width={14} />
-            <p className={styles.subTitle}>5% GST</p>
-          </div>
+        <div className={styles.footer}>
+          <p className={styles.subTitle}>Item Total</p>
+          <p className={styles.subTitle}>
+            <strong>₹500</strong>{" "}
+          </p>
         </div>
         <div className={styles.footer}>
-          <p className={styles.subTitle}>Total</p>
+          <p className={styles.subTitle}>IGST</p>
           <p className={styles.subTitle}>
             <strong>₹500</strong>{" "}
           </p>
         </div>
         <hr />
+        <div className={styles.footer}>
+          <p className={styles.subTitle}>Total Amount Paid</p>
+          <p className={styles.subTitle}>
+            <strong>₹500</strong>{" "}
+          </p>
+        </div>
+        <p className={styles.subTitle}>Nine Hundred and Eighty Seven Rupees only</p>
+        <div className={styles.gaps} />
+        <p className={styles.scanTitle}>Scan below to get the bill information</p>
         <div className={styles.download}>
           <p className={styles.subTitle}>
             Now get a digital copy of your invoice
           </p>
-          <div className={styles.footerlink}>
-            <a href="#">Download Now</a>
-            <img src={ic_download} alt="" width={26} height={26} />
+          <div className={styles.footerlinkqr}>
+            
+            <img src={dummy_qr} alt="" width={110} height={110} />
+          <p className={styles.footertitle}> Thank you for visiting Ksheer Sagar, we are delightful to serve you !</p>
           </div>
         </div>
       </div>

@@ -1,45 +1,36 @@
-import React from 'react'
+import React from "react";
 import styles from "./styles.module.css";
 
-const ItemTable = ({groupedData, tableDatas}) => {
+const ItemTable = () => {
   return (
     <div>
       <table className={styles.myTable}>
         <thead>
-          <tr>
+          <tr className={styles.bgColor4Cols}>
+            <th>item</th>
+            <th>Qty</th>
+            <th>Price/Unit</th>
           
-            <th colSpan="4" className={styles.bgColor4Cols}>
-              item
-            </th>
-            <th colSpan="5" className={styles.bgColor4Cols}>
-              Qty
-            </th>
-            <th colSpan="6" className={styles.bgColor4Cols}>
-            Price/Unit
-            </th>
-            <th colSpan="7" className={styles.bgColor4Cols}>
-            <th colSpan="9" className={styles.bgColor4Cols}>
-            Price/Unit
-            </th>
-            <th colSpan="10" className={styles.bgColor4Cols}>
-            Total
-            </th>
-            </th>
+              <th>Price/Unit</th>
+              <th>Total</th>
+          
           </tr>
         </thead>
 
         <tbody>
-       
-<tr>
-    <td></td>
-</tr>
-        
-              
-      
+          <tr>
+            <td>Sugar</td>
+            <td>10</td>
+            <td>₹50/KG</td>
+            <td>5% GST</td>
+            <td>₹500</td>
+          </tr>
         </tbody>
       </table>
+      <hr/>
+    
     </div>
-  )
-}
+  );
+};
 
-export default ItemTable
+export default ItemTable;
