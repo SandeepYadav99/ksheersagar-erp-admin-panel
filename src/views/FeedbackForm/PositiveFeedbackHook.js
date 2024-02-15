@@ -73,12 +73,6 @@ const usePositiveFeedbackHook = ({ overAll }) => {
     [belowSatisfaction, testFeedback]
   );
 
-  // useEffect(() => {
-  //   if (!isSidePanel) {
-  //     handleReset();
-  //   }
-  // }, [isSidePanel]);
-  console.log(overAll, "OverALL");
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
     let required = [];
