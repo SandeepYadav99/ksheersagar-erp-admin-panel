@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styles from "./styles.module.css";
 
 import { ButtonBase } from "@material-ui/core";
@@ -9,17 +9,27 @@ import ic_quantity from "../../../assets/img/feedback/ic_quantity.png";
 import ic_topnav_logo from "../../../assets/img/feedback/ic_topnav_logo.png";
 import ic_download from "../../../assets/img/feedback/ic_download.png";
 import historyUtils from "../../../libs/history.utils";
+import { serviceDownloadInvoice } from "../../../services/Invoice.service";
+import SnackbarUtils from "../../../libs/SnackbarUtils";
+import { useParams } from "react-router-dom";
 const Invoice = () => {
-  const [selectedRating, setSelectedRating] = useState(null);
-  const [overAll, setOverAll] = useState("");
-  const overAllExperience = useCallback(
-    (rating, feedback) => {
-      setSelectedRating(rating);
-      // overAllExperience(rating);
-      setOverAll(feedback);
-    },
-    [overAll, selectedRating]
-  );
+  const [invoiceDetails, setInvoiceDetails] = useState();
+  const { invoiceNo } = useParams();
+  const { posOder, employeeDetail, customerDetail } = invoiceDetails || {};
+  const invoice_no = "INV-TEST-BC/2024/01/53";
+  
+  useEffect(() => {
+    serviceDownloadInvoice({ invoice_no: invoice_no }).then((res) => {
+      if (!res?.error) {
+        const data = res?.data;
+
+        setInvoiceDetails(data);
+      } else {
+        SnackbarUtils.error(res?.message);
+      }
+    });
+    return () => {};
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -40,24 +50,24 @@ const Invoice = () => {
           Invoice Number: <strong>INV - BC/2023/08/21</strong>{" "}
         </p>
         <p className={styles.subTitle}>
-          Date: <strong>12/08/2023 | 11:00 AM</strong>{" "}
+          Date: <strong>{employeeDetail?.createdAtText}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
-          Temp Sales Order: <strong>KS/BC/2023/08/200</strong>{" "}
+          Temp Sales Order: <strong>{posOder?.cart?.order_no}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
-          Cashier: <strong>Abhinav Sharma</strong>{" "}
+          Cashier: <strong>{posOder?.employee?.name_en}</strong>{" "}
         </p>
         <div className={styles.gaps} />
         <p className={styles.title}>Customer Details</p>
         <p className={styles.subTitle}>
-          <strong>Aakash Singh</strong>
+          <strong>{customerDetail?.name}</strong>
         </p>
         <p className={styles.subTitle}>
-          <strong>9887698342</strong>
+          <strong>{customerDetail?.phone}</strong>
         </p>
         <p className={styles.subTitle}>
-          GSTIN:<strong> 33881091A35</strong>
+          GSTIN:<strong> {customerDetail?.gst_no}</strong>
         </p>
         <div className={styles.gaps} />
         <hr />
@@ -77,7 +87,12 @@ const Invoice = () => {
             ))}
           </div>
           <div className={styles.gaps} />
-          <ButtonBase className={styles.createBtn} onClick={()=>historyUtils.push("/over/all/feedback")}>SUBMIT FEEDBACK</ButtonBase>
+          <ButtonBase
+            className={styles.createBtn}
+            onClick={() => historyUtils.push("/over/all/feedback")}
+          >
+            SUBMIT FEEDBACK
+          </ButtonBase>
         </div>
         <hr />
         <div className={styles.gaps} />
@@ -86,50 +101,50 @@ const Invoice = () => {
         <div className={styles.footer}>
           <p className={styles.subTitle}>
             Total Amount:
-            <br /> <strong> ₹1000</strong>
+            <br /> <strong> {posOder?.cart.prices?.total}</strong>
           </p>
           <p>
-            <span className={styles.subTitle}>No. of Items: 02</span> <br />
-            <span className={styles.subTitle}>No. of Boxes: 20</span>
+            <span className={styles.subTitle}>
+              No. of Items: {posOder?.cart?.items}
+            </span>{" "}
+            <br />
+            <span className={styles.subTitle}>
+              No. of Boxes: {posOder?.cart?.boxes}
+            </span>
           </p>
         </div>
         <div className={styles.gaps} />
-        <p className={styles.title}>Sugar</p>
-        <div className={styles.sugar}>
-          <div className={styles.flexbox}>
-            <img src={ic_rupee} height={14} width={14} />
-            <p className={styles.subTitle}> ₹50/unit</p>
-          </div>
-          <div className={styles.flexbox}>
-            <img src={ic_quantity} height={14} width={14} />
-            <p className={styles.subTitle}>10 Units</p>
-          </div>
-          <div className={styles.flexbox}>
-            <img src={ic_print} height={14} width={14} />
-            <p className={styles.subTitle}>5% GST</p>
-          </div>
-        </div>
-        <hr />
+        {posOder?.cart?.products?.map((product) => {
+          return (
+            <div>
+              <p className={styles.title}>{product?.product?.name_en}</p>
+              <div className={styles.sugar}>
+                <div className={styles.flexbox}>
+                  <img src={ic_rupee} height={14} width={14} alt="" />
+                  <p className={styles.subTitle}> {product?.price}/unit</p>
+                </div>
+                <div className={styles.flexbox}>
+                  <img src={ic_quantity} height={14} width={14} alt="" />
+                  <p className={styles.subTitle}>{product?.weight} Units</p>
+                </div>
+                <div className={styles.flexbox}>
+                  <img src={ic_print} height={14} width={14} alt="" />
+                  <p className={styles.subTitle}>
+                    {product?.product?.gst_slab || 0} GST
+                  </p>
+                </div>
+              </div>
+              <hr />
+            </div>
+          );
+        })}
+
         <div className={styles.gaps} />
-        <p className={styles.title}>Cardamom</p>
-        <div className={styles.sugar}>
-          <div className={styles.flexbox}>
-            <img src={ic_rupee} height={14} width={14} />
-            <p className={styles.subTitle}> ₹50/unit</p>
-          </div>
-          <div className={styles.flexbox}>
-            <img src={ic_quantity} height={14} width={14} />
-            <p className={styles.subTitle}>10 Units</p>
-          </div>
-          <div className={styles.flexbox}>
-            <img src={ic_print} height={14} width={14} />
-            <p className={styles.subTitle}>5% GST</p>
-          </div>
-        </div>
+
         <div className={styles.footer}>
           <p className={styles.subTitle}>Total</p>
           <p className={styles.subTitle}>
-            <strong>₹500</strong>{" "}
+            <strong>{posOder?.prices?.total}</strong>{" "}
           </p>
         </div>
         <hr />
@@ -138,12 +153,10 @@ const Invoice = () => {
             Now get a digital copy of your invoice
           </p>
           <div className={styles.footerlink}>
-
-          <a href="/download/invoice">Download Now</a>
-          <img src={ic_download} alt="" width={26} height={26}/>
+            <a href="/download/invoice">Download Now</a>
+            <img src={ic_download} alt="" width={26} height={26} />
           </div>
         </div>
-      
       </div>
     </div>
   );

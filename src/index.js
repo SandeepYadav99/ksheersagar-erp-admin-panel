@@ -12,6 +12,8 @@ import {setAuthorizationToken, setAxiosTimezone} from './libs/set_auth_token.uti
 import store from './store';
 import {AUTH_USER} from "./actions/auth_index.action";
 import {actionChangeTheme, actionGetAppSettings} from "./actions/AppSettings.action";
+import { createRoot } from 'react-dom/client';
+
 
 setAxiosTimezone();
 if (localStorage.theme && false) {
@@ -33,12 +35,13 @@ if (localStorage.jwt_token) {
 } else {
     // connectToSocket();
 }
-ReactDOM.render(
+const root = createRoot(document.getElementById('root'));
+root.render(
     
   <Provider store={store}>
     <App />
   </Provider>,
-    document.getElementById('root'),
+   
 );
 
 // If you want your app to work offline and load faster, you can change
