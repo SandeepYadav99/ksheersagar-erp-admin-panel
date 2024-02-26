@@ -13,13 +13,13 @@ import DownloadInvoice from "../views/FeedbackForm/Invoice/DownloadInvoice.js";
 
 const RouteComponent = () => (
   <Switch>
-    <Route path={"/invoice"} component={Invoice} />
-    <Route path={"/download/invoice"} component={DownloadInvoice} />
+    <Route path={"/login"} component={Login} />
+    <Route path={`/download/invoice`} component={DownloadInvoice} />
     <Route path={"/over/all/feedback"} component={OverAllFeedbackForm} />
     <Route path={"/positive/feedback"} component={PositiveCustomerFeedback} />
     <Route path={"/negative/feedback"} component={NegativeFeedback} />
     <Route path={"/completion/feedback"} component={CompletionScreen} />
-    <Route path={"/login"} component={Login} />
+    <Route path={"/invoice"} component={Invoice} />
     <Route path={"/"} component={Dashboard} />
     {/* <Route path={RouteName.NEGATIVE_FEEDBACK_FORM} component={NegativeFeedback}/> */}
   </Switch>

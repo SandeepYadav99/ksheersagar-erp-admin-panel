@@ -11,23 +11,23 @@ import ic_download from "../../../assets/img/feedback/ic_download.png";
 import historyUtils from "../../../libs/history.utils";
 import { serviceDownloadInvoice } from "../../../services/Invoice.service";
 import SnackbarUtils from "../../../libs/SnackbarUtils";
+import { useParams } from "react-router-dom";
 const Invoice = () => {
   const [invoiceDetails, setInvoiceDetails] = useState();
-
+  const { invoiceNo } = useParams();
   const { posOder, employeeDetail, customerDetail } = invoiceDetails || {};
+  const invoice_no = "INV-TEST-BC/2024/01/53";
   
   useEffect(() => {
-    serviceDownloadInvoice({ invoice_no: "INV-TEST-BC/2023/12/25" }).then(
-      (res) => {
-        if (!res?.error) {
-          const data = res?.data;
+    serviceDownloadInvoice({ invoice_no: invoice_no }).then((res) => {
+      if (!res?.error) {
+        const data = res?.data;
 
-          setInvoiceDetails(data);
-        } else {
-          SnackbarUtils.error(res?.message);
-        }
+        setInvoiceDetails(data);
+      } else {
+        SnackbarUtils.error(res?.message);
       }
-    );
+    });
     return () => {};
   }, []);
 
@@ -129,7 +129,9 @@ const Invoice = () => {
                 </div>
                 <div className={styles.flexbox}>
                   <img src={ic_print} height={14} width={14} alt="" />
-                  <p className={styles.subTitle}>{product?.product?.gst_slab || 0} GST</p>
+                  <p className={styles.subTitle}>
+                    {product?.product?.gst_slab || 0} GST
+                  </p>
                 </div>
               </div>
               <hr />
