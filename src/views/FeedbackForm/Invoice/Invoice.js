@@ -15,15 +15,17 @@ const Invoice = () => {
   const [invoiceDetails, setInvoiceDetails] = useState();
 
   const { posOder, employeeDetail, customerDetail } = invoiceDetails || {};
+  
   useEffect(() => {
     serviceDownloadInvoice({ invoice_no: "INV-TEST-BC/2023/12/25" }).then(
       (res) => {
-        if (res.error) {
-          SnackbarUtils.error(res.message);
+        if (!res?.error) {
+          const data = res?.data;
+
+          setInvoiceDetails(data);
+        } else {
+          SnackbarUtils.error(res?.message);
         }
-        const data = res?.data;
-        console.log(data);
-        setInvoiceDetails(data);
       }
     );
     return () => {};
@@ -118,16 +120,16 @@ const Invoice = () => {
               <p className={styles.title}>{product?.product?.name_en}</p>
               <div className={styles.sugar}>
                 <div className={styles.flexbox}>
-                  <img src={ic_rupee} height={14} width={14} alt=""/>
+                  <img src={ic_rupee} height={14} width={14} alt="" />
                   <p className={styles.subTitle}> {product?.price}/unit</p>
                 </div>
                 <div className={styles.flexbox}>
-                  <img src={ic_quantity} height={14} width={14}  alt=""/>
+                  <img src={ic_quantity} height={14} width={14} alt="" />
                   <p className={styles.subTitle}>{product?.weight} Units</p>
                 </div>
                 <div className={styles.flexbox}>
-                  <img src={ic_print} height={14} width={14}  alt=""/>
-                  <p className={styles.subTitle}>5% GST</p>
+                  <img src={ic_print} height={14} width={14} alt="" />
+                  <p className={styles.subTitle}>{product?.product?.gst_slab || 0} GST</p>
                 </div>
               </div>
               <hr />
@@ -136,7 +138,7 @@ const Invoice = () => {
         })}
 
         <div className={styles.gaps} />
-       
+
         <div className={styles.footer}>
           <p className={styles.subTitle}>Total</p>
           <p className={styles.subTitle}>
