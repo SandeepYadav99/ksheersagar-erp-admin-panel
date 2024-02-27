@@ -17,6 +17,9 @@ const Invoice = () => {
   const { invoiceNo } = useParams();
   const { posOder, employeeDetail, customerDetail } = invoiceDetails || {};
   const invoice_no = "INV-TEST-BC/2024/01/53";
+  const urlParams = new URLSearchParams(window.location.search);
+  const myParam = urlParams.get("invoice_no");
+  console.log(myParam, "Param");
   
   useEffect(() => {
     serviceDownloadInvoice({ invoice_no: invoice_no }).then((res) => {
