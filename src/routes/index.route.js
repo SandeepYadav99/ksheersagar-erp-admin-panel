@@ -19,7 +19,7 @@ const RouteComponent = () => (
     <Route path={"/positive/feedback"} component={PositiveCustomerFeedback} />
     <Route path={"/negative/feedback"} component={NegativeFeedback} />
     <Route path={"/completion/feedback"} component={CompletionScreen} />
-    <Route path={"invoice?invoice_no='INV-TEST-BC/2024/01/53'"} component={Invoice} />
+    <Route path={"/invoice?invoice_no='INV-TEST-BC/2024/01/53'"} component={Invoice} />
     <Route path={"/"} component={Dashboard} />
     {/* <Route path={RouteName.NEGATIVE_FEEDBACK_FORM} component={NegativeFeedback}/> */}
   </Switch>

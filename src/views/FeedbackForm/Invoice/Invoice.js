@@ -20,9 +20,9 @@ const Invoice = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const myParam = urlParams.get("invoice_no");
   console.log(myParam, "Param");
-  
+
   useEffect(() => {
-    serviceDownloadInvoice({ invoice_no: invoice_no }).then((res) => {
+    serviceDownloadInvoice({ invoice_no: myParam }).then((res) => {
       if (!res?.error) {
         const data = res?.data;
 
