@@ -17,9 +17,12 @@ const Invoice = () => {
   const { invoiceNo } = useParams();
   const { posOder, employeeDetail, customerDetail } = invoiceDetails || {};
   const invoice_no = "INV-TEST-BC/2024/01/53";
-  
+  const urlParams = new URLSearchParams(window.location.search);
+  const myParam = urlParams.get("invoice_no");
+  console.log(myParam, "Param");
+
   useEffect(() => {
-    serviceDownloadInvoice({ invoice_no: invoice_no }).then((res) => {
+    serviceDownloadInvoice({ invoice_no: myParam }).then((res) => {
       if (!res?.error) {
         const data = res?.data;
 
@@ -29,7 +32,7 @@ const Invoice = () => {
       }
     });
     return () => {};
-  }, []);
+  }, [myParam]);
 
   return (
     <div className={styles.container}>
@@ -47,7 +50,7 @@ const Invoice = () => {
         <div className={styles.gaps} />
         <p className={styles.title}>Summary</p>
         <p className={styles.subTitle}>
-          Invoice Number: <strong>INV - BC/2023/08/21</strong>{" "}
+          Invoice Number: <strong>{myParam}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
           Date: <strong>{employeeDetail?.createdAtText}</strong>{" "}
