@@ -32,7 +32,7 @@ const Invoice = () => {
       }
     });
     return () => {};
-  }, []);
+  }, [myParam]);
 
   return (
     <div className={styles.container}>
@@ -50,7 +50,7 @@ const Invoice = () => {
         <div className={styles.gaps} />
         <p className={styles.title}>Summary</p>
         <p className={styles.subTitle}>
-          Invoice Number: <strong>INV-TEST-BC/2024/02/54</strong>{" "}
+          Invoice Number: <strong>{myParam}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
           Date: <strong>{employeeDetail?.createdAtText}</strong>{" "}
