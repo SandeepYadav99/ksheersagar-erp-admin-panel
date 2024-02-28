@@ -14,12 +14,11 @@ import SnackbarUtils from "../../../libs/SnackbarUtils";
 import { useParams } from "react-router-dom";
 const Invoice = () => {
   const [invoiceDetails, setInvoiceDetails] = useState();
-  const { invoiceNo } = useParams();
+
   const { posOder, employeeDetail, customerDetail } = invoiceDetails || {};
-  const invoice_no = "INV-TEST-BC/2024/01/53";
+
   const urlParams = new URLSearchParams(window.location.search);
   const myParam = urlParams.get("invoice_no");
-  console.log(myParam, "Param");
 
   useEffect(() => {
     serviceDownloadInvoice({ invoice_no: myParam }).then((res) => {
@@ -28,7 +27,7 @@ const Invoice = () => {
 
         setInvoiceDetails(data);
       } else {
-        SnackbarUtils.error(res?.message);
+        SnackbarUtils.error(res.message);
       }
     });
     return () => {};
@@ -48,6 +47,7 @@ const Invoice = () => {
           GSTIN:<strong>98881091A35</strong>{" "}
         </p>
         <div className={styles.gaps} />
+        <hr />
         <p className={styles.title}>Summary</p>
         <p className={styles.subTitle}>
           Invoice Number: <strong>{myParam}</strong>{" "}
@@ -56,7 +56,7 @@ const Invoice = () => {
           Date: <strong>{employeeDetail?.createdAtText}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
-          Temp Sales Order: <strong>{posOder?.cart?.order_no}</strong>{" "}
+          Temp Sales Order: <strong>{posOder?.order_no}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
           Cashier: <strong>{posOder?.employee?.name_en}</strong>{" "}
@@ -75,7 +75,7 @@ const Invoice = () => {
         <div className={styles.gaps} />
         <hr />
         <div className={styles.gaps} />
-        <p className={styles.subTitle}>
+        <p className={styles.subTitlePara}>
           Please take a moment to share your feedback with us. It will help us
           to improve so we can serve you better!
         </p>
