@@ -53,7 +53,7 @@ const Invoice = () => {
           Invoice Number: <strong>{myParam}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
-          Date: <strong>{employeeDetail?.createdAtText}</strong>{" "}
+          Date: <strong>{posOder?.orderData}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
           Temp Sales Order: <strong>{posOder?.order_no}</strong>{" "}
@@ -79,6 +79,7 @@ const Invoice = () => {
           Please take a moment to share your feedback with us. It will help us
           to improve so we can serve you better!
         </p>
+      
         <div>
           <img src="" alt="" />
         </div>
@@ -86,9 +87,10 @@ const Invoice = () => {
         <div className={styles.actions}>
           <div className={styles.star}>
             {[...Array(5)].map((_, index) => (
-              <img key={index} src={ic_star} alt="" hight={11} width={11} />
+              <img key={index} src={ic_star} alt="" hight={15} width={15} />
             ))}
           </div>
+          <div className={styles.gaps} />
           <div className={styles.gaps} />
           <ButtonBase
             className={styles.createBtn}
@@ -104,7 +106,7 @@ const Invoice = () => {
         <div className={styles.footer}>
           <p className={styles.subTitle}>
             Total Amount:
-            <br /> <strong> {posOder?.cart.prices?.total}</strong>
+            <br /> <strong> ₹{posOder?.cart.prices?.total}</strong>
           </p>
           <p>
             <span className={styles.subTitle}>
@@ -124,7 +126,7 @@ const Invoice = () => {
               <div className={styles.sugar}>
                 <div className={styles.flexbox}>
                   <img src={ic_rupee} height={14} width={14} alt="" />
-                  <p className={styles.subTitle}> {product?.price}/unit</p>
+                  <p className={styles.subTitle}> {product?.product?.price}/unit</p>
                 </div>
                 <div className={styles.flexbox}>
                   <img src={ic_quantity} height={14} width={14} alt="" />
@@ -133,9 +135,15 @@ const Invoice = () => {
                 <div className={styles.flexbox}>
                   <img src={ic_print} height={14} width={14} alt="" />
                   <p className={styles.subTitle}>
-                    {product?.product?.gst_slab || 0} GST
+                    {product?.product?.gst_slab ? `${product?.product?.gst_slab }%` : '0%'}  GST
                   </p>
                 </div>
+              </div>
+              <div className={styles.footer}>
+                <p className={styles.subTitle}>Total</p>
+                <p className={styles.subTitle}>
+                  <strong>{product?.price}</strong>{" "}
+                </p>
               </div>
               <hr />
             </div>
@@ -144,13 +152,7 @@ const Invoice = () => {
 
         <div className={styles.gaps} />
 
-        <div className={styles.footer}>
-          <p className={styles.subTitle}>Total</p>
-          <p className={styles.subTitle}>
-            <strong>{posOder?.prices?.total}</strong>{" "}
-          </p>
-        </div>
-        <hr />
+     
         <div className={styles.download}>
           <p className={styles.subTitle}>
             Now get a digital copy of your invoice
