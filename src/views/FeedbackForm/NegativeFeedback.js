@@ -36,7 +36,91 @@ const NegativeFeedback = () => {
     handleTest, staffAttitude, quality, belowSatisfaction,
   test} =
     usePositiveFeedbackHook({ rating });
+console.log(staffAttitude, "Atitude");
 
+let feedbackText;
+switch (staffAttitude ) {
+  case 5:
+    feedbackText = language === lng ? "Very Good" : "बहुत अच्छा";
+    break;
+  case 4:
+    feedbackText = language === lng ? "Good" : "अच्छा";
+    break;
+  case 3:
+    feedbackText = language === lng ? "Satisfactory" : "संतोषजनक";
+    break;
+  case 2:
+    feedbackText = language === lng ? "Below Satisfactory" : "संतुष्टि के नीचे";
+    break;
+  case 1:
+    feedbackText = language === lng ? "Bad" : "खराब";
+    break;
+  default:
+    feedbackText = ""; 
+}
+
+let qualityText;
+switch ( quality) {
+  case 5:
+    qualityText = language === lng ? "Very Good" : "बहुत अच्छा";
+    break;
+  case 4:
+    qualityText = language === lng ? "Good" : "अच्छा";
+    break;
+  case 3:
+    qualityText = language === lng ? "Satisfactory" : "संतोषजनक";
+    break;
+  case 2:
+    qualityText = language === lng ? "Below Satisfactory" : "संतुष्टि के नीचे";
+    break;
+  case 1:
+    qualityText = language === lng ? "Bad" : "खराब";
+    break;
+  default:
+    qualityText = ""; 
+}
+
+let belowSatisfactionText;
+switch ( belowSatisfaction) {
+  case 5:
+    belowSatisfactionText = language === lng ? "Very Good" : "बहुत अच्छा";
+    break;
+  case 4:
+    belowSatisfactionText = language === lng ? "Good" : "अच्छा";
+    break;
+  case 3:
+    belowSatisfactionText = language === lng ? "Satisfactory" : "संतोषजनक";
+    break;
+  case 2:
+    belowSatisfactionText = language === lng ? "Below Satisfactory" : "संतुष्टि के नीचे";
+    break;
+  case 1:
+    belowSatisfactionText = language === lng ? "Bad" : "खराब";
+    break;
+  default:
+    belowSatisfactionText = ""; 
+}
+
+let testText;
+switch ( test) {
+  case 5:
+    testText = language === lng ? "Very Good" : "बहुत अच्छा";
+    break;
+  case 4:
+    testText = language === lng ? "Good" : "अच्छा";
+    break;
+  case 3:
+    testText = language === lng ? "Satisfactory" : "संतोषजनक";
+    break;
+  case 2:
+    testText = language === lng ? "Below Satisfactory" : "संतुष्टि के नीचे";
+    break;
+  case 1:
+    testText = language === lng ? "Bad" : "खराब";
+    break;
+  default:
+    testText = ""; 
+}
   return (
     <div className={styles.container}>
       <div className={styles.headerContainer}>
@@ -157,12 +241,13 @@ const NegativeFeedback = () => {
           </div>
         </div>
         <div className={styles.negFeedBack}>
-          {language === lng ? "Good " : "अच्छा"}
+          {feedbackText}
+       
         </div>
         <div className={styles.gaps} />
         {/* Row two */}
         <div className={styles.negativeFeedback}>
-          <div className={styles.negTitle}>Quality</div>
+          <div className={styles.negTitle}>{language === lng ? "Quality" : "गुणवत्ता"}</div>
           <div className={styles.gaps} />
           <div className={styles.emojiContainer}>
             <div
@@ -204,7 +289,7 @@ const NegativeFeedback = () => {
         </div>
         <div className={styles.negFeedBack}>
           {" "}
-          {language === lng ? "Below Satisfaction" : "संतुष्टि के नीचे"}
+          {qualityText}
         </div>
 
         <div className={styles.gaps} />
@@ -266,7 +351,7 @@ const NegativeFeedback = () => {
         </div>
         <div className={styles.negFeedBack}>
           {" "}
-          {language === lng ? "Below Satisfaction" : "संतुष्टि के नीचे"}
+          {belowSatisfactionText}
         </div>
         <div className={styles.gaps} />
 
@@ -318,7 +403,7 @@ const NegativeFeedback = () => {
         </div>
         <div className={styles.negFeedBack}>
           {" "}
-          {language === lng ? "Below Satisfaction" : "संतुष्टि के नीचे"}
+          {testText}
         </div>
         <div className={styles.gaps} />
 

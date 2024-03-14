@@ -18,12 +18,15 @@ import ic_topnav_logo from "../../assets/img/feedback/ic_topnav_logo.png";
 
 import ic_5_inactive from "../../assets/img/feedback/ic_5_inactive.png";
 import useFeedBackHook from "./FeedBackHook";
+
 const OverAllFeedbackForm = () => {
   const { language, toggleLanguageEnglish, toggleLanguageHindi } =
     useFeedBackHook();
   const [selectedRating, setSelectedRating] = useState(null);
   const [overAll, setOverAll] = useState("");
-  
+  const urlParams = new URLSearchParams(window.location.search);
+  const myParam = urlParams.get("invoice_no");
+
   const overAllExperience = useCallback(
     (rating, feedback) => {
       setSelectedRating(rating);

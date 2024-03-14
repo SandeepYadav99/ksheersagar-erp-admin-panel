@@ -34,9 +34,9 @@ const usePositiveFeedbackHook = ({ rating }) => {
   const [testFeedback, setTestFeedback] = useState(null);
   ////////////////////
    const location = useLocation();
-  // const params = new URLSearchParams(location.search);
-  // const lng = params.get("lng") || "english";
+
   const { lng } = location.state;
+  
   const overAllExperience = useCallback(
     (rating, feedback) => {
       setStaffAttitude(rating);
@@ -163,9 +163,10 @@ const usePositiveFeedbackHook = ({ rating }) => {
       if (fieldName === "name") {
         t[fieldName] = text;
       } else if (fieldName === "contact") {
-        if(text.length <= 10){
+        const numericText = text.replace(/\D/g, '');
+        if(numericText.length <= 10){
 
-          t[fieldName] = text;
+          t[fieldName] = numericText;
         }
       } else {
         t[fieldName] = text;
