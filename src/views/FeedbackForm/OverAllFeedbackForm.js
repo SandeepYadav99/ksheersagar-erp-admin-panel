@@ -29,8 +29,8 @@ const OverAllFeedbackForm = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const invoice_id = urlParams.get("invoice_id"); // invoice customer
   const customer_id = urlParams.get("customer_id");
-console.log(invoice_id, "Idi ", customer_id)
- 
+  console.log(invoice_id, "Idi ", customer_id);
+
   const overAllExperience = useCallback(
     (rating, feedback) => {
       setSelectedRating(rating);
@@ -240,21 +240,29 @@ console.log(invoice_id, "Idi ", customer_id)
                 onClick={() => {
                   console.log(selectedRating, "");
                   if (!selectedRating) {
-                    SnackbarUtils.error("Please provide the rating for experience ");
+                    {
+                      language === "english"
+                        ? SnackbarUtils.error(
+                            "Please provide the rating for experience "
+                          )
+                        : SnackbarUtils.error(
+                            "कृपया अनुभव के लिए रेटिंग प्रदान करें"
+                          );
+                    }
                   } else {
                     if (selectedRating === 4 || selectedRating === 5) {
                       historyUtils.push(RouteName.POSITIVE_FEEDBACK_FORM, {
                         lng: language,
                         rating: selectedRating,
-                        invoice_id:invoice_id,
-                        customer_id:customer_id
+                        invoice_id: invoice_id,
+                        customer_id: customer_id,
                       });
                     } else {
                       historyUtils.push(RouteName.NEGATIVE_FEEDBACK_FORM, {
                         lng: language,
                         rating: selectedRating,
-                        invoice_id:invoice_id,
-                        customer_id:customer_id
+                        invoice_id: invoice_id,
+                        customer_id: customer_id,
                       });
                     }
                   }
