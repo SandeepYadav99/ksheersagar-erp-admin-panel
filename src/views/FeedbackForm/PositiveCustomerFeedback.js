@@ -1,29 +1,23 @@
 import React from "react";
 import styles from "./FeedbackForm.module.css";
-
 import { ButtonBase } from "@material-ui/core";
 import ic_Google from "../../assets/img/feedback/ic_google.png";
-
 import StanduredTextField from "../../components/FormFields/TextField/StanduredTextFiled";
-
 import ic_topnav_logo from "../../assets/img/feedback/ic_topnav_logo.png";
 import ic_vendor from "../../assets/img/feedback/ic_vendor.png";
 import ic_number from "../../assets/img/feedback/ic_number.png";
 import useFeedBackHook from "./FeedBackHook";
-
 import { useLocation } from "react-router-dom";
 import usePositiveFeedbackHook from "./PositiveFeedbackHook";
-import RouteName from "../../routes/Route.name";
-import historyUtils from "../../libs/history.utils";
 
 const PositiveCustomerFeedback = () => {
   const { language } = useFeedBackHook();
   const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const lng = params.get("lng") || "english";
-const overAll= params.get("f")
+  const { lng, rating } = location.state;
 
-  const { form , errorData, changeTextData, handleSubmit} = usePositiveFeedbackHook({overAll});
+  const { form, errorData, changeTextData, handleSubmit } =
+    usePositiveFeedbackHook({ rating });
+    
   return (
     <div className={styles.container}>
       <div className={styles.headerContainer}>
@@ -57,12 +51,12 @@ const overAll= params.get("f")
             </div>
             <div className={"formGroup"}>
               <StanduredTextField
-                 isError={errorData?.name}
-                 errorText={errorData?.name}
+                isError={errorData?.name}
+                errorText={errorData?.name}
                 label={language === lng ? "Full Name" : "पूरा नाम"}
                 value={form?.name}
                 onTextChange={(text) => {
-                   changeTextData(text, "name");
+                  changeTextData(text, "name");
                 }}
                 onBlur={() => {
                   // onBlurHandler("name_en");
@@ -80,12 +74,12 @@ const overAll= params.get("f")
             </div>
             <div className={"formGroup"}>
               <StanduredTextField
-                 isError={errorData?.contact}
-                 errorText={errorData?.contact}
+                isError={errorData?.contact}
+                errorText={errorData?.contact}
                 label={language === lng ? "Phone Number" : "फ़ोन नंबर"}
                 value={form?.contact}
                 onTextChange={(text) => {
-                   changeTextData(text, "contact");
+                  changeTextData(text, "contact");
                 }}
                 onBlur={() => {
                   // onBlurHandler("name_en");
@@ -104,7 +98,7 @@ const overAll= params.get("f")
                 className={styles.createBtnSubmit}
                 onClick={() => {
                   // historyUtils.push(RouteName.NEGATIVE_FEEDBACK_FORM);
-                   handleSubmit()
+                  handleSubmit();
                 }}
               >
                 <div className={styles.submit}>

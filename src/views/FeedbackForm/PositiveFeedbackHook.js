@@ -12,7 +12,7 @@ const initialForm = {
   recommendation: "",
 };
 
-const usePositiveFeedbackHook = ({ overAll }) => {
+const usePositiveFeedbackHook = ({ rating }) => {
   const [isLoading] = useState(false);
   const [showPasswordCurrent, setShowPasswordCurrent] = useState(false);
   const [errorData, setErrorData] = useState({});
@@ -33,10 +33,10 @@ const usePositiveFeedbackHook = ({ overAll }) => {
     useState(null); // Quality
   const [testFeedback, setTestFeedback] = useState(null);
   ////////////////////
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const lng = params.get("lng") || "english";
-
+   const location = useLocation();
+  // const params = new URLSearchParams(location.search);
+  // const lng = params.get("lng") || "english";
+  const { lng } = location.state;
   const overAllExperience = useCallback(
     (rating, feedback) => {
       setStaffAttitude(rating);
@@ -108,7 +108,7 @@ const usePositiveFeedbackHook = ({ overAll }) => {
     const formData = {
       customer_name: form?.name,
       customer_contact: form?.contact,
-      overall_experience: overAll,
+      overall_experience: rating,
       customer_id: "",
       invoice_id: "",
       staff_attitude: staffAttitude ? staffAttitude : "",
@@ -123,7 +123,9 @@ const usePositiveFeedbackHook = ({ overAll }) => {
       if (!res.error) {
         // handleToggleSidePannel();
         // window.location.reload();
-        historyUtils.push(`${RouteName.COMPLETION_SCREEN}?lng=${lng}`);
+        historyUtils.push(RouteName.COMPLETION_SCREEN,{
+          lng:lng
+        });//?lng=${lng}
       } else {
        // historyUtils.push(`${RouteName.COMPLETION_SCREEN}?lng=${lng}`);
          SnackbarUtils.error(res.message);
@@ -133,7 +135,7 @@ const usePositiveFeedbackHook = ({ overAll }) => {
     } finally {
       setIsSubmitting(false);
     }
-  }, [form, isSubmitting, setIsSubmitting, overAll]);
+  }, [form, isSubmitting, setIsSubmitting, rating]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();

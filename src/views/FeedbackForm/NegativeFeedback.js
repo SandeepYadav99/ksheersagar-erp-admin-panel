@@ -27,53 +27,15 @@ import useFeedBackHook from "./FeedBackHook";
 import ic_4_inactive from "../../assets/img/feedback/ic_4_inactive.png";
 const NegativeFeedback = () => {
   const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const overAll = params.get("f");
   const { language } = useFeedBackHook();
-  const lng = params.get("lng") || "english";
+  const { lng, rating } = location.state;
+
   const { form, errorData, changeTextData, handleSubmit ,    overAllExperience,
     handleQuality,
     handleBelowSatisfaction,
     handleTest, staffAttitude, quality, belowSatisfaction,
   test} =
-    usePositiveFeedbackHook({ overAll });
-
-  // const [staffAttitude, setStaffAttitude] = useState(null); // Quality
-  // const [quality, setQuality] = useState(null); // Quality
-  // const [belowSatisfaction, setBelowSatisfaction] = useState(null); // Quality
-  // const [test, setTest] = useState(null);
-
-  // const overAllExperience = useCallback(
-  //   (rating, feedback) => {
-  //     setStaffAttitude(rating);
-  //     // overAllExperience(rating);
-  //   },
-  //   [staffAttitude]
-  // );
-
-  // const handleQuality = useCallback(
-  //   (rating, feedback) => {
-  //     setQuality(rating);
-  //     // overAllExperience(rating);
-  //   },
-  //   [quality]
-  // );
-
-  // const handleBelowSatisfaction = useCallback(
-  //   (rating, feedback) => {
-  //     setBelowSatisfaction(rating);
-  //     // overAllExperience(rating);
-  //   },
-  //   [belowSatisfaction]
-  // );
-
-  // const handleTest= useCallback(
-  //   (rating, feedback) => {
-  //     setTest(rating);
-  //     // overAllExperience(rating);
-  //   },
-  //   [belowSatisfaction]
-  // );
+    usePositiveFeedbackHook({ rating });
 
   return (
     <div className={styles.container}>

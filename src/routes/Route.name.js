@@ -23,9 +23,9 @@ EMPLOYEE_INFORMATION:'/employee/details/',
   PRODUCT:'/product',
   PRODUCT_CREATE: "/product/create",
   PRODUCT_UPDATE:"/product/update/",
-  FEEDBACK_FORM:"/over/all/feedback",
-  POSITIVE_FEEDBACK_FORM:"/positive/feedback/",
-  NEGATIVE_FEEDBACK_FORM:"/negative/feedback/",
-  COMPLETION_SCREEN:"/completion/feedback", // CompletionScreen
+  FEEDBACK_FORM:"/feedback",
+  POSITIVE_FEEDBACK_FORM:"/feedback/positive",
+  NEGATIVE_FEEDBACK_FORM:"/feedback/negative",
+  COMPLETION_SCREEN:"/feedback/submit", // CompletionScreen
   // PRODUCT_LIST:"/product/"
 };

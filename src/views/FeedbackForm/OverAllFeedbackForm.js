@@ -233,11 +233,17 @@ const OverAllFeedbackForm = () => {
                 onClick={() => {
                   if (selectedRating === 4 || selectedRating === 5) {
                     historyUtils.push(
-                      `${RouteName.POSITIVE_FEEDBACK_FORM}?lng=${language}&f=${selectedRating}`
+                      RouteName.POSITIVE_FEEDBACK_FORM, {
+                        lng:language,
+                        rating: selectedRating
+                      }
                     );
                   } else {
                     historyUtils.push(
-                      `${RouteName.NEGATIVE_FEEDBACK_FORM}?lng=${language}&f=${selectedRating}`
+                      RouteName.NEGATIVE_FEEDBACK_FORM, {
+                        lng:language,
+                        rating: selectedRating
+                      }
                     );
                   }
                 }}

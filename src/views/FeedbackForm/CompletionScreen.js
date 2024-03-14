@@ -8,9 +8,8 @@ import useFeedBackHook from "./FeedBackHook";
 const CompletionScreen = () => {
   const { language } = useFeedBackHook();
   const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const lng = params.get("lng") || "english";
-
+ 
+  const { lng, rating } = location.state;
   return (
     <div className={styles.container}>
       <div className={styles.headerContainer}>

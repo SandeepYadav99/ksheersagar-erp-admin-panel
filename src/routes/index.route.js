@@ -15,10 +15,10 @@ const RouteComponent = () => (
   <Switch>
     <Route path={"/login"} component={Login} />
     <Route path={`/download/invoice`} component={DownloadInvoice} />
-    <Route path={"/over/all/feedback"} component={OverAllFeedbackForm} />
-    <Route path={"/positive/feedback"} component={PositiveCustomerFeedback} />
-    <Route path={"/negative/feedback"} component={NegativeFeedback} />
-    <Route path={"/completion/feedback"} component={CompletionScreen} />
+    <Route path={"/feedback/positive"} component={PositiveCustomerFeedback} />
+    <Route path={"/feedback/negative"} component={NegativeFeedback} />
+    <Route path={"/feedback/submit"} component={CompletionScreen} />
+    <Route path={"/feedback"} component={OverAllFeedbackForm} />
     <Route path={"/invoice"} component={Invoice} />
     <Route path={"/"} component={Dashboard} />
     {/* <Route path={RouteName.NEGATIVE_FEEDBACK_FORM} component={NegativeFeedback}/> */}
