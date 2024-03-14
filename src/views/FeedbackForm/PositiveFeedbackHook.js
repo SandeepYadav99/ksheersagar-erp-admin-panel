@@ -13,7 +13,7 @@ const initialForm = {
   recommendation: "",
 };
 
-const usePositiveFeedbackHook = ({ rating }) => {
+const usePositiveFeedbackHook = ({ rating ,invoice_id, customer_id}) => {
   const [isLoading] = useState(false);
   const [showPasswordCurrent, setShowPasswordCurrent] = useState(false);
   const [errorData, setErrorData] = useState({});
@@ -21,6 +21,7 @@ const usePositiveFeedbackHook = ({ rating }) => {
   const [form, setForm] = useState({ ...initialForm });
   const [isEdit] = useState(false);
   const includeRef = useRef(null);
+  const location = useLocation();
   /////////////////
 
   const [staffAttitude, setStaffAttitude] = useState(null); // Quality
@@ -34,7 +35,6 @@ const usePositiveFeedbackHook = ({ rating }) => {
     useState(null); // Quality
   const [testFeedback, setTestFeedback] = useState(null);
   ////////////////////
-  const location = useLocation();
 
   const { lng } = location.state;
 
@@ -112,8 +112,8 @@ const usePositiveFeedbackHook = ({ rating }) => {
       customer_name: form?.name,
       customer_contact: form?.contact,
       overall_experience: rating,
-      customer_id: "",
-      invoice_id: "",
+      customer_id: customer_id,
+      invoice_id: invoice_id,
       staff_attitude: staffAttitude ? staffAttitude : "",
       quality: quality ? quality : "",
       speed: belowSatisfaction ? belowSatisfaction : "",

@@ -30,7 +30,7 @@ import DashboardSnackbar from "../../components/Snackbar.component";
 const NegativeFeedback = () => {
   const location = useLocation();
   const { language } = useFeedBackHook();
-  const { lng, rating } = location.state;
+  const { lng, rating, invoice_id, customer_id } = location.state;
 
   const {
     form,
@@ -45,7 +45,7 @@ const NegativeFeedback = () => {
     quality,
     belowSatisfaction,
     test,
-  } = usePositiveFeedbackHook({ rating });
+  } = usePositiveFeedbackHook({ rating ,invoice_id, customer_id});
   console.log(staffAttitude, "Atitude");
 
   let feedbackText;
@@ -134,6 +134,7 @@ const NegativeFeedback = () => {
     default:
       testText = "";
   }
+
   return (
     <div className={styles.container}>
       <div className={styles.headerContainer}>
@@ -510,10 +511,10 @@ const NegativeFeedback = () => {
                     {
                       language === lng
                         ? SnackbarUtils.error(
-                            "Please provide the rating for Staff Taste"
+                            "Please provide the rating for  Taste"
                           )
                         : SnackbarUtils.error(
-                            "कृपया स्टाफ के स्वाद  स के लिए रेटिंग प्रदान करें"
+                            "कृपया  स्वाद  के लिए रेटिंग प्रदान करें"
                           );
                     }
                   } else {

@@ -15,12 +15,11 @@ import SnackbarUtils from "../../libs/SnackbarUtils";
 const PositiveCustomerFeedback = () => {
   const { language } = useFeedBackHook();
   const location = useLocation();
-  const { lng, rating } = location.state;
+  const { lng, rating, invoice_id, customer_id } = location.state;
 
   const { form, errorData, changeTextData, handleSubmit } =
-    usePositiveFeedbackHook({ rating });
-    
-   
+    usePositiveFeedbackHook({ rating , invoice_id, customer_id});
+
   return (
     <div className={styles.container}>
       <div className={styles.headerContainer}>

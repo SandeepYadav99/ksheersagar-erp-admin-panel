@@ -27,8 +27,10 @@ const OverAllFeedbackForm = () => {
   const [selectedRating, setSelectedRating] = useState(null);
   const [overAll, setOverAll] = useState("");
   const urlParams = new URLSearchParams(window.location.search);
-  const myParam = urlParams.get("invoice_id");
-
+  const invoice_id = urlParams.get("invoice_id"); // invoice customer
+  const customer_id = urlParams.get("customer_id");
+console.log(invoice_id, "Idi ", customer_id)
+ 
   const overAllExperience = useCallback(
     (rating, feedback) => {
       setSelectedRating(rating);
@@ -244,11 +246,15 @@ const OverAllFeedbackForm = () => {
                       historyUtils.push(RouteName.POSITIVE_FEEDBACK_FORM, {
                         lng: language,
                         rating: selectedRating,
+                        invoice_id:invoice_id,
+                        customer_id:customer_id
                       });
                     } else {
                       historyUtils.push(RouteName.NEGATIVE_FEEDBACK_FORM, {
                         lng: language,
                         rating: selectedRating,
+                        invoice_id:invoice_id,
+                        customer_id:customer_id
                       });
                     }
                   }
