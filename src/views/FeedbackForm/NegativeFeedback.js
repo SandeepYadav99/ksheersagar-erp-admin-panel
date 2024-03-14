@@ -25,55 +25,115 @@ import { useLocation } from "react-router-dom";
 import useFeedBackHook from "./FeedBackHook";
 
 import ic_4_inactive from "../../assets/img/feedback/ic_4_inactive.png";
+import SnackbarUtils from "../../libs/SnackbarUtils";
+import DashboardSnackbar from "../../components/Snackbar.component";
 const NegativeFeedback = () => {
   const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const overAll = params.get("f");
   const { language } = useFeedBackHook();
-  const lng = params.get("lng") || "english";
-  const { form, errorData, changeTextData, handleSubmit ,    overAllExperience,
+  const { lng, rating, invoice_id, customer_id } = location.state;
+
+  const {
+    form,
+    errorData,
+    changeTextData,
+    handleSubmit,
+    overAllExperience,
     handleQuality,
     handleBelowSatisfaction,
-    handleTest, staffAttitude, quality, belowSatisfaction,
-  test} =
-    usePositiveFeedbackHook({ overAll });
+    handleTest,
+    staffAttitude,
+    quality,
+    belowSatisfaction,
+    test,
+  } = usePositiveFeedbackHook({ rating ,invoice_id, customer_id});
+  console.log(staffAttitude, "Atitude");
 
-  // const [staffAttitude, setStaffAttitude] = useState(null); // Quality
-  // const [quality, setQuality] = useState(null); // Quality
-  // const [belowSatisfaction, setBelowSatisfaction] = useState(null); // Quality
-  // const [test, setTest] = useState(null);
+  let feedbackText;
+  switch (staffAttitude) {
+    case 5:
+      feedbackText = language === lng ? "Very Good" : "बहुत अच्छा";
+      break;
+    case 4:
+      feedbackText = language === lng ? "Good" : "अच्छा";
+      break;
+    case 3:
+      feedbackText = language === lng ? "Satisfactory" : "संतोषजनक";
+      break;
+    case 2:
+      feedbackText =
+        language === lng ? "Below Satisfactory" : "संतुष्टि के नीचे";
+      break;
+    case 1:
+      feedbackText = language === lng ? "Bad" : "खराब";
+      break;
+    default:
+      feedbackText = "";
+  }
 
-  // const overAllExperience = useCallback(
-  //   (rating, feedback) => {
-  //     setStaffAttitude(rating);
-  //     // overAllExperience(rating);
-  //   },
-  //   [staffAttitude]
-  // );
+  let qualityText;
+  switch (quality) {
+    case 5:
+      qualityText = language === lng ? "Very Good" : "बहुत अच्छा";
+      break;
+    case 4:
+      qualityText = language === lng ? "Good" : "अच्छा";
+      break;
+    case 3:
+      qualityText = language === lng ? "Satisfactory" : "संतोषजनक";
+      break;
+    case 2:
+      qualityText =
+        language === lng ? "Below Satisfactory" : "संतुष्टि के नीचे";
+      break;
+    case 1:
+      qualityText = language === lng ? "Bad" : "खराब";
+      break;
+    default:
+      qualityText = "";
+  }
 
-  // const handleQuality = useCallback(
-  //   (rating, feedback) => {
-  //     setQuality(rating);
-  //     // overAllExperience(rating);
-  //   },
-  //   [quality]
-  // );
+  let belowSatisfactionText;
+  switch (belowSatisfaction) {
+    case 5:
+      belowSatisfactionText = language === lng ? "Very Good" : "बहुत अच्छा";
+      break;
+    case 4:
+      belowSatisfactionText = language === lng ? "Good" : "अच्छा";
+      break;
+    case 3:
+      belowSatisfactionText = language === lng ? "Satisfactory" : "संतोषजनक";
+      break;
+    case 2:
+      belowSatisfactionText =
+        language === lng ? "Below Satisfactory" : "संतुष्टि के नीचे";
+      break;
+    case 1:
+      belowSatisfactionText = language === lng ? "Bad" : "खराब";
+      break;
+    default:
+      belowSatisfactionText = "";
+  }
 
-  // const handleBelowSatisfaction = useCallback(
-  //   (rating, feedback) => {
-  //     setBelowSatisfaction(rating);
-  //     // overAllExperience(rating);
-  //   },
-  //   [belowSatisfaction]
-  // );
-
-  // const handleTest= useCallback(
-  //   (rating, feedback) => {
-  //     setTest(rating);
-  //     // overAllExperience(rating);
-  //   },
-  //   [belowSatisfaction]
-  // );
+  let testText;
+  switch (test) {
+    case 5:
+      testText = language === lng ? "Very Good" : "बहुत अच्छा";
+      break;
+    case 4:
+      testText = language === lng ? "Good" : "अच्छा";
+      break;
+    case 3:
+      testText = language === lng ? "Satisfactory" : "संतोषजनक";
+      break;
+    case 2:
+      testText = language === lng ? "Below Satisfactory" : "संतुष्टि के नीचे";
+      break;
+    case 1:
+      testText = language === lng ? "Bad" : "खराब";
+      break;
+    default:
+      testText = "";
+  }
 
   return (
     <div className={styles.container}>
@@ -153,7 +213,12 @@ const NegativeFeedback = () => {
               }
               onClick={() => overAllExperience(5, "Very Good")}
             >
-            <img src={staffAttitude === 5 ? ic_5 : ic_5_inactive} height={37} width={37} alt="" />
+              <img
+                src={staffAttitude === 5 ? ic_5 : ic_5_inactive}
+                height={37}
+                width={37}
+                alt=""
+              />
               <span>5</span>
             </div>
             <div
@@ -194,13 +259,13 @@ const NegativeFeedback = () => {
             </div>
           </div>
         </div>
-        <div className={styles.negFeedBack}>
-          {language === lng ? "Good " : "अच्छा"}
-        </div>
+        <div className={styles.negFeedBack}>{feedbackText}</div>
         <div className={styles.gaps} />
         {/* Row two */}
         <div className={styles.negativeFeedback}>
-          <div className={styles.negTitle}>Quality</div>
+          <div className={styles.negTitle}>
+            {language === lng ? "Quality" : "गुणवत्ता"}
+          </div>
           <div className={styles.gaps} />
           <div className={styles.emojiContainer}>
             <div
@@ -212,7 +277,7 @@ const NegativeFeedback = () => {
             </div>
             <div
               className={quality === 4 ? styles.ngEmojiActive : styles.ngEmoji}
-              onClick={() => handleQuality(4,"Good")}
+              onClick={() => handleQuality(4, "Good")}
             >
               <img src={quality === 4 ? ic_4 : ic_4_inactive} alt="" />
               <span>4</span>
@@ -240,10 +305,7 @@ const NegativeFeedback = () => {
             </div>
           </div>
         </div>
-        <div className={styles.negFeedBack}>
-          {" "}
-          {language === lng ? "Below Satisfaction" : "संतुष्टि के नीचे"}
-        </div>
+        <div className={styles.negFeedBack}> {qualityText}</div>
 
         <div className={styles.gaps} />
         {/* Row three */}
@@ -261,7 +323,10 @@ const NegativeFeedback = () => {
               }
               onClick={() => handleBelowSatisfaction(5, "Very Good")}
             >
-              <img src={belowSatisfaction === 5 ? ic_5 : ic_5_inactive} alt="" />
+              <img
+                src={belowSatisfaction === 5 ? ic_5 : ic_5_inactive}
+                alt=""
+              />
               <span>5</span>
             </div>
             <div
@@ -270,7 +335,10 @@ const NegativeFeedback = () => {
               }
               onClick={() => handleBelowSatisfaction(4, "Good")}
             >
-              <img src={belowSatisfaction === 4 ? ic_4 : ic_4_inactive} alt="" />
+              <img
+                src={belowSatisfaction === 4 ? ic_4 : ic_4_inactive}
+                alt=""
+              />
               <span>4</span>
             </div>
             <div
@@ -279,7 +347,10 @@ const NegativeFeedback = () => {
               }
               onClick={() => handleBelowSatisfaction(3, " Satisfactory")}
             >
-              <img src={belowSatisfaction === 3 ? ic_3 : ic_3_inactive} alt="" />
+              <img
+                src={belowSatisfaction === 3 ? ic_3 : ic_3_inactive}
+                alt=""
+              />
               <span>3</span>
             </div>
             <div
@@ -288,7 +359,10 @@ const NegativeFeedback = () => {
               }
               onClick={() => handleBelowSatisfaction(2, "Bellow Satisfactory")}
             >
-              <img src={belowSatisfaction === 2 ? ic_2 : ic_2_inactive} alt="" />
+              <img
+                src={belowSatisfaction === 2 ? ic_2 : ic_2_inactive}
+                alt=""
+              />
               <span>2</span>
             </div>
             <div
@@ -297,15 +371,15 @@ const NegativeFeedback = () => {
               }
               onClick={() => handleBelowSatisfaction(1, "Bad")}
             >
-              <img src={belowSatisfaction === 1 ? ic_1 : ic_1_inactive} alt="" />
+              <img
+                src={belowSatisfaction === 1 ? ic_1 : ic_1_inactive}
+                alt=""
+              />
               <span>1</span>
             </div>
           </div>
         </div>
-        <div className={styles.negFeedBack}>
-          {" "}
-          {language === lng ? "Below Satisfaction" : "संतुष्टि के नीचे"}
-        </div>
+        <div className={styles.negFeedBack}> {belowSatisfactionText}</div>
         <div className={styles.gaps} />
 
         {/* Row Forth */}
@@ -354,10 +428,7 @@ const NegativeFeedback = () => {
             </div>
           </div>
         </div>
-        <div className={styles.negFeedBack}>
-          {" "}
-          {language === lng ? "Below Satisfaction" : "संतुष्टि के नीचे"}
-        </div>
+        <div className={styles.negFeedBack}> {testText}</div>
         <div className={styles.gaps} />
 
         {/* End */}
@@ -399,7 +470,56 @@ const NegativeFeedback = () => {
               <ButtonBase
                 className={styles.createBtnSubmit}
                 onClick={() => {
-                  handleSubmit()
+                  if (
+                    !staffAttitude &&
+                    !test &&
+                    !quality &&
+                    !belowSatisfaction
+                  ) {
+                    // eslint-disable-next-line no-lone-blocks
+                    {
+                      language === lng
+                        ? SnackbarUtils.error(
+                            "Please provide the rating for Staff Attitude, Quality, Speed, Taste"
+                          )
+                        : SnackbarUtils.error(
+                            "कृपया स्टाफ के रवैये, गुणवत्ता, गति, स्वाद के लिए रेटिंग प्रदान करें"
+                          );
+                    }
+                  } else if (!staffAttitude) {
+                    {
+                      language === lng
+                        ? SnackbarUtils.error(
+                            "Please provide the rating for Staff Attitude"
+                          )
+                        : SnackbarUtils.error(
+                            "कृपया स्टाफ के रवैये स के लिए रेटिंग प्रदान करें"
+                          );
+                    }
+                  } else if (!quality) {
+                    {
+                      language === lng
+                        ? SnackbarUtils.error(
+                            "Please provide the rating for  Quality"
+                          )
+                        : SnackbarUtils.error(
+                            "कृपया  गति के लिए रेटिंग प्रदान करें"
+                          );
+                    }
+                  } else if (!test) {
+                    // eslint-disable-next-line no-lone-blocks
+                    {
+                      language === lng
+                        ? SnackbarUtils.error(
+                            "Please provide the rating for  Taste"
+                          )
+                        : SnackbarUtils.error(
+                            "कृपया  स्वाद  के लिए रेटिंग प्रदान करें"
+                          );
+                    }
+                  } else {
+                    handleSubmit();
+                  }
                   // historyUtils.push(RouteName.COMPLETION_SCREEN);
                 }}
               >
@@ -411,6 +531,7 @@ const NegativeFeedback = () => {
           </div>
         </div>
       </div>
+      <DashboardSnackbar />
     </div>
   );
 };

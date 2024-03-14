@@ -1,9 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect, useRef, useState } from "react";
 import { serviceCreateFeedback } from "../../services/Feedback.service";
-import RouteName from "../../routes/Route.name";
-import historyUtils from "../../libs/history.utils";
 import { useLocation } from "react-router-dom";
+import DashboardSnackbar from "../../components/Snackbar.component";
+import historyUtils from "../../libs/history.utils";
+import RouteName from "../../routes/Route.name";
 import SnackbarUtils from "../../libs/SnackbarUtils";
 
 const initialForm = {
@@ -12,7 +13,7 @@ const initialForm = {
   recommendation: "",
 };
 
-const usePositiveFeedbackHook = ({ overAll }) => {
+const usePositiveFeedbackHook = ({ rating ,invoice_id, customer_id}) => {
   const [isLoading] = useState(false);
   const [showPasswordCurrent, setShowPasswordCurrent] = useState(false);
   const [errorData, setErrorData] = useState({});
@@ -20,6 +21,7 @@ const usePositiveFeedbackHook = ({ overAll }) => {
   const [form, setForm] = useState({ ...initialForm });
   const [isEdit] = useState(false);
   const includeRef = useRef(null);
+  const location = useLocation();
   /////////////////
 
   const [staffAttitude, setStaffAttitude] = useState(null); // Quality
@@ -33,9 +35,8 @@ const usePositiveFeedbackHook = ({ overAll }) => {
     useState(null); // Quality
   const [testFeedback, setTestFeedback] = useState(null);
   ////////////////////
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const lng = params.get("lng") || "english";
+
+  const { lng } = location.state;
 
   const overAllExperience = useCallback(
     (rating, feedback) => {
@@ -75,7 +76,7 @@ const usePositiveFeedbackHook = ({ overAll }) => {
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = [];
+    let required = ["name", "contact"];
     // if (!(overAll === "Very_Good" || overAll === "Good")) {
     //   required.push("recommendation");
     // }
@@ -85,6 +86,7 @@ const usePositiveFeedbackHook = ({ overAll }) => {
         (Array.isArray(form?.[val]) && form?.[val].length === 0)
       ) {
         errors[val] = true;
+        SnackbarUtils.error("Please add required filed");
       } else if (["code"].indexOf(val) < 0) {
         delete errors[val];
       }
@@ -104,13 +106,14 @@ const usePositiveFeedbackHook = ({ overAll }) => {
     }
 
     setIsSubmitting(true);
+    console.log(rating, "Rating");
 
     const formData = {
       customer_name: form?.name,
       customer_contact: form?.contact,
-      overall_experience: overAll,
-      customer_id: "",
-      invoice_id: "",
+      overall_experience: rating,
+      customer_id: customer_id,
+      invoice_id: invoice_id,
       staff_attitude: staffAttitude ? staffAttitude : "",
       quality: quality ? quality : "",
       speed: belowSatisfaction ? belowSatisfaction : "",
@@ -120,20 +123,19 @@ const usePositiveFeedbackHook = ({ overAll }) => {
     try {
       const res = await serviceCreateFeedback(formData);
 
-      if (!res.error) {
-        // handleToggleSidePannel();
-        // window.location.reload();
-        historyUtils.push(`${RouteName.COMPLETION_SCREEN}?lng=${lng}`);
+      if (!res?.error) {
+        historyUtils.push(RouteName.COMPLETION_SCREEN, {
+          lng: lng,
+        });
       } else {
-       // historyUtils.push(`${RouteName.COMPLETION_SCREEN}?lng=${lng}`);
-         SnackbarUtils.error(res.message);
+        SnackbarUtils.error(res?.message);
+        // DashboardSnackbar.error(res.message)
       }
     } catch (error) {
-      console.error("Error submitting data:", error);
     } finally {
       setIsSubmitting(false);
     }
-  }, [form, isSubmitting, setIsSubmitting, overAll]);
+  }, [form, isSubmitting, setIsSubmitting, rating]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
@@ -159,11 +161,16 @@ const usePositiveFeedbackHook = ({ overAll }) => {
       let shouldRemoveError = true;
       const t = { ...form };
       if (fieldName === "name") {
-        t[fieldName] = text;
-      } else if (fieldName === "contact") {
-        if(text.length <= 10){
-
+        if (text.trim() !== "") {
           t[fieldName] = text;
+        }
+      } else if (fieldName === "contact") {
+        const numericText = text.replace(/\D/g, "");
+
+        if (numericText.length <= 10) {
+          if (numericText.trim() !== "") {
+            t[fieldName] = numericText;
+          }
         }
       } else {
         t[fieldName] = text;

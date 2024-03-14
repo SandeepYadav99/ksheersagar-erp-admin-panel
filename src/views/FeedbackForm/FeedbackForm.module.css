@@ -3,6 +3,7 @@
 .container {
   display: flex;
   justify-content: center;
+
 }
 .headerContainer {
   /* margin: 5rem auto !important; */
@@ -13,7 +14,9 @@
   width: 375px !important;
   height: auto !important;
   align-items: center;
+ 
 }
+
 .logo {
   text-align: center;
 }
@@ -26,6 +29,15 @@
 
 .gaps {
   margin-top: 10px;
+}
+.gapsThank{
+  margin-top: 20% !important;
+}
+.gapsThank1{
+  margin-top: 16% !important;
+}
+.gapsThank2{
+  margin-top: 35% !important;
 }
 /*End Common Css  */
 
