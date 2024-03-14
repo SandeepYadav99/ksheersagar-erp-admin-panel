@@ -25,7 +25,7 @@ const OverAllFeedbackForm = () => {
   const [selectedRating, setSelectedRating] = useState(null);
   const [overAll, setOverAll] = useState("");
   const urlParams = new URLSearchParams(window.location.search);
-  const myParam = urlParams.get("invoice_no");
+  const myParam = urlParams.get("invoice_id");
 
   const overAllExperience = useCallback(
     (rating, feedback) => {

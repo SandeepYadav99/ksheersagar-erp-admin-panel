@@ -16,15 +16,18 @@ const CompletionScreen = () => {
         <div className={styles.logo}>
           <img src={ic_topnav_logo} alt="" width={166} height={34} />
         </div>
-        <div className={styles.gaps} />
+        <div className={styles.gapsThank} />
         <div className={styles.ic_Google_img}>
           <img src={ic_Google} alt="" width={221} height={230} />
         </div>
+        <div className={styles.gapsThank1} />
         <div className={styles.title}>  {language === lng ? "Your Feedback has been recorded!" : "आपकी प्रतिक्रिया दर्ज कर ली गई है!"}</div>
         <div className={styles.subParagraph}>
         {language === lng ?
           "We appreciate your feedback, and we're dedicated to providing a better experience. Thank you for giving us the opportunity to improve. ": "हम आपकी प्रतिक्रिया की सराहना करते हैं, और हम बेहतर प्रदान करने के लिए समर्पित हैं अनुभव। हमें सुधार करने का अवसर देने के लिए धन्यवाद।" }
         </div>
+        <div className={styles.gapsThank2} />
+      
       </div>
     </div>
   );
