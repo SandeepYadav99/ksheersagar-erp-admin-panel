@@ -1,9 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect, useRef, useState } from "react";
 import { serviceCreateFeedback } from "../../services/Feedback.service";
-import RouteName from "../../routes/Route.name";
-import historyUtils from "../../libs/history.utils";
 import { useLocation } from "react-router-dom";
+import DashboardSnackbar from "../../components/Snackbar.component";
+import historyUtils from "../../libs/history.utils";
+import RouteName from "../../routes/Route.name";
 import SnackbarUtils from "../../libs/SnackbarUtils";
 
 const initialForm = {
@@ -33,10 +34,10 @@ const usePositiveFeedbackHook = ({ rating }) => {
     useState(null); // Quality
   const [testFeedback, setTestFeedback] = useState(null);
   ////////////////////
-   const location = useLocation();
+  const location = useLocation();
 
   const { lng } = location.state;
-  
+
   const overAllExperience = useCallback(
     (rating, feedback) => {
       setStaffAttitude(rating);
@@ -75,7 +76,7 @@ const usePositiveFeedbackHook = ({ rating }) => {
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = [];
+    let required = ["name", "contact"];
     // if (!(overAll === "Very_Good" || overAll === "Good")) {
     //   required.push("recommendation");
     // }
@@ -85,6 +86,7 @@ const usePositiveFeedbackHook = ({ rating }) => {
         (Array.isArray(form?.[val]) && form?.[val].length === 0)
       ) {
         errors[val] = true;
+        SnackbarUtils.error("Please add required filed");
       } else if (["code"].indexOf(val) < 0) {
         delete errors[val];
       }
@@ -104,6 +106,7 @@ const usePositiveFeedbackHook = ({ rating }) => {
     }
 
     setIsSubmitting(true);
+    console.log(rating, "Rating");
 
     const formData = {
       customer_name: form?.name,
@@ -120,18 +123,15 @@ const usePositiveFeedbackHook = ({ rating }) => {
     try {
       const res = await serviceCreateFeedback(formData);
 
-      if (!res.error) {
-        // handleToggleSidePannel();
-        // window.location.reload();
-        historyUtils.push(RouteName.COMPLETION_SCREEN,{
-          lng:lng
-        });//?lng=${lng}
+      if (!res?.error) {
+        historyUtils.push(RouteName.COMPLETION_SCREEN, {
+          lng: lng,
+        });
       } else {
-       // historyUtils.push(`${RouteName.COMPLETION_SCREEN}?lng=${lng}`);
-         SnackbarUtils.error(res.message);
+        SnackbarUtils.error(res?.message);
+        // DashboardSnackbar.error(res.message)
       }
     } catch (error) {
-      console.error("Error submitting data:", error);
     } finally {
       setIsSubmitting(false);
     }
@@ -161,12 +161,16 @@ const usePositiveFeedbackHook = ({ rating }) => {
       let shouldRemoveError = true;
       const t = { ...form };
       if (fieldName === "name") {
-        t[fieldName] = text;
+        if (text.trim() !== "") {
+          t[fieldName] = text;
+        }
       } else if (fieldName === "contact") {
-        const numericText = text.replace(/\D/g, '');
-        if(numericText.length <= 10){
+        const numericText = text.replace(/\D/g, "");
 
-          t[fieldName] = numericText;
+        if (numericText.length <= 10) {
+          if (numericText.trim() !== "") {
+            t[fieldName] = numericText;
+          }
         }
       } else {
         t[fieldName] = text;

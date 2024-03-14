@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./FeedbackForm.module.css";
 import { ButtonBase } from "@material-ui/core";
 import ic_Google from "../../assets/img/feedback/ic_google.png";
@@ -9,6 +9,8 @@ import ic_number from "../../assets/img/feedback/ic_number.png";
 import useFeedBackHook from "./FeedBackHook";
 import { useLocation } from "react-router-dom";
 import usePositiveFeedbackHook from "./PositiveFeedbackHook";
+import DashboardSnackbar from "../../components/Snackbar.component";
+import SnackbarUtils from "../../libs/SnackbarUtils";
 
 const PositiveCustomerFeedback = () => {
   const { language } = useFeedBackHook();
@@ -18,6 +20,7 @@ const PositiveCustomerFeedback = () => {
   const { form, errorData, changeTextData, handleSubmit } =
     usePositiveFeedbackHook({ rating });
     
+   
   return (
     <div className={styles.container}>
       <div className={styles.headerContainer}>
@@ -108,7 +111,9 @@ const PositiveCustomerFeedback = () => {
             </div>
           </div>
         </div>
+        <div className={styles.gapsThank2} />
       </div>
+      <DashboardSnackbar />
     </div>
   );
 };

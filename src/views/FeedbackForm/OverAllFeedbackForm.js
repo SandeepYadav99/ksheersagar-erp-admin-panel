@@ -18,6 +18,8 @@ import ic_topnav_logo from "../../assets/img/feedback/ic_topnav_logo.png";
 
 import ic_5_inactive from "../../assets/img/feedback/ic_5_inactive.png";
 import useFeedBackHook from "./FeedBackHook";
+import SnackbarUtils from "../../libs/SnackbarUtils";
+import DashboardSnackbar from "../../components/Snackbar.component";
 
 const OverAllFeedbackForm = () => {
   const { language, toggleLanguageEnglish, toggleLanguageHindi } =
@@ -234,20 +236,21 @@ const OverAllFeedbackForm = () => {
               <ButtonBase
                 className={styles.createBtnSubmit}
                 onClick={() => {
-                  if (selectedRating === 4 || selectedRating === 5) {
-                    historyUtils.push(
-                      RouteName.POSITIVE_FEEDBACK_FORM, {
-                        lng:language,
-                        rating: selectedRating
-                      }
-                    );
+                  console.log(selectedRating, "");
+                  if (!selectedRating) {
+                    SnackbarUtils.error("Please provide the rating for experience ");
                   } else {
-                    historyUtils.push(
-                      RouteName.NEGATIVE_FEEDBACK_FORM, {
-                        lng:language,
-                        rating: selectedRating
-                      }
-                    );
+                    if (selectedRating === 4 || selectedRating === 5) {
+                      historyUtils.push(RouteName.POSITIVE_FEEDBACK_FORM, {
+                        lng: language,
+                        rating: selectedRating,
+                      });
+                    } else {
+                      historyUtils.push(RouteName.NEGATIVE_FEEDBACK_FORM, {
+                        lng: language,
+                        rating: selectedRating,
+                      });
+                    }
                   }
                 }}
               >
@@ -276,6 +279,7 @@ const OverAllFeedbackForm = () => {
           </ButtonBase>
         </div>
       </div>
+      <DashboardSnackbar />
     </div>
   );
 };
