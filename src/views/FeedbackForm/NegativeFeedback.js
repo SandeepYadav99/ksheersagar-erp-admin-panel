@@ -503,6 +503,16 @@ const NegativeFeedback = () => {
                             "Please provide the rating for  Quality"
                           )
                         : SnackbarUtils.error(
+                            "कृपया  गुणवत्ता के लिए रेटिंग प्रदान करें"
+                          );
+                    }
+                  } else if (!belowSatisfaction) {
+                    {
+                      language === lng
+                        ? SnackbarUtils.error(
+                            "Please provide the rating for  Speed"
+                          )
+                        : SnackbarUtils.error(
                             "कृपया  गति के लिए रेटिंग प्रदान करें"
                           );
                     }

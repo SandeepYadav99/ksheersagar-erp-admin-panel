@@ -99,14 +99,14 @@ const usePositiveFeedbackHook = ({ rating ,invoice_id, customer_id}) => {
     });
     return errors;
   }, [form, errorData]);
-
+  console.log(invoice_id, "Rating", customer_id);
   const submitToServer = useCallback(async () => {
     if (isSubmitting) {
       return;
     }
 
     setIsSubmitting(true);
-    console.log(rating, "Rating");
+    
 
     const formData = {
       customer_name: form?.name,
