@@ -534,7 +534,7 @@ const NegativeFeedback = () => {
                 }}
               >
                 <div className={styles.submit}>
-                  {language === "english" ? "Submit" : "जमा करना"}
+                  {language === lng ? "Submit" : "जमा करना"}
                 </div>
               </ButtonBase>
             </div>
