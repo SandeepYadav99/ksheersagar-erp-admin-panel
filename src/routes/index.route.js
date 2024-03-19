@@ -16,7 +16,7 @@ const RouteComponent = () => (
     <Route path={"/login"} component={Login} />
     <Route path={`/download/invoice`} component={DownloadInvoice} />
     <Route path={"/feedback/positive"} component={PositiveCustomerFeedback} />
-    <Route path={"/feedback/negative"} component={NegativeFeedback} />
+    <Route path={"/feedback/detail"} component={NegativeFeedback} />
     <Route path={"/feedback/submit"} component={CompletionScreen} />
     <Route path={"/feedback"} component={OverAllFeedbackForm} />
     <Route path={"/invoice"} component={Invoice} />
