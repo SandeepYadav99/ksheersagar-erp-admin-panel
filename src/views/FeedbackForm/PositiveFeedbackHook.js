@@ -106,7 +106,7 @@ const usePositiveFeedbackHook = ({ rating ,invoice_id, customer_id}) => {
     }
 
     setIsSubmitting(true);
-    console.log(rating, "Rating");
+    
 
     const formData = {
       customer_name: form?.name,

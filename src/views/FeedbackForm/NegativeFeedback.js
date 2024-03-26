@@ -470,61 +470,33 @@ const NegativeFeedback = () => {
               <ButtonBase
                 className={styles.createBtnSubmit}
                 onClick={() => {
-                  if (
-                    !staffAttitude &&
-                    !test &&
-                    !quality &&
-                    !belowSatisfaction
-                  ) {
-                    // eslint-disable-next-line no-lone-blocks
-                    {
-                      language === lng
-                        ? SnackbarUtils.error(
-                            "Please provide the rating for Staff Attitude, Quality, Speed, Taste"
-                          )
-                        : SnackbarUtils.error(
-                            "कृपया स्टाफ के रवैये, गुणवत्ता, गति, स्वाद के लिए रेटिंग प्रदान करें"
-                          );
-                    }
-                  } else if (!staffAttitude) {
-                    {
-                      language === lng
-                        ? SnackbarUtils.error(
-                            "Please provide the rating for Staff Attitude"
-                          )
-                        : SnackbarUtils.error(
-                            "कृपया स्टाफ के रवैये स के लिए रेटिंग प्रदान करें"
-                          );
-                    }
-                  } else if (!quality) {
-                    {
-                      language === lng
-                        ? SnackbarUtils.error(
-                            "Please provide the rating for  Quality"
-                          )
-                        : SnackbarUtils.error(
-                            "कृपया  गति के लिए रेटिंग प्रदान करें"
-                          );
-                    }
-                  } else if (!test) {
-                    // eslint-disable-next-line no-lone-blocks
-                    {
-                      language === lng
-                        ? SnackbarUtils.error(
-                            "Please provide the rating for  Taste"
-                          )
-                        : SnackbarUtils.error(
-                            "कृपया  स्वाद  के लिए रेटिंग प्रदान करें"
-                          );
-                    }
+                  if (!staffAttitude || !test || !quality || !belowSatisfaction) {
+                      let errorMessage = "";
+                      if (!staffAttitude) {
+                          errorMessage += language === lng ? "Staff Attitude, " : "स्टाफ के रवैये, ";
+                      }
+                      if (!quality) {
+                          errorMessage += language === lng ? "Quality, " : "गुणवत्ता, ";
+                      }
+                      if (!belowSatisfaction) {
+                          errorMessage += language === lng ? "Speed, " : "गति, ";
+                      }
+                      if (!test) {
+                          errorMessage += language === lng ? "Taste" : "स्वाद";
+                      }
+              
+                      errorMessage = errorMessage.replace(/,\s*$/, ""); 
+                      errorMessage = language === lng ? `Please provide the rating for ${errorMessage}` : `कृपया ${errorMessage} के लिए रेटिंग प्रदान करें`;
+              
+                      SnackbarUtils.error(errorMessage);
                   } else {
-                    handleSubmit();
+                      handleSubmit();
                   }
-                  // historyUtils.push(RouteName.COMPLETION_SCREEN);
-                }}
+              }}
+              
               >
                 <div className={styles.submit}>
-                  {language === "english" ? "Submit" : "जमा करना"}
+                  {language === lng ? "Submit" : "जमा करना"}
                 </div>
               </ButtonBase>
             </div>
