@@ -19,11 +19,9 @@ import LocationDetail from "../views/Locations/LocationDetail/LocationDetail.vie
 import EmployeeDetail from "../views/EmployeeDetail/EmployeeDetail.view";
 import EmployeeEdit from "../views/EmployeeEdit/EmployeeEdit.view";
 
-import OverAllFeedbackForm from "../views/FeedbackForm/OverAllFeedbackForm";
-import PositiveCustomerFeedback from "../views/FeedbackForm/PositiveCustomerFeedback";
-import NegativeFeedback from "../views/FeedbackForm/NegativeFeedback";
-import CompletionScreen from "../views/FeedbackForm/CompletionScreen";
 
+import UserRoleList from "../views/UserRoles/List/UserRoleList";
+import UserRolesCreate from "../views/UserRoles/Create/UserRolesCreate"
 const NewDashboard = lazy(() => import("../views/dashboard/NewDashboard.view"));
 const LocationList = lazy(() =>
   import("../views/Locations/Location/LocationList.container")
@@ -60,6 +58,36 @@ const dashboardRoutes = [
     navbarName: "Employee Master",
     icon: DashboardOutlined,
     component: EmployeeDetail,
+    is_sidebar: false,
+    is_protect: true,
+    // roles: [Roles.ADMIN, Roles.RECRUITER, Roles.CORPORATE_HR],
+  },
+  {
+    path: `${RouteName.USER_ROLES}`,
+    sidebarName: "User Roles",
+    navbarName: "User Roles",
+    icon: PeopleOutlined,
+    component: UserRoleList,
+    is_sidebar: true,
+    is_protect: true,
+    // roles: [Roles.ADMIN, Roles.RECRUITER, Roles.CORPORATE_HR],
+  },
+  {
+    path: `${RouteName.USER_ROLES_CREATE}`,
+    sidebarName: "User Roles",
+    navbarName: "User Roles",
+    icon: PeopleOutlined,
+    component: UserRolesCreate,
+    is_sidebar: false,
+    is_protect: true,
+    // roles: [Roles.ADMIN, Roles.RECRUITER, Roles.CORPORATE_HR],
+  },
+  {
+    path: `${RouteName.USER_ROLES_UPDATE}:id`,
+    sidebarName: "User Roles",
+    navbarName: "User Roles",
+    icon: PeopleOutlined,
+    component: UserRolesCreate,
     is_sidebar: false,
     is_protect: true,
     // roles: [Roles.ADMIN, Roles.RECRUITER, Roles.CORPORATE_HR],
