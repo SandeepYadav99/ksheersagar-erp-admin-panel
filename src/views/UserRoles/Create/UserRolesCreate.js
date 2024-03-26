@@ -7,7 +7,7 @@ import CustomTextField from "../../../components/FormFields/TextField/TextField.
 import useUserRolesCreateHook from "./UserRolesCreateHook";
 import historyUtils from "../../../libs/history.utils";
 const UserRolesCreate = () => {
-  const {form, errorData, changeTextData, onBlurHandler, handleDelete}=useUserRolesCreateHook()
+  const {form, errorData, changeTextData, onBlurHandler, handleDelete, permission, handleSubmit, permisionChangeHandler}=useUserRolesCreateHook()
   return (
     <div>
       
@@ -36,7 +36,7 @@ const UserRolesCreate = () => {
         {/* )} */}
       </div>
 
-      <form >
+      <div className={"plainPaper"} >
         <div className={"formFlex"} style={{ alignItems: "center" }}>
           <div className={"formGroup"}>
           <CustomTextField
@@ -75,17 +75,17 @@ const UserRolesCreate = () => {
 
         <div className={"formFlex"}>
           <div className={"formGroup"}>
-            <RoleTableComponent />
+            <RoleTableComponent permissions={permission}  changeTextData={changeTextData} permisionChangeHandler={permisionChangeHandler}/>
           </div>
         </div>
         <br />
         <br />
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
-          <Button variant={"contained"} color={"primary"} type={"submit"}>
+          <Button variant={"contained"} color={"primary"} onClick={handleSubmit}>
             Submit
           </Button>
         </div>
-      </form>
+      </div>
      
     </div>
   );

@@ -35,11 +35,12 @@ const UserRoleList = ({}) => {
 
   const { isCorporateHR } = useAuthenticate();
   const {
-    data,
+    present:data,
     all: allData,
     currentPage,
     is_fetching: isFetching,
-  } = useSelector((state) => state.location);
+    
+  } = useSelector((state) => state?.userRoles);
 
   const renderStatus = useCallback((status) => {
     return <StatusPill status={status} />;
@@ -50,7 +51,7 @@ const UserRoleList = ({}) => {
       return (
         <div className={styles.firstCellFlex}>
           <div className={classNames(styles.firstCellInfo, "openSans")}>
-            <span className={styles.productName}>{obj?.name_en}</span> <br />
+            <span className={styles.productName}>{obj?.code}</span> <br />
           </div>
         </div>
       );
@@ -70,7 +71,7 @@ const UserRoleList = ({}) => {
         key: "description",
         label: "Description",
         sortable: false,
-        render: (temp, all) => <div>{all?.code}</div>,
+        render: (temp, all) => <div>{all?.description || "N/A"}</div>,
       },
       {
         key: "users",
@@ -118,7 +119,7 @@ const UserRoleList = ({}) => {
       ...Constants.DATATABLE_PROPERTIES,
       columns: tableStructure,
       data: data,
-      count: allData.length,
+      count: allData?.length,
       page: currentPage,
     };
 

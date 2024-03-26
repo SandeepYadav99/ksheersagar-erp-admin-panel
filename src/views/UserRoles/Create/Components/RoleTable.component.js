@@ -1,58 +1,152 @@
-
-import React from 'react';
+import React from "react";
 import {
-    withStyles, Paper,
-    Table, TableBody, TableCell, TableRow
-} from '@material-ui/core';
-import Checkbox from '@material-ui/core/Checkbox';
-import styles from './Style.module.css';
+  withStyles,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+} from "@material-ui/core";
+import Checkbox from "@material-ui/core/Checkbox";
+import styles from "./Style.module.css";
 
-const RoleTableComponent = ({ classes, data }) => {
+const RoleTableComponent = ({
+  classes,
+  data,
+  permissions,
+  changeTextData,
+  permisionChangeHandler,
+}) => {
+  const handleCheckboxChange = (event, permissionType, index) => {
+  
+    permisionChangeHandler(index, { [permissionType]: event });
 
-    const renderRows = () => {
-        return (
-            <TableRow>
-                <TableCell classes={{ root: classes.tableCell }}>Modules</TableCell>
-                
-                <TableCell classes={{ root: classes.tableCell }}><div className={styles.crud}>All Location<Checkbox color={'primary'} /></div></TableCell>
-                <TableCell classes={{ root: classes.tableCell }}><div className={styles.crud}>All Records<Checkbox color={'primary'} /></div></TableCell>
-                <TableCell classes={{ root: classes.tableCell }}><div className={styles.crud}>Read<Checkbox color={'primary'} /></div></TableCell>
-                <TableCell classes={{ root: classes.tableCell }}><div className={styles.crud}>Write<Checkbox color={'primary'} /></div></TableCell>
-                <TableCell classes={{ root: classes.tableCell }}><div className={styles.crud}>Update<Checkbox color={'primary'} /></div></TableCell>
-                <TableCell classes={{ root: classes.tableCell }}><div className={styles.crud}>Delete<Checkbox color={'primary'} /></div></TableCell>
-            </TableRow>
-        );
-    };
+  };
 
+  const renderHeader = () => {
     return (
-        <Paper>
-            <Table className={classes.table} aria-label="simple table">
-                <TableBody>
-                    {renderRows(data)}
-                    <TableRow>
-                        <TableCell>Customer</TableCell>
-                        <TableCell classes={{ root: classes.singleCell }}><Checkbox color={'primary'} /></TableCell>
-                        <TableCell classes={{ root: classes.singleCell }}><Checkbox color={'primary'} /></TableCell>
-                        <TableCell classes={{ root: classes.singleCell }}><Checkbox color={'primary'} /></TableCell>
-                        <TableCell classes={{ root: classes.singleCell }}><Checkbox color={'primary'} /></TableCell>
-                        <TableCell classes={{ root: classes.singleCell }}><Checkbox color={'primary'} /></TableCell>
-                        <TableCell classes={{ root: classes.singleCell }}><Checkbox color={'primary'} /></TableCell>
-                    </TableRow>
-                </TableBody>
-            </Table>
-        </Paper>
+      <TableRow>
+        <TableCell classes={{ root: classes.tableCell }}></TableCell>
+        <TableCell classes={{ root: classes.tableCell }}>
+          All Location
+        </TableCell>
+        <TableCell classes={{ root: classes.tableCell }}>All Records</TableCell>
+        <TableCell classes={{ root: classes.tableCell }}>Read</TableCell>
+        <TableCell classes={{ root: classes.tableCell }}>Write</TableCell>
+        <TableCell classes={{ root: classes.tableCell }}>Update</TableCell>
+        <TableCell classes={{ root: classes.tableCell }}>Delete</TableCell>
+      </TableRow>
     );
+  };
+  const renderRows = () => {
+    return (
+      <>
+        {permissions?.map((permission, index) => {
+          return (
+            <TableRow key={index}>
+              <TableCell classes={{ root: classes.tableCell }}>
+                {permission?.name}
+              </TableCell>
+
+              <TableCell classes={{ root: classes.tableCell }}>
+                <div className={styles.crud}>
+                  <Checkbox
+                    color={"primary"}
+                    value={permission?.all_location_access}
+                    onChange={(event) =>
+                      handleCheckboxChange(
+                        !permission?.all_location_access,
+                        `all_location_access`,
+                        index
+                      )
+                    }
+                  />
+                </div>
+              </TableCell>
+              <TableCell classes={{ root: classes.tableCell }}>
+                <div className={styles.crud}>
+                  <Checkbox
+                    color={"primary"}
+                    value={permission?.limited_access}
+                    onChange={(event) =>
+                    
+                      handleCheckboxChange(!permission?.limited_access, `limited_access`, index)
+                    }
+                  />
+                </div>
+              </TableCell>
+              <TableCell classes={{ root: classes.tableCell }}>
+                <div className={styles.crud}>
+                  <Checkbox
+                    color={"primary"}
+                    value={permission?.read}
+                    onChange={(event) =>
+                      handleCheckboxChange(!permission?.read, `read`, index)
+                    }
+                  />
+                </div>
+              </TableCell>
+              <TableCell classes={{ root: classes.tableCell }}>
+                <div className={styles.crud}>
+                  <Checkbox
+                    color={"primary"}
+                    value={permission?.create}
+                    onChange={(event) =>
+                      handleCheckboxChange(!permission?.create, `create`, index)
+                    }
+                  />
+                </div>
+              </TableCell>
+              <TableCell classes={{ root: classes.tableCell }}>
+                <div className={styles.crud}>
+                  <Checkbox
+                    color={"primary"}
+                    value={permission?.update}
+                    onChange={(event) =>
+                      handleCheckboxChange(!permission?.update, `update`, index)
+                    }
+                  />
+                </div>
+              </TableCell>
+              <TableCell classes={{ root: classes.tableCell }}>
+                <div className={styles.crud}>
+                  <Checkbox
+                    color={"primary"}
+                    value={permission?.delete}
+                    onChange={(event) =>
+                      handleCheckboxChange(!permission?.delete, `delete`, index)
+                    }
+                  />
+                </div>
+              </TableCell>
+            </TableRow>
+          );
+        })}
+      </>
+    );
+  };
+
+  return (
+    <Paper>
+      <Table className={classes.table} aria-label="simple table">
+        <TableBody>
+          {renderHeader()}
+          {renderRows(data)}
+        </TableBody>
+      </Table>
+    </Paper>
+  );
 };
 
-const useStyle = theme => ({
-    tableCell: {
-        color: 'black',
-        fontSize: '0.90rem',
-        textTransform: 'capitalize',
-    },
-    singleCell: {
-        textAlign: 'center'
-    }
+const useStyle = (theme) => ({
+  tableCell: {
+    color: "black",
+    fontSize: "0.90rem",
+    textTransform: "capitalize",
+  },
+  singleCell: {
+    textAlign: "center",
+  },
 });
 
 export default withStyles(useStyle, { withTheme: true })(RoleTableComponent);

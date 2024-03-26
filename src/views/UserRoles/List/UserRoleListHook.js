@@ -9,6 +9,7 @@ import {
 } from "../../../actions/Location.action";
 import historyUtils from "../../../libs/history.utils";
 import RouteName from "../../../routes/Route.name";
+import { actionFetchUserRoles, actionSetPageRoles } from "../../../actions/UserRoles.action";
 
 const useUserRoleListHook = ({}) => {
   const [isSidePanel, setSidePanel] = useState(false);
@@ -29,7 +30,7 @@ const useUserRoleListHook = ({}) => {
     is_fetching: isFetching,
     query,
     query_data: queryData,
-  } = useSelector((state) => state.location);
+  } = useSelector((state) => state?.userRoles);
 
   useEffect(() => {
     // dispatch(actionFetchLocation());
@@ -37,7 +38,7 @@ const useUserRoleListHook = ({}) => {
 
   useEffect(() => {
     dispatch(
-      actionFetchLocation(1, sortingData, {
+      actionFetchUserRoles(1, sortingData, {
         query: isMountRef.current ? query : null,
         query_data: isMountRef.current ? queryData : null,
       })
@@ -47,7 +48,7 @@ const useUserRoleListHook = ({}) => {
 
   const handlePageChange = useCallback((type) => {
     console.log("_handlePageChange", type);
-    dispatch(actionSetPageLocation(type));
+    dispatch(actionSetPageRoles(type));
   }, []);
 
   const handleDataSave = useCallback(
@@ -69,7 +70,7 @@ const useUserRoleListHook = ({}) => {
       console.log("_queryFilter", key, value);
       // dispatch(actionSetPageLocationRequests(1));
       dispatch(
-        actionFetchLocation(1, sortingData, {
+        actionFetchUserRoles(1, sortingData, {
           query: key == "SEARCH_TEXT" ? value : query,
           query_data: key == "FILTER_DATA" ? value : queryData,
         })
@@ -98,9 +99,9 @@ const useUserRoleListHook = ({}) => {
   const handleSortOrderChange = useCallback(
     (row, order) => {
       console.log(`handleSortOrderChange key:${row} order: ${order}`);
-      dispatch(actionSetPageLocation(1));
+      dispatch(actionSetPageRoles(1));
       dispatch(
-        actionFetchLocation(
+        actionFetchUserRoles(
           1,
           { row, order },
           {

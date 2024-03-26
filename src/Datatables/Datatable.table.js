@@ -335,7 +335,7 @@ class EnhancedTable extends React.Component {
 
     _renderTableCells(row, indexPr) {
         const {columns} = this.props;
-        return columns.map((val, index) => {
+        return columns?.map((val, index) => {
             return (
                 <TableCell style={('style' in val) ? val.style : {} }>
                     {val.render(row[val.key], row, indexPr)}
@@ -349,7 +349,7 @@ class EnhancedTable extends React.Component {
         const {rowsPerPage, page, order, orderBy, selected, dense} = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
         const isSelected = name => selected.indexOf(name) !== -1;
-        if (data.length > 0) {
+        if (data?.length > 0) {
             return data.map((row, index) => {
                 const isItemSelected = isSelected(row.name);
                 const labelId = `enhanced-table-checkbox-${index}`;

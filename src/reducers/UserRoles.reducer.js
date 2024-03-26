@@ -1,6 +1,4 @@
-/**
- * Created by charnjeetelectrovese@gmail.com on 12/5/2024.
- */
+
 import {
     FETCH_NEXT,
     FETCH_INIT,
@@ -16,7 +14,7 @@ import {
     CREATE_DATA,
     UPDATE_DATA,
     DELETE_ITEM
-} from '../actions/Service.action';
+} from '../actions/UserRoles.action';
 import Constants from '../config/constants';
 
 function mapPresetPRequest(all, pageId) {

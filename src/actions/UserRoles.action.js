@@ -1,19 +1,18 @@
-/**
- * Created by charnjeetelectrovese@gmail.com on 12/5/2019.
- */
+
 
 // import { serviceFetchProviderRequests } from '../services/ProviderRequest.service';
 // import { fetchPRequests } from '../services/User.service';
 import store from '../store';
 import Constants from '../config/constants';
-import {serviceCreateService, serviceGetService, serviceUpdateService,serviceDeleteService} from "../services/Service.service";
+
+import { serviceCreateRoles, serviceDeleteRoles, serviceGetRoles, serviceUpdateRoles } from '../services/UserRoles.service';
 
 export const FETCH_INIT = 'FETCH_INIT_USER_ROLES';
 export const FETCHED = 'FETCHED_USER_ROLES';
 export const FETCHED_FAIL = 'FETCHED_FAIL_USER_ROLES';
 export const FETCHED_FILTER = 'FETCHED_FILTER_USER_ROLES';
-// export const NEXT_PREQUESTS = 'NEXT_PREQUESTS';
-// export const PREV_PREQUESTS = 'PREV_PREQUESTS';
+export const NEXT_PREQUESTS = 'NEXT_PREQUESTS_ROLES';
+export const PREV_PREQUESTS = 'PREV_PREQUESTS_ROLES';
 export const FETCH_NEXT = 'FETCH_NEXT_USER_ROLES';
 export const FILTER = 'FILTER_USER_ROLES';
 export const RESET_FILTER = 'RESET_FILTER_USER_ROLES';
@@ -28,7 +27,7 @@ export const UPDATE_DATA = 'UPDATE_USER_ROLES';
 export const DELETE_ITEM = 'DELETE_USER_ROLES';
 
 export function actionFetchUserRoles(index = 1, sorting = {}, filter = {}, shouldReset=false) {
-    const request = serviceGetService({ index, row: sorting.row, order: sorting.order, ...filter });
+    const request = serviceGetRoles({ index, row: sorting.row, order: sorting.order, ...filter });
     return (dispatch) => {
         if (shouldReset) {
             dispatch({
@@ -53,8 +52,8 @@ export function actionFetchUserRoles(index = 1, sorting = {}, filter = {}, shoul
     };
 }
 
-export function actionCreateService(data) {
-    const request = serviceCreateService(data);
+export function actionCreateRoles(data) {
+    const request = serviceCreateRoles(data);
     return (dispatch) => {
         request.then((data) => {
             if (!data.error) {
@@ -64,8 +63,8 @@ export function actionCreateService(data) {
     }
 }
 
-export function actionUpdateService(data) {
-    const request = serviceUpdateService(data);
+export function actionUpdateRoles(data) {
+    const request = serviceUpdateRoles(data);
     return (dispatch) => {
         request.then((data) => {
             if (!data.error) {
@@ -75,15 +74,15 @@ export function actionUpdateService(data) {
     }
 }
 
-export function actionDeleteService(id) {
-    const request = serviceDeleteService({ id: id});
+export function actionDeleteRoles(id) {
+    const request = serviceDeleteRoles({ id: id});
     return (dispatch) => {
         dispatch({type: DELETE_ITEM, payload: id})
     }
 }
 
 
-export function actionChangePageServiceRequests(page) {
+export function actionChangePageRolesRequests(page) {
     return (dispatch) => {
         dispatch({type: CHANGE_PAGE, payload: page})
     }
@@ -103,7 +102,7 @@ export function actionChangePageServiceRequests(page) {
 //     };
 // }
 
-export function actionFilterService(value) {
+export function actionFilterRoles(value) {
     const request = null;////serviceFetchProviderRequests(value);
     return (dispatch) => {
         dispatch({type: FETCH_INIT, payload: null});
@@ -115,7 +114,7 @@ export function actionFilterService(value) {
 }
 
 
-export function actionChangeStatusService(id, status) {
+export function actionChangeStatusRoles(id, status) {
     // const request = serviceFetchProviderRequests(value);
     return (dispatch) => {
         dispatch({type: CHANGE_STATUS, payload: {id, status}});
@@ -126,14 +125,14 @@ export function actionChangeStatusService(id, status) {
     };
 }
 
-export function actionResetFilterService() {
+export function actionResetFilterRoles() {
     return {
         type: RESET_FILTER,
         payload: null,
     };
 }
 
-export function actionSetPageService(page) {
+export function actionSetPageRoles(page) {
     const stateData = store.getState().userRoles;
     const currentPage = stateData.currentPage;
     const totalLength = stateData.all.length;
