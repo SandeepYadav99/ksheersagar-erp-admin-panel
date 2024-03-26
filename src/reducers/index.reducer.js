@@ -13,6 +13,7 @@ import UnitReducer from "./Unit.reducer";
 import CategoryReducer from "./Category.reducer";
 import SubcategoryReducer from "./Subcategory.reducer";
 import ProductReducer from "./Product.reducer";
+import UserRolesReducer from "./UserRoles.reducer";
 
 const rootReducer = combineReducers({
   state: (state = {}) => state,
@@ -29,7 +30,8 @@ const rootReducer = combineReducers({
   unit:UnitReducer,
   category:CategoryReducer,
   subcategory:SubcategoryReducer,
-  product:ProductReducer
+  product:ProductReducer,
+  userRoles:UserRolesReducer
 });
 
 export default rootReducer;
