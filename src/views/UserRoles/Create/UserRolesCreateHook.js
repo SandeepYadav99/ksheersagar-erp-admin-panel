@@ -89,11 +89,7 @@ const useUserRolesCreateHook = () => {
     if (!isSubmitting) {
       setIsSubmitting(true);
     }
-    setTimeout(() => {
-      if (permission) {
-        return true;
-      }
-    }, 500);
+ 
     const fd = {
       name: form?.role,
       description: form?.role_description,
