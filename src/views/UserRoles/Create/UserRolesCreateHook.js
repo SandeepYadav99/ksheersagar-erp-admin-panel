@@ -16,7 +16,7 @@ import { useDispatch } from "react-redux";
 const initialForm = {
   role: "",
   role_description: "",
-  is_active:true,
+  is_active: true,
 };
 const useUserRolesCreateHook = () => {
   const [form, setForm] = useState({ ...initialForm });
@@ -89,12 +89,16 @@ const useUserRolesCreateHook = () => {
     if (!isSubmitting) {
       setIsSubmitting(true);
     }
-
+    setTimeout(() => {
+      if (permission) {
+        return true;
+      }
+    }, 500);
     const fd = {
       name: form?.role,
       description: form?.role_description,
       permissions: permission,
-      is_active:form?.is_active === true ? true : false
+      is_active: form?.is_active === true ? true : false,
     };
 
     let req;
