@@ -71,13 +71,24 @@ const UserRoleList = ({}) => {
         key: "description",
         label: "Description",
         sortable: false,
-        render: (temp, all) => <div>{all?.description || "N/A"}</div>,
+        render: (temp, all) => <div style={{width:"15rem"}}>{all?.description || "N/A"}</div>,
       },
       {
         key: "users",
         label: "Users",
         sortable: false,
-        render: (temp, all) => <div>{all?.city}</div>,
+        render: (temp, all) =>     <div style={{width:"20rem"}}>
+        {all?.users?.length > 0 ? (
+          all?.users?.map((user, index) => (
+            <span key={user.id}>
+              {user.name}
+              {index < all.users.length - 1 && ", "}
+            </span>
+          ))
+        ) : (
+          "N/A"
+        )}
+      </div>
       },
     
       {
