@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import {
   withStyles,
   Paper,
@@ -17,11 +17,11 @@ const RoleTableComponent = ({
   changeTextData,
   permisionChangeHandler,
 }) => {
-  const handleCheckboxChange = (event, permissionType, index) => {
+  const handleCheckboxChange = useCallback((event, permissionType, index) => {
   
     permisionChangeHandler(index, { [permissionType]: event });
 
-  };
+  },[permisionChangeHandler]);
 
   const renderHeader = () => {
     return (
@@ -52,7 +52,7 @@ const RoleTableComponent = ({
                 <div className={styles.crud}>
                   <Checkbox
                     color={"primary"}
-                    value={permission?.all_location_access}
+                    checked={permission?.all_location_access}
                     onChange={(event) =>
                       handleCheckboxChange(
                         !permission?.all_location_access,
@@ -67,7 +67,7 @@ const RoleTableComponent = ({
                 <div className={styles.crud}>
                   <Checkbox
                     color={"primary"}
-                    value={permission?.limited_access}
+                    checked={permission?.limited_access}
                     onChange={(event) =>
                     
                       handleCheckboxChange(!permission?.limited_access, `limited_access`, index)
@@ -79,7 +79,7 @@ const RoleTableComponent = ({
                 <div className={styles.crud}>
                   <Checkbox
                     color={"primary"}
-                    value={permission?.read}
+                    checked={permission?.read}
                     onChange={(event) =>
                       handleCheckboxChange(!permission?.read, `read`, index)
                     }
@@ -90,7 +90,7 @@ const RoleTableComponent = ({
                 <div className={styles.crud}>
                   <Checkbox
                     color={"primary"}
-                    value={permission?.create}
+                    checked={permission?.create}
                     onChange={(event) =>
                       handleCheckboxChange(!permission?.create, `create`, index)
                     }
@@ -101,7 +101,7 @@ const RoleTableComponent = ({
                 <div className={styles.crud}>
                   <Checkbox
                     color={"primary"}
-                    value={permission?.update}
+                    checked={permission?.update}
                     onChange={(event) =>
                       handleCheckboxChange(!permission?.update, `update`, index)
                     }

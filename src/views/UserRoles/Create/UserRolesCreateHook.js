@@ -10,10 +10,13 @@ import historyUtils from "../../../libs/history.utils";
 import SnackbarUtils from "../../../libs/SnackbarUtils";
 import RouteName from "../../../routes/Route.name";
 import constants from "../../../config/constants";
+import { actionDeleteRoles } from "../../../actions/UserRoles.action";
+import { useDispatch } from "react-redux";
 
 const initialForm = {
   role: "",
   role_description: "",
+  is_active:true,
 };
 const useUserRolesCreateHook = () => {
   const [form, setForm] = useState({ ...initialForm });
@@ -21,9 +24,9 @@ const useUserRolesCreateHook = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [permission, setPermissions] = useState([]);
-  const [permissionUpdate, setPermissionsUpdate] = useState({});
+  const [permissionUpdate, setPermissionsUpdate] = useState([]);
   const { id } = useParams();
-
+  const dispatch = useDispatch();
   useEffect(() => {
     if (id) {
       serviceRolesDetails({ id: id }).then((res) => {
@@ -32,11 +35,8 @@ const useUserRolesCreateHook = () => {
 
           setForm({
             ...form,
-            // id:data._id,
-            name: data?.name,
-
-            // document: data.document,
-            //  videos:data?.videos?.map((vi)=>vi),
+            role: data?.name,
+            role_description: data?.description,
             status: data?.status === constants.GENERAL_STATUS.ACTIVE,
           });
         } else {
@@ -47,18 +47,15 @@ const useUserRolesCreateHook = () => {
   }, [id]);
 
   useEffect(() => {
-    if (id) return;
-    serviceRolesPermissions({ id: "" }).then((res) => {
+    serviceRolesPermissions({ id: id ? id : "" }).then((res) => {
       if (!res?.error) {
         setPermissions(res?.data);
       }
     });
-  }, []);
-  console.log(permission, "Permi");
+  }, [id]);
 
   const permisionChangeHandler = useCallback(
     (index, data) => {
-      console.log(data, index);
       const t = [...permission];
       console.log(t, "T");
       t[index] = { ...t[index], ...data };
@@ -69,7 +66,7 @@ const useUserRolesCreateHook = () => {
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = ["role"];
+    let required = ["role", "role_description"];
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -87,19 +84,23 @@ const useUserRolesCreateHook = () => {
     return errors;
   }, [form, errorData]);
 
-  const submitToServer = useCallback(() => {
+  const submitToServer = useCallback(async () => {
     setIsLoading(true);
     if (!isSubmitting) {
       setIsSubmitting(true);
     }
+
     const fd = {
       name: form?.role,
       description: form?.role_description,
       permissions: permission,
+      is_active:form?.is_active === true ? true : false
     };
 
     let req;
     if (id) {
+      fd.id = id;
+
       req = serviceUpdateRoles(fd);
     } else {
       req = serviceCreateRoles(fd);
@@ -115,7 +116,7 @@ const useUserRolesCreateHook = () => {
       setIsSubmitting(false);
     });
   }, [form, isSubmitting, setIsSubmitting, id]);
-  console.log(form, "Form");
+
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
     // console.log('dff',errors)
@@ -125,7 +126,7 @@ const useUserRolesCreateHook = () => {
     }
 
     submitToServer();
-  }, [checkFormValidation, setErrorData, form]);
+  }, [checkFormValidation, setErrorData, form, errorData]);
 
   const removeError = useCallback(
     (title) => {
@@ -135,24 +136,23 @@ const useUserRolesCreateHook = () => {
     },
     [setErrorData, errorData]
   );
-  console.log(permissionUpdate, "Update");
+
   const changeTextData = useCallback(
-    (text, fieldName, index) => {
+    (text, fieldName) => {
       let shouldRemoveError = true;
-      console.log(text, "Text", fieldName, index);
-      if (index) {
-        // setPermissionsUpdate((prev)=>())
-      }
+
       const t = { ...form };
       if (fieldName === "name") {
-        t[fieldName] = text;
+        t[fieldName] = text?.trimStart();
+      } else if (fieldName === "role_description") {
+        t[fieldName] = text?.trimStart();
       } else {
         t[fieldName] = text;
       }
       setForm(t);
       shouldRemoveError && removeError(fieldName);
     },
-    [removeError, form, setForm]
+    [removeError, form, setForm, errorData]
   );
 
   const onBlurHandler = useCallback(
@@ -165,9 +165,10 @@ const useUserRolesCreateHook = () => {
   );
 
   const handleDelete = useCallback(() => {
-    // dispatch(actionDeleteProduct(id));
+    dispatch(actionDeleteRoles(id));
     // setIsDialog(false);
     // historyUtils.push("/product");
+    historyUtils.push(RouteName.USER_ROLES);
   }, [id]);
 
   const handleReset = useCallback(() => {
@@ -182,6 +183,8 @@ const useUserRolesCreateHook = () => {
     handleSubmit,
     permission,
     permisionChangeHandler,
+    id,
+    handleDelete,
   };
 };
 

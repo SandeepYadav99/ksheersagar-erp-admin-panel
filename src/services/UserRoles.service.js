@@ -1,7 +1,7 @@
 import {getRequest, postRequest} from '../libs/AxiosService.util';
 
 export async function serviceCreateRoles(params) {
-    return await postRequest('roles/create', params);
+    return await postRequest('roles/createE', params);
 }
 
 export async function serviceUpdateRoles(params) {
