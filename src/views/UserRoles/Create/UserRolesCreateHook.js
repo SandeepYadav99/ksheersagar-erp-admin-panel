@@ -22,9 +22,10 @@ const useUserRolesCreateHook = () => {
   const [form, setForm] = useState({ ...initialForm });
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+
   const [isLoading, setIsLoading] = useState(false);
   const [permission, setPermissions] = useState([]);
-  const [permissionUpdate, setPermissionsUpdate] = useState([]);
+  const [permissionUpdate, setPermissionsUpdate] = useState(null);
   const { id } = useParams();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -54,14 +55,18 @@ const useUserRolesCreateHook = () => {
     });
   }, [id]);
 
+
+  console.log(permission, "int")
   const permisionChangeHandler = useCallback(
     (index, data) => {
       const t = [...permission];
-      console.log(t, "T");
+      console.log(data,"t")
       t[index] = { ...t[index], ...data };
+      
       setPermissions(t);
     },
-    [permission, setPermissions]
+    [permission,setPermissions]
+
   );
 
   const checkFormValidation = useCallback(() => {
@@ -83,13 +88,14 @@ const useUserRolesCreateHook = () => {
     });
     return errors;
   }, [form, errorData]);
-
+ 
+  
   const submitToServer = useCallback(async () => {
     setIsLoading(true);
     if (!isSubmitting) {
       setIsSubmitting(true);
     }
- 
+  console.log(permission, "p")
     const fd = {
       name: form?.role,
       description: form?.role_description,
@@ -115,7 +121,7 @@ const useUserRolesCreateHook = () => {
       }
       setIsSubmitting(false);
     });
-  }, [form, isSubmitting, setIsSubmitting, id]);
+  }, [form, isSubmitting, setIsSubmitting, id, permission,setPermissions]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
@@ -125,8 +131,8 @@ const useUserRolesCreateHook = () => {
       return true;
     }
 
-    submitToServer();
-  }, [checkFormValidation, setErrorData, form, errorData]);
+   await submitToServer();
+  }, [checkFormValidation, setErrorData, form, errorData, permission,setPermissions]);
 
   const removeError = useCallback(
     (title) => {
