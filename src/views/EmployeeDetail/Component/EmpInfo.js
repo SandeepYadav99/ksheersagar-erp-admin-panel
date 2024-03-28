@@ -2,7 +2,7 @@ import React from "react";
 import image from "../../../assets/img/KS_logo.png";
 
 const EmpInfo = ({ data }) => {
-  
+ 
   return (
     <div
       style={{
