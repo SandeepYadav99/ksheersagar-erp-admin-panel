@@ -26,5 +26,8 @@ EMPLOYEE_INFORMATION:'/employee/details/',
   POSITIVE_FEEDBACK_FORM:"/feedback/positive",
   NEGATIVE_FEEDBACK_FORM:"/feedback/detail",
   COMPLETION_SCREEN:"/feedback/submit", // CompletionScreen
-  // PRODUCT_LIST:"/product/"
+  // PRODUCT_LIST:"/product/",
+  USER_ROLES:"/roles/",
+  USER_ROLES_CREATE:"/roles/create",
+  USER_ROLES_UPDATE:"/roles/update/"
 };
