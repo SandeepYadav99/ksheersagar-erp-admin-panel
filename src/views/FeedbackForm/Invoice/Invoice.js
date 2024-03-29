@@ -79,7 +79,7 @@ const Invoice = () => {
           Please take a moment to share your feedback with us. It will help us
           to improve so we can serve you better!
         </p>
-      
+
         <div>
           <img src="" alt="" />
         </div>
@@ -94,7 +94,11 @@ const Invoice = () => {
           <div className={styles.gaps} />
           <ButtonBase
             className={styles.createBtn}
-            onClick={() => historyUtils.push("/over/all/feedback")}
+            onClick={() =>
+              historyUtils.push(
+                `/feedback?invoice_id=${myParam}&customer_id=${invoiceDetails?.posOder?.customer_id}`
+              )
+            }
           >
             SUBMIT FEEDBACK
           </ButtonBase>
@@ -126,7 +130,10 @@ const Invoice = () => {
               <div className={styles.sugar}>
                 <div className={styles.flexbox}>
                   <img src={ic_rupee} height={14} width={14} alt="" />
-                  <p className={styles.subTitle}> {product?.product?.price}/unit</p>
+                  <p className={styles.subTitle}>
+                    {" "}
+                    {product?.product?.price}/unit
+                  </p>
                 </div>
                 <div className={styles.flexbox}>
                   <img src={ic_quantity} height={14} width={14} alt="" />
@@ -135,7 +142,10 @@ const Invoice = () => {
                 <div className={styles.flexbox}>
                   <img src={ic_print} height={14} width={14} alt="" />
                   <p className={styles.subTitle}>
-                    {product?.product?.gst_slab ? `${product?.product?.gst_slab }%` : '0%'}  GST
+                    {product?.product?.gst_slab
+                      ? `${product?.product?.gst_slab}%`
+                      : "0%"}{" "}
+                    GST
                   </p>
                 </div>
               </div>
@@ -152,7 +162,6 @@ const Invoice = () => {
 
         <div className={styles.gaps} />
 
-     
         <div className={styles.download}>
           <p className={styles.subTitle}>
             Now get a digital copy of your invoice

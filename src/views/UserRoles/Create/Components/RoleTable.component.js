@@ -21,7 +21,7 @@ const RoleTableComponent = ({
   
     permisionChangeHandler(index, { [permissionType]: event });
 
-  },[permisionChangeHandler]);
+  },[permisionChangeHandler, permissions]);
 
   const renderHeader = () => {
     return (

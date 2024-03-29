@@ -35,8 +35,8 @@ function useEmployeeDetails() {
 
   const handleEmpInfoPage = useCallback((data) => {
     const newWindow = window.open('', '_blank');
-    if (newWindow) {
-      ReactDOM.render(<EmpInfo data={data}/>, newWindow.document.body);
+    if (newWindow && data) {
+      ReactDOM.render(<EmpInfo data={data}/>, newWindow.document.body)
     } 
     //  historyUtils.push(`${RouteName.EMPLOYEE_INFORMATION}${id}`);
   }, []);
