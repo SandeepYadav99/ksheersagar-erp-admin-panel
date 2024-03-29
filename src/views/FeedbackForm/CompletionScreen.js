@@ -5,16 +5,25 @@ import ic_Google from "../../assets/img/feedback/feedback.png";
 import ic_topnav_logo from "../../assets/img/feedback/ic_topnav_logo.png"
 import { useLocation } from "react-router-dom";
 import useFeedBackHook from "./FeedBackHook";
+import { IconButton } from "@material-ui/core";
+import { Close } from "@material-ui/icons";
 const CompletionScreen = () => {
-  const { language } = useFeedBackHook();
+  const { language , handleClos} = useFeedBackHook();
   const location = useLocation();
  
   const { lng, rating } = location.state;
+
   return (
     <div className={styles.container}>
       <div className={styles.headerContainer}>
-        <div className={styles.logo}>
+      <div className={styles.closeIconAction}>
+            <IconButton onClick={handleClos}>
+              <Close fontSize="small" />
+            </IconButton>
+            </div>
+        <div className={styles.logoCompleteion}>
           <img src={ic_topnav_logo} alt="" width={166} height={34} />
+         
         </div>
         <div className={styles.gapsThank} />
         <div className={styles.ic_Google_img}>

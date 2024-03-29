@@ -3,7 +3,6 @@
 .container {
   display: flex;
   justify-content: center;
-
 }
 .headerContainer {
   /* margin: 5rem auto !important; */
@@ -14,29 +13,41 @@
   width: 375px !important;
   height: auto !important;
   align-items: center;
- 
 }
 
 .logo {
   text-align: center;
+}
+.logoCompleteion {
+  text-align: center;
+  margin-left: 10%;
+}
+.closeIconAction {
+  float: right !important;
+  top: 0px !important;
+  right: 0px;
+}
+.logo img {
+  width: 186px;
 }
 .title {
   text-align: center;
   color: #007aff;
   margin: 20px 0px 20px 0px;
   font-weight: bold;
+  font-size: 16px;
 }
 
 .gaps {
   margin-top: 10px;
 }
-.gapsThank{
+.gapsThank {
   margin-top: 20% !important;
 }
-.gapsThank1{
+.gapsThank1 {
   margin-top: 16% !important;
 }
-.gapsThank2{
+.gapsThank2 {
   margin-top: 35% !important;
 }
 /*End Common Css  */
@@ -44,6 +55,7 @@
 .paragraph {
   font-size: 14px;
   text-align: center;
+  margin: 30px 0px 45px 0px;
 }
 .ic_Google_img {
   font-size: 14px;
@@ -53,6 +65,10 @@
   text-align: center;
   font-size: 14px;
   color: #212125;
+  margin: 22px 0px 22px 0px;
+}
+.formNeg {
+  margin: 20px 0px 20px 0px;
 }
 .subTitle {
   text-align: center;
@@ -71,12 +87,22 @@
 .actionContainer {
   /* text-align: justify; */
   width: 375px !important;
+  overflow: hidden;
 }
 .action {
   display: flex;
   justify-content: space-between;
   align-items: center;
   text-align: justify;
+  margin-top: 15px;
+}
+
+.action_negative {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: justify;
+  margin-top: -30px;
 }
 .createBtn {
   background-color: #007aff !important;
@@ -84,7 +110,7 @@
   padding: 12px 35px !important;
   font-size: 0.8rem !important;
   border-radius: 5px !important;
-  text-transform: uppercase !important;
+  /* text-transform: uppercase !important; */
   font-weight: 600 !important;
   width: 375px !important;
 }
@@ -94,7 +120,7 @@
   padding: 12px 35px !important;
   font-size: 0.8rem !important;
   border-radius: 5px !important;
-  text-transform: uppercase !important;
+  /* text-transform: uppercase !important; */
   font-weight: 600 !important;
   width: 375px !important;
   text-align: justify;
@@ -102,7 +128,7 @@
 .submitContainer {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 3rem;
 }
 .createBtnSubmit {
   background-color: #007aff !important;
@@ -135,7 +161,6 @@
   margin-left: 60px;
   display: flex;
   align-items: center;
-  
 }
 
 .language {
@@ -150,6 +175,7 @@
   text-decoration: none;
   border: none;
   cursor: pointer;
+  text-decoration: underline;
 }
 .hindi {
   text-decoration: underline;
@@ -159,22 +185,61 @@
 }
 
 /* Negative Feeedback Css */
-.emojiContainer{
+.emojiContainer {
   display: flex;
   justify-content: space-between;
   width: 375px !important;
-  
 }
-.negTitle{
+@media screen and (max-width: 404px) {
+  .headerContainer,
+  .emojiContainer {
+    width: 300px !important;
+  }
+  .feedback1 {
+    margin-left: 1px !important;
+  }
+  .createBtn,
+  .createBtnDisable,
+  .actionContainer {
+    padding: 12px 20px !important;
+    width: 300px !important;
+  }
+  .actionContainer {
+    margin-left: -30px;
+    overflow: hidden;
+  }
+  .action {
+    width: 200px !important;
+  }
+}
+@media screen and (max-width: 352px) {
+  .headerContainer,
+  .emojiContainer {
+    width: 250px !important;
+  }
+}
+@media screen and (max-width: 282px) {
+  .headerContainer,
+  .emojiContainer {
+    width: 210px !important;
+  }
+  .action_negative,
+  .action {
+    width: 200px !important;
+  }
+}
+.negTitle {
   font-size: 14px;
   color: #212125;
   font-weight: bold;
-
+  margin-top: 10px;
 }
-.negFeedBack{
+.negFeedBack {
   font-size: 12px;
-  color: #007AFF;
+  color: #007aff;
   font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 .negativeFeedback {
   display: flex;
@@ -183,25 +248,24 @@
 .ngEmoji {
   display: flex;
   flex-direction: column;
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
   color: black;
   border-radius: 5px;
   padding: 2px;
   cursor: pointer;
-
 }
 .ngEmoji img {
   width: 37px;
   height: 37px;
 }
 .ngEmoji span {
- margin-left: 15px;
- font-size: 12px;
+  margin-left: 15px;
+  font-size: 12px;
 }
-.ngEmojiActive{
+.ngEmojiActive {
   display: flex;
   flex-direction: column;
-  background-color: #007AFF;
+  background-color: #007aff;
   color: white;
   border-radius: 5px;
   padding: 2px;
@@ -212,19 +276,35 @@
   height: 37px;
 }
 .ngEmojiActive span {
- margin-left: 15px;
- font-size: 12px;
+  margin-left: 15px;
+  font-size: 12px;
 }
-.footerTitle{
+.footerTitle {
   font-size: 14px;
   font-weight: bold;
-  text-align: center;
+  text-align: justify;
   margin-top: 20px;
+  color: #212125;
+  margin: 20% 0px 20px 0px;
 }
-.underline{
-  color: #007aff;
+.underline {
+  color: #007aff !important;
   border: none;
-  text-decoration: underline;
+  text-decoration: underline !important;
   cursor: pointer;
 }
+.formContainer {
+  margin-top: 2rem !important;
+}
 /* End Negative Feeedback Css */
+
+.imageBorder {
+  margin-top: 14px !important;
+  margin-right: 8px !important;
+}
+.hrline {
+  border: 0.7px solid rgba(0, 0, 0, 0.42) !important;
+}
+.hrline:hover {
+  /* border: 1px solid #2896E9; */
+}

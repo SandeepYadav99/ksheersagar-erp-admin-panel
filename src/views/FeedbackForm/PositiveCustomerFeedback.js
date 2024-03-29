@@ -38,7 +38,7 @@ const PositiveCustomerFeedback = () => {
           {" "}
           {language === lng
             ? "Review us on Google!"
-            : "Google पर हमारी समीक्षा करें!"}
+            : "गूगल पर हमारी समीक्षा करें!"}
         </div>
         <div className={styles.subParagraph}>
           {language === lng
@@ -46,12 +46,13 @@ const PositiveCustomerFeedback = () => {
             : "इस बात को फैलाने में हमारी मदद करें और समीक्षा लिंक प्राप्त करने के लिए नीचे दिए गए विवरण भरें"}
         </div>
 
-        <div>
+        <div className={styles.formContainer}>
           <div className={"formFlex"}>
-            <div style={{ marginTop: "40px" }}>
-              <img src={ic_vendor} width={20} height={20} />
+            <div >
+              <img src={ic_vendor} width={25} height={25} alt="" className={styles.imageBorder}/>
+              <hr className={styles.hrline}/>
             </div>
-            <div className={"formGroup"}>
+            <div className={"formGroup"} style={{padding:"0px " }}>
               <StanduredTextField
                 isError={errorData?.name}
                 errorText={errorData?.name}
@@ -63,18 +64,22 @@ const PositiveCustomerFeedback = () => {
                 onBlur={() => {
                   // onBlurHandler("name_en");
                 }}
-                // icon={ic_person}
+                  // icon={ic_vendor}
               />
             </div>
           </div>
           {/* <div>
                   <img src={ic_person}/>
                 </div> */}
+           
           <div className={"formFlex"}>
-            <div style={{ marginTop: "40px" }}>
-              <img src={ic_number} width={20} height={20} />
+          
+          <div >
+              <img src={ic_number} width={25} height={25} alt="" className={styles.imageBorder}/>
+              <hr className={styles.hrline}/>
             </div>
-            <div className={"formGroup"}>
+            <div className={"formGroup"} style={{padding:"0px " }}>
+            
               <StanduredTextField
                 isError={errorData?.contact}
                 errorText={errorData?.contact}

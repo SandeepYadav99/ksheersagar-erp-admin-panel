@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import historyUtils from "../../libs/history.utils";
 
 const useFeedBackHook = () => {
   const [language, setLanguage] = useState("english");
@@ -24,12 +25,16 @@ const useFeedBackHook = () => {
     [setLanguage, language]
   );
 
+  const handleClos = useCallback(() => {
+    // historyUtils.push("/feedback");
+  }, []);
   return {
     language,
     toggleLanguageEnglish,
     toggleLanguageHindi,
     setLanguage,
-    overAllExperience
+    overAllExperience,
+    handleClos,
   };
 };
 

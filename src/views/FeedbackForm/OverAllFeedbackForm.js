@@ -29,7 +29,7 @@ const OverAllFeedbackForm = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const invoice_id = urlParams.get("invoice_id"); // invoice customer
   const customer_id = urlParams.get("customer_id");
-  console.log(invoice_id, "Idi ", customer_id);
+
 
   const overAllExperience = useCallback(
     (rating, feedback) => {
@@ -197,7 +197,7 @@ const OverAllFeedbackForm = () => {
           </div>
           <div className={styles.gaps} />
           <div className={styles.action}>
-            {console.log(selectedRating === 1, "Rating")}
+            
             <ButtonBase
               className={
                 selectedRating === 1
@@ -238,7 +238,7 @@ const OverAllFeedbackForm = () => {
               <ButtonBase
                 className={styles.createBtnSubmit}
                 onClick={() => {
-                  console.log(selectedRating, "");
+                 
                   if (!selectedRating) {
                     {
                       language === "english"
@@ -275,6 +275,7 @@ const OverAllFeedbackForm = () => {
             </div>
           </div>
         </div>
+     
         <div className={styles.language}>
           <button
             className={
