@@ -38,7 +38,7 @@ const PositiveCustomerFeedback = () => {
           {" "}
           {language === lng
             ? "Review us on Google!"
-            : "Google पर हमारी समीक्षा करें!"}
+            : "गूगल पर हमारी समीक्षा करें!"}
         </div>
         <div className={styles.subParagraph}>
           {language === lng
@@ -46,10 +46,10 @@ const PositiveCustomerFeedback = () => {
             : "इस बात को फैलाने में हमारी मदद करें और समीक्षा लिंक प्राप्त करने के लिए नीचे दिए गए विवरण भरें"}
         </div>
 
-        <div>
+        <div className={styles.formContainer}>
           <div className={"formFlex"}>
             <div style={{ marginTop: "40px" }}>
-              <img src={ic_vendor} width={20} height={20} />
+              <img src={ic_vendor} width={20} height={20} alt=""/>
             </div>
             <div className={"formGroup"}>
               <StanduredTextField
@@ -63,7 +63,7 @@ const PositiveCustomerFeedback = () => {
                 onBlur={() => {
                   // onBlurHandler("name_en");
                 }}
-                // icon={ic_person}
+                //  icon={ic_vendor}
               />
             </div>
           </div>

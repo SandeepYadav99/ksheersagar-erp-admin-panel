@@ -13,7 +13,7 @@ const initialForm = {
   recommendation: "",
 };
 
-const usePositiveFeedbackHook = ({ rating ,invoice_id, customer_id}) => {
+const usePositiveFeedbackHook = ({ rating, invoice_id, customer_id }) => {
   const [isLoading] = useState(false);
   const [showPasswordCurrent, setShowPasswordCurrent] = useState(false);
   const [errorData, setErrorData] = useState({});
@@ -86,12 +86,20 @@ const usePositiveFeedbackHook = ({ rating ,invoice_id, customer_id}) => {
         (Array.isArray(form?.[val]) && form?.[val].length === 0)
       ) {
         errors[val] = true;
-        SnackbarUtils.error("Please add required filed");
+        SnackbarUtils.error(
+          lng === "english"
+            ? "Please enter the detail"
+            : "कृपया विवरण दर्ज करें"
+        );
       } else if (["code"].indexOf(val) < 0) {
         delete errors[val];
       }
     });
-
+    if (form?.contact?.length < 10) {
+      errors.contact = lng === "english" ? "Enter Min. 10 digit" :"न्यूनतम दर्ज करें. 10 अंक" ;
+    }else{
+      delete errors.contact
+    }
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
         delete errors[key];
@@ -106,7 +114,6 @@ const usePositiveFeedbackHook = ({ rating ,invoice_id, customer_id}) => {
     }
 
     setIsSubmitting(true);
-    
 
     const formData = {
       customer_name: form?.name,
@@ -161,16 +168,12 @@ const usePositiveFeedbackHook = ({ rating ,invoice_id, customer_id}) => {
       let shouldRemoveError = true;
       const t = { ...form };
       if (fieldName === "name") {
-        if (text.trim() !== "") {
-          t[fieldName] = text;
-        }
+        t[fieldName] = text.trimStart();
       } else if (fieldName === "contact") {
         const numericText = text.replace(/\D/g, "");
-
+       
         if (numericText.length <= 10) {
-          if (numericText.trim() !== "") {
-            t[fieldName] = numericText;
-          }
+          t[fieldName] = numericText?.trimStart();
         }
       } else {
         t[fieldName] = text;

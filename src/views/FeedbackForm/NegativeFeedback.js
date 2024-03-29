@@ -46,7 +46,7 @@ const NegativeFeedback = () => {
     belowSatisfaction,
     test,
   } = usePositiveFeedbackHook({ rating ,invoice_id, customer_id});
-  console.log(staffAttitude, "Atitude");
+
 
   let feedbackText;
   switch (staffAttitude) {
@@ -139,12 +139,12 @@ const NegativeFeedback = () => {
     <div className={styles.container}>
       <div className={styles.headerContainer}>
         <div className={styles.logo}>
-          <img src={ic_topnav_logo} alt="" width={166} height={34} />
+          <img src={ic_topnav_logo} alt=""  />
         </div>
         <div className={styles.title}>
           {language === lng
-            ? "  Thank you for your feedback! We are glad you are happy."
-            : "आपकी प्रतिक्रिया के लिए आपका धन्यवाद! हमें खुशी है कि आप खुश हैं."}
+            ? "Thank you for your feedback! We are truly sorry to hear about your experience"
+            : "आपकी प्रतिक्रिया के लिए आपका धन्यवाद! आपके अनुभव के बारे में सुनकर हमें सचमुच दुख हुआ"}
         </div>
 
         <div className={styles.subParagraph}>
@@ -153,7 +153,7 @@ const NegativeFeedback = () => {
             : "आपकी चिंताओं को बेहतर ढंग से समझने और हल करने के लिए, यदि आप अपने अनुभव के बारे में अधिक विवरण प्रदान कर सकें तो हम इसकी सराहना करेंगे।"}
         </div>
 
-        <div>
+        <div className={styles.formNeg}>
           <div className={"formFlex"}>
             <div style={{ marginTop: "40px" }}>
               <img src={ic_vendor} width={20} height={20} />
@@ -446,8 +446,8 @@ const NegativeFeedback = () => {
               errorText={errorData?.recommendation}
               label={
                 language === lng
-                  ? "e.g. the quality can be improved..."
-                  : "जैसे गुणवत्ता में सुधार किया जा सकता है..."
+                  ?<div style={{color: "#BFC3CA"}}>  e.g. the quality can be improved... </div>
+                  :<div style={{color: "#BFC3CA"}}> जैसे गुणवत्ता में सुधार किया जा सकता है...</div>
               }
               value={form?.recommendation}
               onTextChange={(text) => {
@@ -458,7 +458,7 @@ const NegativeFeedback = () => {
               }}
               // icon={ic_person}
               multiline
-              rows={4}
+              rows={3}
               // icon={ic_notes}
             />
           </div>
@@ -466,7 +466,7 @@ const NegativeFeedback = () => {
         <div>
           <div className={styles.gaps} />
           <div className={styles.submitContainer}>
-            <div className={styles.action}>
+            <div className={styles.action_negative}>
               <ButtonBase
                 className={styles.createBtnSubmit}
                 onClick={() => {
