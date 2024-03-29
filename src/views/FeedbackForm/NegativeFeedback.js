@@ -155,10 +155,11 @@ const NegativeFeedback = () => {
 
         <div className={styles.formNeg}>
           <div className={"formFlex"}>
-            <div style={{ marginTop: "40px" }}>
-              <img src={ic_vendor} width={20} height={20} />
+          <div >
+              <img src={ic_vendor} width={25} height={25} alt="" className={styles.imageBorder}/>
+              <hr className={styles.hrline}/>
             </div>
-            <div className={"formGroup"}>
+            <div className={"formGroup"} style={{padding:"0px " }}>
               <StanduredTextField
                 isError={errorData?.name}
                 errorText={errorData?.name}
@@ -178,10 +179,11 @@ const NegativeFeedback = () => {
                   <img src={ic_person}/>
                 </div> */}
           <div className={"formFlex"}>
-            <div style={{ marginTop: "40px" }}>
-              <img src={ic_number} width={20} height={20} />
+          <div >
+              <img src={ic_number} width={25} height={25} alt="" className={styles.imageBorder}/>
+              <hr className={styles.hrline}/>
             </div>
-            <div className={"formGroup"}>
+            <div className={"formGroup"} style={{padding:"0px " }}>
               <StanduredTextField
                 isError={errorData?.contact}
                 errorText={errorData?.contact}

@@ -48,10 +48,11 @@ const PositiveCustomerFeedback = () => {
 
         <div className={styles.formContainer}>
           <div className={"formFlex"}>
-            <div style={{ marginTop: "40px" }}>
-              <img src={ic_vendor} width={20} height={20} alt=""/>
+            <div >
+              <img src={ic_vendor} width={25} height={25} alt="" className={styles.imageBorder}/>
+              <hr className={styles.hrline}/>
             </div>
-            <div className={"formGroup"}>
+            <div className={"formGroup"} style={{padding:"0px " }}>
               <StanduredTextField
                 isError={errorData?.name}
                 errorText={errorData?.name}
@@ -63,18 +64,22 @@ const PositiveCustomerFeedback = () => {
                 onBlur={() => {
                   // onBlurHandler("name_en");
                 }}
-                //  icon={ic_vendor}
+                  // icon={ic_vendor}
               />
             </div>
           </div>
           {/* <div>
                   <img src={ic_person}/>
                 </div> */}
+           
           <div className={"formFlex"}>
-            <div style={{ marginTop: "40px" }}>
-              <img src={ic_number} width={20} height={20} />
+          
+          <div >
+              <img src={ic_number} width={25} height={25} alt="" className={styles.imageBorder}/>
+              <hr className={styles.hrline}/>
             </div>
-            <div className={"formGroup"}>
+            <div className={"formGroup"} style={{padding:"0px " }}>
+            
               <StanduredTextField
                 isError={errorData?.contact}
                 errorText={errorData?.contact}
