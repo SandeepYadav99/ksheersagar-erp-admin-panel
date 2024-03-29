@@ -34,11 +34,13 @@ function useEmployeeDetails() {
   }, [id]);
 
   const handleEmpInfoPage = useCallback((data) => {
-    const newWindow = window.open('', '_blank');
-    if (newWindow && data) {
-      ReactDOM.render(<EmpInfo data={data}/>, newWindow.document.body)
-    } 
-    //  historyUtils.push(`${RouteName.EMPLOYEE_INFORMATION}${id}`);
+    // const newWindow = window.open('', '_blank');
+    // if (newWindow && data) {
+    //   ReactDOM.render(<EmpInfo data={data}/>, newWindow.document.body)
+    // } 
+      historyUtils.push("/employe/information/",{
+        empId:data?.id
+      });
   }, []);
 
   return {

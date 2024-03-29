@@ -18,6 +18,15 @@
 .logo {
   text-align: center;
 }
+.logoCompleteion {
+  text-align: center;
+  margin-left: 10%;
+}
+.closeIconAction {
+  float: right !important;
+  top: 0px !important;
+  right: 0px;
+}
 .logo img {
   width: 186px;
 }
@@ -169,7 +178,7 @@
   text-decoration: underline;
 }
 .hindi {
-  text-decoration: underline ;
+  text-decoration: underline;
   border: none;
   cursor: pointer;
   color: #007aff;

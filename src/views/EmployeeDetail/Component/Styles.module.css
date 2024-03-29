@@ -1,0 +1,10 @@
+.employInfoContainer {
+  background-color: #00000000 !important;
+  border: 2px solid #00000011 !important;
+  color: #161616 !important;
+  font-weight: normal !important;
+  font-size: 1.2rem !important;
+  box-shadow: 2rem !important;
+  width: 28% !important;
+  margin: 5rem auto !important;
+}
