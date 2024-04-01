@@ -38,9 +38,7 @@ function useEmployeeDetails() {
     // if (newWindow && data) {
     //   ReactDOM.render(<EmpInfo data={data}/>, newWindow.document.body)
     // } 
-      historyUtils.push("/employe/information/",{
-        empId:data?.id
-      });
+      historyUtils.push(`/employe/information/${data?.id}`);
   }, []);
 
   return {

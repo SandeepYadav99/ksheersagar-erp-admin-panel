@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import image from "../../../assets/img/KS_logo.png";
 import styles from "./Styles.module.css";
 import { serviceGetEmployCardDetails } from "../../../services/Employee.service";
-import { useLocation } from "react-router-dom";
+
+import { useParams } from "react-router-dom";
 const EmpInfo = () => {
   const [data, setData] = useState(null);
-  const location = useLocation();
-  const { empId } = location.state;
+  const {empId}=useParams()
+  // const location = useLocation();
+  // const { empId } = location.state;
 console.log(empId, "Empid")
   useEffect(() => {
     serviceGetEmployCardDetails({ id: empId }).then((res) => {
