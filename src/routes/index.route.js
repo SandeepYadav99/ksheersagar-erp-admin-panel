@@ -21,7 +21,7 @@ const RouteComponent = () => (
     <Route path={"/feedback/submit"} component={CompletionScreen} />
     <Route path={"/feedback"} component={OverAllFeedbackForm} />
     <Route path={"/invoice"} component={Invoice} />
-    <Route path={"/employe/information/"} component={EmpInfo} />
+    <Route path={"/employe/information/:empId"} component={EmpInfo} />
     <Route path={"/"} component={Dashboard} />
   
   </Switch>
