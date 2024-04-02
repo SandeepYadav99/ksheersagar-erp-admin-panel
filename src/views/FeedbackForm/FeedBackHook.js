@@ -26,7 +26,7 @@ const useFeedBackHook = () => {
   );
 
   const handleClos = useCallback(() => {
-    // historyUtils.push("/feedback");
+     historyUtils.push("https://ksheersagar.com/");
   }, []);
   return {
     language,

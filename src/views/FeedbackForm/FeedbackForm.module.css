@@ -175,7 +175,7 @@
   text-decoration: none;
   border: none;
   cursor: pointer;
-  text-decoration: underline;
+  /* text-decoration: underline; */
 }
 .hindi {
   text-decoration: underline;
