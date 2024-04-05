@@ -79,7 +79,7 @@ const AddEmployRecord_Dilog = ({
         label: "ATTENDANCE TYPE",
         sortable: false,
         style: { width: "12%" },
-        render: (temp, all) => <div>{all?.type}</div>,
+        render: (temp, all) => <div>{all?.type?.replaceAll('_', " ")}</div>,
       },
 
       {
@@ -90,7 +90,7 @@ const AddEmployRecord_Dilog = ({
           <>
             {all?.employee?.image ? (
               <img
-                src={all?.employee?.image}
+                src={all?.image}
                 style={{ width: "50px", height: "50px", borderRadius: "50px" }}
               />
             ) : (
@@ -108,7 +108,7 @@ const AddEmployRecord_Dilog = ({
 
   const tableData = useMemo(() => {
     const datatableFunctions = {};
-   
+
     const datatable = {
       ...Constants.DATATABLE_PROPERTIES,
       columns: tableStructure,
@@ -153,25 +153,18 @@ const AddEmployRecord_Dilog = ({
               </div>
             </div>
           </div>
-        
-     
-     
-        <div className={styles.upperWrap}>
-          {details.length === 0 ? (
-          
-            <p className={styles.loader}>No Found Data</p>
-          ) : (
-           
-            <DataTables
-              {...tableData.datatable}
-              {...tableData.datatableFunctions}
-            />
-          )}
-        </div>
-      </>
-            
-           
-          
+
+          <div className={styles.upperWrap}>
+            {details.length === 0 ? (
+              <p className={styles.loader}>No Found Data</p>
+            ) : (
+              <DataTables
+                {...tableData.datatable}
+                {...tableData.datatableFunctions}
+              />
+            )}
+          </div>
+        </>
       </Dialog>
     </div>
   );
