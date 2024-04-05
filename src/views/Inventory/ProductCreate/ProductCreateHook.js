@@ -52,7 +52,11 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
 
   const includeRef = useRef(null);
   const { id } = useParams();
-  const [listData, setListData] = useState()
+  const [listData, setListData] = useState({
+    UNITS:[],
+    CATEGORIES:[],
+    SUB_CATEGORIES:[]
+  })
   const dispatch = useDispatch();
   const [defaultImg, setDefaultImg] = useState("");
   const [productDetail, setProductDetail] = useState();
@@ -102,7 +106,7 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
     }
   }, [id]);
   useEffect(() => {
-    serviceGetList(["UNITS", "CATEGORIES"]).then(res => {
+    serviceGetList(["UNITS", "CATEGORIES","SUB_CATEGORIES"]).then(res => {
       if (!res.error) {
         setListData(res.data);
       }
