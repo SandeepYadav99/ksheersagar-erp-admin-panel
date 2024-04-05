@@ -176,6 +176,18 @@ const JobCalendarComponent = ({ id }) => {
           fontSize: "10px",
         },
       };
+    }else if (e.type === "DUTY_DONE") {
+      return {
+        className: "deliverySlot",
+        style: {
+          backgroundColor: "#EBFCFC",
+          color: "#0D9191",
+
+          padding: "20px",
+          outline: "none",
+          fontSize: "10px",
+        },
+      };
     } else if (e.type === "N/A") {
       return {
         className: "deliverySlot",
@@ -229,7 +241,7 @@ const JobCalendarComponent = ({ id }) => {
   const CustomEventComponent = useCallback(
     ({ event }) => (
       <div className="custom-event">
-        <div className={styles.event_status}>{event.title}</div>
+        <div className={styles.event_status}>{event.title.replaceAll('_', " ")}</div>
         {/* <div className="event-date">{moment(event.start).format("DD")}</div> */}
       </div>
     ),
