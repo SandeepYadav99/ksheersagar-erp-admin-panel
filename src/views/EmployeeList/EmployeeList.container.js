@@ -262,6 +262,8 @@ const EmployeeList = ({}) => {
         handleToggle={toggleApprovalDialog}
         empId={id}
         data={allData}
+   
+
       />
         <div>
           <FilterComponent

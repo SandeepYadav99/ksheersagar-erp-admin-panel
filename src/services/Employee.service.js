@@ -78,3 +78,7 @@ export async function serviceGetEmployLogs(params) { // employees/id/card
 export async function serviceGetEmployCardDetails(params) { // employees/id/card
     return await postRequest('employees/id/card', params);
 }
+
+export async function serviceGetEmployAttendesReport(params) { // employees/id/card
+    return await postRequest('attendance/monthly/attendance/report', params);
+}

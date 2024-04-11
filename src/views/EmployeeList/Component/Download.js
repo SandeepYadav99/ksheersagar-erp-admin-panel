@@ -86,7 +86,7 @@ const DownloadDialog = ({ isOpen, handleToggle, empId, data }) => {
                 <CustomDatePicker
                   clearable
                   label={"Select Month & Year"}
-                  maxDate={new Date()}
+                  // maxDate={new Date()}
                   onChange={(date) => {
                     changeTextData(date, "date");
                   }}

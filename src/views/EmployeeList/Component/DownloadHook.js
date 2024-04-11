@@ -4,16 +4,15 @@ import LogUtils from "../../../libs/LogUtils";
 import SnackbarUtils from "../../../libs/SnackbarUtils";
 import { serviceGetList } from "../../../services/index.services";
 import { serviceLocationDepartmentUpdate } from "../../../services/Location.service";
+import { serviceGetEmployAttendesReport } from "../../../services/Employee.service";
 
 const initialForm = {
   date: "",
-  location:""
+  location: "",
 };
 
 const useDownloadDialogHook = ({ isOpen, handleToggle, empId, data }) => {
-  const [form, setForm] = useState(
- { ...initialForm }
-  );
+  const [form, setForm] = useState({ ...initialForm });
   const [errorData, setErrorData] = useState({});
   const [resData, setResData] = useState([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -28,7 +27,7 @@ const useDownloadDialogHook = ({ isOpen, handleToggle, empId, data }) => {
       }
     });
   }, []);
-  
+
   useEffect(() => {
     if (data?.length > 0) {
       const departmentArray = data?.map((item) => item?.department);
@@ -67,7 +66,7 @@ const useDownloadDialogHook = ({ isOpen, handleToggle, empId, data }) => {
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = ["department"];
+    let required = ["date","location"];
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -85,16 +84,18 @@ const useDownloadDialogHook = ({ isOpen, handleToggle, empId, data }) => {
     });
     return errors;
   }, [form, errorData]);
-
+  console.log(form, "Form");
   const submitToServer = useCallback(() => {
     if (!isSubmitting) {
       setIsSubmitting(true);
-      const departmentIds = form?.department?.map((item) => ({
-        department_id: item?.id,
-      }));
-      serviceLocationDepartmentUpdate({
-        location_id: empId,
-        data: departmentIds,
+      const month = form?.date?.getMonth() + 1;
+      const year = form?.date?.getFullYear();
+      serviceGetEmployAttendesReport({
+        month: month,
+        year: year,
+        location_id: form?.location?.id,
+        start_date: "2024-02-01",
+        end_date: "2024-02-29",
       }).then((res) => {
         if (!res.error) {
           window.location?.reload();
@@ -106,6 +107,13 @@ const useDownloadDialogHook = ({ isOpen, handleToggle, empId, data }) => {
       setIsSubmitting(false);
     }
   }, [form, isSubmitting, setIsSubmitting, handleToggle]);
+
+  
+  useEffect(() => {
+    if (!isOpen) {
+      handleReset();
+    }
+  }, [isOpen]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
@@ -126,6 +134,10 @@ const useDownloadDialogHook = ({ isOpen, handleToggle, empId, data }) => {
     [changeTextData]
   );
 
+  const handleReset = useCallback(() => {
+    setForm({ ...initialForm });
+    setErrorData({});
+  }, [form]);
   return {
     form,
     changeTextData,
