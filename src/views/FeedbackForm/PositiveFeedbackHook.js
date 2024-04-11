@@ -126,7 +126,7 @@ const usePositiveFeedbackHook = ({ rating, invoice_id, customer_id }) => {
       speed: belowSatisfaction ? belowSatisfaction : "",
       taste: test ? test : "",
       recommendation: form?.recommendation,
-      location_id:""
+      location_id:customer_id
     };
     try {
       const res = await serviceCreateFeedback(formData);

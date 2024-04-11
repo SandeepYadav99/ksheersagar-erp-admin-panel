@@ -12,6 +12,7 @@ import { serviceGetList } from "../../services/Common.service";
 import RouteName from "../../routes/Route.name";
 import { serviceExportEmployees } from "../../services/Employee.service";
 import Constants from "../../config/constants";
+import { serviceDownloadReport } from "../../services/index.services";
 
 const useEmployeeList = ({}) => {
   const [isSidePanel, setSidePanel] = useState(false);
@@ -20,6 +21,7 @@ const useEmployeeList = ({}) => {
   const [createDD, setCreateDD] = useState(null);
   const dispatch = useDispatch();
   const { role } = useSelector((state) => state.auth);
+
   const [listData, setListData] = useState({
     LOCATIONS: [],
     GRADES: [],
@@ -28,6 +30,10 @@ const useEmployeeList = ({}) => {
     TRAINEE_EMPLOYEES: [],
   });
   const isMountRef = useRef(false);
+  const [isApprovalPopUp, setIsApprovalPopUp] = useState(false);
+  const toggleApprovalDialog = useCallback(() => {
+    setIsApprovalPopUp((e) => !e);
+  }, [isApprovalPopUp]);
   const {
     sorting_data: sortingData,
     is_fetching: isFetching,
@@ -169,7 +175,12 @@ const useEmployeeList = ({}) => {
   }, []);
   const handleViewUpdate = useCallback((data) => {
     historyUtils.push(`${RouteName.EMPLOYEE_UPDATE}${data?.id}`);
-  }, []);
+  }, []); // serviceDownloadReport
+
+  const handleDownload = useCallback((data) => {
+    serviceDownloadReport({})
+  }, []); // serviceDownloadReport
+
 
   const configFilter = useMemo(() => {
     return [
@@ -218,6 +229,9 @@ const useEmployeeList = ({}) => {
     handleAddCandidate,
     createDD,
     listData,
+    handleDownload,
+    isApprovalPopUp,
+    toggleApprovalDialog,
   };
 };
 

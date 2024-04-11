@@ -35,3 +35,7 @@ export async function serviceLoginSupport(params) {
 export async function servicePasswordVerify(params) {
     return await postRequest('password/verify', params);
 }
+
+export async function serviceDownloadReport(params) {
+    return await postRequest('password/report', params);
+}

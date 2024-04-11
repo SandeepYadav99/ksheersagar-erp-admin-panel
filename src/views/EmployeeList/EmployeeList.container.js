@@ -2,7 +2,7 @@ import React, { Component, useCallback, useEffect, useMemo } from "react";
 import { IconButton, MenuItem, ButtonBase, Menu } from "@material-ui/core";
 import classNames from "classnames";
 import { connect, useSelector } from "react-redux";
-import { Add, InfoOutlined, PrintOutlined } from "@material-ui/icons";
+import { Add, FontDownload, GetApp, InfoOutlined, PrintOutlined } from "@material-ui/icons";
 import PageBox from "../../components/PageBox/PageBox.component";
 import SidePanelComponent from "../../components/SidePanel/SidePanel.component";
 import styles from "./Style.module.css";
@@ -14,6 +14,7 @@ import useEmployeeList from "./EmployeeListHook";
 import StatusPill from "../../components/Status/StatusPill.component";
 import CreateView from "./Employee.view";
 import defaultImage from "../../assets/img/ic_user_pic.png";
+import DownloadDialog from "./Component/Download";
 
 const EmployeeList = ({}) => {
   const {
@@ -32,9 +33,13 @@ const EmployeeList = ({}) => {
     isSidePanel,
     isCalling,
     configFilter,
-    handleAddCandidate,
+    handleDownload,
     createDD,
     handleCreate,
+  id,
+   
+    isApprovalPopUp,
+    toggleApprovalDialog,
   } = useEmployeeList({});
 
   const {
@@ -228,6 +233,17 @@ const EmployeeList = ({}) => {
             <div className={styles.newLine} />
           </div>
           <div className={styles.btnWrapperGap}>
+           <div>
+              <ButtonBase
+                aria-owns={createDD ? "createDD" : undefined}
+                aria-haspopup="true"
+                onClick={toggleApprovalDialog}
+                className={"createBtnOutland"}
+              >
+                Download
+                <GetApp fontSize={"small"} className={"plusIcon"}></GetApp>
+              </ButtonBase>
+            </div> 
             <div>
               <ButtonBase
                 aria-owns={createDD ? "createDD" : undefined}
@@ -241,7 +257,12 @@ const EmployeeList = ({}) => {
             </div>
           </div>
         </div>
-
+        <DownloadDialog
+        isOpen={isApprovalPopUp}
+        handleToggle={toggleApprovalDialog}
+        empId={id}
+        data={allData}
+      />
         <div>
           <FilterComponent
             is_progress={isFetching}

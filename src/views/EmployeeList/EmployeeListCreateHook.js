@@ -72,6 +72,7 @@ function EmployeeListCreateHook({ location }) {
     ROLES:[]
   });
   const [showPasswordCurrent, setShowPasswordCurrent] = useState(false);
+ 
   useEffect(() => {
     serviceGetList([
       "LOCATION_DEPARTMENTS",
@@ -335,6 +336,7 @@ function EmployeeListCreateHook({ location }) {
     isSubmitting,
     showPasswordCurrent,
     setShowPasswordCurrent,
+   
   };
 }
 

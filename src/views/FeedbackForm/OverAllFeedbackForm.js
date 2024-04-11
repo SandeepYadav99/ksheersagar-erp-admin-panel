@@ -277,14 +277,14 @@ const OverAllFeedbackForm = () => {
         </div>
      
         <div className={styles.language}>
-          <button
+          <ButtonBase
             className={
               language === "english" ? styles.underline : styles.english
             }
             onClick={() => toggleLanguageEnglish("english")}
           >
             English
-          </button>
+          </ButtonBase>
           <span> | </span>
           <ButtonBase
             className={language === "hindi" ? styles.underline : styles.hindi}
