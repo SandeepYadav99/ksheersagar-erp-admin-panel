@@ -412,6 +412,38 @@ const EmployeeListCreate = ({ location }) => {
           <div className={"formGroup"}>
             <CustomTextField
               type="number"
+              isError={errorData?.uan}
+              errorText={errorData?.uan}
+              label={"Uan Number"}
+              value={form?.uan}
+              onTextChange={(text) => {
+                changeTextData(text, "uan");
+              }}
+              onBlur={() => {
+                onBlurHandler("uan");
+              }}
+            />
+          </div>
+          <div className={"formGroup"}>
+          <CustomTextField
+              type="number"
+              isError={errorData?.esi}
+              errorText={errorData?.esi}
+              label={"Esi Number"}
+              value={form?.esi}
+              onTextChange={(text) => {
+                changeTextData(text, "esi");
+              }}
+              onBlur={() => {
+                onBlurHandler("esi");
+              }}
+            />
+          </div>
+        </div>
+        <div className={"formFlex"}>
+          <div className={"formGroup"}>
+            <CustomTextField
+              type="number"
               isError={errorData?.pin}
               errorText={errorData?.pin}
               label={"Pin*"}

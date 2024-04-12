@@ -49,6 +49,8 @@ function EmployeeListCreateHook({ location }) {
     is_address_same: false,
     aadhaar_back: "",
     aadhaar_front: "",
+    uan:"",
+    esi:""
   };
   const [form, setForm] = useState({ ...initialForm });
   const [errorData, setErrorData] = useState({});
@@ -131,6 +133,8 @@ function EmployeeListCreateHook({ location }) {
       // "current_address",
       // "aadhar_no",
       // "email",
+      "uan",
+      "esi"
     ];
     required.forEach((val) => {
       if (
@@ -207,6 +211,14 @@ function EmployeeListCreateHook({ location }) {
         }
       } else if (fieldName === "aadhar_no") {
         if (text >= 0 && text?.length <= 12) {
+          t[fieldName] = text;
+        }
+      }else if (fieldName === "uan") {
+        if (text >= 0 && text?.length <= 12) {
+          t[fieldName] = text;
+        }
+      }else if (fieldName === "esi") {
+        if (text >= 0 && text?.length <= 17) {
           t[fieldName] = text;
         }
       } else {
