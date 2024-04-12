@@ -2,7 +2,13 @@ import React, { Component, useCallback, useEffect, useMemo } from "react";
 import { IconButton, MenuItem, ButtonBase, Menu } from "@material-ui/core";
 import classNames from "classnames";
 import { connect, useSelector } from "react-redux";
-import { Add, FontDownload, GetApp, InfoOutlined, PrintOutlined } from "@material-ui/icons";
+import {
+  Add,
+  FontDownload,
+  GetApp,
+  InfoOutlined,
+  PrintOutlined,
+} from "@material-ui/icons";
 import PageBox from "../../components/PageBox/PageBox.component";
 import SidePanelComponent from "../../components/SidePanel/SidePanel.component";
 import styles from "./Style.module.css";
@@ -36,8 +42,8 @@ const EmployeeList = ({}) => {
     handleDownload,
     createDD,
     handleCreate,
-  id,
-   
+    id,
+
     isApprovalPopUp,
     toggleApprovalDialog,
   } = useEmployeeList({});
@@ -55,7 +61,6 @@ const EmployeeList = ({}) => {
   }, []);
 
   const renderFirstCell = useCallback((obj) => {
-  
     if (obj) {
       return (
         <div className={styles.firstCellFlex}>
@@ -233,7 +238,7 @@ const EmployeeList = ({}) => {
             <div className={styles.newLine} />
           </div>
           <div className={styles.btnWrapperGap}>
-           <div>
+            <div>
               <ButtonBase
                 aria-owns={createDD ? "createDD" : undefined}
                 aria-haspopup="true"
@@ -243,7 +248,7 @@ const EmployeeList = ({}) => {
                 Download
                 <GetApp fontSize={"small"} className={"plusIcon"}></GetApp>
               </ButtonBase>
-            </div> 
+            </div>
             <div>
               <ButtonBase
                 aria-owns={createDD ? "createDD" : undefined}
@@ -258,13 +263,11 @@ const EmployeeList = ({}) => {
           </div>
         </div>
         <DownloadDialog
-        isOpen={isApprovalPopUp}
-        handleToggle={toggleApprovalDialog}
-        empId={id}
-        data={allData}
-   
-
-      />
+          isOpen={isApprovalPopUp}
+          handleToggle={toggleApprovalDialog}
+          empId={id}
+          data={allData}
+        />
         <div>
           <FilterComponent
             is_progress={isFetching}
