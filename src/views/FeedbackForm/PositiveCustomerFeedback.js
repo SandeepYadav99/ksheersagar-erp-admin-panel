@@ -15,10 +15,10 @@ import SnackbarUtils from "../../libs/SnackbarUtils";
 const PositiveCustomerFeedback = () => {
   const { language } = useFeedBackHook();
   const location = useLocation();
-  const { lng, rating, invoice_id, customer_id } = location.state;
+  const { lng, rating, invoice_id, customer_id, location_id } = location.state;
 
   const { form, errorData, changeTextData, handleSubmit } =
-    usePositiveFeedbackHook({ rating , invoice_id, customer_id});
+    usePositiveFeedbackHook({ rating, invoice_id, customer_id, location_id });
 
   return (
     <div className={styles.container}>
@@ -48,11 +48,17 @@ const PositiveCustomerFeedback = () => {
 
         <div className={styles.formContainer}>
           <div className={"formFlex"}>
-            <div >
-              <img src={ic_vendor} width={25} height={25} alt="" className={styles.imageBorder}/>
-              <hr className={styles.hrline}/>
+            <div>
+              <img
+                src={ic_vendor}
+                width={25}
+                height={25}
+                alt=""
+                className={styles.imageBorder}
+              />
+              <hr className={styles.hrline} />
             </div>
-            <div className={"formGroup"} style={{padding:"0px " }}>
+            <div className={"formGroup"} style={{ padding: "0px " }}>
               <StanduredTextField
                 isError={errorData?.name}
                 errorText={errorData?.name}
@@ -64,23 +70,28 @@ const PositiveCustomerFeedback = () => {
                 onBlur={() => {
                   // onBlurHandler("name_en");
                 }}
-                  // icon={ic_vendor}
+                // icon={ic_vendor}
               />
             </div>
           </div>
           {/* <div>
                   <img src={ic_person}/>
                 </div> */}
-           
+
           <div className={"formFlex"}>
-          
-          <div >
-              <img src={ic_number} width={25} height={25} alt="" className={styles.imageBorder}/>
-              <hr className={styles.hrline}/>
+            <div>
+              <img
+                src={ic_number}
+                width={25}
+                height={25}
+                alt=""
+                className={styles.imageBorder}
+              />
+              <hr className={styles.hrline} />
             </div>
-            <div className={"formGroup"} style={{padding:"0px " }}>
-            
+            <div className={"formGroup"} style={{ padding: "0px " }}>
               <StanduredTextField
+                // type={"number"}
                 isError={errorData?.contact}
                 errorText={errorData?.contact}
                 label={language === lng ? "Phone Number" : "फ़ोन नंबर"}

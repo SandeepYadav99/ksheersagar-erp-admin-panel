@@ -3,7 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
 
 
-const StanduredTextField = ({isError, errorText, icon, label, onChange, onTextChange, inputProps, ...rest }) => {
+const StanduredTextField = ({isError, errorText, icon,type, label, onChange, onTextChange, inputProps, ...rest }) => {
 
     const handleChange = useCallback((e) => {
         onChange && onChange(e);
@@ -16,6 +16,7 @@ const StanduredTextField = ({isError, errorText, icon, label, onChange, onTextCh
     <TextField
         error={isError}
         //  helperText={errorText}
+        type={type}
         label={label}
         InputProps={{
             startAdornment: icon ? (

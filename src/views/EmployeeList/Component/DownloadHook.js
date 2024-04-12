@@ -5,10 +5,14 @@ import SnackbarUtils from "../../../libs/SnackbarUtils";
 import { serviceGetList } from "../../../services/index.services";
 import { serviceLocationDepartmentUpdate } from "../../../services/Location.service";
 import { serviceGetEmployAttendesReport } from "../../../services/Employee.service";
+import historyUtils from "../../../libs/history.utils";
+import { format } from "date-fns";
 
 const initialForm = {
   date: "",
   location: "",
+  startDate: "",
+  endDate: "",
 };
 
 const useDownloadDialogHook = ({ isOpen, handleToggle, empId, data }) => {
@@ -63,10 +67,10 @@ const useDownloadDialogHook = ({ isOpen, handleToggle, empId, data }) => {
     },
     [removeError, form, setForm]
   );
-
+  console.log({ form });
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = ["date","location"];
+    let required = ["location", "startDate", "endDate"];
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -88,17 +92,26 @@ const useDownloadDialogHook = ({ isOpen, handleToggle, empId, data }) => {
   const submitToServer = useCallback(() => {
     if (!isSubmitting) {
       setIsSubmitting(true);
-      const month = form?.date?.getMonth() + 1;
-      const year = form?.date?.getFullYear();
+      // const month = form?.date?.getMonth() + 1;
+      // const year = form?.date?.getFullYear();
+      const date = form?.date;
+      const month = date ? format(date, "MM") : "";
+      const year = date ? format(date, "yyyy") : "";
+      const startDateFormatted = form?.startDate ? format(form.startDate, 'yyyy-MM-dd') : ''; 
+      const endDateFormatted = form?.endDate ? format(form.endDate, 'yyyy-MM-dd') : ''; 
+  
       serviceGetEmployAttendesReport({
         month: month,
         year: year,
-        location_id: form?.location?.id,
-        start_date: "2024-02-01",
-        end_date: "2024-02-29",
+        location_id: form?.location,
+        start_date: startDateFormatted,
+        end_date: endDateFormatted,
       }).then((res) => {
         if (!res.error) {
-          window.location?.reload();
+          const data = res?.data;
+          window.open(data, "_blank");
+          handleToggle();
+          
         } else {
           SnackbarUtils.error(res?.message);
         }
@@ -108,7 +121,6 @@ const useDownloadDialogHook = ({ isOpen, handleToggle, empId, data }) => {
     }
   }, [form, isSubmitting, setIsSubmitting, handleToggle]);
 
-  
   useEffect(() => {
     if (!isOpen) {
       handleReset();

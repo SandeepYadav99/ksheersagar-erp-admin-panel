@@ -29,7 +29,7 @@ const OverAllFeedbackForm = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const invoice_id = urlParams.get("invoice_id"); // invoice customer
   const customer_id = urlParams.get("customer_id");
-
+  const location_id = urlParams.get("location_id");
 
   const overAllExperience = useCallback(
     (rating, feedback) => {
@@ -256,6 +256,7 @@ const OverAllFeedbackForm = () => {
                         rating: selectedRating,
                         invoice_id: invoice_id,
                         customer_id: customer_id,
+                        location_id:location_id
                       });
                     } else {
                       historyUtils.push(RouteName.NEGATIVE_FEEDBACK_FORM, {
@@ -263,6 +264,7 @@ const OverAllFeedbackForm = () => {
                         rating: selectedRating,
                         invoice_id: invoice_id,
                         customer_id: customer_id,
+                        location_id:location_id
                       });
                     }
                   }

@@ -13,7 +13,12 @@ const initialForm = {
   recommendation: "",
 };
 
-const usePositiveFeedbackHook = ({ rating, invoice_id, customer_id }) => {
+const usePositiveFeedbackHook = ({
+  rating,
+  invoice_id,
+  customer_id,
+  location_id,
+}) => {
   const [isLoading] = useState(false);
   const [showPasswordCurrent, setShowPasswordCurrent] = useState(false);
   const [errorData, setErrorData] = useState({});
@@ -93,12 +98,16 @@ const usePositiveFeedbackHook = ({ rating, invoice_id, customer_id }) => {
         );
       } else if (["code"].indexOf(val) < 0) {
         delete errors[val];
+      }else if(val === "contact"){
+        
       }
     });
-    if (form?.contact?.length < 10) {
-      errors.contact = lng === "english" ? "Enter Min. 10 digit" :"न्यूनतम दर्ज करें. 10 अंक" ;
-    }else{
-      delete errors.contact
+    console.log(form?.contact, "Contact")
+    if ( form?.contact?.length < 10) {
+      errors.contact =
+        lng === "english" ? "Enter Min. 10 digit" : "न्यूनतम दर्ज करें. 10 अंक";
+    } else {
+      delete errors.contact;
     }
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
@@ -126,7 +135,7 @@ const usePositiveFeedbackHook = ({ rating, invoice_id, customer_id }) => {
       speed: belowSatisfaction ? belowSatisfaction : "",
       taste: test ? test : "",
       recommendation: form?.recommendation,
-      location_id:customer_id
+      location_id: location_id,
     };
     try {
       const res = await serviceCreateFeedback(formData);
@@ -171,8 +180,9 @@ const usePositiveFeedbackHook = ({ rating, invoice_id, customer_id }) => {
       if (fieldName === "name") {
         t[fieldName] = text.trimStart();
       } else if (fieldName === "contact") {
+      
         const numericText = text.replace(/\D/g, "");
-       
+
         if (numericText.length <= 10) {
           t[fieldName] = numericText?.trimStart();
         }

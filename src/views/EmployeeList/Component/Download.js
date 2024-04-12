@@ -71,7 +71,10 @@ const DownloadDialog = ({ isOpen, handleToggle, empId, data }) => {
         {/*<DialogTitle id="alert-dialog-title">*/}
         <div className={styles.resetPasswordWrapper}>
           <div className={styles.resetWrapper}>
-            <div className={styles.upperFlex}>Add Department</div>
+            <div className={styles.upperFlex}>Attendance Report</div>
+            <div className={styles.upperPara}>
+              Fill the below details and download the report
+            </div>
             <ButtonBase
               classes={{ root: classes.closeBtn }}
               onClick={handleToggle}
@@ -90,15 +93,42 @@ const DownloadDialog = ({ isOpen, handleToggle, empId, data }) => {
                   onChange={(date) => {
                     changeTextData(date, "date");
                   }}
-                  format={
-                    "MM-yyyy"
-                }
+                  format={"MM-yyyy"}
                   value={form?.date}
                   isError={errorData?.date}
                 />
               </div>
             </div>
-
+            <div className={"formFlex"}>
+              <div className={"formGroup"}>
+                <CustomDatePicker
+                  clearable
+                  label={"Start Date"}
+                  // maxDate={new Date()}
+                  onChange={(date) => {
+                    changeTextData(date, "startDate");
+                  }}
+                  format={"dd-MM-yyyy"}
+                  value={form?.startDate}
+                  isError={errorData?.startDate}
+                />
+              </div>
+            </div>
+            <div className={"formFlex"}>
+              <div className={"formGroup"}>
+                <CustomDatePicker
+                  clearable
+                  label={"End Date"}
+                  // maxDate={new Date()}
+                  onChange={(date) => {
+                    changeTextData(date, "endDate");
+                  }}
+                  format={"dd-MM-yyyy"}
+                  value={form?.endDate}
+                  isError={errorData?.endDate}
+                />
+              </div>
+            </div>
             <div className={"formFlex"}>
               <div className={"formGroup"}>
                 <CustomSelectField
@@ -123,7 +153,11 @@ const DownloadDialog = ({ isOpen, handleToggle, empId, data }) => {
             <ButtonBase
               onClick={handleSubmit}
               disabled={isSubmitting}
-              className={"createBtnreset"}
+              className={
+                form?.date && form?.endDate && form?.startDate && form?.location
+                  ? "createBtnreset"
+                  : "createBtnResetDisable"
+              }
             >
               Download
             </ButtonBase>

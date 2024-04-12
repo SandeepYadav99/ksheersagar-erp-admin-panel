@@ -30,7 +30,7 @@ import DashboardSnackbar from "../../components/Snackbar.component";
 const NegativeFeedback = () => {
   const location = useLocation();
   const { language } = useFeedBackHook();
-  const { lng, rating, invoice_id, customer_id } = location.state;
+  const { lng, rating, invoice_id, customer_id , location_id} = location.state;
 
   const {
     form,
@@ -45,7 +45,7 @@ const NegativeFeedback = () => {
     quality,
     belowSatisfaction,
     test,
-  } = usePositiveFeedbackHook({ rating ,invoice_id, customer_id});
+  } = usePositiveFeedbackHook({ rating ,invoice_id, customer_id, location_id});
 
 
   let feedbackText;

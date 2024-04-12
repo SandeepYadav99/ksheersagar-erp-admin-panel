@@ -20,6 +20,7 @@ import useEmployeeList from "./EmployeeListHook";
 import StatusPill from "../../components/Status/StatusPill.component";
 import CreateView from "./Employee.view";
 import defaultImage from "../../assets/img/ic_user_pic.png";
+import Download from "../../assets/img/ic_download_report@2x.png";
 import DownloadDialog from "./Component/Download";
 
 const EmployeeList = ({}) => {
@@ -238,17 +239,23 @@ const EmployeeList = ({}) => {
             <div className={styles.newLine} />
           </div>
           <div className={styles.btnWrapperGap}>
-            <div>
+            <>
               <ButtonBase
                 aria-owns={createDD ? "createDD" : undefined}
                 aria-haspopup="true"
                 onClick={toggleApprovalDialog}
                 className={"createBtnOutland"}
               >
-                Download
-                <GetApp fontSize={"small"} className={"plusIcon"}></GetApp>
+                DOWNLOAD REPORT
+                <img
+                  src={Download}
+                  alt=""
+                  height={20}
+                  className={styles.downloadImg}
+                />
+                {/* <GetApp fontSize={"small"} className={"plusIcon"}></GetApp> */}
               </ButtonBase>
-            </div>
+            </>
             <div>
               <ButtonBase
                 aria-owns={createDD ? "createDD" : undefined}
