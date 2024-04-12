@@ -30,7 +30,7 @@ import DashboardSnackbar from "../../components/Snackbar.component";
 const NegativeFeedback = () => {
   const location = useLocation();
   const { language } = useFeedBackHook();
-  const { lng, rating, invoice_id, customer_id , location_id} = location.state;
+  const { lng, rating, invoice_id, customer_id, location_id } = location.state;
 
   const {
     form,
@@ -45,8 +45,7 @@ const NegativeFeedback = () => {
     quality,
     belowSatisfaction,
     test,
-  } = usePositiveFeedbackHook({ rating ,invoice_id, customer_id, location_id});
-
+  } = usePositiveFeedbackHook({ rating, invoice_id, customer_id, location_id });
 
   let feedbackText;
   switch (staffAttitude) {
@@ -139,7 +138,7 @@ const NegativeFeedback = () => {
     <div className={styles.container}>
       <div className={styles.headerContainer}>
         <div className={styles.logo}>
-          <img src={ic_topnav_logo} alt=""  />
+          <img src={ic_topnav_logo} alt="" />
         </div>
         <div className={styles.title}>
           {language === lng
@@ -155,11 +154,17 @@ const NegativeFeedback = () => {
 
         <div className={styles.formNeg}>
           <div className={"formFlex"}>
-          <div >
-              <img src={ic_vendor} width={25} height={25} alt="" className={styles.imageBorder}/>
-              <hr className={styles.hrline}/>
+            <div>
+              <img
+                src={ic_vendor}
+                width={25}
+                height={25}
+                alt=""
+                className={styles.imageBorder}
+              />
+              <hr className={styles.hrline} />
             </div>
-            <div className={"formGroup"} style={{padding:"0px " }}>
+            <div className={"formGroup"} style={{ padding: "0px " }}>
               <StanduredTextField
                 isError={errorData?.name}
                 errorText={errorData?.name}
@@ -179,11 +184,17 @@ const NegativeFeedback = () => {
                   <img src={ic_person}/>
                 </div> */}
           <div className={"formFlex"}>
-          <div >
-              <img src={ic_number} width={25} height={25} alt="" className={styles.imageBorder}/>
-              <hr className={styles.hrline}/>
+            <div>
+              <img
+                src={ic_number}
+                width={25}
+                height={25}
+                alt=""
+                className={styles.imageBorder}
+              />
+              <hr className={styles.hrline} />
             </div>
-            <div className={"formGroup"} style={{padding:"0px " }}>
+            <div className={"formGroup"} style={{ padding: "0px " }}>
               <StanduredTextField
                 isError={errorData?.contact}
                 errorText={errorData?.contact}
@@ -447,9 +458,17 @@ const NegativeFeedback = () => {
               isError={errorData?.recommendation}
               errorText={errorData?.recommendation}
               label={
-                language === lng
-                  ?<div style={{color: "#BFC3CA"}}>  e.g. the quality can be improved... </div>
-                  :<div style={{color: "#BFC3CA"}}> जैसे गुणवत्ता में सुधार किया जा सकता है...</div>
+                language === lng ? (
+                  <div style={{ color: "#BFC3CA" }}>
+                    {" "}
+                    e.g. the quality can be improved...{" "}
+                  </div>
+                ) : (
+                  <div style={{ color: "#BFC3CA" }}>
+                    {" "}
+                    जैसे गुणवत्ता में सुधार किया जा सकता है...
+                  </div>
+                )
               }
               value={form?.recommendation}
               onTextChange={(text) => {
@@ -472,30 +491,41 @@ const NegativeFeedback = () => {
               <ButtonBase
                 className={styles.createBtnSubmit}
                 onClick={() => {
-                  if (!staffAttitude || !test || !quality || !belowSatisfaction) {
-                      let errorMessage = "";
-                      if (!staffAttitude) {
-                          errorMessage += language === lng ? "Staff Attitude, " : "स्टाफ के रवैये, ";
-                      }
-                      if (!quality) {
-                          errorMessage += language === lng ? "Quality, " : "गुणवत्ता, ";
-                      }
-                      if (!belowSatisfaction) {
-                          errorMessage += language === lng ? "Speed, " : "गति, ";
-                      }
-                      if (!test) {
-                          errorMessage += language === lng ? "Taste" : "स्वाद";
-                      }
-              
-                      errorMessage = errorMessage.replace(/,\s*$/, ""); 
-                      errorMessage = language === lng ? `Please provide the rating for ${errorMessage}` : `कृपया ${errorMessage} के लिए रेटिंग प्रदान करें`;
-              
-                      SnackbarUtils.error(errorMessage);
+                  if (
+                    !staffAttitude ||
+                    !test ||
+                    !quality ||
+                    !belowSatisfaction
+                  ) {
+                    let errorMessage = "";
+                    if (!staffAttitude) {
+                      errorMessage +=
+                        language === lng
+                          ? "Staff Attitude, "
+                          : "स्टाफ के रवैये, ";
+                    }
+                    if (!quality) {
+                      errorMessage +=
+                        language === lng ? "Quality, " : "गुणवत्ता, ";
+                    }
+                    if (!belowSatisfaction) {
+                      errorMessage += language === lng ? "Speed, " : "गति, ";
+                    }
+                    if (!test) {
+                      errorMessage += language === lng ? "Taste" : "स्वाद";
+                    }
+
+                    errorMessage = errorMessage.replace(/,\s*$/, "");
+                    errorMessage =
+                      language === lng
+                        ? `Please provide the rating for ${errorMessage}`
+                        : `कृपया ${errorMessage} के लिए रेटिंग प्रदान करें`;
+
+                    SnackbarUtils.error(errorMessage);
                   } else {
-                      handleSubmit();
+                    handleSubmit();
                   }
-              }}
-              
+                }}
               >
                 <div className={styles.submit}>
                   {language === lng ? "Submit" : "जमा करना"}

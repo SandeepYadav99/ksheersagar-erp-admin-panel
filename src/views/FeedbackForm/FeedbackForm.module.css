@@ -18,6 +18,9 @@
 .logo {
   text-align: center;
 }
+.logoImg{
+  /* width: 50%; */
+}
 .logoCompleteion {
   text-align: center;
   margin-left: 10%;
@@ -27,9 +30,9 @@
   top: 0px !important;
   right: 0px;
 }
-.logo img {
+/* .logo img {
   width: 186px;
-}
+} */
 .title {
   text-align: center;
   color: #007aff;
@@ -313,11 +316,12 @@
 /* End Negative Feeedback Css */
 
 .imageBorder {
-  margin-top: 14px !important;
+  margin-top: 24px !important;
   margin-right: 8px !important;
 }
 .hrline {
-  border: 0.7px solid rgba(0, 0, 0, 0.42) !important;
+   /* border: 0.7px solid rgba(0, 0, 0, 0.42) !important; */
+   margin-top: -1px;
 }
 .hrline:hover {
   /* border: 1px solid #2896E9; */

@@ -85,6 +85,7 @@ const usePositiveFeedbackHook = ({
     // if (!(overAll === "Very_Good" || overAll === "Good")) {
     //   required.push("recommendation");
     // }
+
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -98,16 +99,21 @@ const usePositiveFeedbackHook = ({
         );
       } else if (["code"].indexOf(val) < 0) {
         delete errors[val];
-      }else if(val === "contact"){
-        
+      } else if (val === "contact") {
       }
     });
-    console.log(form?.contact, "Contact")
-    if ( form?.contact?.length < 10) {
-      errors.contact =
-        lng === "english" ? "Enter Min. 10 digit" : "न्यूनतम दर्ज करें. 10 अंक";
+
+    if (form?.contact) {
+      if (form?.contact?.length < 10) {
+        errors.contact =
+          lng === "english"
+            ? "Enter Min. 10 digit"
+            : "न्यूनतम दर्ज करें. 10 अंक";
+      } else {
+        delete errors.contact;
+      }
     } else {
-      delete errors.contact;
+      errors.contact = true;
     }
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
@@ -115,7 +121,7 @@ const usePositiveFeedbackHook = ({
       }
     });
     return errors;
-  }, [form, errorData]);
+  }, [form, errorData, staffAttitude, quality, belowSatisfaction, test]);
 
   const submitToServer = useCallback(async () => {
     if (isSubmitting) {
@@ -152,7 +158,16 @@ const usePositiveFeedbackHook = ({
     } finally {
       setIsSubmitting(false);
     }
-  }, [form, isSubmitting, setIsSubmitting, rating]);
+  }, [
+    form,
+    isSubmitting,
+    setIsSubmitting,
+    rating,
+    staffAttitude,
+    quality,
+    belowSatisfaction,
+    test,
+  ]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
@@ -162,7 +177,16 @@ const usePositiveFeedbackHook = ({
     } else {
       await submitToServer();
     }
-  }, [checkFormValidation, setErrorData, form, submitToServer]);
+  }, [
+    checkFormValidation,
+    setErrorData,
+    form,
+    submitToServer,
+    staffAttitude,
+    quality,
+    belowSatisfaction,
+    test,
+  ]);
 
   const removeError = useCallback(
     (title) => {
@@ -172,7 +196,7 @@ const usePositiveFeedbackHook = ({
     },
     [setErrorData, errorData]
   );
-
+  console.log({ quality, test, belowSatisfaction, qualityFeedback });
   const changeTextData = useCallback(
     (text, fieldName) => {
       let shouldRemoveError = true;
@@ -180,7 +204,6 @@ const usePositiveFeedbackHook = ({
       if (fieldName === "name") {
         t[fieldName] = text.trimStart();
       } else if (fieldName === "contact") {
-      
         const numericText = text.replace(/\D/g, "");
 
         if (numericText.length <= 10) {

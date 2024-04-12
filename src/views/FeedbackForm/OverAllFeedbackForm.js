@@ -44,7 +44,7 @@ const OverAllFeedbackForm = () => {
     <div className={styles.container}>
       <div className={styles.headerContainer}>
         <div className={styles.logo}>
-          <img src={ic_topnav_logo} alt="" width={166} height={34} />
+          <img src={ic_topnav_logo} alt=""  className={styles.logoImg}/>
         </div>
         <div className={styles.title}>
           {language === "english" ? "Feedback Form" : "प्रतिक्रिया फ़ॉर्म"}
