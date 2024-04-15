@@ -189,6 +189,8 @@ const ProductCreate = ({ location }) => {
                       <MenuItem value="SERVICE">SERVICE</MenuItem>
                       <MenuItem value="CONTAINER">CONTAINER</MenuItem>
                       <MenuItem value="ASSETS">ASSETS</MenuItem>
+                      <MenuItem value="MITHAI_BOX"> MITHAI BOX</MenuItem>
+                      <MenuItem value="MATERIAL">MATERIAL</MenuItem>
                     </CustomSelectField>
                   </div>
                 </div>
@@ -279,6 +281,52 @@ const ProductCreate = ({ location }) => {
                   }}
                 />
                 {unitSelected}
+              </div>
+            </div>
+            <div className={"formFlex"}>
+              <div className={"formGroup"}>
+                {/* <CustomTextField
+                  isError={errorData?.daysExpiration}
+                  errorText={errorData?.daysExpiration}
+                  label={"Days until expiration"}
+                  value={form?.daysExpiration}
+                  onTextChange={(text) => {
+                    changeTextData(text, "daysExpiration");
+                  }}
+                  onBlur={() => {
+                    onBlurHandler("daysExpiration");
+                  }}
+                /> */}
+                   <CustomTextField
+                  isError={errorData?.daysExpiration}
+                  errorText={errorData?.daysExpiration}
+                  label={"Days until expiration"}
+                  value={form?.daysExpiration}
+                  onTextChange={(text) => {
+                    changeTextData(text, "daysExpiration");
+                  }}
+                  onBlur={() => {
+                    onBlurHandler("daysExpiration");
+                  }}
+                />
+                {/* {unitSelected} */}
+             
+              </div>
+
+              <div className={classNames("formGroup", styles.unitWrap)}>
+                <CustomSelectField
+                  isError={errorData?.gstSlab}
+                  errorText={errorData?.gstSlab}
+                  label={"Subcategory"}
+                  value={form?.gstSlab ?? subcategoryId}
+                  handleChange={(value) => {
+                    changeTextData(value, "gstSlab");
+                  }}
+                >
+                  <MenuItem value="5%">5%</MenuItem>
+                  <MenuItem value="18%">18%</MenuItem>
+                </CustomSelectField>
+              
               </div>
             </div>
             <div className={"formFlex"}>

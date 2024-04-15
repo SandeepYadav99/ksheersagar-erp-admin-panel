@@ -24,7 +24,7 @@ const PositiveCustomerFeedback = () => {
     <div className={styles.container}>
       <div className={styles.headerContainer}>
         <div className={styles.logo}>
-          <img src={ic_topnav_logo} alt=""  />
+          <img src={ic_topnav_logo} alt="" />
         </div>
         <div className={styles.title}>
           {language === lng
@@ -91,7 +91,7 @@ const PositiveCustomerFeedback = () => {
             </div>
             <div className={"formGroup"} style={{ padding: "0px " }}>
               <StanduredTextField
-                // type={"number"}
+                type={"tel"}
                 isError={errorData?.contact}
                 errorText={errorData?.contact}
                 label={language === lng ? "Phone Number" : "फ़ोन नंबर"}
@@ -103,6 +103,7 @@ const PositiveCustomerFeedback = () => {
                   // onBlurHandler("name_en");
                 }}
                 // icon={ic_person}
+                pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
               />
             </div>
           </div>

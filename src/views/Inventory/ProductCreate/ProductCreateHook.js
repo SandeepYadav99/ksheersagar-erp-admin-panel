@@ -38,6 +38,8 @@ const initialForm = {
   is_negative_allowed: false,
   is_batch_wise: false,
   is_first_in_first_out: false,
+  gstSlab:"",
+  daysExpiration:""
 
 };
 
@@ -150,7 +152,7 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
   }, [])
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = ["name_en", "name_hi", "category_id", "code", "sub_category_id", "min_qty", "max_qty", "unit_ids", "type"];
+    let required = ["daysExpiration", "gstSlab","name_en", "name_hi", "category_id", "code", "sub_category_id", "min_qty", "max_qty", "unit_ids", "type"];
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -265,7 +267,7 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
         if (!text || (isAlpha(text) && text.toString().length <= 30)) {
           t[fieldName] = text;
         }
-      } else if (fieldName === "max_qty" || fieldName === "min_qty") {
+      } else if (fieldName === "max_qty" || fieldName === "min_qty" || fieldName === "daysExpiration") {
         if (!text || (isNum(text) && text.toString().length <= 30)) {
           t[fieldName] = text;
         }
