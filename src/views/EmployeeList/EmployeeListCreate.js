@@ -412,30 +412,30 @@ const EmployeeListCreate = ({ location }) => {
           <div className={"formGroup"}>
             <CustomTextField
               type="number"
-              isError={errorData?.uan}
-              errorText={errorData?.uan}
+              isError={errorData?.uan_no}
+              errorText={errorData?.uan_no}
               label={"Uan Number"}
-              value={form?.uan}
+              value={form?.uan_no}
               onTextChange={(text) => {
-                changeTextData(text, "uan");
+                changeTextData(text, "uan_no");
               }}
               onBlur={() => {
-                onBlurHandler("uan");
+                onBlurHandler("uan_no");
               }}
             />
           </div>
           <div className={"formGroup"}>
           <CustomTextField
               type="number"
-              isError={errorData?.esi}
-              errorText={errorData?.esi}
+              isError={errorData?.esi_no}
+              errorText={errorData?.esi_no}
               label={"Esi Number"}
-              value={form?.esi}
+              value={form?.esi_no}
               onTextChange={(text) => {
-                changeTextData(text, "esi");
+                changeTextData(text, "esi_no");
               }}
               onBlur={() => {
-                onBlurHandler("esi");
+                onBlurHandler("esi_no");
               }}
             />
           </div>

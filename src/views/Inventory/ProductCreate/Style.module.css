@@ -261,3 +261,8 @@
     column-gap: 10px;
     text-transform: capitalize;
 }
+.flexfile{
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}

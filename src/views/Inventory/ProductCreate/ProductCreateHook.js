@@ -1,7 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import {
-  isAlphaNumChars, isNum, isAlpha
-} from "../../../libs/RegexUtils";
+import { isAlphaNumChars, isNum, isAlpha } from "../../../libs/RegexUtils";
 import { useSelector, useDispatch } from "react-redux";
 
 import SnackbarUtils from "../../../libs/SnackbarUtils";
@@ -13,14 +11,10 @@ import {
   serviceCreateProduct,
   serviceGetProductDetails,
   serviceUpdateProduct,
-  serviceDeleteProductImage
+  serviceDeleteProductImage,
 } from "../../../services/Product.service";
-import {
-  actionDeleteProduct,
-} from "../../../actions/Product.action";
-import {
-  actionFetchSubcategory,
-} from "../../../actions/Subcategory.action";
+import { actionDeleteProduct } from "../../../actions/Product.action";
+import { actionFetchSubcategory } from "../../../actions/Subcategory.action";
 import historyUtils from "../../../libs/history.utils";
 
 const initialForm = {
@@ -38,9 +32,14 @@ const initialForm = {
   is_negative_allowed: false,
   is_batch_wise: false,
   is_first_in_first_out: false,
-  gstSlab:"",
-  daysExpiration:""
-
+  gstSlab: "",
+  daysExpiration: "",
+  price: "",
+  deadWeight:"",
+  capacity:"",
+  no_of_lanes:"",
+  applies_to:"",
+  selling_price:""
 };
 
 const useProductDetail = ({ handleToggleSidePannel }) => {
@@ -48,37 +47,39 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({ ...initialForm });
-  const [subcatList, setSubcatList] = useState()
+  const [subcatList, setSubcatList] = useState();
   const [isEdit, setIsEdit] = useState(false);
   const [isDialog, setIsDialog] = useState(false);
 
   const includeRef = useRef(null);
   const { id } = useParams();
   const [listData, setListData] = useState({
-    UNITS:[],
-    CATEGORIES:[],
-    SUB_CATEGORIES:[]
-  })
+    UNITS: [],
+    CATEGORIES: [],
+    SUB_CATEGORIES: [],
+  });
   const dispatch = useDispatch();
   const [defaultImg, setDefaultImg] = useState("");
   const [productDetail, setProductDetail] = useState();
-  const [unitSelected,setUnitSelected] = useState()
-  const [subcategoryId,setSubcategoryId] = useState()
-
+  const [unitSelected, setUnitSelected] = useState();
+  const [subcategoryId, setSubcategoryId] = useState();
+  const [finishedGood, setFinishedGood] = useState(false);
+  const [mithaiBox, setMithaiBox] = useState(false);
   const {
-    all, data, sorting_data: sortingData,
-
+    all,
+    data,
+    sorting_data: sortingData,
   } = useSelector((state) => state.subcategory);
   useEffect(() => {
     if (id) {
       serviceGetProductDetails({ id: id }).then((res) => {
         if (!res.error) {
           const dataVal = res?.data?.details;
-          console.log('data', dataVal)
+          console.log("data", dataVal);
           setDefaultImg(dataVal?.image);
-          setUnitSelected(dataVal?.units[0]?.name)
-          setProductDetail(dataVal)
-          setSubcategoryId(dataVal?.sub_category_id)
+          setUnitSelected(dataVal?.units[0]?.name);
+          setProductDetail(dataVal);
+          setSubcategoryId(dataVal?.sub_category_id);
           // Object.keys({ ...initialForm }).forEach((key) => {
           //   if (key in initialForm && key !== "image") {
           //     data[key] = dataVal[key];
@@ -92,12 +93,16 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
           // setForm({...data});
           const dataItem = { image: "" };
           Object.keys({ ...initialForm }).forEach((key) => {
-            if (key in initialForm && key !== "image" & key != "is_active") {
+            if (
+              key in initialForm &&
+              (key !== "image") & (key != "is_active")
+            ) {
               dataItem[key] = dataVal[key];
             }
           });
           setForm({
-            ...initialForm, ...dataItem,
+            ...initialForm,
+            ...dataItem,
             id: dataVal?.id,
             is_active: dataVal?.status === Constants.GENERAL_STATUS.ACTIVE,
           });
@@ -108,51 +113,63 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
     }
   }, [id]);
   useEffect(() => {
-    serviceGetList(["UNITS", "CATEGORIES","SUB_CATEGORIES"]).then(res => {
+    serviceGetList(["UNITS", "CATEGORIES", "SUB_CATEGORIES"]).then((res) => {
       if (!res.error) {
         setListData(res.data);
       }
     });
   }, []);
   const addSubcatData = useCallback((value) => {
-    console.log('value', value)
+    console.log("value", value);
     // if(form?.category_id ==0)
     const payload = {
       index: 1,
-      category_id: value
-    }
+      category_id: value,
+    };
     dispatch(
       actionFetchSubcategory(1, sortingData, {
         query: null,
         query_data: null,
-        category_id: value
-      }
-      )
+        category_id: value,
+      })
     );
     // setSubcatList(data)
 
     // console.log('listjsfhsxu', data)
-
-  }, [])
-  console.log('listjsfhsxu', data)
-  const toggleConfirmDialog = useCallback((type) => {
-    // setDialogType(type);
-    setIsDialog(e => !e);
-  }, [setIsDialog]);
+  }, []);
+  console.log("listjsfhsxu", data);
+  const toggleConfirmDialog = useCallback(
+    (type) => {
+      // setDialogType(type);
+      setIsDialog((e) => !e);
+    },
+    [setIsDialog]
+  );
 
   const dialogText = useMemo(() => {
-
-    return (<p>
-      Are you sure you want to{" "}
-      <strong>SHORTLIST CANDIDATES - </strong>. The
-      candidates once shortlisted will be sent automatic email regarding
-      interview.
-    </p>);
-
-  }, [])
+    return (
+      <p>
+        Are you sure you want to <strong>SHORTLIST CANDIDATES - </strong>. The
+        candidates once shortlisted will be sent automatic email regarding
+        interview.
+      </p>
+    );
+  }, []);
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = ["daysExpiration", "gstSlab","name_en", "name_hi", "category_id", "code", "sub_category_id", "min_qty", "max_qty", "unit_ids", "type"];
+    let required = [
+      "daysExpiration",
+      "gstSlab",
+      "name_en",
+      "name_hi",
+      "category_id",
+      "code",
+      "sub_category_id",
+      "min_qty",
+      "max_qty",
+      "unit_ids",
+      "type",
+    ];
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -161,7 +178,7 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
         errors[val] = true;
       }
       if (form?.["max_qty"] < form?.["min_qty"]) {
-        errors["max_qty"] = true
+        errors["max_qty"] = true;
       }
     });
 
@@ -173,79 +190,72 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
     return errors;
   }, [form, errorData]);
 
-
   const submitToServer = useCallback(() => {
-    console.log('jenekfnek')
-    setIsLoading(true)
+    console.log("jenekfnek");
+    setIsLoading(true);
     if (!isSubmitting) {
       setIsSubmitting(true);
       const fd = new FormData();
       Object.keys(form).forEach((key) => {
-        if (['unit_ids'].indexOf(key) < 0) {
+        if (["unit_ids"].indexOf(key) < 0) {
           fd.append(key, form[key]);
         }
       });
-      fd.append('unit_ids', JSON.stringify(form?.unit_ids));
+      fd.append("unit_ids", JSON.stringify(form?.unit_ids));
 
       if (id) {
-        console.log('id', id)
-        console.log('fd', fd)
-        serviceUpdateProduct(fd)
-          .then((res) => {
-            if (!res.error) {
-              console.log('idrierei')
-              setIsLoading(false)
+        console.log("id", id);
+        console.log("fd", fd);
+        serviceUpdateProduct(fd).then((res) => {
+          if (!res.error) {
+            console.log("idrierei");
+            setIsLoading(false);
 
-              historyUtils.push("/product");
+            historyUtils.push("/product");
+          } else {
+            console.log("res", res);
+            setIsLoading(false);
+
+            // if(res?.err)
+            SnackbarUtils.error(res.message);
+          }
+          setIsSubmitting(false);
+        });
+      } else {
+        serviceCreateProduct(fd).then((res) => {
+          if (!res.error) {
+            console.log("idrierei");
+            setIsLoading(false);
+
+            historyUtils.push("/product");
+          } else {
+            setIsLoading(false);
+
+            console.log("res", res);
+            if (res?.message == "Code already exists") {
+              const temp = JSON.parse(JSON.stringify(errorData));
+              temp["code"] = true;
+              setErrorData(temp);
+              SnackbarUtils.error("Product code already exists");
             } else {
-              console.log('res', res)
-              setIsLoading(false)
-
-              // if(res?.err)
               SnackbarUtils.error(res.message);
             }
-            setIsSubmitting(false);
-          });
-      } else {
-        serviceCreateProduct(fd)
-          .then((res) => {
-            if (!res.error) {
-              console.log('idrierei')
-              setIsLoading(false)
-
-              historyUtils.push("/product");
-            } else {
-              setIsLoading(false)
-
-              console.log('res', res)
-              if (res?.message == "Code already exists") {
-                const temp = JSON.parse(JSON.stringify(errorData));
-                temp["code"] = true;
-                setErrorData(temp);
-                SnackbarUtils.error("Product code already exists");
-
-              } else {
-                SnackbarUtils.error(res.message);
-
-              }
-            }
-            setIsSubmitting(false);
-          });
+          }
+          setIsSubmitting(false);
+        });
       }
-
     }
   }, [form, isSubmitting, setIsSubmitting, id]);
 
   const handleSubmit = useCallback(async () => {
-
-    console.log('innnnnn')
+    console.log("innnnnn");
     const errors = checkFormValidation();
     // console.log('dff',errors)
     if (Object.keys(errors).length > 0) {
       setErrorData(errors);
       return true;
     }
-    console.log('abnove')
+    console.log("abnove");
 
     submitToServer();
   }, [checkFormValidation, setErrorData, form, includeRef.current]);
@@ -267,25 +277,47 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
         if (!text || (isAlpha(text) && text.toString().length <= 30)) {
           t[fieldName] = text;
         }
-      } else if (fieldName === "max_qty" || fieldName === "min_qty" || fieldName === "daysExpiration") {
+      } else if (
+        fieldName === "max_qty" ||
+        fieldName === "min_qty" ||
+        fieldName === "daysExpiration" ||
+        fieldName === "price" ||
+       
+        fieldName === "no_of_lanes"
+      ) {
         if (!text || (isNum(text) && text.toString().length <= 30)) {
           t[fieldName] = text;
         }
-    }else if (fieldName ==="unit_ids"){
-      const index = listData?.UNITS?.findIndex((obj) => obj.id === text);
-      setUnitSelected(listData?.UNITS[index]?.name)
-      t[fieldName] = text
-    }else if (fieldName ==="sub_category_id"){
-      setSubcategoryId(text)
-      t[fieldName]=text
-    }
-      else {
+      } else if (fieldName === "unit_ids") {
+        const index = listData?.UNITS?.findIndex((obj) => obj.id === text);
+        setUnitSelected(listData?.UNITS[index]?.name);
+        t[fieldName] = text;
+      } else if (fieldName === "sub_category_id") {
+        setSubcategoryId(text);
+        t[fieldName] = text;
+      } else if (fieldName === "type") {
+        if (text === "FINISHED_GOODS") {
+          setFinishedGood(true);
+          setMithaiBox(false);
+        } else if (text === "MITHAI_BOX") {
+          setMithaiBox(true);
+          setFinishedGood(false);
+        } else {
+          setFinishedGood(false);
+          setMithaiBox(false);
+        }
+        t[fieldName] = text;
+      }else if(fieldName === "deadWeight"){
+      
+          t[fieldName] = text;
+      
+      } else {
         t[fieldName] = text;
       }
       setForm(t);
       shouldRemoveError && removeError(fieldName);
     },
-    [removeError, form, setForm]
+    [removeError, form, setForm, setMithaiBox, setFinishedGood]
   );
 
   const onBlurHandler = useCallback(
@@ -297,28 +329,26 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
     [changeTextData]
   );
 
-
   const handleDelete = useCallback(() => {
     dispatch(actionDeleteProduct(id));
     setIsDialog(false);
 
     historyUtils.push("/product");
-
   }, [id]);
 
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });
   }, [form]);
   const handleRemoveImage = useCallback(() => {
-    setDefaultImg("")
+    setDefaultImg("");
     setForm({
       ...form,
       image: "",
     });
     serviceDeleteProductImage({ id: id }).then((res) => {
-      console.log(res)
+      console.log(res);
     });
-  })
+  });
 
   return {
     form,
@@ -343,7 +373,11 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
     dialogText,
     handleRemoveImage,
     unitSelected,
-    subcategoryId
+    subcategoryId,
+    setFinishedGood,
+    finishedGood,
+    mithaiBox,
+    setMithaiBox,
   };
 };
 
