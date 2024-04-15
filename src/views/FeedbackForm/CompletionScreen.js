@@ -24,7 +24,7 @@ const CompletionScreen = () => {
           </a>
         </div>
         <div className={styles.logoCompleteion}>
-          <img src={ic_topnav_logo} alt="" width={166} height={34} />
+          <img src={ic_topnav_logo} alt=""  />
         </div>
         <div className={styles.gapsThank} />
         <div className={styles.ic_Google_img}>

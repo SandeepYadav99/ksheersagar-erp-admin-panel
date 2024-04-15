@@ -18,7 +18,9 @@ import CustomSwitch from "../../../components/FormFields/CustomSwitch";
 import WaitingComponent from "../../../components/Waiting.component";
 import DialogComponent from "./Dialog.component";
 import classNames from "classnames";
-
+import { TextField } from "@material-ui/core";
+import { Autocomplete } from "@material-ui/lab";
+import { ArrowDropDown, Clear } from "@material-ui/icons";
 const useStyles = makeStyles((theme) => ({
   iconBtnError: {
     color: theme.palette.error.dark,
@@ -54,6 +56,10 @@ const ProductCreate = ({ location }) => {
     handleRemoveImage,
     unitSelected,
     subcategoryId,
+    setFinishedGood,
+    finishedGood,
+    mithaiBox,
+    setMithaiBox,
   } = ProductCreateHook({ location });
 
   const image = useMemo(() => {
@@ -181,6 +187,8 @@ const ProductCreate = ({ location }) => {
                       label={"Type"}
                       value={form?.type}
                       handleChange={(value) => {
+                        console.log({ value });
+
                         changeTextData(value, "type");
                       }}
                     >
@@ -189,11 +197,151 @@ const ProductCreate = ({ location }) => {
                       <MenuItem value="SERVICE">SERVICE</MenuItem>
                       <MenuItem value="CONTAINER">CONTAINER</MenuItem>
                       <MenuItem value="ASSETS">ASSETS</MenuItem>
+                      <MenuItem value="MITHAI_BOX"> MITHAI BOX</MenuItem>
+                      <MenuItem value="MATERIAL">MATERIAL</MenuItem>
                     </CustomSelectField>
                   </div>
                 </div>
               </div>
             </div>
+            {finishedGood && (
+              <div className={"formFlex"}>
+                <div className={"formGroup"}>
+                  <div></div>
+                </div>
+                <div className={"formGroup"}>
+                  <CustomTextField
+                    isError={errorData?.price}
+                    errorText={errorData?.price}
+                    label={"Price "}
+                    value={form?.price}
+                    onTextChange={(text) => {
+                      changeTextData(text, "price");
+                    }}
+                    onBlur={() => {
+                      onBlurHandler("price");
+                    }}
+                  />
+                </div>
+              </div>
+            )}
+            {mithaiBox && (
+              <>
+                <div className={"formFlex"}>
+                  <div className={"formGroup"}>
+                    <div className={styles.flexfile}>
+                      <CustomTextField
+                        isError={errorData?.deadWeight}
+                        errorText={errorData?.deadWeight}
+                        label={"Dead weight"}
+                        type={"number"}
+                        value={form?.deadWeight}
+                        onTextChange={(text) => {
+                          changeTextData(text, "deadWeight");
+                        }}
+                        onBlur={() => {
+                          onBlurHandler("deadWeight");
+                        }}
+                      />
+                      <div>KG</div>
+                    </div>
+                  </div>
+                  <div className={"formGroup"}>
+                    <CustomTextField
+                      isError={errorData?.selling_price}
+                      errorText={errorData?.selling_price}
+                      label={"Selling price  "}
+                      type={"number"}
+                      value={form?.selling_price}
+                      onTextChange={(text) => {
+                        changeTextData(text, "selling_price");
+                      }}
+                      onBlur={() => {
+                        onBlurHandler("selling_price");
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className={"formFlex"}>
+                  <div className={"formGroup"}>
+                    <div className={styles.flexfile}>
+                      <CustomTextField
+                        isError={errorData?.capacity}
+                        errorText={errorData?.capacity}
+                        label={"Capacity"}
+                        type={"number"}
+                        value={form?.capacity}
+                        onTextChange={(text) => {
+                          changeTextData(text, "capacity");
+                        }}
+                        onBlur={() => {
+                          onBlurHandler("capacity");
+                        }}
+                      />
+                      <div>KG</div>
+                    </div>
+                  </div>
+                  <div className={"formGroup"}>
+                    <CustomTextField
+                      isError={errorData?.no_of_lanes}
+                      errorText={errorData?.no_of_lanes}
+                      label={"No of lanes  "}
+                      value={form?.no_of_lanes}
+                      onTextChange={(text) => {
+                        changeTextData(text, "no_of_lanes");
+                      }}
+                      onBlur={() => {
+                        onBlurHandler("no_of_lanes");
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className={"formFlex"}>
+                  <div className={"formGroup"}>
+                    <Autocomplete
+                      id="tags-outlined"
+                      onChange={(e, value) => {
+                        changeTextData(value, "applies_to");
+                      }}
+                      value={form.applies_to || []}
+                      options={[]} // listData ||
+                      getOptionLabel={(option) => option}
+                      defaultValue={form?.applies_to || []}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          variant="outlined"
+                          label={"Applies to"}
+                          error={errorData?.applies_to}
+                          InputProps={{
+                            ...params.InputProps,
+                            endAdornment: (
+                              <>
+                                {form?.applies_to ? (
+                                  <Clear
+                                    onClick={() =>
+                                      changeTextData(null, "applies_to")
+                                    }
+                                    style={{ cursor: "pointer" }}
+                                  />
+                                ) : null}
+                                <ArrowDropDown
+                                  style={{
+                                    marginRight: -20,
+                                    cursor: "pointer",
+                                  }}
+                                />
+                              </>
+                            ),
+                          }}
+                        />
+                      )}
+                      disableClearable
+                    />
+                  </div>
+                </div>
+              </>
+            )}
             <div className={"formFlex"}>
               <div className={"formGroup"}>
                 <CustomSelectField
@@ -230,9 +378,6 @@ const ProductCreate = ({ location }) => {
                     changeTextData(value, "sub_category_id");
                   }}
                 >
-                  {console.log("fom cat", form?.category_id)}
-                  {console.log(form?.category_id)}
-                  {/* {(form?.category_id != 0) ? ( */}
                   {listData?.SUB_CATEGORIES?.map((dT) => {
                     return (
                       <MenuItem value={dT?.id} key={dT?.id}>
@@ -279,6 +424,50 @@ const ProductCreate = ({ location }) => {
                   }}
                 />
                 {unitSelected}
+              </div>
+            </div>
+            <div className={"formFlex"}>
+              <div className={"formGroup"}>
+                {/* <CustomTextField
+                  isError={errorData?.daysExpiration}
+                  errorText={errorData?.daysExpiration}
+                  label={"Days until expiration"}
+                  value={form?.daysExpiration}
+                  onTextChange={(text) => {
+                    changeTextData(text, "daysExpiration");
+                  }}
+                  onBlur={() => {
+                    onBlurHandler("daysExpiration");
+                  }}
+                /> */}
+                <CustomTextField
+                  isError={errorData?.daysExpiration}
+                  errorText={errorData?.daysExpiration}
+                  label={"Days until expiration"}
+                  value={form?.daysExpiration}
+                  onTextChange={(text) => {
+                    changeTextData(text, "daysExpiration");
+                  }}
+                  onBlur={() => {
+                    onBlurHandler("daysExpiration");
+                  }}
+                />
+                {/* {unitSelected} */}
+              </div>
+
+              <div className={classNames("formGroup", styles.unitWrap)}>
+                <CustomSelectField
+                  isError={errorData?.gstSlab}
+                  errorText={errorData?.gstSlab}
+                  label={"Subcategory"}
+                  value={form?.gstSlab ?? subcategoryId}
+                  handleChange={(value) => {
+                    changeTextData(value, "gstSlab");
+                  }}
+                >
+                  <MenuItem value="5%">5%</MenuItem>
+                  <MenuItem value="18%">18%</MenuItem>
+                </CustomSelectField>
               </div>
             </div>
             <div className={"formFlex"}>

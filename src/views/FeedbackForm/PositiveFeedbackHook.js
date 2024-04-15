@@ -13,7 +13,12 @@ const initialForm = {
   recommendation: "",
 };
 
-const usePositiveFeedbackHook = ({ rating, invoice_id, customer_id }) => {
+const usePositiveFeedbackHook = ({
+  rating,
+  invoice_id,
+  customer_id,
+  location_id,
+}) => {
   const [isLoading] = useState(false);
   const [showPasswordCurrent, setShowPasswordCurrent] = useState(false);
   const [errorData, setErrorData] = useState({});
@@ -80,6 +85,7 @@ const usePositiveFeedbackHook = ({ rating, invoice_id, customer_id }) => {
     // if (!(overAll === "Very_Good" || overAll === "Good")) {
     //   required.push("recommendation");
     // }
+
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -93,12 +99,21 @@ const usePositiveFeedbackHook = ({ rating, invoice_id, customer_id }) => {
         );
       } else if (["code"].indexOf(val) < 0) {
         delete errors[val];
+      } else if (val === "contact") {
       }
     });
-    if (form?.contact?.length < 10) {
-      errors.contact = lng === "english" ? "Enter Min. 10 digit" :"न्यूनतम दर्ज करें. 10 अंक" ;
-    }else{
-      delete errors.contact
+
+    if (form?.contact) {
+      if (form?.contact?.length < 10) {
+        errors.contact =
+          lng === "english"
+            ? "Enter Min. 10 digit"
+            : "न्यूनतम दर्ज करें. 10 अंक";
+      } else {
+        delete errors.contact;
+      }
+    } else {
+      errors.contact = true;
     }
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
@@ -106,7 +121,7 @@ const usePositiveFeedbackHook = ({ rating, invoice_id, customer_id }) => {
       }
     });
     return errors;
-  }, [form, errorData]);
+  }, [form, errorData, staffAttitude, quality, belowSatisfaction, test]);
 
   const submitToServer = useCallback(async () => {
     if (isSubmitting) {
@@ -126,7 +141,7 @@ const usePositiveFeedbackHook = ({ rating, invoice_id, customer_id }) => {
       speed: belowSatisfaction ? belowSatisfaction : "",
       taste: test ? test : "",
       recommendation: form?.recommendation,
-      location_id:""
+      location_id: location_id,
     };
     try {
       const res = await serviceCreateFeedback(formData);
@@ -143,7 +158,16 @@ const usePositiveFeedbackHook = ({ rating, invoice_id, customer_id }) => {
     } finally {
       setIsSubmitting(false);
     }
-  }, [form, isSubmitting, setIsSubmitting, rating]);
+  }, [
+    form,
+    isSubmitting,
+    setIsSubmitting,
+    rating,
+    staffAttitude,
+    quality,
+    belowSatisfaction,
+    test,
+  ]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
@@ -153,7 +177,16 @@ const usePositiveFeedbackHook = ({ rating, invoice_id, customer_id }) => {
     } else {
       await submitToServer();
     }
-  }, [checkFormValidation, setErrorData, form, submitToServer]);
+  }, [
+    checkFormValidation,
+    setErrorData,
+    form,
+    submitToServer,
+    staffAttitude,
+    quality,
+    belowSatisfaction,
+    test,
+  ]);
 
   const removeError = useCallback(
     (title) => {
@@ -163,7 +196,7 @@ const usePositiveFeedbackHook = ({ rating, invoice_id, customer_id }) => {
     },
     [setErrorData, errorData]
   );
-
+  console.log({ quality, test, belowSatisfaction, qualityFeedback });
   const changeTextData = useCallback(
     (text, fieldName) => {
       let shouldRemoveError = true;
@@ -172,7 +205,7 @@ const usePositiveFeedbackHook = ({ rating, invoice_id, customer_id }) => {
         t[fieldName] = text.trimStart();
       } else if (fieldName === "contact") {
         const numericText = text.replace(/\D/g, "");
-       
+
         if (numericText.length <= 10) {
           t[fieldName] = numericText?.trimStart();
         }

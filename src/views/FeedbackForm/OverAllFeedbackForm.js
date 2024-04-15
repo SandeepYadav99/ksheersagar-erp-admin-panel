@@ -29,7 +29,7 @@ const OverAllFeedbackForm = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const invoice_id = urlParams.get("invoice_id"); // invoice customer
   const customer_id = urlParams.get("customer_id");
-
+  const location_id = urlParams.get("location_id");
 
   const overAllExperience = useCallback(
     (rating, feedback) => {
@@ -44,7 +44,7 @@ const OverAllFeedbackForm = () => {
     <div className={styles.container}>
       <div className={styles.headerContainer}>
         <div className={styles.logo}>
-          <img src={ic_topnav_logo} alt="" width={166} height={34} />
+          <img src={ic_topnav_logo} alt=""  className={styles.logoImg}/>
         </div>
         <div className={styles.title}>
           {language === "english" ? "Feedback Form" : "प्रतिक्रिया फ़ॉर्म"}
@@ -256,6 +256,7 @@ const OverAllFeedbackForm = () => {
                         rating: selectedRating,
                         invoice_id: invoice_id,
                         customer_id: customer_id,
+                        location_id:location_id
                       });
                     } else {
                       historyUtils.push(RouteName.NEGATIVE_FEEDBACK_FORM, {
@@ -263,6 +264,7 @@ const OverAllFeedbackForm = () => {
                         rating: selectedRating,
                         invoice_id: invoice_id,
                         customer_id: customer_id,
+                        location_id:location_id
                       });
                     }
                   }
@@ -277,14 +279,14 @@ const OverAllFeedbackForm = () => {
         </div>
      
         <div className={styles.language}>
-          <button
+          <ButtonBase
             className={
               language === "english" ? styles.underline : styles.english
             }
             onClick={() => toggleLanguageEnglish("english")}
           >
             English
-          </button>
+          </ButtonBase>
           <span> | </span>
           <ButtonBase
             className={language === "hindi" ? styles.underline : styles.hindi}

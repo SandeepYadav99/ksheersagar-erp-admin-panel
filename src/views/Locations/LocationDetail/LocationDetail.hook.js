@@ -10,13 +10,13 @@ import EmpInfo_Qr from "./component/QrDownload/EmpInfo_Qr";
 
 function useLocationDetail() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isApprovalPopUp, setIsApprovalPopUp] = useState(false);
   const [allData, setAllData] = useState({});
   const [data, setData] = useState(null);
   const { id } = useParams();
   const [isSidePanel, setSidePanel] = useState(false);
   const [editData, setEditData] = useState(null);
-
+  
+  const [isApprovalPopUp, setIsApprovalPopUp] = useState(false);
   const toggleApprovalDialog = useCallback(() => {
     setIsApprovalPopUp((e) => !e);
   }, [isApprovalPopUp]);

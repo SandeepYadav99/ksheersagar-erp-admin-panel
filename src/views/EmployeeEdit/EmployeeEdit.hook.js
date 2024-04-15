@@ -48,6 +48,8 @@ function EmployeeEditHook({ location }) {
     is_address_same: false,
     aadhaar_back: "",
     aadhaar_front: "",
+    uan_no:"",
+    esi_no:""
   };
   const [form, setForm] = useState({ ...initialForm });
   const [errorData, setErrorData] = useState({});
@@ -133,7 +135,9 @@ function EmployeeEditHook({ location }) {
       "gender",
       "status",
       "father_name",
-      "doj"
+      "doj",
+      "uan_no",
+      "esi_no"
     ];
     required.forEach((val) => {
       if (
@@ -210,6 +214,14 @@ function EmployeeEditHook({ location }) {
         }
       }else if (fieldName === "aadhar_no") {
         if (text >= 0 && text?.length <= 12) {
+          t[fieldName] = text;
+        }
+      }else if (fieldName === "uan_no") {
+        if (text >= 0 && text?.length <= 12) {
+          t[fieldName] = text;
+        }
+      }else if (fieldName === "esi_no") {
+        if (text >= 0 && text?.length <= 17) {
           t[fieldName] = text;
         }
       } else {

@@ -231,6 +231,15 @@ input[type=radio] + label:hover {
     text-transform: uppercase !important;
     font-weight: 600 !important;
 }
+.createBtnOutland{
+    border: 1px solid #29CB97 !important;
+    color: #29CB97 !important;
+    padding: 10px 20px !important;
+    font-size: 0.8rem !important;
+    border-radius: 30px !important;
+    text-transform: uppercase !important;
+    font-weight: 600 !important;
+}
 .createBtnreset{
     background-color: #29CB97 !important;
     color: #ffffff !important;
@@ -241,6 +250,16 @@ input[type=radio] + label:hover {
     font-weight: 600 !important;
 }
 
+.createBtnResetDisable{
+    background-color: #B8C5D3 !important;
+    color: #ffffff !important;
+    padding: 10px 30px !important;
+    font-size: 0.8rem !important;
+    border-radius: 30px !important;
+    text-transform: uppercase !important;
+    font-weight: 600 !important;
+    cursor: not-allowed !important;
+}
 .plusIcon{
     margin-left: 10px !important;
 }

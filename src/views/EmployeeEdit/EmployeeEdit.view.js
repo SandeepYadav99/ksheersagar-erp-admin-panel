@@ -395,6 +395,38 @@ const EmployeeEdit = ({ location }) => {
           </div>
         </div>
         <div className={"formFlex"}>
+          <div className={"formGroup"}>
+            <CustomTextField
+              type="number"
+              isError={errorData?.uan_no}
+              errorText={errorData?.uan_no}
+              label={"Uan Number"}
+              value={form?.uan_no}
+              onTextChange={(text) => {
+                changeTextData(text, "uan_no");
+              }}
+              onBlur={() => {
+                onBlurHandler("uan_no");
+              }}
+            />
+          </div>
+          <div className={"formGroup"}>
+          <CustomTextField
+              type="number"
+              isError={errorData?.esi_no}
+              errorText={errorData?.esi_no}
+              label={"Esi Number"}
+              value={form?.esi_no}
+              onTextChange={(text) => {
+                changeTextData(text, "esi_no");
+              }}
+              onBlur={() => {
+                onBlurHandler("esi_no");
+              }}
+            />
+          </div>
+        </div>
+        <div className={"formFlex"}>
           <div className={styles.adharBack}>
             <div className={styles.adharWrap}>
               <File
@@ -444,7 +476,7 @@ const EmployeeEdit = ({ location }) => {
           </div>
         </div>
       </div>
-
+    
       <div className={styles.btnCont}>
         <div className={"headerFlex wrapper"}>
           <ButtonBase

@@ -49,6 +49,8 @@ function EmployeeListCreateHook({ location }) {
     is_address_same: false,
     aadhaar_back: "",
     aadhaar_front: "",
+    uan_no:"",
+    esi_no:""
   };
   const [form, setForm] = useState({ ...initialForm });
   const [errorData, setErrorData] = useState({});
@@ -72,6 +74,7 @@ function EmployeeListCreateHook({ location }) {
     ROLES: [],
   });
   const [showPasswordCurrent, setShowPasswordCurrent] = useState(false);
+ 
   useEffect(() => {
     serviceGetList([
       "LOCATION_DEPARTMENTS",
@@ -130,6 +133,8 @@ function EmployeeListCreateHook({ location }) {
       // "current_address",
       // "aadhar_no",
       // "email",
+      "uan_no",
+      "esi_no"
     ];
     required.forEach((val) => {
       if (
@@ -206,6 +211,14 @@ function EmployeeListCreateHook({ location }) {
         }
       } else if (fieldName === "aadhar_no") {
         if (text >= 0 && text?.length <= 12) {
+          t[fieldName] = text;
+        }
+      }else if (fieldName === "uan_no") {
+        if (text >= 0 && text?.length <= 12) {
+          t[fieldName] = text;
+        }
+      }else if (fieldName === "esi_no") {
+        if (text >= 0 && text?.length <= 17) {
           t[fieldName] = text;
         }
       } else {
@@ -335,6 +348,7 @@ function EmployeeListCreateHook({ location }) {
     isSubmitting,
     showPasswordCurrent,
     setShowPasswordCurrent,
+   
   };
 }
 

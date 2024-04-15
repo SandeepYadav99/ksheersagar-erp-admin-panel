@@ -2,7 +2,13 @@ import React, { Component, useCallback, useEffect, useMemo } from "react";
 import { IconButton, MenuItem, ButtonBase, Menu } from "@material-ui/core";
 import classNames from "classnames";
 import { connect, useSelector } from "react-redux";
-import { Add, InfoOutlined, PrintOutlined } from "@material-ui/icons";
+import {
+  Add,
+  FontDownload,
+  GetApp,
+  InfoOutlined,
+  PrintOutlined,
+} from "@material-ui/icons";
 import PageBox from "../../components/PageBox/PageBox.component";
 import SidePanelComponent from "../../components/SidePanel/SidePanel.component";
 import styles from "./Style.module.css";
@@ -14,6 +20,8 @@ import useEmployeeList from "./EmployeeListHook";
 import StatusPill from "../../components/Status/StatusPill.component";
 import CreateView from "./Employee.view";
 import defaultImage from "../../assets/img/ic_user_pic.png";
+import Download from "../../assets/img/ic_download_report@2x.png";
+import DownloadDialog from "./Component/Download";
 
 const EmployeeList = ({}) => {
   const {
@@ -32,9 +40,13 @@ const EmployeeList = ({}) => {
     isSidePanel,
     isCalling,
     configFilter,
-    handleAddCandidate,
+    handleDownload,
     createDD,
     handleCreate,
+    id,
+
+    isApprovalPopUp,
+    toggleApprovalDialog,
   } = useEmployeeList({});
 
   const {
@@ -50,7 +62,6 @@ const EmployeeList = ({}) => {
   }, []);
 
   const renderFirstCell = useCallback((obj) => {
-  
     if (obj) {
       return (
         <div className={styles.firstCellFlex}>
@@ -228,6 +239,23 @@ const EmployeeList = ({}) => {
             <div className={styles.newLine} />
           </div>
           <div className={styles.btnWrapperGap}>
+            <>
+              <ButtonBase
+                aria-owns={createDD ? "createDD" : undefined}
+                aria-haspopup="true"
+                onClick={toggleApprovalDialog}
+                className={"createBtnOutland"}
+              >
+                DOWNLOAD REPORT
+                <img
+                  src={Download}
+                  alt=""
+                  height={20}
+                  className={styles.downloadImg}
+                />
+                {/* <GetApp fontSize={"small"} className={"plusIcon"}></GetApp> */}
+              </ButtonBase>
+            </>
             <div>
               <ButtonBase
                 aria-owns={createDD ? "createDD" : undefined}
@@ -241,7 +269,12 @@ const EmployeeList = ({}) => {
             </div>
           </div>
         </div>
-
+        <DownloadDialog
+          isOpen={isApprovalPopUp}
+          handleToggle={toggleApprovalDialog}
+          empId={id}
+          data={allData}
+        />
         <div>
           <FilterComponent
             is_progress={isFetching}

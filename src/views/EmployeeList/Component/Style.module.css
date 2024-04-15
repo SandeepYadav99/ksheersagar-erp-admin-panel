@@ -1,0 +1,54 @@
+.upperFlex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    margin-top: 15px;
+    /* margin-left: 20px; */
+}
+.upperPara{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    margin-top: 15px;
+    /* margin-left: 20px; */
+}
+.printFlex{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 30px;
+    padding-top: 10px;
+}
+
+.btmBtn{
+    background-color: #29CB97 !important;
+    padding: 15px 50px !important;
+    color: white !important;
+    border-radius: 5px !important;
+}
+.tableCont {
+    padding: 10px 10px;
+    max-height: 200px;
+    overflow: scroll;
+}
+.resetWrapper{
+    /* display: flex; */
+}
+.resetPasswordWrapper{
+    padding: 1.2rem;
+}
+.fieldWrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+.checkBox > label{
+    font-size:.75rem
+}
+.checkBox{
+    display: flex;
+    align-items: center;
+}
