@@ -204,7 +204,7 @@ const ProductCreate = ({ location }) => {
                 </div>
               </div>
             </div>
-            {finishedGood && (
+            {(finishedGood === true || form?.type === "FINISHED_GOODS") && (
               <div className={"formFlex"}>
                 <div className={"formGroup"}>
                   <div></div>
@@ -225,22 +225,22 @@ const ProductCreate = ({ location }) => {
                 </div>
               </div>
             )}
-            {mithaiBox && (
+            {(mithaiBox === true || form?.type === "MITHAI_BOX") && (
               <>
                 <div className={"formFlex"}>
                   <div className={"formGroup"}>
                     <div className={styles.flexfile}>
                       <CustomTextField
-                        isError={errorData?.deadWeight}
-                        errorText={errorData?.deadWeight}
+                        isError={errorData?.dead_weight}
+                        errorText={errorData?.dead_weight}
                         label={"Dead weight"}
                         type={"number"}
-                        value={form?.deadWeight}
+                        value={form?.dead_weight}
                         onTextChange={(text) => {
-                          changeTextData(text, "deadWeight");
+                          changeTextData(text, "dead_weight");
                         }}
                         onBlur={() => {
-                          onBlurHandler("deadWeight");
+                          onBlurHandler("dead_weight");
                         }}
                       />
                       <div>KG</div>
@@ -266,16 +266,16 @@ const ProductCreate = ({ location }) => {
                   <div className={"formGroup"}>
                     <div className={styles.flexfile}>
                       <CustomTextField
-                        isError={errorData?.capacity}
-                        errorText={errorData?.capacity}
+                        isError={errorData?.max_capacity}
+                        errorText={errorData?.max_capacity}
                         label={"Capacity"}
                         type={"number"}
-                        value={form?.capacity}
+                        value={form?.max_capacity}
                         onTextChange={(text) => {
-                          changeTextData(text, "capacity");
+                          changeTextData(text, "max_capacity");
                         }}
                         onBlur={() => {
-                          onBlurHandler("capacity");
+                          onBlurHandler("max_capacity");
                         }}
                       />
                       <div>KG</div>
@@ -283,44 +283,45 @@ const ProductCreate = ({ location }) => {
                   </div>
                   <div className={"formGroup"}>
                     <CustomTextField
-                      isError={errorData?.no_of_lanes}
-                      errorText={errorData?.no_of_lanes}
+                      isError={errorData?.lanes}
+                      errorText={errorData?.lanes}
                       label={"No of lanes  "}
-                      value={form?.no_of_lanes}
+                      value={form?.lanes}
                       onTextChange={(text) => {
-                        changeTextData(text, "no_of_lanes");
+                        changeTextData(text, "lanes");
                       }}
                       onBlur={() => {
-                        onBlurHandler("no_of_lanes");
+                        onBlurHandler("lanes");
                       }}
                     />
                   </div>
                 </div>
                 <div className={"formFlex"}>
                   <div className={"formGroup"}>
-                    <Autocomplete
+                    {/* <Autocomplete
+                    
                       id="tags-outlined"
                       onChange={(e, value) => {
-                        changeTextData(value, "applies_to");
+                        changeTextData(value, "applicable_for");
                       }}
-                      value={form.applies_to || []}
-                      options={[]} // listData ||
-                      getOptionLabel={(option) => option}
-                      defaultValue={form?.applies_to || []}
+                      value={form.applicable_for || []}
+                      options={listData?.CATEGORIES} // listData ||
+                      getOptionLabel={(option) => option?.name}
+                      defaultValue={form?.applicable_for || []}
                       renderInput={(params) => (
                         <TextField
                           {...params}
                           variant="outlined"
                           label={"Applies to"}
-                          error={errorData?.applies_to}
+                          error={errorData?.applicable_for}
                           InputProps={{
                             ...params.InputProps,
                             endAdornment: (
                               <>
-                                {form?.applies_to ? (
+                                {form?.applicable_for ? (
                                   <Clear
                                     onClick={() =>
-                                      changeTextData(null, "applies_to")
+                                      changeTextData(null, "applicable_for")
                                     }
                                     style={{ cursor: "pointer" }}
                                   />
@@ -337,6 +338,26 @@ const ProductCreate = ({ location }) => {
                         />
                       )}
                       disableClearable
+                    /> */}
+                    <Autocomplete
+                      multiple
+                      id="tags-outlined"
+                      onChange={(e, value) => {
+                        changeTextData(value, "applicable_for");
+                      }}
+                      value={form.applicable_for || []}
+                      options={listData?.CATEGORIES || []}
+                      getOptionLabel={(option) => option.name}
+                      defaultValue={form.applicable_for || []}
+                      //  getOptionSelected={(option, value) => option.id === value.id}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          variant="outlined"
+                          label={"Applies to"}
+                          error={errorData?.applicable_for}
+                        />
+                      )}
                     />
                   </div>
                 </div>
@@ -441,15 +462,15 @@ const ProductCreate = ({ location }) => {
                   }}
                 /> */}
                 <CustomTextField
-                  isError={errorData?.daysExpiration}
-                  errorText={errorData?.daysExpiration}
+                  isError={errorData?.expire_day}
+                  errorText={errorData?.expire_day}
                   label={"Days until expiration"}
-                  value={form?.daysExpiration}
+                  value={form?.expire_day}
                   onTextChange={(text) => {
-                    changeTextData(text, "daysExpiration");
+                    changeTextData(text, "expire_day");
                   }}
                   onBlur={() => {
-                    onBlurHandler("daysExpiration");
+                    onBlurHandler("expire_day");
                   }}
                 />
                 {/* {unitSelected} */}
@@ -457,16 +478,16 @@ const ProductCreate = ({ location }) => {
 
               <div className={classNames("formGroup", styles.unitWrap)}>
                 <CustomSelectField
-                  isError={errorData?.gstSlab}
-                  errorText={errorData?.gstSlab}
-                  label={"Subcategory"}
-                  value={form?.gstSlab ?? subcategoryId}
+                  isError={errorData?.gst_slab}
+                  errorText={errorData?.gst_slab}
+                  label={"GST Slab"}
+                  value={form?.gst_slab ?? subcategoryId}
                   handleChange={(value) => {
-                    changeTextData(value, "gstSlab");
+                    changeTextData(value, "gst_slab");
                   }}
                 >
-                  <MenuItem value="5%">5%</MenuItem>
-                  <MenuItem value="18%">18%</MenuItem>
+                  <MenuItem value="5">5%</MenuItem>
+                  <MenuItem value="18">18%</MenuItem>
                 </CustomSelectField>
               </div>
             </div>

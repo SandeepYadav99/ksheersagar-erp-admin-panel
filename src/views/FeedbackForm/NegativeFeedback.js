@@ -207,6 +207,7 @@ const NegativeFeedback = () => {
                   // onBlurHandler("name_en");
                 }}
                 // icon={ic_person}
+                
               />
             </div>
           </div>
