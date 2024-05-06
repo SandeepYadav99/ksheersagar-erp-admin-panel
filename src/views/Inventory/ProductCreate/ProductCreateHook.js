@@ -32,14 +32,16 @@ const initialForm = {
   is_negative_allowed: false,
   is_batch_wise: false,
   is_first_in_first_out: false,
-  gstSlab: "",
-  daysExpiration: "",
+
+  gst_slab: "",
+  expire_day: "",
   price: "",
-  deadWeight:"",
-  capacity:"",
-  no_of_lanes:"",
-  applies_to:"",
-  selling_price:""
+  dead_weight: "",
+  max_capacity: "",
+  lanes: "",
+  applicable_for: "",
+
+  selling_price: "",
 };
 
 const useProductDetail = ({ handleToggleSidePannel }) => {
@@ -104,6 +106,7 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
             ...initialForm,
             ...dataItem,
             id: dataVal?.id,
+            applicable_for:dataVal?.applicableFor,
             is_active: dataVal?.status === Constants.GENERAL_STATUS.ACTIVE,
           });
         } else {
@@ -158,8 +161,8 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
     let required = [
-      "daysExpiration",
-      "gstSlab",
+      // "daysExpiration",
+      // "gst_slab",
       "name_en",
       "name_hi",
       "category_id",
@@ -195,25 +198,47 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
     setIsLoading(true);
     if (!isSubmitting) {
       setIsSubmitting(true);
+      const industryID =
+      Array.isArray(form.applicable_for) && form.applicable_for.length > 0
+        ? form.applicable_for.map((item) => item.id || item._id)
+        : [];
       const fd = new FormData();
       Object.keys(form).forEach((key) => {
-        if (["unit_ids"].indexOf(key) < 0) {
+        if (key === "gst_slab") {
+          // console.log({ key });
+          fd.append(key, form[key] ? form?.gst_slab : "");
+        } else if (key === "dead_weight") {
+          fd.append(key, form[key] ? form[key] : "");
+        } else if (key === "max_capacity") {
+          fd.append(key, form[key] ? form[key] : "");
+        } else if (key === "lanes") {
+          fd.append(key, form[key] ? form[key] : "");
+        } else if (key === "selling_price") {
+           fd.append(key, form[key] ? form[key] : "")
+          //  delete form[key];
+        } else if (key === "price") {
+          fd.append(key, form[key] ? form[key] : "")
+          // delete form[key];
+        }else if (key === "applicable_for") {
+           fd.append(key, JSON.stringify(industryID))
+          // delete form[key];
+        } else if (key === "unit_ids") {
+          if (["unit_ids"].indexOf(key) < 0) {
+            fd.append(key, form[key]);
+          }
+        } else {
           fd.append(key, form[key]);
         }
       });
       fd.append("unit_ids", JSON.stringify(form?.unit_ids));
 
       if (id) {
-        console.log("id", id);
-        console.log("fd", fd);
         serviceUpdateProduct(fd).then((res) => {
           if (!res.error) {
-            console.log("idrierei");
             setIsLoading(false);
 
             historyUtils.push("/product");
           } else {
-            console.log("res", res);
             setIsLoading(false);
 
             // if(res?.err)
@@ -224,14 +249,12 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
       } else {
         serviceCreateProduct(fd).then((res) => {
           if (!res.error) {
-            console.log("idrierei");
             setIsLoading(false);
 
             historyUtils.push("/product");
           } else {
             setIsLoading(false);
 
-            console.log("res", res);
             if (res?.message == "Code already exists") {
               const temp = JSON.parse(JSON.stringify(errorData));
               temp["code"] = true;
@@ -248,11 +271,11 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
   }, [form, isSubmitting, setIsSubmitting, id]);
 
   const handleSubmit = useCallback(async () => {
-    console.log("innnnnn");
     const errors = checkFormValidation();
     // console.log('dff',errors)
     if (Object.keys(errors).length > 0) {
       setErrorData(errors);
+      console.log({ errors });
       return true;
     }
     console.log("abnove");
@@ -282,7 +305,6 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
         fieldName === "min_qty" ||
         fieldName === "daysExpiration" ||
         fieldName === "price" ||
-       
         fieldName === "no_of_lanes"
       ) {
         if (!text || (isNum(text) && text.toString().length <= 30)) {
@@ -307,10 +329,14 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
           setMithaiBox(false);
         }
         t[fieldName] = text;
-      }else if(fieldName === "deadWeight"){
-      
-          t[fieldName] = text;
-      
+      }else if (fieldName === "applicable_for") {
+     
+        t[fieldName] = text?.filter((item, index, self) => {
+          return  index === self.findIndex((i) => i.id === item.id && i._id === item._id)
+          
+        });
+      } else if (fieldName === "deadWeight") {
+        t[fieldName] = text;
       } else {
         t[fieldName] = text;
       }
