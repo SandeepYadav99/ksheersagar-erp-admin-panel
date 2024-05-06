@@ -106,6 +106,7 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
             ...initialForm,
             ...dataItem,
             id: dataVal?.id,
+            applicable_for:dataVal?.applicableFor,
             is_active: dataVal?.status === Constants.GENERAL_STATUS.ACTIVE,
           });
         } else {

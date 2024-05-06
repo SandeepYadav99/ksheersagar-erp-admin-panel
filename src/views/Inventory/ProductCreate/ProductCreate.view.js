@@ -345,11 +345,11 @@ const ProductCreate = ({ location }) => {
                       onChange={(e, value) => {
                         changeTextData(value, "applicable_for");
                       }}
-                      value={form.applicable_for || []}
+                      value={form?.applicable_for || []}
                       options={listData?.CATEGORIES || []}
-                      getOptionLabel={(option) => option.name}
+                      getOptionLabel={(option) => option?.name || option?.name_en}
                       defaultValue={form.applicable_for || []}
-                      //  getOptionSelected={(option, value) => option.id === value.id}
+                         getOptionSelected={(option, value) => option?.id === value?.id}
                       renderInput={(params) => (
                         <TextField
                           {...params}
