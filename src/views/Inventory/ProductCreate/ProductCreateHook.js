@@ -198,8 +198,8 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
     if (!isSubmitting) {
       setIsSubmitting(true);
       const industryID =
-      Array.isArray(form.industry_id) && form.industry_id.length > 0
-        ? form.industry_id.map((item) => item.id || item._id)
+      Array.isArray(form.applicable_for) && form.applicable_for.length > 0
+        ? form.applicable_for.map((item) => item.id || item._id)
         : [];
       const fd = new FormData();
       Object.keys(form).forEach((key) => {
