@@ -213,14 +213,14 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
         } else if (key === "lanes") {
           fd.append(key, form[key] ? form[key] : "");
         } else if (key === "selling_price") {
-          // fd.append(key, form[key] ? form[key] : "")
-           delete form[key];
+           fd.append(key, form[key] ? form[key] : "")
+          //  delete form[key];
         } else if (key === "price") {
           fd.append(key, form[key] ? form[key] : "")
           // delete form[key];
         }else if (key === "applicable_for") {
-          // fd.append(key, JSON.stringify(industryID))
-          delete form[key];
+           fd.append(key, JSON.stringify(industryID))
+          // delete form[key];
         } else if (key === "unit_ids") {
           if (["unit_ids"].indexOf(key) < 0) {
             fd.append(key, form[key]);
