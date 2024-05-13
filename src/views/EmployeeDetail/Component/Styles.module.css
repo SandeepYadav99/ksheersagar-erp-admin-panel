@@ -10,8 +10,8 @@
 }
 .title {
   text-align: center !important;
-  margin-top: 18% !important;
-  font-size: 1rem !important;
+  margin-top: 15% !important;
+  font-size: 1.1rem !important;
 }
 .title1 {
   font-size: 1.1rem !important;
@@ -45,7 +45,7 @@
 }
 .subemployInfoContainer img {
   width: 150px !important;
-  margin: 20px auto !important;
+  margin: 10px auto !important;
 }
 
 .imageContainer {
@@ -67,7 +67,7 @@
     border-radius: 80px !important;
   }
   .subemployInfoContainer img {
-    width: 90px !important;
+    width: 100px !important;
   }
   .qr img{
   

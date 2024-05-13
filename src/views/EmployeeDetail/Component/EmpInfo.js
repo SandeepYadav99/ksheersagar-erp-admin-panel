@@ -53,13 +53,13 @@ const EmpInfo = () => {
           
           >
             <li style={{ marginBottom: "8px" }}>
-              Phone Number: {data?.contact}
+              <strong> Phone Number:</strong> {data?.contact}
             </li>
             <li style={{ marginBottom: "8px" }}>
-              Father's Name: {data?.father_name}
+            <strong>  Father's Name:</strong> {data?.father_name}
             </li>
             <li style={{ marginBottom: "8px" }}>
-              Location: {data?.location}
+            <strong>  Location:</strong> {data?.location}
             </li>
           </ul>
           <div className={styles.qr} >
