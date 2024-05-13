@@ -9,7 +9,7 @@ const EmpInfo = () => {
   const {empId}=useParams()
   // const location = useLocation();
   // const { empId } = location.state;
-console.log(empId, "Empid")
+
   useEffect(() => {
     serviceGetEmployCardDetails({ id: empId }).then((res) => {
       if (!res?.error) {
@@ -26,53 +26,43 @@ console.log(empId, "Empid")
         <div>
           <div
           className={styles.subemployInfoContainer}
-            style={{
-              top: "0px",
-              backgroundColor: " #032D55 ",
-              opacity: "1",
-              width: "100%",
-              height: "100.72px",
-              textAlign: "center",
-            }}
+           
           >
-            <img src={image} style={{ width: "150px", margin: "20px auto" }} />
+            <img src={image} style={{ }} />
           </div>
-          <div style={{ display: "flex", justifyContent: "center" }}>
+          <div className={styles.imageContainer} >
             <img
-              style={{
-                width: "100px",
-                borderRadius: "100px",
-                position: "absolute",
-                marginTop: "-50px",
-              }}
+            className={styles.imageProfile}
+           
               src={data?.image}
               alt="Profile Image"
             />
           </div>
-          <div style={{ textAlign: "center", marginTop: "15%" }}>
+          <div  className={styles.title}>
             <div>
-              <span style={{ fontSize: "1.1rem" }}>{data?.name_en}</span> <br />
-              <span style={{ fontSize: "1.1rem" }}>{data?.name_hi}</span>
+              <span >{data?.name_en}</span> <br />
+              <span >{data?.name_hi}</span>
               <br />
             </div>
-            <span style={{ fontSize: "1.2rem", marginTop: "10px" }}>
+            <span className={styles.title}>
               {data?.emp_code}
             </span>
           </div>
           <ul
-            style={{ listStyle: "none", fontSize: "1.4rem", color: "#161616" }}
+          className={styles.listStyle}
+          
           >
             <li style={{ marginBottom: "8px" }}>
-              Phone Number: {data?.contact}
+              <strong> Phone Number:</strong> {data?.contact}
             </li>
             <li style={{ marginBottom: "8px" }}>
-              Father's Name: {data?.father_name}
+            <strong>  Father's Name:</strong> {data?.father_name}
             </li>
             <li style={{ marginBottom: "8px" }}>
-              Location: {data?.location}
+            <strong>  Location:</strong> {data?.location}
             </li>
           </ul>
-          <div style={{ textAlign: "right" }}>
+          <div className={styles.qr} >
             <img src={data?.qr_code} />
           </div>
         </div>
