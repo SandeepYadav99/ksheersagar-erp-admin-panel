@@ -33,11 +33,9 @@ const EmployeeEdit = ({ location }) => {
     listData,
     changeTextData,
     onBlurHandler,
-    removeError,
     handleSubmit,
     filteredDepartments,
-    filteredSubDepartments,
-    filteredEmployees,
+   
     defaultImg,
     frontImg,
     backImg,
