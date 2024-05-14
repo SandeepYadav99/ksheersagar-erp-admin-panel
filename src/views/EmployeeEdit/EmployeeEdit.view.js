@@ -168,6 +168,24 @@ const EmployeeEdit = ({ location }) => {
           </div>
         </div>
         <div className={"formFlex"}>
+        <div className={"formGroup"}>
+            {" "}
+            <CustomTextField
+              // type="number"
+              isError={errorData?.external_emp_code}
+              errorText={errorData?.external_emp_code}
+              label={"External employee code*"}
+              value={form?.external_emp_code}
+              onTextChange={(text) => {
+                changeTextData(text, "external_emp_code");
+              }}
+              onBlur={() => {
+                onBlurHandler("external_emp_code");
+              }}
+            />
+          </div>
+        </div>
+        <div className={"formFlex"}>
           <div className={"formGroup"}>
             <CustomTextField
               type="number"
@@ -424,24 +442,7 @@ const EmployeeEdit = ({ location }) => {
             />
           </div>
         </div>
-        <div className={"formFlex"}>
-            <div className={"formGroup"}>
-            {" "}
-            <CustomTextField
-              // type="number"
-              isError={errorData?.external_emp_code}
-              errorText={errorData?.external_emp_code}
-              label={"External employee code*"}
-              value={form?.external_emp_code}
-              onTextChange={(text) => {
-                changeTextData(text, "external_emp_code");
-              }}
-              onBlur={() => {
-                onBlurHandler("external_emp_code");
-              }}
-            />
-          </div>
-            </div>
+       
         <div className={"formFlex"}>
           <div className={styles.adharBack}>
             <div className={styles.adharWrap}>
