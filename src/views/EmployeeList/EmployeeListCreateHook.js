@@ -74,7 +74,7 @@ function EmployeeListCreateHook({ location }) {
     DESIGNATIONS: [],
     LEVEL: [],
     LOCATIONS: [],
-    ROLES:[]
+    ROLES: [],
   });
   const [showPasswordCurrent, setShowPasswordCurrent] = useState(false);
  

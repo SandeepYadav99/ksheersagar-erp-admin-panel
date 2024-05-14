@@ -4,7 +4,6 @@ export default {
   EMPLOYEE_CREATE:'/employee/create',
   EMPLOYEE_DETAILS:'/employee/details/',
   EMPLOYEE_UPDATE:'/employee/update/',
-
 EMPLOYEE_INFORMATION:'/employee/details/',
 
   LOCATIONS: "/locations",
