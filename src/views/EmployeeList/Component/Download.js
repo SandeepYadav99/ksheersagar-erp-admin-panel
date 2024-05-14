@@ -55,6 +55,24 @@ const DownloadDialog = ({ isOpen, handleToggle, empId, data }) => {
     listData,
   } = useDownloadDialogHook({ isOpen, handleToggle, empId, data });
 
+  const getStartMonthFirstDay = () => {
+    if (form.date) {
+      const selectedYear = form.date.getFullYear();
+      const selectedMonth = form.date.getMonth();
+      return new Date(selectedYear, selectedMonth, 1);
+    }
+    return new Date(); 
+  };
+
+  const getStartMonthLastDay = () => {
+    if (form.date) {
+      const selectedYear = form.date.getFullYear();
+      const selectedMonth = form.date.getMonth();
+      return new Date(selectedYear, selectedMonth + 2, 1);
+    }
+    return new Date(); 
+  };
+  
   return (
     <div>
       <Dialog
@@ -89,7 +107,7 @@ const DownloadDialog = ({ isOpen, handleToggle, empId, data }) => {
                 <CustomDatePicker
                   clearable
                   label={"Select Month & Year"}
-                  // maxDate={new Date()}
+                   maxDate={new Date()}
                   onChange={(date) => {
                     changeTextData(date, "date");
                   }}
@@ -104,7 +122,9 @@ const DownloadDialog = ({ isOpen, handleToggle, empId, data }) => {
                 <CustomDatePicker
                   clearable
                   label={"Start Date"}
-                  // maxDate={new Date()}
+                  minDate={getStartMonthFirstDay()}
+                  maxDate={getStartMonthLastDay()}
+                   disabled={!form?.date ? true : false}
                   onChange={(date) => {
                     changeTextData(date, "startDate");
                   }}
@@ -119,13 +139,15 @@ const DownloadDialog = ({ isOpen, handleToggle, empId, data }) => {
                 <CustomDatePicker
                   clearable
                   label={"End Date"}
-                  // maxDate={new Date()}
+                  disabled={!form?.date ? true : false}
+                   maxDate={new Date()}
                   onChange={(date) => {
                     changeTextData(date, "endDate");
                   }}
                   format={"dd-MM-yyyy"}
                   value={form?.endDate}
                   isError={errorData?.endDate}
+                  errorText={errorData?.endDate}
                 />
               </div>
             </div>

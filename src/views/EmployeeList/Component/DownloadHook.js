@@ -61,13 +61,20 @@ const useDownloadDialogHook = ({ isOpen, handleToggle, empId, data }) => {
     (text, fieldName) => {
       let shouldRemoveError = true;
       const t = { ...form };
-      t[fieldName] = text;
+      if (fieldName === "date") {
+        t["startDate"]="";
+        t["endDate"]="";
+        t[fieldName]=text
+      } else {
+        t[fieldName] = text;
+      }
+   
       setForm(t);
       shouldRemoveError && removeError(fieldName);
     },
     [removeError, form, setForm]
   );
-  console.log({ form });
+ 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
     let required = ["location", "startDate", "endDate"];
@@ -81,6 +88,22 @@ const useDownloadDialogHook = ({ isOpen, handleToggle, empId, data }) => {
         delete errors[val];
       }
     });
+  
+    if(form?.startDate){
+      if (form.endDate && form?.startDate >= form.endDate) {
+       errors.endDate = true;
+       SnackbarUtils.error("Start date should not be greater  end date")
+      }else{
+        delete errors.endDate
+      }
+
+    }
+    // if(form?.endDate){
+    //   if ( form.startDate && form?.endDate >= form.startDate) {
+    //    errors.startDate = true
+    //   }
+
+    // }
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
         delete errors[key];
@@ -88,7 +111,7 @@ const useDownloadDialogHook = ({ isOpen, handleToggle, empId, data }) => {
     });
     return errors;
   }, [form, errorData]);
-  console.log(form, "Form");
+
   const submitToServer = useCallback(() => {
     if (!isSubmitting) {
       setIsSubmitting(true);

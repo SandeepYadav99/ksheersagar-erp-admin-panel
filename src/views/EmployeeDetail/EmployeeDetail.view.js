@@ -89,6 +89,18 @@ function EmployeeDetail() {
                   {data?.aadhar_no}
                 </div>
                 <div className={styles.key}>
+                  <span className={styles.value}>UAN No:</span>
+                  {data?.uan_no}
+                </div>
+                <div className={styles.key}>
+                  <span className={styles.value}>ESI No:</span>
+                  {data?.esi_no}
+                </div>
+                <div className={styles.key}>
+                  <span className={styles.value}>External employee code:</span>
+                  {data?.external_emp_code || "N/A"}
+                </div>
+                <div className={styles.key}>
                   <div className={styles.parentWrap}>
                     {data?.aadhaar_front && (
                       <div className={styles.wrapadhar}>

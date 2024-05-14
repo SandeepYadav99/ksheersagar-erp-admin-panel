@@ -55,6 +55,17 @@ const IsVehicleNo=(value)=>{
 function validateUrl(value) {
     return /^https?:\/\/[^\s/$.?#].[^\s]*$/i.test(value);
   }
+  function validateUAN(uan) {
+    const regex = /^\d{12}$/;
+    return regex.test(uan);
+  }
+
+  function validateESI(esiNumber) {
+    // const regex = /^[0-9]{2}-[0-9]{2}-[0-9]{6}-[0-9]{3}-[0-9]{4}$/;
+    const regex = /^\d{17}$/;
+    return regex.test(esiNumber);
+  }
+
 export {
     isUrl,
     isEmail,
@@ -68,5 +79,7 @@ export {
     isAccountNum,
     IsVehicleNo,
     validateUrl,
-    isNumDec
+    isNumDec,
+    validateUAN,
+    validateESI
 };

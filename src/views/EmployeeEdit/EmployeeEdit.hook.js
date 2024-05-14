@@ -10,6 +10,8 @@ import {
   IsIFSCCode,
   isNum,
   isSpace,
+  validateESI,
+  validateUAN,
 } from "../../libs/RegexUtils";
 import { useParams } from "react-router";
 import { serviceGetList } from "../../services/Common.service";
@@ -49,7 +51,8 @@ function EmployeeEditHook({ location }) {
     aadhaar_back: "",
     aadhaar_front: "",
     uan_no:"",
-    esi_no:""
+    esi_no:"",
+    external_emp_code:""
   };
   const [form, setForm] = useState({ ...initialForm });
   const [errorData, setErrorData] = useState({});
@@ -122,7 +125,7 @@ function EmployeeEditHook({ location }) {
       });
     });
   }, [id]);
-  LogUtils.log("formLLL", form, remotePath);
+console.log(form?.esi_no?.length)
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
     let required = [
@@ -131,13 +134,13 @@ function EmployeeEditHook({ location }) {
       "name_hi",
       "location_id",
       "pin",
-      "department_id",
+      // "department_id",
       "gender",
       "status",
       "father_name",
       "doj",
-      "uan_no",
-      "esi_no"
+      // "uan_no",
+      // "esi_no"
     ];
     required.forEach((val) => {
       if (
@@ -151,6 +154,13 @@ function EmployeeEditHook({ location }) {
     });
     if (form?.email && !isEmail(form?.email)) {
       errors["email"] = true;
+    }
+    if (form?.uan_no && !validateUAN(form?.uan_no)) {
+      errors["uan_no"] = "Min 12 digit required";
+    }
+    
+    if (form?.esi_no && !validateESI(form?.esi_no)) {
+      errors["esi_no"] = "Min 17 digit required";
     }
     if (
       form?.contact &&
