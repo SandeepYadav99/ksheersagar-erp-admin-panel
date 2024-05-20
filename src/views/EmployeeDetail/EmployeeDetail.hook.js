@@ -34,7 +34,7 @@ function useEmployeeDetails() {
   }, [id]);
 
   const handleEmpInfoPage = useCallback((data) => {
-    window.open(`${`http://localhost:3006/employe/information/${data?.id}`}`, '_blank');
+    window.open(`${`http://91.205.173.97:8587/employee/details/${data?.id}`}`, '_blank');
     
   }, []);
 
