@@ -34,11 +34,8 @@ function useEmployeeDetails() {
   }, [id]);
 
   const handleEmpInfoPage = useCallback((data) => {
-    // const newWindow = window.open('', '_blank');
-    // if (newWindow && data) {
-    //   ReactDOM.render(<EmpInfo data={data}/>, newWindow.document.body)
-    // } 
-      historyUtils.push(`/employe/information/${data?.id}`);
+    window.open(`${`http://localhost:3006/employe/information/${data?.id}`}`, '_blank');
+    
   }, []);
 
   return {

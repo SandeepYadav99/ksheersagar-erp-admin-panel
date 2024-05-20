@@ -18,6 +18,7 @@ import { Autocomplete } from "@material-ui/lab";
 import useDownloadDialogHook from "./DownloadHook";
 import CustomDatePicker from "../../../components/FormFields/DatePicker/CustomDatePicker";
 import CustomSelectField from "../../../components/FormFields/SelectField/SelectField.component";
+import SnackbarUtils from "../../../libs/SnackbarUtils";
 
 const useStyles = makeStyles((theme) => ({
   flex: {
@@ -61,7 +62,7 @@ const DownloadDialog = ({ isOpen, handleToggle, empId, data }) => {
       const selectedMonth = form.date.getMonth();
       return new Date(selectedYear, selectedMonth, 1);
     }
-    return new Date(); 
+    return new Date();
   };
 
   const getStartMonthLastDay = () => {
@@ -70,9 +71,9 @@ const DownloadDialog = ({ isOpen, handleToggle, empId, data }) => {
       const selectedMonth = form.date.getMonth();
       return new Date(selectedYear, selectedMonth + 2, 1);
     }
-    return new Date(); 
+    return new Date();
   };
-  
+
   return (
     <div>
       <Dialog
@@ -107,7 +108,7 @@ const DownloadDialog = ({ isOpen, handleToggle, empId, data }) => {
                 <CustomDatePicker
                   clearable
                   label={"Select Month & Year"}
-                   maxDate={new Date()}
+                  maxDate={new Date()}
                   onChange={(date) => {
                     changeTextData(date, "date");
                   }}
@@ -123,8 +124,8 @@ const DownloadDialog = ({ isOpen, handleToggle, empId, data }) => {
                   clearable
                   label={"Start Date"}
                   minDate={getStartMonthFirstDay()}
-                  maxDate={getStartMonthLastDay()}
-                   disabled={!form?.date ? true : false}
+                  maxDate={new Date()}
+                  disabled={!form?.date ? true : false}
                   onChange={(date) => {
                     changeTextData(date, "startDate");
                   }}
@@ -140,9 +141,15 @@ const DownloadDialog = ({ isOpen, handleToggle, empId, data }) => {
                   clearable
                   label={"End Date"}
                   disabled={!form?.date ? true : false}
-                   maxDate={new Date()}
+                  maxDate={new Date()}
                   onChange={(date) => {
-                    changeTextData(date, "endDate");
+                    if (date < form?.startDate) {
+                      SnackbarUtils.error(
+                        "Start date should not be greater  end date"
+                      );
+                    } else {
+                      changeTextData(date, "endDate");
+                    }
                   }}
                   format={"dd-MM-yyyy"}
                   value={form?.endDate}

@@ -18,6 +18,7 @@ const CustomDatePicker = ({
   value,
   label,
   clearable,
+  errorText,
   ...rest
 }) => {
   const handleOnChange = (e, d) => {
@@ -56,6 +57,8 @@ const CustomDatePicker = ({
           //     'aria-label': 'change time',
           // }}
         />
+        {errorText ? <p style={{textAlign:"right", marginTop:"-1px", color:"#FF0000"}}>{errorText}</p> :""}
+        
       </MuiPickersUtilsProvider>
     );
   }

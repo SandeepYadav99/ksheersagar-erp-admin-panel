@@ -180,7 +180,7 @@ const EmployeeListCreate = ({ location }) => {
               // type="number"
               isError={errorData?.external_emp_code}
               errorText={errorData?.external_emp_code}
-              label={"External employee code*"}
+              label={"External employee code"}
               value={form?.external_emp_code}
               onTextChange={(text) => {
                 changeTextData(text, "external_emp_code");
@@ -345,7 +345,7 @@ const EmployeeListCreate = ({ location }) => {
             <CustomSelectField
               //  isError={errorData?.department_id}
               // errorText={errorData?.department_id}
-              label={"Department*"}
+              label={"Department"}
               value={form?.department_id}
               handleChange={(value) => {
                 changeTextData(value, "department_id");

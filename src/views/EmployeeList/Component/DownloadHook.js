@@ -62,19 +62,19 @@ const useDownloadDialogHook = ({ isOpen, handleToggle, empId, data }) => {
       let shouldRemoveError = true;
       const t = { ...form };
       if (fieldName === "date") {
-        t["startDate"]="";
-        t["endDate"]="";
-        t[fieldName]=text
-      } else {
+        t["startDate"] = "";
+        t["endDate"] = "";
+        t[fieldName] = text;
+      }else {
         t[fieldName] = text;
       }
-   
+
       setForm(t);
       shouldRemoveError && removeError(fieldName);
     },
     [removeError, form, setForm]
   );
- 
+
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
     let required = ["location", "startDate", "endDate"];
@@ -88,16 +88,13 @@ const useDownloadDialogHook = ({ isOpen, handleToggle, empId, data }) => {
         delete errors[val];
       }
     });
-  
-    if(form?.startDate){
-      if (form.endDate && form?.startDate >= form.endDate) {
-       errors.endDate = true;
-       SnackbarUtils.error("Start date should not be greater  end date")
-      }else{
-        delete errors.endDate
-      }
 
-    }
+    // if (form?.startDate) {
+    //   if (form.endDate && form?.startDate >= form.endDate) {
+    //     errors.endDate = "Start date should not be greater  end date";
+      
+    //   } 
+    // }
     // if(form?.endDate){
     //   if ( form.startDate && form?.endDate >= form.startDate) {
     //    errors.startDate = true
@@ -120,9 +117,13 @@ const useDownloadDialogHook = ({ isOpen, handleToggle, empId, data }) => {
       const date = form?.date;
       const month = date ? format(date, "MM") : "";
       const year = date ? format(date, "yyyy") : "";
-      const startDateFormatted = form?.startDate ? format(form.startDate, 'yyyy-MM-dd') : ''; 
-      const endDateFormatted = form?.endDate ? format(form.endDate, 'yyyy-MM-dd') : ''; 
-  
+      const startDateFormatted = form?.startDate
+        ? format(form.startDate, "yyyy-MM-dd")
+        : "";
+      const endDateFormatted = form?.endDate
+        ? format(form.endDate, "yyyy-MM-dd")
+        : "";
+
       serviceGetEmployAttendesReport({
         month: month,
         year: year,
@@ -134,7 +135,6 @@ const useDownloadDialogHook = ({ isOpen, handleToggle, empId, data }) => {
           const data = res?.data;
           window.open(data, "_blank");
           handleToggle();
-          
         } else {
           SnackbarUtils.error(res?.message);
         }

@@ -44,6 +44,8 @@ function EmployeeDetail() {
             <img src={data?.qr_code} />
           </div>
           <div className={styles.btnCont}>
+            {/* <a href={`${`http://91.205.173.97:8587/employe/information/${data?.id}`}`} target="_blank" rel="noreferrer"> */}
+
             <ButtonBase
               // disabled={isSubmitting}
               type={"button"}
@@ -52,6 +54,7 @@ function EmployeeDetail() {
             >
               DOWNLOAD ID CARD
             </ButtonBase>
+            {/* </a> */}
           </div>
         </div>
         <div className={styles.plainPaperRight}>
@@ -105,7 +108,7 @@ function EmployeeDetail() {
                     {data?.aadhaar_front && (
                       <div className={styles.wrapadhar}>
                         <span className={styles.value}>Aadhar Card Front</span>
-                        <a href={data?.aadhaar_front} target="_blank">
+                        <a href={data?.aadhaar_front} target="_blank" rel="noreferrer">
                           <img
                             src={data?.aadhaar_front}
                             className={styles.aadharView}
@@ -116,7 +119,7 @@ function EmployeeDetail() {
                     {data?.aadhaar_back && (
                       <div className={styles.wrapadhar}>
                         <span className={styles.value}>Aadhar Card Back</span>
-                        <a href={data?.aadhaar_back} target="_blank">
+                        <a href={data?.aadhaar_back} target="_blank" rel="noreferrer">
                           <img
                             src={data?.aadhaar_back}
                             className={styles.aadharView}

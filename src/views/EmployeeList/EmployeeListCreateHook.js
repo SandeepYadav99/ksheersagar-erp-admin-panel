@@ -62,6 +62,7 @@ function EmployeeListCreateHook({ location }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [remotePath, setRemotePath] = useState("");
   const codeDebouncer = useDebounce(form?.emp_code, 500);
+  const codeDebouncerExternalCode = useDebounce(form?.external_emp_code, 600);
   const candidateId = location?.state?.empId;
   const empFlag = location?.state?.isOnboard;
   const [listData, setListData] = useState({
@@ -201,6 +202,11 @@ function EmployeeListCreateHook({ location }) {
           t[fieldName] = text.toUpperCase();
         }
         shouldRemoveError = false;
+      } else if (fieldName === "external_emp_code") {
+        if (!text || (!isSpace(text) && isAlphaNumChars(text))) {
+          t[fieldName] = text.toUpperCase();
+        }
+        shouldRemoveError = false;
       } else if (fieldName === "is_address_same") {
         if (text) {
           t.current_address = t?.permanent_address;
@@ -262,13 +268,37 @@ function EmployeeListCreateHook({ location }) {
       checkCodeValidation();
     }
   }, [codeDebouncer]);
+  const checkCodeValidationEmpoyCode = useCallback(() => {
+    if (form?.external_emp_code) {
+      serviceCheckEmployeeExists({
+        external_emp_code: form?.external_emp_code,
+      }).then((res) => {
+        if (!res.error) {
+          const errors = JSON.parse(JSON.stringify(errorData));
+          if (res.data.is_exists) {
+            errors["external_emp_code"] = "External Employee Code Exists";
+            setErrorData(errors);
+          } else {
+            delete errors.external_emp_code;
+            setErrorData(errors);
+          }
+        }
+      });
+    }
+  }, [errorData, setErrorData, form.external_emp_code, id]);
+
+  useEffect(() => {
+    if (codeDebouncerExternalCode) {
+      checkCodeValidationEmpoyCode();
+    }
+  }, [codeDebouncerExternalCode]);
   const onBlurHandler = useCallback(
     (type) => {
       if (form?.[type]) {
         changeTextData(form?.[type].trim(), type);
       }
     },
-    [changeTextData, checkCodeValidation]
+    [changeTextData, checkCodeValidation, checkCodeValidationEmpoyCode]
   );
   const submitToServer = useCallback(() => {
     if (!isSubmitting) {
