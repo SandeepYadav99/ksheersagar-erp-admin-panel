@@ -63,7 +63,7 @@ function EmployeeEditHook({ location }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [remotePath, setRemotePath] = useState("");
   const codeDebouncer = useDebounce(form?.emp_code, 500);
-  const codeDebouncerExternalCode = useDebounce(form?.external_emp_code, 600);
+  const codeDebouncerExternalCode = useDebounce(form?.external_emp_code, 500);
   const empFlag = location?.state?.isOnboard;
   const [listData, setListData] = useState({
     LOCATION_DEPARTMENTS: [],
@@ -140,6 +140,7 @@ console.log(form?.esi_no?.length)
       "status",
       "father_name",
       "doj",
+    
       // "uan_no",
       // "esi_no"
     ];
@@ -153,6 +154,7 @@ console.log(form?.esi_no?.length)
         delete errors[val];
       }
     });
+   
     if (form?.email && !isEmail(form?.email)) {
       errors["email"] = true;
     }
@@ -272,12 +274,13 @@ console.log(form?.esi_no?.length)
   const checkCodeValidationEmpoyCode = useCallback(() => {
     if (form?.external_emp_code) {
       serviceCheckEmployeeExists({
+        id: id ? id : null,
         external_emp_code: form?.external_emp_code,
       }).then((res) => {
         if (!res.error) {
           const errors = JSON.parse(JSON.stringify(errorData));
           if (res.data.is_exists) {
-            errors["external_emp_code"] = "External Employee Code Exists";
+            errors.external_emp_code= "External Employee Code Exists";
             setErrorData(errors);
           } else {
             delete errors.external_emp_code;
@@ -293,11 +296,12 @@ console.log(form?.esi_no?.length)
       checkCodeValidationEmpoyCode();
     }
   }, [codeDebouncerExternalCode]);
+
   const onBlurHandler = useCallback(
     (type) => {
-      if (form?.[type]) {
-        changeTextData(form?.[type].trim(), type);
-      }
+      // if (form?.[type]) {
+      //   changeTextData(form?.[type].trim(), type);
+      // }
     },
     [changeTextData, checkCodeValidation, checkCodeValidationEmpoyCode]
   );
@@ -324,18 +328,18 @@ console.log(form?.esi_no?.length)
         setIsSubmitting(false);
       });
     }
-  }, [form, isSubmitting, setIsSubmitting]);
+  }, [form, isSubmitting, setIsSubmitting, id]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
-    LogUtils.log("errors==>", errors);
+   
     if (Object.keys(errors)?.length > 0) {
       setErrorData(errors);
 
-      return true;
+       return true;
     }
 
-    submitToServer();
+      await submitToServer();
   }, [checkFormValidation, setErrorData, form, submitToServer]);
 
   const filteredDepartments = useMemo(() => {

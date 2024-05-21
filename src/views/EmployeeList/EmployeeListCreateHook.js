@@ -294,9 +294,9 @@ function EmployeeListCreateHook({ location }) {
   }, [codeDebouncerExternalCode]);
   const onBlurHandler = useCallback(
     (type) => {
-      if (form?.[type]) {
-        changeTextData(form?.[type].trim(), type);
-      }
+      // if (form?.[type]) {
+      //   changeTextData(form?.[type].trim(), type);
+      // }
     },
     [changeTextData, checkCodeValidation, checkCodeValidationEmpoyCode]
   );
