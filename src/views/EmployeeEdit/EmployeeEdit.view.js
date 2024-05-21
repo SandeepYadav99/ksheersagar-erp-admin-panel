@@ -206,7 +206,7 @@ const EmployeeEdit = ({ location }) => {
             <CustomSelectField
               isError={errorData?.gender}
               errorText={errorData?.gender}
-              label={"Gender"}
+              label={"Gender*"}
               value={form?.gender}
               handleChange={(value) => {
                 changeTextData(value, "gender");
@@ -358,7 +358,7 @@ const EmployeeEdit = ({ location }) => {
             <CustomSelectField
               isError={errorData?.role_id}
               errorText={errorData?.role_id}
-              label={"Role"}
+              label={"Role*"}
               value={form?.role_id}
               handleChange={(value) => {
                 changeTextData(value, "role_id");
