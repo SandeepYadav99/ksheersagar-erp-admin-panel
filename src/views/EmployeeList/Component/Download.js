@@ -145,7 +145,7 @@ const DownloadDialog = ({ isOpen, handleToggle, empId, data }) => {
                   onChange={(date) => {
                     if (date < form?.startDate) {
                       SnackbarUtils.error(
-                        "Start date should not be greater  end date"
+                        "Start date should not be greater than end date"
                       );
                     } else {
                       changeTextData(date, "endDate");
@@ -181,7 +181,7 @@ const DownloadDialog = ({ isOpen, handleToggle, empId, data }) => {
           <div className={styles.printFlex}>
             <ButtonBase
               onClick={handleSubmit}
-              disabled={isSubmitting}
+              disabled={(form?.date && form?.endDate && form?.startDate && form?.location) ? false : true}
               className={
                 form?.date && form?.endDate && form?.startDate && form?.location
                   ? "createBtnreset"

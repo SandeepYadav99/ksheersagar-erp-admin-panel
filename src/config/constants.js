@@ -83,6 +83,7 @@ export default {
     RESIGNED:'error',
     EXPIRED:'success',
     REJECTED:'error',
+    DELETED:'error',
     // PENDING:'pending',
     SOURCING:'error',
     NOSOURCING:'nosourcing',
