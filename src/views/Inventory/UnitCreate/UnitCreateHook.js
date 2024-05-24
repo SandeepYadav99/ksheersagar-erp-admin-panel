@@ -1,9 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { isAlphaNumChars } from "../../../libs/RegexUtils";
 import SnackbarUtils from "../../../libs/SnackbarUtils";
-import { useParams } from "react-router";
-import Constants from "../../../config/constants";
-import RouteName from "../../../routes/Route.name";
+
 import {
   serviceCreateUnit,
   serviceGetUnitDetails,
@@ -46,7 +44,7 @@ const useUnitDetail = ({ handleToggleSidePannel, isSidePanel, empId }) => {
     }
   }, [empId]);
 
-  console.log("editData", form);
+ 
   useEffect(() => {
     if (!isSidePanel) {
       handleReset();
@@ -86,6 +84,7 @@ const useUnitDetail = ({ handleToggleSidePannel, isSidePanel, empId }) => {
           handleToggleSidePannel();
           window.location.reload();
         } else {
+        
           SnackbarUtils.error(res.message);
         }
         setIsSubmitting(false);

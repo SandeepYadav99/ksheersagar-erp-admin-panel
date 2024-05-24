@@ -12,6 +12,7 @@ import RouteName from "../../../routes/Route.name";
 import constants from "../../../config/constants";
 import { actionDeleteRoles } from "../../../actions/UserRoles.action";
 import { useDispatch } from "react-redux";
+import { isAlphaNumeric } from "../../../libs/RegexUtils";
 
 const initialForm = {
   role: "",
@@ -55,18 +56,16 @@ const useUserRolesCreateHook = () => {
     });
   }, [id]);
 
-
-  console.log(permission, "int")
+  console.log(permission, "int");
   const permisionChangeHandler = useCallback(
     (index, data) => {
       const t = [...permission];
-      console.log(data,"t")
+      console.log(data, "t");
       t[index] = { ...t[index], ...data };
-      
+
       setPermissions(t);
     },
-    [permission,setPermissions]
-
+    [permission, setPermissions]
   );
 
   const checkFormValidation = useCallback(() => {
@@ -88,14 +87,13 @@ const useUserRolesCreateHook = () => {
     });
     return errors;
   }, [form, errorData]);
- 
-  
+
   const submitToServer = useCallback(async () => {
     setIsLoading(true);
     if (!isSubmitting) {
       setIsSubmitting(true);
     }
-  console.log(permission, "p")
+    console.log(permission, "p");
     const fd = {
       name: form?.role,
       description: form?.role_description,
@@ -121,7 +119,7 @@ const useUserRolesCreateHook = () => {
       }
       setIsSubmitting(false);
     });
-  }, [form, isSubmitting, setIsSubmitting, id, permission,setPermissions]);
+  }, [form, isSubmitting, setIsSubmitting, id, permission, setPermissions]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
@@ -131,8 +129,15 @@ const useUserRolesCreateHook = () => {
       return true;
     }
 
-   await submitToServer();
-  }, [checkFormValidation, setErrorData, form, errorData, permission,setPermissions]);
+    await submitToServer();
+  }, [
+    checkFormValidation,
+    setErrorData,
+    form,
+    errorData,
+    permission,
+    setPermissions,
+  ]);
 
   const removeError = useCallback(
     (title) => {
@@ -152,6 +157,10 @@ const useUserRolesCreateHook = () => {
         t[fieldName] = text?.trimStart();
       } else if (fieldName === "role_description") {
         t[fieldName] = text?.trimStart();
+      } else if (fieldName === "role") {
+        if (isAlphaNumeric(text)) {
+          t[fieldName] = text?.trimStart();
+        }
       } else {
         t[fieldName] = text;
       }

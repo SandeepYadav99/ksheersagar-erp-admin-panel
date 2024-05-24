@@ -98,12 +98,12 @@ const EmployeeList = ({}) => {
   const renderContact = useCallback((obj) => {
     return (
       <div>
-        {obj?.contact && (
+        {obj?.contact ?  (
           <div>
             <strong>{obj?.contact} </strong>
           </div>
-        )}
-        {obj?.email && <div>{obj?.email}</div>}
+        ) : "N/A"}
+        {obj?.email ? <div>{obj?.email}</div> : ""}
       </div>
     );
   }, []);
@@ -123,7 +123,7 @@ const EmployeeList = ({}) => {
       {
         key: "name",
         label: "EMPLOYEE INFO",
-        sortable: true,
+        sortable: false,
         render: (value, all) => <div>{renderFirstCell(all)}</div>,
       },
       {
@@ -159,7 +159,7 @@ const EmployeeList = ({}) => {
         style: { width: "12%" },
         render: (temp, all) => (
           <div className={styles.captialize}>
-            {all?.department?.name}/{all?.role?.name}
+            {all?.department?.name || "N/A"}{ all?.role?.name && `/${all?.role?.name}`}
           </div>
         ),
       },
@@ -167,7 +167,7 @@ const EmployeeList = ({}) => {
       {
         key: "status",
         label: "Status",
-        sortable: true,
+        sortable: false,
         render: (temp, all) => <div>{renderStatus(all.status)}</div>,
       },
       {

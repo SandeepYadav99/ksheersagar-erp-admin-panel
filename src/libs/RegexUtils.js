@@ -52,6 +52,11 @@ const IsIFSCCode=(value)=>{
 const IsVehicleNo=(value)=>{
     return /^[A-Za-z]{2}.+\d{4}$/.test(value)
 }
+const isAlphaNumeric = (text) => {
+    const alphaNumericRegex = /^[a-zA-Z0-9]*$/;
+    return alphaNumericRegex.test(text);
+  };
+ 
 function validateUrl(value) {
     return /^https?:\/\/[^\s/$.?#].[^\s]*$/i.test(value);
   }
@@ -81,5 +86,6 @@ export {
     validateUrl,
     isNumDec,
     validateUAN,
-    validateESI
+    validateESI,
+    isAlphaNumeric
 };

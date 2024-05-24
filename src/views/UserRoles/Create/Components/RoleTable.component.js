@@ -18,7 +18,7 @@ const RoleTableComponent = ({
   permisionChangeHandler,
 }) => {
   const handleCheckboxChange = useCallback((event, permissionType, index) => {
-  
+
     permisionChangeHandler(index, { [permissionType]: event });
 
   },[permisionChangeHandler, permissions]);
@@ -113,6 +113,7 @@ const RoleTableComponent = ({
                   <Checkbox
                     color={"primary"}
                     value={permission?.delete}
+                    checked={permission?.delete}
                     onChange={(event) =>
                       handleCheckboxChange(!permission?.delete, `delete`, index)
                     }

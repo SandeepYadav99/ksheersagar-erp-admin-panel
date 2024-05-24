@@ -156,28 +156,28 @@ const useUserRoleListHook = ({}) => {
 
   const configFilter = useMemo(() => {
     return [
-      {
-        label: "Location",
-        name: "location_id",
-        type: "selectObject",
-        custom: { extract: { id: "id", title: "name" } },
-        fields: listData?.LOCATIONS,
-      },
+      // {
+      //   label: "Location",
+      //   name: "location_id",
+      //   type: "selectObject",
+      //   custom: { extract: { id: "id", title: "name" } },
+      //   fields: listData?.LOCATIONS,
+      // },
 
-      {
-        label: "Department",
-        name: "department_id",
-        type: "selectObject",
-        custom: { extract: { id: "id", title: "name" } },
-        fields: listData?.DEPARTMENTS,
-      },
+      // {
+      //   label: "Department",
+      //   name: "department_id",
+      //   type: "selectObject",
+      //   custom: { extract: { id: "id", title: "name" } },
+      //   fields: listData?.DEPARTMENTS,
+      // },
       {
         label: "Created Date",
         options: { maxDate: new Date() },
         name: "createdAt",
         type: "date",
       },
-      // {label: 'Status', name: 'status', type: 'select', fields: ['INACTIVE', 'ACTIVE']},
+       {label: 'Status', name: 'status', type: 'select', fields: ['INACTIVE', 'ACTIVE']},
     ];
   }, [listData, role]);
 

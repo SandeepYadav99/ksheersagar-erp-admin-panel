@@ -63,9 +63,15 @@ const UnitList = ({}) => {
     return [
       {
         key: "name",
-        label: "Unit Name",
-        sortable: true,
+        label: "Unit display name",
+        sortable: false,
         render: (value, all) => <div>{renderFirstCell(all)}</div>,
+      },
+      {
+        key: "unit_name",
+        label: "Unit name",
+        sortable: false,
+        render: (value, all) => <div>{all?.full_name || "N/A"}</div>,
       },
       {
         key: "general",
@@ -77,7 +83,7 @@ const UnitList = ({}) => {
       {
         key: "status",
         label: "Status",
-        sortable: true,
+        sortable: false,
         render: (temp, all) => <div>{renderStatus(all.status)}</div>,
       },
       {

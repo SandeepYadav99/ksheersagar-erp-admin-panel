@@ -77,7 +77,7 @@ function EmployeeDetail() {
                 </div>
                 <div className={styles.key}>
                   <span className={styles.value}>Phone Number:</span>
-                  {data?.contact}
+                  {data?.contact || "N/A"}
                 </div>
                 <div className={styles.key}>
                   <span className={styles.value}>Father's Name:</span>
@@ -85,19 +85,19 @@ function EmployeeDetail() {
                 </div>
                 <div className={styles.key}>
                   <span className={styles.value}>Email ID:</span>
-                  {data?.email}
+                  {data?.email || "N/A"}
                 </div>
                 <div className={styles.key}>
                   <span className={styles.value}>Aadhar No:</span>
-                  {data?.aadhar_no}
+                  {data?.aadhar_no || "N/A"}
                 </div>
                 <div className={styles.key}>
                   <span className={styles.value}>UAN No:</span>
-                  {data?.uan_no}
+                  {data?.uan_no || "N/A"}
                 </div>
                 <div className={styles.key}>
                   <span className={styles.value}>ESI No:</span>
-                  {data?.esi_no}
+                  {data?.esi_no || "N/A"}
                 </div>
                 <div className={styles.key}>
                   <span className={styles.value}>External employee code:</span>
@@ -137,21 +137,21 @@ function EmployeeDetail() {
                     <div className={styles.info}>
                       <div className={styles.key}>
                         <span className={styles.value}>Role:</span>{" "}
-                        {data?.role?.name}
+                        {data?.role?.name || "N/A"}
                       </div>
                       <div className={styles.key}>
                         <span className={styles.value}>D.O.J:</span>
-                        {data?.dojText}
+                        {data?.dojText || "N/A"}
                       </div>
                       <div className={styles.key}>
                         <span className={styles.value}>Permanent Address:</span>
-                        {data?.permanent_address}
+                        {data?.permanent_address || "N/A"}
                       </div>
                       <div className={styles.key}>
                         <span className={styles.value}>
                           Correspondence Address:
                         </span>
-                        {data?.current_address}
+                        {data?.current_address || "N/A"}
                       </div>
                       <div className={styles.key}>
                         <span className={styles.value}>Status:</span>

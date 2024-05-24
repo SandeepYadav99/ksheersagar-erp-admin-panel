@@ -205,7 +205,7 @@ const useEmployeeList = ({}) => {
         name: "createdAt",
         type: "date",
       },
-      // {label: 'Status', name: 'status', type: 'select', fields: ['INACTIVE', 'ACTIVE']},
+       {label: 'Status', name: 'status', type: 'select', fields: ['INACTIVE', 'ACTIVE','SUSPENDED', 'TERMINATED','DELETED']},
     ];
   }, [listData, role]);
 

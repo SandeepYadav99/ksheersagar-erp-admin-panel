@@ -95,23 +95,24 @@ const UserRolesCreate = () => {
         <br />
         <br />
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <div className={"formFlex"}>
-          <div className={"formGroup"}>
-            <CustomSwitch
-              value={form?.is_active}
-              handleChange={() => {
-                changeTextData(!form?.is_active, "is_active");
-              }}
-              label={`Active`}
-            />
+          <div className={"formFlex"}>
+            <div className={"formGroup"}>
+              <CustomSwitch
+                value={form?.is_active}
+                handleChange={() => {
+                  changeTextData(!form?.is_active, "is_active");
+                }}
+                label={form?.is_active ? `Active` : "Inactive"}
+              />
+            </div>
           </div>
-        </div>
           <Button
             variant={"contained"}
             color={"primary"}
             onClick={handleSubmit}
           >
-            Submit
+            {id ? "Update" : " Submit"}
+           
           </Button>
         </div>
       </div>

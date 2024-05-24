@@ -51,7 +51,7 @@ const UserRoleList = ({}) => {
       return (
         <div className={styles.firstCellFlex}>
           <div className={classNames(styles.firstCellInfo, "openSans")}>
-            <span className={styles.productName}>{obj?.code}</span> <br />
+            <span className={styles.productName}>{obj?.name || "N/A"}</span> <br />
           </div>
         </div>
       );
@@ -64,7 +64,7 @@ const UserRoleList = ({}) => {
       {
         key: "role",
         label: "Role",
-        sortable: true,
+        sortable: false,
         render: (value, all) => <div>{renderFirstCell(all)}</div>,
       },
       {
@@ -94,7 +94,7 @@ const UserRoleList = ({}) => {
       {
         key: "status",
         label: "Status",
-        sortable: true,
+        sortable: false,
         render: (temp, all) => <div>{renderStatus(all.status)}</div>,
       },
       {
@@ -150,7 +150,7 @@ const UserRoleList = ({}) => {
       <PageBox>
         <div className={styles.headerContainer}>
           <div>
-            <span className={styles.title}>Location List</span>
+            <span className={styles.title}>Roles list</span>
             <div className={styles.newLine} />
           </div>
           <div>
