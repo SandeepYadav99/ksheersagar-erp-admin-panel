@@ -15,10 +15,13 @@ export async function serviceDeleteRoles(params) {
 export async function serviceGetRoles(params) {
     return await postRequest('roles', params);
 }
+export async function serviceRolesCheckIsExist(params) {
+    return await postRequest('roles/check', params);
+}
 
 
 export async function serviceRolesPermissions(params) {
-    return await postRequest('roles/permissions', params); //roles/detail
+    return await postRequest('roles/permissions', params); ///roles/check
 }
 
 export async function serviceRolesDetails(params) {

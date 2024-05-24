@@ -113,13 +113,16 @@ const useLocationDetail = ({ isSidePanel, setSidePanel }) => {
   }, [mapAddress]);
 
   const checkForSalaryInfo = (data, fieldName, errorArr) => {
+   
     if (data) {
-      if (!id) return;
+      // if (!id) return;
       let filteredForm = { id: id ? id : "" };
       filteredForm[fieldName] = data;
+     
       let req = serviceLocationCheck({
         ...filteredForm,
       });
+    
       req.then((res) => {
         if (!res.error) {
           const errors = JSON.parse(JSON.stringify(errorArr));
@@ -135,7 +138,7 @@ const useLocationDetail = ({ isSidePanel, setSidePanel }) => {
     }
   };
   const checkSalaryInfoDebouncer = useMemo(() => {
-    console.log("DEBOUNCE");
+      
     return debounce((e, fieldName, errorArr) => {
       checkForSalaryInfo(e, fieldName, errorArr);
     }, 1000);
@@ -284,7 +287,7 @@ const useLocationDetail = ({ isSidePanel, setSidePanel }) => {
         if (!text || (isAlpha(text) && text.toString().length <= 30)) {
           t[fieldName] = text;
         }
-      } else if (fieldName === "code") {
+      } else if (fieldName === "codee") {
         if (!text || (!isSpace(text) && isAlphaNumChars(text))) {
           t[fieldName] = text.toUpperCase();
         }
@@ -296,13 +299,9 @@ const useLocationDetail = ({ isSidePanel, setSidePanel }) => {
       } else {
         t[fieldName] = text;
       }
-      if (["code", "name_en", "name_hi", "address"]) {
-        checkSalaryInfoDebouncer(
-          fieldName === "code" ? text.toUpperCase() : text,
-          fieldName,
-          errorData
-        );
-      }
+     if (["code", "name_en", "name_hi", "address"].includes(fieldName)) {
+      checkSalaryInfoDebouncer(fieldName === "code" ? text.toUpperCase() : text, fieldName, errorData);
+    }
 
       setForm(t);
       shouldRemoveError && removeError(fieldName);

@@ -64,7 +64,7 @@ const LocationList = ({}) => {
       {
         key: "location",
         label: "Location",
-        sortable: true,
+        sortable: false,
         render: (value, all) => <div>{renderFirstCell(all)}</div>,
       },
       {
@@ -94,7 +94,7 @@ const LocationList = ({}) => {
       {
         key: "status",
         label: "Status",
-        sortable: true,
+        sortable: false,
         render: (temp, all) => <div>{renderStatus(all.status)}</div>,
       },
       {

@@ -1,6 +1,7 @@
 import React, { useCallback, useState, useEffect } from "react";
 import {
   serviceCreateRoles,
+  serviceRolesCheckIsExist,
   serviceRolesDetails,
   serviceRolesPermissions,
   serviceUpdateRoles,
@@ -13,7 +14,8 @@ import constants from "../../../config/constants";
 import { actionDeleteRoles } from "../../../actions/UserRoles.action";
 import { useDispatch } from "react-redux";
 import { isAlphaNumeric } from "../../../libs/RegexUtils";
-
+import { useMemo } from "react";
+import debounce from "lodash.debounce";
 const initialForm = {
   role: "",
   role_description: "",
@@ -93,7 +95,7 @@ const useUserRolesCreateHook = () => {
     if (!isSubmitting) {
       setIsSubmitting(true);
     }
-    console.log(permission, "p");
+  
     const fd = {
       name: form?.role,
       description: form?.role_description,
@@ -148,6 +150,38 @@ const useUserRolesCreateHook = () => {
     [setErrorData, errorData]
   );
 
+  const checkForSalaryInfo = (data, fieldName, errorArr) => {
+   
+    if (data) {
+      // if (!id) return;
+      let filteredForm = { id: id ? id : "" };
+      filteredForm[fieldName] = data;
+     
+      let req = serviceRolesCheckIsExist({
+       id:id ? id : "",
+       name: data
+      });
+    
+      req.then((res) => {
+        if (!res.error) {
+          const errors = JSON.parse(JSON.stringify(errorArr));
+          if (res.data.is_exists) {
+            errors[fieldName] = `Display Name ${data} Exist`;
+            setErrorData(errors);
+          } else {
+            delete errors[fieldName];
+            setErrorData(errors);
+          }
+        }
+      });
+    }
+  };
+  const checkSalaryInfoDebouncer = useMemo(() => {
+      
+    return debounce((e, fieldName, errorArr) => {
+      checkForSalaryInfo(e, fieldName, errorArr);
+    }, 1000);
+  }, [checkForSalaryInfo]);
   const changeTextData = useCallback(
     (text, fieldName) => {
       let shouldRemoveError = true;
@@ -163,6 +197,9 @@ const useUserRolesCreateHook = () => {
         }
       } else {
         t[fieldName] = text;
+      }
+      if (["role"].includes(fieldName)) {
+        checkSalaryInfoDebouncer( text, fieldName, errorData);
       }
       setForm(t);
       shouldRemoveError && removeError(fieldName);

@@ -16,7 +16,7 @@ const EmpInfo_Qr = ({ data }) => {
       }}
     >
       <div>
-        <div style={{ textAlign: "end" }}>
+        {/* <div style={{ textAlign: "end" }}>
           <a
             style={{cursor:"pointer", outline:"none"}}
             // onClick={handleDownload}
@@ -24,7 +24,7 @@ const EmpInfo_Qr = ({ data }) => {
             <img src={downloadImage}/>
          
           </a>
-        </div>
+        </div> */}
         <div>
           <div
             style={{

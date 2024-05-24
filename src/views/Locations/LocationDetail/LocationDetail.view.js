@@ -27,9 +27,9 @@ function LocationDetail() {
     isSidePanel,
     handleToggleSidePannel,
     openGoogleMaps,
-    setSidePanel
+    setSidePanel,
   } = useLocationDetail({});
-console.log(data)
+
   const tableStructure = useMemo(() => {
     return [
       {
@@ -52,7 +52,6 @@ console.log(data)
         sortable: false,
         render: (value, all) => (
           <div>
-            {console.log(all)}
             <img
               className={styles.tableQr}
               src={all?.department?.qr_code}
@@ -131,30 +130,50 @@ console.log(data)
               </div>
               <div className={styles.key}>
                 <span className={styles.value}>Location City:</span>
-                {data?.city}
+                {data?.city || "N/A"}
               </div>
               <div className={styles.key}>
                 <span className={styles.value}>Location Code:</span>
-                {data?.code}
+                {data?.code || "N/A"}
               </div>
+              {/* <div style={{ marginBottom: "7px" }}>
               <a
                 className={styles.addBtn}
                 href={data?.google_page_url}
                 target="_blank"
               >
-                <div style={{ marginBottom: "7px" }}>
                   <span className={styles.value}>Google Page URL:</span>
                   {data?.google_page_url}
-                </div>
               </a>
+                </div> */}
+              <div className={styles.key}>
+                <span className={styles.value}>Google Page URL:</span>
+                {data?.google_page_url ? (
+                  <a
+                    className={styles.addBtn}
+                    href={data?.google_page_url}
+                    target="_blank"
+                  >
+                    {data?.google_page_url}
+                  </a>
+                ) : (
+                  "N/A"
+                )}
+              </div>
 
               <div className={styles.key}>
                 <span className={styles.value}>Attendance Type:</span>
-                {data?.is_department_attendance ? "Department Wise" : "location only"}
+                {data?.is_department_attendance
+                  ? "Department Wise"
+                  : "location only"}
               </div>
               <div className={styles.key}>
                 <span className={styles.value}>Phone Number:</span>
-                {data?.contact}
+                {data?.contact || "N/A"}
+              </div>
+              <div className={styles.key}>
+                <span className={styles.value}>Landline number:</span>
+                {data?.landline_number || "N/A"}
               </div>
 
               <div className={styles.key}>
@@ -243,8 +262,10 @@ console.log(data)
         open={isSidePanel}
         side={"right"}
       >
-        
-        <LocationCreateView isSidePanel={isSidePanel} setSidePanel={setSidePanel}/>
+        <LocationCreateView
+          isSidePanel={isSidePanel}
+          setSidePanel={setSidePanel}
+        />
       </SidePanelComponent>
     </div>
   );

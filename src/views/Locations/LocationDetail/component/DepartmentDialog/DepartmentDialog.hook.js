@@ -57,7 +57,14 @@ const useDepartmentDialogHook = ({ isOpen, handleToggle, empId, data }) => {
     (text, fieldName) => {
       let shouldRemoveError = true;
       const t = { ...form };
-      t[fieldName] = text;
+      if (fieldName === "department") {
+        t[fieldName] = text.filter((item, index, self) => {
+          return index === self.findIndex((i) => i.id === item.id);
+        });
+      } else {
+        t[fieldName] = text;
+      }
+      
       setForm(t);
       shouldRemoveError && removeError(fieldName);
     },

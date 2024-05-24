@@ -147,9 +147,18 @@ const useLocationList = ({}) => {
   }, []);
 
   const configFilter = useMemo(() => {
-    return [];
+    return [
+      {
+        label: "Status",
+        name: "status",
+        type: "select",
+        fields: [
+          "ACTIVE",
+          "INACTIVE"
+        ],
+      },
+    ];
   }, []);
-
   return {
     handlePageChange,
     handleDataSave,

@@ -186,6 +186,7 @@ const LocationCreateView = ({ isSidePanel , setSidePanel}) => {
               onTextChange={(text) => {
                 changeTextData(text, "landline_number");
               }}
+              type={"number"}
               onBlur={() => {
                 onBlurHandler("landline_number");
               }}
@@ -267,7 +268,7 @@ const LocationCreateView = ({ isSidePanel , setSidePanel}) => {
             handleChange={() => {
               changeTextData(!form?.is_active, "is_active");
             }}
-            label={`Active`}
+            label={form?.is_active ? `Active` :"Inactive"}
           />
         </h4>
       </div>
