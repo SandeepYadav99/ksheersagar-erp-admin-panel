@@ -77,7 +77,7 @@ const UnitList = ({}) => {
         key: "general",
         label: "IS GENERAL",
         sortable: false,
-        render: (temp, all) => <div>{all?.is_general ? 'Yes' : 'No'}</div>,
+        render: (temp, all) => <div>{all?.is_general ? "Yes" : "No"}</div>,
       },
 
       {
@@ -146,8 +146,7 @@ const UnitList = ({}) => {
               onClick={handleToggleSidePannel}
               className={"createBtn"}
             >
-              ADD UNIT{" "}
-              <Add fontSize={"small"} className={"plusIcon"}></Add>
+              ADD UNIT <Add fontSize={"small"} className={"plusIcon"}></Add>
             </ButtonBase>
           </div>
         </div>
@@ -183,7 +182,11 @@ const UnitList = ({}) => {
           open={isSidePanel}
           side={"right"}
         >
-          <UnitCreateView handleToggleSidePannel={handleToggleSidePannel} isSidePanel={isSidePanel} empId={editData}/>
+          <UnitCreateView
+            handleToggleSidePannel={handleToggleSidePannel}
+            isSidePanel={isSidePanel}
+            empId={editData}
+          />
         </SidePanelComponent>
       </PageBox>
     </div>

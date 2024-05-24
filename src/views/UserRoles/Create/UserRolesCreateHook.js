@@ -191,7 +191,7 @@ const useUserRolesCreateHook = () => {
         t[fieldName] = text?.trimStart();
       } else if (fieldName === "role_description") {
         t[fieldName] = text?.trimStart();
-      } else if (fieldName === "role") {
+      } else if (fieldName === "roleeewe") {
         if (isAlphaNumeric(text)) {
           t[fieldName] = text?.trimStart();
         }

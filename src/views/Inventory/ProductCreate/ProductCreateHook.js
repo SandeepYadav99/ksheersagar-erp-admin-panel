@@ -72,6 +72,7 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
     data,
     sorting_data: sortingData,
   } = useSelector((state) => state.subcategory);
+
   useEffect(() => {
     if (id) {
       serviceGetProductDetails({ id: id }).then((res) => {
@@ -106,7 +107,8 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
             ...initialForm,
             ...dataItem,
             id: dataVal?.id,
-            applicable_for:dataVal?.applicableFor,
+            applicable_for: dataVal?.applicableFor,
+            unit_ids: dataVal?.units,
             is_active: dataVal?.status === Constants.GENERAL_STATUS.ACTIVE,
           });
         } else {
@@ -127,13 +129,13 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
     // if(form?.category_id ==0)
     const payload = {
       index: 1,
-      category_id: value,
+      category_id: [value],
     };
     dispatch(
       actionFetchSubcategory(1, sortingData, {
         query: null,
         query_data: null,
-        category_id: value,
+        category_id: [value],
       })
     );
     // setSubcatList(data)
@@ -158,6 +160,7 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
       </p>
     );
   }, []);
+
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
     let required = [
@@ -172,7 +175,10 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
       "max_qty",
       "unit_ids",
       "type",
+      ...(mithaiBox ? ["dead_weight", "lanes", "max_capacity"] : []),
+      ...(finishedGood ? ["price"] : []),
     ];
+
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -184,14 +190,20 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
         errors["max_qty"] = true;
       }
     });
+    if (form?.max_qty === "0") {
+      errors["max_qty"] = true;
+    }
 
+    if (form?.min_qty === "0") {
+      errors["min_qty"] = true;
+    }
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
         delete errors[key];
       }
     });
     return errors;
-  }, [form, errorData]);
+  }, [form, errorData, finishedGood, mithaiBox]);
 
   const submitToServer = useCallback(() => {
     console.log("jenekfnek");
@@ -199,9 +211,13 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
     if (!isSubmitting) {
       setIsSubmitting(true);
       const industryID =
-      Array.isArray(form.applicable_for) && form.applicable_for.length > 0
-        ? form.applicable_for.map((item) => item.id || item._id)
-        : [];
+        Array.isArray(form.applicable_for) && form.applicable_for.length > 0
+          ? form.applicable_for.map((item) => item.id || item._id)
+          : [];
+      const unitID =
+        Array.isArray(form.unit_ids) && form.unit_ids.length > 0
+          ? form.unit_ids.map((item) => item.id || item._id)
+          : [];
       const fd = new FormData();
       Object.keys(form).forEach((key) => {
         if (key === "gst_slab") {
@@ -214,23 +230,26 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
         } else if (key === "lanes") {
           fd.append(key, form[key] ? form[key] : "");
         } else if (key === "selling_price") {
-           fd.append(key, form[key] ? form[key] : "")
+          fd.append(key, form[key] ? form[key] : "");
           //  delete form[key];
         } else if (key === "price") {
-          fd.append(key, form[key] ? form[key] : "")
+          fd.append(key, form[key] ? form[key] : "");
           // delete form[key];
-        }else if (key === "applicable_for") {
-           fd.append(key, JSON.stringify(industryID))
+        } else if (key === "applicable_for") {
+          fd.append(key, JSON.stringify(industryID));
+          //  delete form[key];
+        } else if (key === "expire_day") {
+          fd.append(key, form[key] ? form[key] : 0);
           // delete form[key];
         } else if (key === "unit_ids") {
-          if (["unit_ids"].indexOf(key) < 0) {
-            fd.append(key, form[key]);
-          }
+          // if (["unit_ids"].indexOf(key) < 0) {
+          fd.append(key, JSON.stringify(unitID));
+          // }
         } else {
           fd.append(key, form[key]);
         }
       });
-      fd.append("unit_ids", JSON.stringify(form?.unit_ids));
+      // fd.append("unit_ids", JSON.stringify(form?.unit_ids));
 
       if (id) {
         serviceUpdateProduct(fd).then((res) => {
@@ -303,9 +322,9 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
       } else if (
         fieldName === "max_qty" ||
         fieldName === "min_qty" ||
-        fieldName === "daysExpiration" ||
-        fieldName === "price" ||
-        fieldName === "no_of_lanes"
+        fieldName === "expire_day" ||
+        // fieldName === "price" ||
+        fieldName === "lanes"
       ) {
         if (!text || (isNum(text) && text.toString().length <= 30)) {
           t[fieldName] = text;
@@ -313,6 +332,11 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
       } else if (fieldName === "unit_ids") {
         const index = listData?.UNITS?.findIndex((obj) => obj.id === text);
         setUnitSelected(listData?.UNITS[index]?.name);
+        t[fieldName] = text;
+      } else if (fieldName === "price") {
+        t[fieldName] = text;
+      } else if (fieldName === "category_id") {
+        t["sub_category_id"] = text;
         t[fieldName] = text;
       } else if (fieldName === "sub_category_id") {
         setSubcategoryId(text);
@@ -329,11 +353,12 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
           setMithaiBox(false);
         }
         t[fieldName] = text;
-      }else if (fieldName === "applicable_for") {
-     
+      } else if (fieldName === "applicable_for") {
         t[fieldName] = text?.filter((item, index, self) => {
-          return  index === self.findIndex((i) => i.id === item.id && i._id === item._id)
-          
+          return (
+            index ===
+            self.findIndex((i) => i.id === item.id && i._id === item._id)
+          );
         });
       } else if (fieldName === "deadWeight") {
         t[fieldName] = text;

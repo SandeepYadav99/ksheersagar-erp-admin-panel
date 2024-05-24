@@ -14,6 +14,7 @@ import useAuthenticate from "../../../hooks/AuthenticateHook";
 import useCategoryList from "./ProductListHook";
 import StatusPill from "../../../components/Status/StatusPill.component";
 import ProductCreateView from "../ProductCreate/ProductCreate.view";
+import { capitalizeFirstLetter } from "../../../hooks/CapsLetter";
 
 const ProductList = ({}) => {
   const {
@@ -68,7 +69,7 @@ const ProductList = ({}) => {
       {
         // key: "name_en",
         label: "Product Name",
-        sortable: true,
+        sortable: false,
         render: (value, all) => <div>{all?.name_en}</div>,
       },
       {
@@ -81,19 +82,19 @@ const ProductList = ({}) => {
         // key: "name",
         label: "Category",
         sortable: true,
-        render: (value, all) => <div>{all?.category?.name}</div>,
+        render: (value, all) => <div>{all?.category?.name_en}</div>,
       },
       {
         // key: "subCategoryCount",
         label: "Subcategory",
         sortable: false,
-        render: (temp, all) => <div>{all?.sub_category?.name}</div>,
+        render: (temp, all) => <div>{all?.sub_category?.name_en}</div>,
       },
       {
         // key: "name",
         label: "Type",
         sortable: true,
-        render: (value, all) => <div>{all?.type}</div>,
+        render: (value, all) => <div>{capitalizeFirstLetter(all?.type)}</div>,
       },
       {
         // key: "name",
@@ -104,7 +105,7 @@ const ProductList = ({}) => {
       {
         // key: "status",
         label: "Status",
-        sortable: true,
+        sortable: false,
         render: (temp, all) => <div>{renderStatus(all.status)}</div>,
       },
       {

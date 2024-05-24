@@ -7,10 +7,13 @@ import {
   serviceGetUnitDetails,
   serviceUpdateUnit,
 } from "../../../services/Unit.service";
-
+import debounce from "lodash.debounce";
+import { serviceRolesCheckIsExist } from "../../../services/UserRoles.service";
+import { actionFetchUnit } from "../../../actions/Unit.action";
+import { useDispatch } from "react-redux";
 const initialForm = {
   name: "",
-  full_name:"",
+  full_name: "",
   is_general: false,
   is_active: true,
 };
@@ -22,7 +25,7 @@ const useUnitDetail = ({ handleToggleSidePannel, isSidePanel, empId }) => {
   const [form, setForm] = useState({ ...initialForm });
   const [isEdit, setIsEdit] = useState(false);
   const includeRef = useRef(null);
-
+  const dispatch = useDispatch();
   useEffect(() => {
     if (empId) {
       serviceGetUnitDetails({ id: empId }).then((res) => {
@@ -36,7 +39,12 @@ const useUnitDetail = ({ handleToggleSidePannel, isSidePanel, empId }) => {
             }
           });
           console.log("data", data);
-          setForm({ ...initialForm, ...data, id: empData?.id , is_active: empData?.status === 'ACTIVE'});
+          setForm({
+            ...initialForm,
+            ...data,
+            id: empData?.id,
+            is_active: empData?.status === "ACTIVE",
+          });
         } else {
           SnackbarUtils.error(res?.message);
         }
@@ -44,7 +52,6 @@ const useUnitDetail = ({ handleToggleSidePannel, isSidePanel, empId }) => {
     }
   }, [empId]);
 
- 
   useEffect(() => {
     if (!isSidePanel) {
       handleReset();
@@ -53,7 +60,7 @@ const useUnitDetail = ({ handleToggleSidePannel, isSidePanel, empId }) => {
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = ["name","full_name"];
+    let required = ["name", "full_name"];
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -82,9 +89,9 @@ const useUnitDetail = ({ handleToggleSidePannel, isSidePanel, empId }) => {
       }).then((res) => {
         if (!res.error) {
           handleToggleSidePannel();
-          window.location.reload();
+          // window.location.reload();
+          dispatch(actionFetchUnit(1));
         } else {
-        
           SnackbarUtils.error(res.message);
         }
         setIsSubmitting(false);
@@ -109,6 +116,38 @@ const useUnitDetail = ({ handleToggleSidePannel, isSidePanel, empId }) => {
     },
     [setErrorData, errorData]
   );
+  const checkForSalaryInfo = useCallback(
+    (data, fieldName, errorArr) => {
+      if (data) {
+        // if (!id) return;
+
+        let req = serviceRolesCheckIsExist({
+          id: empId ? empId : "",
+          name: data,
+        });
+
+        req.then((res) => {
+          if (!res.error) {
+            const errors = JSON.parse(JSON.stringify(errorArr));
+            if (res.data.is_exists) {
+              errors[fieldName] = `Display Name ${data} Exist`;
+              setErrorData(errors);
+            } else {
+              delete errors[fieldName];
+              setErrorData(errors);
+            }
+          }
+        });
+      }
+    },
+    [empId]
+  );
+
+  const checkSalaryInfoDebouncer = useMemo(() => {
+    return debounce((e, fieldName, errorArr) => {
+      checkForSalaryInfo(e, fieldName, errorArr);
+    }, 1000);
+  }, [checkForSalaryInfo]);
 
   const changeTextData = useCallback(
     (text, fieldName) => {
@@ -120,6 +159,9 @@ const useUnitDetail = ({ handleToggleSidePannel, isSidePanel, empId }) => {
         }
       } else {
         t[fieldName] = text;
+      }
+      if (["name"].includes(fieldName)) {
+        checkSalaryInfoDebouncer(text, fieldName, errorData);
       }
       setForm(t);
       shouldRemoveError && removeError(fieldName);
@@ -140,7 +182,8 @@ const useUnitDetail = ({ handleToggleSidePannel, isSidePanel, empId }) => {
 
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });
-  }, [form]);
+    setErrorData({})
+  }, [setForm, setErrorData]);
 
   return {
     form,

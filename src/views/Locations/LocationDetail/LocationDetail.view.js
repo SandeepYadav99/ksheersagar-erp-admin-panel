@@ -136,16 +136,7 @@ function LocationDetail() {
                 <span className={styles.value}>Location Code:</span>
                 {data?.code || "N/A"}
               </div>
-              {/* <div style={{ marginBottom: "7px" }}>
-              <a
-                className={styles.addBtn}
-                href={data?.google_page_url}
-                target="_blank"
-              >
-                  <span className={styles.value}>Google Page URL:</span>
-                  {data?.google_page_url}
-              </a>
-                </div> */}
+           
               <div className={styles.key}>
                 <span className={styles.value}>Google Page URL:</span>
                 {data?.google_page_url ? (
@@ -188,7 +179,7 @@ function LocationDetail() {
                   <div className={styles.info}>
                     <div className={styles.key}>
                       <span className={styles.value}>Location Manager:</span>{" "}
-                      {data?.head?.name}
+                      {data?.head?.name} {data?.code && `(${data?.code})`}
                     </div>
                     <div className={styles.key}>
                       <span className={styles.value}>Location Type:</span>

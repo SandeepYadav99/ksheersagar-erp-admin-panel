@@ -180,7 +180,17 @@ const useProductList = ({ }) => {
         type: "select",
         // custom: { extract: { id: "id", title: "name" } },
         fields: ["RAW_MATERIAL", "FINISHED_GOODS", "SERVICE","CONTAINER","ASSETS"],
-      }
+      },
+      {
+        label: "Status",
+        name: "status",
+        type: "select",
+        fields: [
+          "ACTIVE",
+          "INACTIVE",
+          "DELETED"
+        ],
+      },
     ];
   }, [listData]);
 

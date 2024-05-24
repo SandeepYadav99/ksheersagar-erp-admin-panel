@@ -15,6 +15,7 @@ import useAuthenticate from "../../../hooks/AuthenticateHook";
 import useDepartmentList from "./DepartmentListHook";
 import DepartmentCreateView from "../DepartmentCreate/DepartmentCreate.view";
 import StatusPill from "../../../components/Status/StatusPill.component";
+import { capitalizeFirstLetter } from "../../../hooks/CapsLetter";
 
 const DepartmentList = ({}) => {
   const {
@@ -65,20 +66,20 @@ const DepartmentList = ({}) => {
       {
         key: "code",
         label: "DEPARTMENT CODE",
-        sortable: true,
+        sortable: false,
         render: (value, all) => <div>{renderFirstCell(all)}</div>,
       },
       {
         key: "name",
         label: "DEPARTMENT NAME",
         sortable: false,
-        render: (temp, all) => <div>{all?.name}</div>,
+        render: (temp, all) => <div>{capitalizeFirstLetter(all?.name)}</div>,
       },
 
       {
         key: "status",
         label: "Status",
-        sortable: true,
+        sortable: false,
         render: (temp, all) => <div>{renderStatus(all.status)}</div>,
       },
       {

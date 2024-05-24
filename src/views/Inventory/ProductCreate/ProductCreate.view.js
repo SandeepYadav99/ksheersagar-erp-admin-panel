@@ -21,6 +21,7 @@ import classNames from "classnames";
 import { TextField } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 import { ArrowDropDown, Clear } from "@material-ui/icons";
+import SnackbarUtils from "../../../libs/SnackbarUtils";
 const useStyles = makeStyles((theme) => ({
   iconBtnError: {
     color: theme.palette.error.dark,
@@ -213,7 +214,7 @@ const ProductCreate = ({ location }) => {
                   <CustomTextField
                     isError={errorData?.price}
                     errorText={errorData?.price}
-                    label={"Price "}
+                    label={"Selling price "}
                     value={form?.price}
                     onTextChange={(text) => {
                       changeTextData(text, "price");
@@ -221,6 +222,7 @@ const ProductCreate = ({ location }) => {
                     onBlur={() => {
                       onBlurHandler("price");
                     }}
+                    type={"number"}
                   />
                 </div>
               </div>
@@ -347,9 +349,13 @@ const ProductCreate = ({ location }) => {
                       }}
                       value={form?.applicable_for || []}
                       options={listData?.CATEGORIES || []}
-                      getOptionLabel={(option) => option?.name || option?.name_en}
+                      getOptionLabel={(option) =>
+                        option?.name || option?.name_en
+                      }
                       defaultValue={form.applicable_for || []}
-                         getOptionSelected={(option, value) => option?.id === value?.id}
+                      getOptionSelected={(option, value) =>
+                        option?.id === value?.id
+                      }
                       renderInput={(params) => (
                         <TextField
                           {...params}
@@ -396,13 +402,17 @@ const ProductCreate = ({ location }) => {
                   label={"Subcategory"}
                   value={form?.sub_category_id ?? subcategoryId}
                   handleChange={(value) => {
-                    changeTextData(value, "sub_category_id");
+                    if (form?.category_id) {
+                      changeTextData(value, "sub_category_id");
+                    } else {
+                      SnackbarUtils.error("Please select the category first");
+                    }
                   }}
                 >
-                  {listData?.SUB_CATEGORIES?.map((dT) => {
+                  {data.map((dT) => {
                     return (
                       <MenuItem value={dT?.id} key={dT?.id}>
-                        {dT?.name}
+                        {dT?.name_en}
                       </MenuItem>
                     );
                   })}
@@ -411,7 +421,7 @@ const ProductCreate = ({ location }) => {
             </div>
             <div className={"formFlex"}>
               <div className={"formGroup"}>
-                <CustomSelectField
+                {/* <CustomSelectField
                   // multiple
                   isError={errorData?.unit_ids}
                   errorText={errorData?.unit_ids}
@@ -428,24 +438,54 @@ const ProductCreate = ({ location }) => {
                       </MenuItem>
                     );
                   })}
-                </CustomSelectField>
+                </CustomSelectField> */}
+                   <Autocomplete
+                      multiple
+                      id="tags-outlined"
+                      onChange={(e, value) => {
+                        changeTextData(value, "unit_ids");
+                      }}
+                      value={form?.unit_ids || []}
+                      options={listData?.UNITS || []}
+                      getOptionLabel={(option) =>
+                        option?.label || option?.name
+                      }
+                      defaultValue={form.unit_ids || []}
+                      getOptionSelected={(option, value) =>
+                        option?.id === value?.id
+                      }
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          variant="outlined"
+                          label={"Units"}
+                          error={errorData?.unit_ids}
+                        />
+                      )}
+                    />
               </div>
 
+           
               <div className={classNames("formGroup", styles.unitWrap)}>
                 <CustomTextField
-                  isError={errorData?.min_qty}
-                  errorText={errorData?.min_qty}
-                  label={"Min Quantity"}
-                  value={form?.min_qty}
+                  isError={errorData?.max_qty}
+                  errorText={
+                    errorData?.max_qty &&
+                    form?.max_qty != "" &&
+                    "Max quantity should be greater than min quantity"
+                  }
+                  label={"Max Quantity"}
+                  value={form?.max_qty}
                   onTextChange={(text) => {
-                    changeTextData(text, "min_qty");
+                    changeTextData(text, "max_qty");
                   }}
                   onBlur={() => {
-                    onBlurHandler("min_qty");
+                    onBlurHandler("max_qty");
                   }}
                 />
                 {unitSelected}
               </div>
+
             </div>
             <div className={"formFlex"}>
               <div className={"formGroup"}>
@@ -472,6 +512,7 @@ const ProductCreate = ({ location }) => {
                   onBlur={() => {
                     onBlurHandler("expire_day");
                   }}
+                  
                 />
                 {/* {unitSelected} */}
               </div>
@@ -486,27 +527,25 @@ const ProductCreate = ({ location }) => {
                     changeTextData(value, "gst_slab");
                   }}
                 >
+                  <MenuItem value="0">0%</MenuItem>
                   <MenuItem value="5">5%</MenuItem>
+                  <MenuItem value="12">12%</MenuItem>
                   <MenuItem value="18">18%</MenuItem>
                 </CustomSelectField>
               </div>
             </div>
             <div className={"formFlex"}>
-              <div className={classNames("formGroup", styles.unitWrap)}>
+            <div className={classNames("formGroup", styles.unitWrap)}>
                 <CustomTextField
-                  isError={errorData?.max_qty}
-                  errorText={
-                    errorData?.max_qty &&
-                    form?.max_qty != "" &&
-                    "Max quantity should be greater than min quantity"
-                  }
-                  label={"Max Quantity"}
-                  value={form?.max_qty}
+                  isError={errorData?.min_qty}
+                  errorText={errorData?.min_qty}
+                  label={"Min Quantity"}
+                  value={form?.min_qty}
                   onTextChange={(text) => {
-                    changeTextData(text, "max_qty");
+                    changeTextData(text, "min_qty");
                   }}
                   onBlur={() => {
-                    onBlurHandler("max_qty");
+                    onBlurHandler("min_qty");
                   }}
                 />
                 {unitSelected}
