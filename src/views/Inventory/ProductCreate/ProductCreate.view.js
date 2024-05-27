@@ -420,51 +420,22 @@ const ProductCreate = ({ location }) => {
               </div>
             </div>
             <div className={"formFlex"}>
-              <div className={"formGroup"}>
-                {/* <CustomSelectField
-                  // multiple
-                  isError={errorData?.unit_ids}
-                  errorText={errorData?.unit_ids}
-                  label={"Units"}
-                  value={form?.unit_ids ?? unitSelected}
-                  handleChange={(value) => {
-                    changeTextData(value, "unit_ids");
+       
+            <div className={classNames("formGroup", styles.unitWrap)}>
+                <CustomTextField
+                  isError={errorData?.min_qty}
+                  errorText={errorData?.min_qty}
+                  label={"Min Quantity"}
+                  value={form?.min_qty}
+                  onTextChange={(text) => {
+                    changeTextData(text, "min_qty");
                   }}
-                >
-                  {listData?.UNITS?.map((dT) => {
-                    return (
-                      <MenuItem value={dT?.id} key={dT?.id}>
-                        {dT?.label}
-                      </MenuItem>
-                    );
-                  })}
-                </CustomSelectField> */}
-                   <Autocomplete
-                      multiple
-                      id="tags-outlined"
-                      onChange={(e, value) => {
-                        changeTextData(value, "unit_ids");
-                      }}
-                      value={form?.unit_ids || []}
-                      options={listData?.UNITS || []}
-                      getOptionLabel={(option) =>
-                        option?.label || option?.name
-                      }
-                      defaultValue={form.unit_ids || []}
-                      getOptionSelected={(option, value) =>
-                        option?.id === value?.id
-                      }
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          variant="outlined"
-                          label={"Units"}
-                          error={errorData?.unit_ids}
-                        />
-                      )}
-                    />
+                  onBlur={() => {
+                    onBlurHandler("min_qty");
+                  }}
+                />
+                {unitSelected}
               </div>
-
            
               <div className={classNames("formGroup", styles.unitWrap)}>
                 <CustomTextField
@@ -485,7 +456,7 @@ const ProductCreate = ({ location }) => {
                 />
                 {unitSelected}
               </div>
-
+             
             </div>
             <div className={"formFlex"}>
               <div className={"formGroup"}>
@@ -535,20 +506,32 @@ const ProductCreate = ({ location }) => {
               </div>
             </div>
             <div className={"formFlex"}>
-            <div className={classNames("formGroup", styles.unitWrap)}>
-                <CustomTextField
-                  isError={errorData?.min_qty}
-                  errorText={errorData?.min_qty}
-                  label={"Min Quantity"}
-                  value={form?.min_qty}
-                  onTextChange={(text) => {
-                    changeTextData(text, "min_qty");
-                  }}
-                  onBlur={() => {
-                    onBlurHandler("min_qty");
-                  }}
-                />
-                {unitSelected}
+            <div className={"formGroup"}>
+            
+                   <Autocomplete
+                      multiple
+                      id="tags-outlined"
+                      onChange={(e, value) => {
+                        changeTextData(value, "unit_ids");
+                      }}
+                      value={form?.unit_ids || []}
+                      options={listData?.UNITS || []}
+                      getOptionLabel={(option) =>
+                        option?.label || option?.name
+                      }
+                      defaultValue={form.unit_ids || []}
+                      getOptionSelected={(option, value) =>
+                        option?.id === value?.id
+                      }
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          variant="outlined"
+                          label={"Units"}
+                          error={errorData?.unit_ids}
+                        />
+                      )}
+                    />
               </div>
             </div>
             <div className={"formFlex"}>
