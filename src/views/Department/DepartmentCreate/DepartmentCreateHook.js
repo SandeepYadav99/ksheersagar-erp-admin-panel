@@ -60,19 +60,12 @@ const useDepartmentDetail = ({
       handleReset();
     }
   }, [isSidePanel]);
-
-  const checkSalaryInfoDebouncer = useMemo(() => {
-    return debounce((e, fieldName, errorArr) => {
-      checkForSalaryInfo(e, fieldName, errorArr);
-    }, 1000);
-  }, []);
-
-  const checkForSalaryInfo = (data, fieldName, errorArr) => {
+  const checkForSalaryInfo = useCallback((data, fieldName, errorArr) => {
     if (data) {
       let filteredForm = { id: empId ? empId : "" };
       filteredForm[fieldName] = data;
       let req = serviceDepartmentCheck({
-        ...filteredForm,
+       ...filteredForm
       });
       req.then((res) => {
         if (!res.error) {
@@ -87,7 +80,15 @@ const useDepartmentDetail = ({
         }
       });
     }
-  };
+  },[empId]);
+  
+  const checkSalaryInfoDebouncer = useMemo(() => {
+    return debounce((e, fieldName, errorArr) => {
+      checkForSalaryInfo(e, fieldName, errorArr);
+    }, 1000);
+  }, [checkForSalaryInfo]);
+
+
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
@@ -162,10 +163,11 @@ const useDepartmentDetail = ({
         if (!text || (!isSpace(text) && isAlphaNumChars(text))) {
           t[fieldName] = text.toUpperCase();
         }
-        shouldRemoveError = false;
+         shouldRemoveError = false;
       } else {
         t[fieldName] = text;
       }
+      
       checkSalaryInfoDebouncer(
         fieldName === "code" ? text.toUpperCase() : text,
         fieldName,

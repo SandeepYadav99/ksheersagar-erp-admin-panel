@@ -74,7 +74,7 @@ const UnitCreateView = ({ handleToggleSidePannel, isSidePanel, empId }) => {
             handleChange={() => {
               changeTextData(!form?.is_active, "is_active");
             }}
-            label={`Active`}
+            label={form?.is_active ? `Active` : "Inactive"}
           />
         </div>
       </div>
