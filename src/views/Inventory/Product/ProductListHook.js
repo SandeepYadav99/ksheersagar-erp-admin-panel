@@ -179,7 +179,7 @@ const useProductList = ({ }) => {
         name: "type",
         type: "select",
         // custom: { extract: { id: "id", title: "name" } },
-        fields: ["RAW_MATERIAL", "FINISHED_GOODS", "SERVICE","CONTAINER","ASSETS"],
+        fields: ["RAW_MATERIAL", "FINISHED_GOODS", "SERVICE","CONTAINER","ASSETS", "MITHAI_BOX","MATERIAL"],
       },
       {
         label: "Status",

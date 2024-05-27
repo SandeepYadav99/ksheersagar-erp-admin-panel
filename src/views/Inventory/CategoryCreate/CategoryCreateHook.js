@@ -45,7 +45,7 @@ const useCategoryDetail = ({ handleToggleSidePannel,data,isSidePanel }) => {
             // ...data,
             id:data?.id,
             name:data?.name,
-            is_active: data?.status === Constants.GENERAL_STATUS.ACTIVE,
+            is_active: data?.status === "ACTIVE" ? "ACTIVE" : "INACTIVE",
           });
         } else {
           SnackbarUtils.error(res?.message);

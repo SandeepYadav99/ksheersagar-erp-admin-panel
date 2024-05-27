@@ -51,7 +51,7 @@ const LocationList = ({}) => {
       return (
         <div className={styles.firstCellFlex}>
           <div className={classNames(styles.firstCellInfo, "openSans")}>
-            <span className={styles.productName}>{obj?.name_en}</span> <br />
+            <span className={styles.productName}>{obj?.name_en || "N/A"}</span> <br />
           </div>
         </div>
       );
@@ -71,25 +71,25 @@ const LocationList = ({}) => {
         key: "code",
         label: "Location Code",
         sortable: false,
-        render: (temp, all) => <div>{all?.code}</div>,
+        render: (temp, all) => <div>{all?.code || "N/A"}</div>,
       },
       {
         key: "city",
         label: "Location City",
         sortable: false,
-        render: (temp, all) => <div>{all?.city}</div>,
+        render: (temp, all) => <div>{all?.city || "N/A"}</div>,
       },
       {
         key: "type",
         label: "Type",
         sortable: false,
-        render: (temp, all) => <div>{all?.type}</div>,
+        render: (temp, all) => <div>{all?.type || "N/A"}</div>,
       },
       {
         key: "manager",
         label: "Location Manager",
         sortable: false,
-        render: (temp, all) => <div>{all?.head?.name}</div>,
+        render: (temp, all) => <div>{all?.head?.name || "N/A"}</div>,
       },
       {
         key: "status",

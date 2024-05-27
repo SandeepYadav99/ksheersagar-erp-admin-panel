@@ -8,7 +8,7 @@ import {
   serviceUpdateUnit,
 } from "../../../services/Unit.service";
 import debounce from "lodash.debounce";
-import { serviceRolesCheckIsExist } from "../../../services/UserRoles.service";
+import { serviceRolesCheckIsExist, serviceUnitCheckIsExist } from "../../../services/UserRoles.service";
 import { actionFetchUnit } from "../../../actions/Unit.action";
 import { useDispatch } from "react-redux";
 const initialForm = {
@@ -121,7 +121,7 @@ const useUnitDetail = ({ handleToggleSidePannel, isSidePanel, empId }) => {
       if (data) {
         // if (!id) return;
 
-        let req = serviceRolesCheckIsExist({
+        let req = serviceUnitCheckIsExist({
           id: empId ? empId : "",
           name: data,
         });

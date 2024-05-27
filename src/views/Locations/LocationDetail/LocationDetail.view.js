@@ -179,7 +179,7 @@ function LocationDetail() {
                   <div className={styles.info}>
                     <div className={styles.key}>
                       <span className={styles.value}>Location Manager:</span>{" "}
-                      {data?.head?.name} {data?.code && `(${data?.code})`}
+                      {data?.head?.name} {data?.code && `(${data?.head?.code})`}
                     </div>
                     <div className={styles.key}>
                       <span className={styles.value}>Location Type:</span>

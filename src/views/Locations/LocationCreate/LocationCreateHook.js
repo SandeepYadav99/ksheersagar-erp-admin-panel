@@ -287,7 +287,7 @@ const useLocationDetail = ({ isSidePanel, setSidePanel }) => {
         if (!text || (isAlpha(text) && text.toString().length <= 30)) {
           t[fieldName] = text;
         }
-      } else if (fieldName === "codee") {
+      } else if (fieldName === "code") {
         if (!text || (!isSpace(text) && isAlphaNumChars(text))) {
           t[fieldName] = text.toUpperCase();
         }

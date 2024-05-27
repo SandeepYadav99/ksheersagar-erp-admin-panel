@@ -19,6 +19,9 @@ export async function serviceRolesCheckIsExist(params) {
     return await postRequest('roles/check', params);
 }
 
+export async function serviceUnitCheckIsExist(params) {
+    return await postRequest('units/check', params);
+}
 
 export async function serviceRolesPermissions(params) {
     return await postRequest('roles/permissions', params); ///roles/check

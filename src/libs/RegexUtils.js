@@ -53,8 +53,8 @@ const IsVehicleNo=(value)=>{
     return /^[A-Za-z]{2}.+\d{4}$/.test(value)
 }
 const isAlphaNumeric = (text) => {
-    const alphaNumericRegex = /^[a-zA-Z0-9]*$/;
-    return alphaNumericRegex.test(text);
+  
+    return /^[a-z0-9 ]+$/i.test(text);
   };
  
 function validateUrl(value) {

@@ -94,15 +94,16 @@ const UserRolesCreate = () => {
         </div>
         <br />
         <br />
+        {console.log(form?.is_active)}
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div className={"formFlex"}>
             <div className={"formGroup"}>
               <CustomSwitch
-                value={form?.is_active}
+                value={form?.is_active }
                 handleChange={() => {
                   changeTextData(!form?.is_active, "is_active");
                 }}
-                label={form?.is_active ? `Active` : "Inactive"}
+                label={form?.is_active  ? `Active` : "Inactive"}
               />
             </div>
           </div>

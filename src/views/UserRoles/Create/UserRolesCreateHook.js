@@ -13,7 +13,7 @@ import RouteName from "../../../routes/Route.name";
 import constants from "../../../config/constants";
 import { actionDeleteRoles } from "../../../actions/UserRoles.action";
 import { useDispatch } from "react-redux";
-import { isAlphaNumeric } from "../../../libs/RegexUtils";
+import { isAlpha, isAlphaNumeric } from "../../../libs/RegexUtils";
 import { useMemo } from "react";
 import debounce from "lodash.debounce";
 const initialForm = {
@@ -41,7 +41,7 @@ const useUserRolesCreateHook = () => {
             ...form,
             role: data?.name,
             role_description: data?.description,
-            status: data?.status === constants.GENERAL_STATUS.ACTIVE,
+            is_active: data?.status === "ACTIVE" ? true : false,
           });
         } else {
           SnackbarUtils.error(res?.message);
@@ -95,7 +95,7 @@ const useUserRolesCreateHook = () => {
     if (!isSubmitting) {
       setIsSubmitting(true);
     }
-  
+
     const fd = {
       name: form?.role,
       description: form?.role_description,
@@ -151,22 +151,21 @@ const useUserRolesCreateHook = () => {
   );
 
   const checkForSalaryInfo = (data, fieldName, errorArr) => {
-   
     if (data) {
       // if (!id) return;
       let filteredForm = { id: id ? id : "" };
       filteredForm[fieldName] = data;
-     
+
       let req = serviceRolesCheckIsExist({
-       id:id ? id : "",
-       name: data
+        id: id ? id : "",
+        name: data,
       });
-    
+
       req.then((res) => {
         if (!res.error) {
           const errors = JSON.parse(JSON.stringify(errorArr));
           if (res.data.is_exists) {
-            errors[fieldName] = `Display Name ${data} Exist`;
+            errors[fieldName] = `Role  name already exist`;
             setErrorData(errors);
           } else {
             delete errors[fieldName];
@@ -177,7 +176,6 @@ const useUserRolesCreateHook = () => {
     }
   };
   const checkSalaryInfoDebouncer = useMemo(() => {
-      
     return debounce((e, fieldName, errorArr) => {
       checkForSalaryInfo(e, fieldName, errorArr);
     }, 1000);
@@ -191,15 +189,17 @@ const useUserRolesCreateHook = () => {
         t[fieldName] = text?.trimStart();
       } else if (fieldName === "role_description") {
         t[fieldName] = text?.trimStart();
-      } else if (fieldName === "roleeewe") {
-        if (isAlphaNumeric(text)) {
-          t[fieldName] = text?.trimStart();
+      } else if (fieldName === "role") {
+        if (!text || (isAlpha(text) && text.toString())) {
+          t[fieldName] = text;
         }
       } else {
         t[fieldName] = text;
       }
       if (["role"].includes(fieldName)) {
-        checkSalaryInfoDebouncer( text, fieldName, errorData);
+        if (fieldName === "role") {
+          checkSalaryInfoDebouncer(text, fieldName, errorData);
+        }
       }
       setForm(t);
       shouldRemoveError && removeError(fieldName);
