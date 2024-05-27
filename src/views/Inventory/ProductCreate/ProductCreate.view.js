@@ -22,6 +22,8 @@ import { TextField } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 import { ArrowDropDown, Clear } from "@material-ui/icons";
 import SnackbarUtils from "../../../libs/SnackbarUtils";
+import { actionFetchProduct } from "../../../actions/Product.action";
+import { useDispatch } from "react-redux";
 const useStyles = makeStyles((theme) => ({
   iconBtnError: {
     color: theme.palette.error.dark,
@@ -32,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProductCreate = ({ location , isSidePanel, handleToggleSidePannel}) => {
+const ProductCreate = ({ location, isSidePanel, handleToggleSidePannel }) => {
   const {
     form,
     errorData,
@@ -61,8 +63,9 @@ const ProductCreate = ({ location , isSidePanel, handleToggleSidePannel}) => {
     finishedGood,
     mithaiBox,
     setMithaiBox,
-  } = ProductCreateHook({ location , isSidePanel, handleToggleSidePannel});
-
+    subCategory,
+  } = ProductCreateHook({ location, isSidePanel, handleToggleSidePannel });
+  console.log(form.unit_ids);
   const image = useMemo(() => {
     console.log("data image", defaultImg);
     return (
@@ -88,14 +91,20 @@ const ProductCreate = ({ location , isSidePanel, handleToggleSidePannel}) => {
       </>
     );
   }, [form?.image, changeTextData]);
-  console.log("form", form);
+  console.log("form", form?.applicable_for);
+  const dispatch=useDispatch()
   return (
     <>
       <>
         <div>
           <div className={styles.outerFlex}>
             <div>
-              <ButtonBase onClick={() => history.goBack()}>
+              <ButtonBase
+                onClick={() => {
+                  history.push("/product");
+                  addSubcatData("")
+                }}
+              >
                 <ArrowBackIosIcon fontSize={"small"} />{" "}
                 <span>
                   <b>{id ? "Update" : "New"} Product</b>
@@ -378,7 +387,6 @@ const ProductCreate = ({ location , isSidePanel, handleToggleSidePannel}) => {
                   value={form?.category_id}
                   handleChange={(value) => {
                     changeTextData(value, "category_id");
-                    addSubcatData(value);
                   }}
                   // onChange={()=>{
                   //   addSubcatData("category_id")
@@ -400,7 +408,7 @@ const ProductCreate = ({ location , isSidePanel, handleToggleSidePannel}) => {
                   isError={errorData?.sub_category_id}
                   errorText={errorData?.sub_category_id}
                   label={"Subcategory"}
-                  value={form?.sub_category_id ?? subcategoryId}
+                  value={form?.sub_category_id}
                   handleChange={(value) => {
                     if (form?.category_id) {
                       changeTextData(value, "sub_category_id");
@@ -409,7 +417,7 @@ const ProductCreate = ({ location , isSidePanel, handleToggleSidePannel}) => {
                     }
                   }}
                 >
-                  {data.map((dT) => {
+                  {data?.map((dT) => {
                     return (
                       <MenuItem value={dT?.id} key={dT?.id}>
                         {dT?.name_en}
@@ -420,8 +428,7 @@ const ProductCreate = ({ location , isSidePanel, handleToggleSidePannel}) => {
               </div>
             </div>
             <div className={"formFlex"}>
-       
-            <div className={classNames("formGroup", styles.unitWrap)}>
+              <div className={classNames("formGroup", styles.unitWrap)}>
                 <CustomTextField
                   isError={errorData?.min_qty}
                   errorText={errorData?.min_qty}
@@ -436,7 +443,7 @@ const ProductCreate = ({ location , isSidePanel, handleToggleSidePannel}) => {
                 />
                 {unitSelected}
               </div>
-           
+
               <div className={classNames("formGroup", styles.unitWrap)}>
                 <CustomTextField
                   isError={errorData?.max_qty}
@@ -456,7 +463,6 @@ const ProductCreate = ({ location , isSidePanel, handleToggleSidePannel}) => {
                 />
                 {unitSelected}
               </div>
-             
             </div>
             <div className={"formFlex"}>
               <div className={"formGroup"}>
@@ -483,7 +489,6 @@ const ProductCreate = ({ location , isSidePanel, handleToggleSidePannel}) => {
                   onBlur={() => {
                     onBlurHandler("expire_day");
                   }}
-                  
                 />
                 {/* {unitSelected} */}
               </div>
@@ -506,20 +511,35 @@ const ProductCreate = ({ location , isSidePanel, handleToggleSidePannel}) => {
               </div>
             </div>
             <div className={"formFlex"}>
-            <div className={"formGroup"}>
-            
-                   <Autocomplete
-                      multiple
+              <div className={"formGroup"}>
+                <CustomSelectField
+                  isError={errorData?.unit_ids}
+                  errorText={errorData?.unit_ids}
+                  label={"Units"}
+                  value={form?.unit_ids}
+                  handleChange={(value) => {
+                    changeTextData(value, "unit_ids");
+                  }}
+                >
+                  {listData?.UNITS?.map((val) => {
+                    return <MenuItem value={val?.id}>{val?.name}</MenuItem>;
+                  })}
+                  {/* <MenuItem value="5">5%</MenuItem>
+                  <MenuItem value="12">12%</MenuItem>
+                  <MenuItem value="18">18%</MenuItem> */}
+                </CustomSelectField>
+                {/* <Autocomplete
+                      //  multiple
                       id="tags-outlined"
                       onChange={(e, value) => {
                         changeTextData(value, "unit_ids");
                       }}
-                      value={form?.unit_ids || []}
+                      value={form?.unit_ids || [] }
                       options={listData?.UNITS || []}
                       getOptionLabel={(option) =>
                         option?.label || option?.name
                       }
-                      defaultValue={form.unit_ids || []}
+                      defaultValue={form.unit_ids || [] }
                       getOptionSelected={(option, value) =>
                         option?.id === value?.id
                       }
@@ -531,7 +551,7 @@ const ProductCreate = ({ location , isSidePanel, handleToggleSidePannel}) => {
                           error={errorData?.unit_ids}
                         />
                       )}
-                    />
+                    /> */}
               </div>
             </div>
             <div className={"formFlex"}>

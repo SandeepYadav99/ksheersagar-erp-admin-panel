@@ -114,7 +114,7 @@ const ProductList = ({}) => {
         render: (temp, all) => (
           
           <div>
-            <IconButton onClick={() => { handleEdit(all) }} className={'tableActionBtn'} color='secondary' disabled={isCalling}><Edit fontSize={'small'} /></IconButton>
+            <IconButton onClick={() => { handleEdit(all)}} className={'tableActionBtn'} color='secondary' disabled={isCalling}><Edit fontSize={'small'} /></IconButton>
             <IconButton className={'tableActionBtn'} color='secondary' disabled={isCalling}  onClick={() => {handleSubCategory(all)}}>
                         <OpenInNew fontSize={'small'} className={styles.openIcon}/> <span className={styles.subText}>Data</span>
                     </IconButton >

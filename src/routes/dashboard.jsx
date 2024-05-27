@@ -47,7 +47,7 @@ const dashboardRoutes = [
     component: EmployeeList,
     is_sidebar: true,
     is_protect: true,
-
+    should_regex: true,
 
 
     // roles: [Roles.ADMIN, Roles.RECRUITER, Roles.CORPORATE_HR],
@@ -59,7 +59,8 @@ const dashboardRoutes = [
     icon: DashboardOutlined,
     component: EmployeeDetail,
     is_sidebar: false,
-    is_protect: true,
+    is_protect: false,
+
     // roles: [Roles.ADMIN, Roles.RECRUITER, Roles.CORPORATE_HR],
   },
   {
@@ -70,6 +71,7 @@ const dashboardRoutes = [
     component: UserRoleList,
     is_sidebar: true,
     is_protect: true,
+    should_regex: true,
     // roles: [Roles.ADMIN, Roles.RECRUITER, Roles.CORPORATE_HR],
   },
   {
@@ -80,6 +82,7 @@ const dashboardRoutes = [
     component: UserRolesCreate,
     is_sidebar: false,
     is_protect: true,
+    should_regex: false,
     // roles: [Roles.ADMIN, Roles.RECRUITER, Roles.CORPORATE_HR],
   },
   {
@@ -90,6 +93,7 @@ const dashboardRoutes = [
     component: UserRolesCreate,
     is_sidebar: false,
     is_protect: true,
+    should_regex: false,
     // roles: [Roles.ADMIN, Roles.RECRUITER, Roles.CORPORATE_HR],
   },
   {
@@ -99,7 +103,8 @@ const dashboardRoutes = [
     icon: DashboardOutlined,
     component: EmployeeListCreate,
     is_sidebar: false,
-     is_protect: true
+     is_protect: true,
+     should_regex: false,
     // roles: [Roles.ADMIN, Roles.RECRUITER, Roles.CORPORATE_HR],
   },
   {

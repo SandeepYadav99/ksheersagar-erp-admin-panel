@@ -1,10 +1,10 @@
 export default {
   LOGIN: "/login",
   EMPLOYEES:'/employees',
-  EMPLOYEE_CREATE:'/employee/create',
-  EMPLOYEE_DETAILS:'/employee/details/',
-  EMPLOYEE_UPDATE:'/employee/update/',
-EMPLOYEE_INFORMATION:'/employee/details/',
+  EMPLOYEE_CREATE:'/employees/create',
+  EMPLOYEE_DETAILS:'/employees/details/',
+  EMPLOYEE_UPDATE:'/employees/update/',
+EMPLOYEE_INFORMATION:'/employees/details/',
 
   LOCATIONS: "/locations",
   LOCATIONS_CREATE: "/locations/create",

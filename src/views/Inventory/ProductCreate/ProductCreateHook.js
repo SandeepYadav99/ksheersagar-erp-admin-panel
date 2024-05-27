@@ -67,6 +67,7 @@ const useProductDetail = ({ isSidePanel, handleToggleSidePannel }) => {
   const [subcategoryId, setSubcategoryId] = useState();
   const [finishedGood, setFinishedGood] = useState(false);
   const [mithaiBox, setMithaiBox] = useState(false);
+  const [categoryIdSelect, setCategoryIdSelect]=useState("")
   const {
     all,
     data,
@@ -83,6 +84,7 @@ const useProductDetail = ({ isSidePanel, handleToggleSidePannel }) => {
           setUnitSelected(dataVal?.units[0]?.name);
           setProductDetail(dataVal);
           setSubcategoryId(dataVal?.sub_category_id);
+          setCategoryIdSelect(dataVal?.category?.id)
           if (dataVal.type === "MITHAI_BOX") {
             setMithaiBox(true);
           }
@@ -114,15 +116,16 @@ const useProductDetail = ({ isSidePanel, handleToggleSidePannel }) => {
             ...dataItem,
             id: dataVal?.id,
             applicable_for: dataVal?.applicableFor,
-            unit_ids: dataVal?.units,
+            unit_ids: dataVal?.units[0]?.id,
             is_active: dataVal?.status === Constants.GENERAL_STATUS.ACTIVE,
+            category_id:dataVal?.category?.id
           });
         } else {
           SnackbarUtils.error(res?.message);
         }
       });
     }
-  }, [id, setMithaiBox, setFinishedGood]);
+  }, [id, setMithaiBox, setFinishedGood, setCategoryIdSelect]);
   useEffect(() => {
     serviceGetList(["UNITS", "CATEGORIES", "SUB_CATEGORIES"]).then((res) => {
       if (!res.error) {
@@ -130,26 +133,33 @@ const useProductDetail = ({ isSidePanel, handleToggleSidePannel }) => {
       }
     });
   }, []);
+  useEffect(() => {
+    if (categoryIdSelect) {
+      addSubcatData(categoryIdSelect);
+    }
+  }, [categoryIdSelect]);
+  
   const addSubcatData = useCallback(
     (value) => {
-      console.log("value", value);
-      // if(form?.category_id ==0)
+      
+  
       const payload = {
         index: 1,
         category_id: [value],
       };
+    console.log(categoryIdSelect)
       dispatch(
         actionFetchSubcategory(1, sortingData, {
           query: null,
           query_data: null,
-          category_id: value ? [value] : [],
+          category_id:value ?   [value] : [categoryIdSelect],
         })
       );
       // setSubcatList(data)
 
       // console.log('listjsfhsxu', data)
     },
-    [isSidePanel, form?.category_id]
+    [ categoryIdSelect, id, dispatch]
   );
 
   const toggleConfirmDialog = useCallback(
@@ -190,7 +200,7 @@ const useProductDetail = ({ isSidePanel, handleToggleSidePannel }) => {
       "max_qty",
       "unit_ids",
       "type",
-      ...(mithaiBox ? ["dead_weight", "lanes", "max_capacity"] : []),
+      ...(mithaiBox ? ["dead_weight", "lanes", "max_capacity", "selling_price"] : []),
       ...(finishedGood ? ["price"] : []),
     ];
 
@@ -205,6 +215,9 @@ const useProductDetail = ({ isSidePanel, handleToggleSidePannel }) => {
         errors["max_qty"] = true;
       }
     });
+    // if(!form?.category_id){
+    //   SnackbarUtils.error("Please select the category first");
+    // }
     if (form?.max_qty === "0") {
       errors["max_qty"] = true;
     }
@@ -219,7 +232,7 @@ const useProductDetail = ({ isSidePanel, handleToggleSidePannel }) => {
     });
     return errors;
   }, [form, errorData, finishedGood, mithaiBox]);
-console.log(form?.unit_ids)
+  console.log(form?.unit_ids);
   const submitToServer = useCallback(() => {
     console.log("jenekfnek");
     setIsLoading(true);
@@ -229,10 +242,7 @@ console.log(form?.unit_ids)
         Array.isArray(form.applicable_for) && form.applicable_for.length > 0
           ? form.applicable_for.map((item) => item.id || item._id)
           : [];
-      const unitID =
-        Array.isArray(form.unit_ids) && form.unit_ids.length > 0
-          ? form.unit_ids.map((item) => item.id || item._id)
-          : [];
+      const unitID = [form?.unit_ids];
       const fd = new FormData();
       Object.keys(form).forEach((key) => {
         if (key === "gst_slab") {
@@ -354,10 +364,12 @@ console.log(form?.unit_ids)
       } else if (fieldName === "price") {
         t[fieldName] = text;
       } else if (fieldName === "category_id") {
-        t["sub_category_id"] = text;
+         t["sub_category_id"] = " ";
         t[fieldName] = text;
+        addSubcatData(text);
       } else if (fieldName === "sub_category_id") {
-        setSubcategoryId(text);
+        // setSubcategoryId(text);
+        
         t[fieldName] = text;
       } else if (fieldName === "type") {
         if (text === "FINISHED_GOODS") {
@@ -386,7 +398,7 @@ console.log(form?.unit_ids)
       setForm(t);
       shouldRemoveError && removeError(fieldName);
     },
-    [removeError, form, setForm, setMithaiBox, setFinishedGood]
+    [removeError, form, setForm, setMithaiBox, setFinishedGood, addSubcatData, categoryIdSelect]
   );
 
   const onBlurHandler = useCallback(
@@ -448,6 +460,7 @@ console.log(form?.unit_ids)
     finishedGood,
     mithaiBox,
     setMithaiBox,
+    
   };
 };
 
