@@ -75,13 +75,13 @@ const ProductList = ({}) => {
       {
         // key: "code",
         label: "Product Code",
-        sortable: true,
+        sortable: false,
         render: (value, all) => <div>{all?.code}</div>,
       },
       {
         // key: "name",
         label: "Category",
-        sortable: true,
+        sortable: false,
         render: (value, all) => <div>{all?.category?.name_en}</div>,
       },
       {
@@ -93,13 +93,13 @@ const ProductList = ({}) => {
       {
         // key: "name",
         label: "Type",
-        sortable: true,
+        sortable: false,
         render: (value, all) => <div>{capitalizeFirstLetter(all?.type)}</div>,
       },
       {
         // key: "name",
         label: "Unit",
-        sortable: true,
+        sortable: false,
         render: (value, all) => <div>{all?.units?.[0]?.name}</div>,
       },
       {
@@ -201,7 +201,7 @@ const ProductList = ({}) => {
           open={isSidePanel}
           side={"right"}
         >
-          <ProductCreateView handleToggleSidePannel={handleToggleSidePannel}/>
+          <ProductCreateView handleToggleSidePannel={handleToggleSidePannel} isSidePanel={isSidePanel}/>
         </SidePanelComponent>
       </PageBox>
     </div>

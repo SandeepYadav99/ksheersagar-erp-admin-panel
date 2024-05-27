@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProductCreate = ({ location }) => {
+const ProductCreate = ({ location , isSidePanel, handleToggleSidePannel}) => {
   const {
     form,
     errorData,
@@ -61,7 +61,7 @@ const ProductCreate = ({ location }) => {
     finishedGood,
     mithaiBox,
     setMithaiBox,
-  } = ProductCreateHook({ location });
+  } = ProductCreateHook({ location , isSidePanel, handleToggleSidePannel});
 
   const image = useMemo(() => {
     console.log("data image", defaultImg);

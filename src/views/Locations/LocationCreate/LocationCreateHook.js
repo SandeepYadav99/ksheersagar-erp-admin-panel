@@ -112,7 +112,7 @@ const useLocationDetail = ({ isSidePanel, setSidePanel }) => {
     }
   }, [mapAddress]);
 
-  const checkForSalaryInfo = (data, fieldName, errorArr) => {
+  const checkForSalaryInfo = useCallback((data, fieldName, errorArr) => {
    
     if (data) {
       // if (!id) return;
@@ -136,7 +136,7 @@ const useLocationDetail = ({ isSidePanel, setSidePanel }) => {
         }
       });
     }
-  };
+  },[id]);
   const checkSalaryInfoDebouncer = useMemo(() => {
       
     return debounce((e, fieldName, errorArr) => {
@@ -306,7 +306,7 @@ const useLocationDetail = ({ isSidePanel, setSidePanel }) => {
       setForm(t);
       shouldRemoveError && removeError(fieldName);
     },
-    [removeError, form, setForm]
+    [removeError, form, setForm, checkSalaryInfoDebouncer]
   );
 
   const onBlurHandler = useCallback(
@@ -323,7 +323,7 @@ const useLocationDetail = ({ isSidePanel, setSidePanel }) => {
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });
     setErrorData({});
-  }, [form]);
+  }, [form, setErrorData]);
 
   const handleMapAddress = useCallback(
     (lat, lng, address) => {

@@ -44,7 +44,7 @@ const initialForm = {
   selling_price: "",
 };
 
-const useProductDetail = ({ handleToggleSidePannel }) => {
+const useProductDetail = ({ isSidePanel, handleToggleSidePannel }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -83,6 +83,12 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
           setUnitSelected(dataVal?.units[0]?.name);
           setProductDetail(dataVal);
           setSubcategoryId(dataVal?.sub_category_id);
+          if (dataVal.type === "MITHAI_BOX") {
+            setMithaiBox(true);
+          }
+          if (dataVal.type === "FINISHED_GOODS") {
+            setFinishedGood(true);
+          }
           // Object.keys({ ...initialForm }).forEach((key) => {
           //   if (key in initialForm && key !== "image") {
           //     data[key] = dataVal[key];
@@ -116,7 +122,7 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
         }
       });
     }
-  }, [id]);
+  }, [id, setMithaiBox, setFinishedGood]);
   useEffect(() => {
     serviceGetList(["UNITS", "CATEGORIES", "SUB_CATEGORIES"]).then((res) => {
       if (!res.error) {
@@ -124,25 +130,28 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
       }
     });
   }, []);
-  const addSubcatData = useCallback((value) => {
-    console.log("value", value);
-    // if(form?.category_id ==0)
-    const payload = {
-      index: 1,
-      category_id: [value],
-    };
-    dispatch(
-      actionFetchSubcategory(1, sortingData, {
-        query: null,
-        query_data: null,
+  const addSubcatData = useCallback(
+    (value) => {
+      console.log("value", value);
+      // if(form?.category_id ==0)
+      const payload = {
+        index: 1,
         category_id: [value],
-      })
-    );
-    // setSubcatList(data)
+      };
+      dispatch(
+        actionFetchSubcategory(1, sortingData, {
+          query: null,
+          query_data: null,
+          category_id: value ? [value] : [],
+        })
+      );
+      // setSubcatList(data)
 
-    // console.log('listjsfhsxu', data)
-  }, []);
-  console.log("listjsfhsxu", data);
+      // console.log('listjsfhsxu', data)
+    },
+    [isSidePanel, form?.category_id]
+  );
+
   const toggleConfirmDialog = useCallback(
     (type) => {
       // setDialogType(type);
@@ -150,6 +159,12 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
     },
     [setIsDialog]
   );
+
+  useEffect(() => {
+    if (!isSidePanel) {
+      handleReset();
+    }
+  }, [isSidePanel]);
 
   const dialogText = useMemo(() => {
     return (
@@ -204,7 +219,7 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
     });
     return errors;
   }, [form, errorData, finishedGood, mithaiBox]);
-
+console.log(form?.unit_ids)
   const submitToServer = useCallback(() => {
     console.log("jenekfnek");
     setIsLoading(true);
@@ -315,10 +330,13 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
     (text, fieldName) => {
       let shouldRemoveError = true;
       const t = { ...form };
-      if (fieldName === "name_en" || fieldName === "name_hi") {
+      if (fieldName === "name_en") {
         if (!text || (isAlpha(text) && text.toString().length <= 30)) {
           t[fieldName] = text;
         }
+      }
+      if (fieldName === "name_hi") {
+        t[fieldName] = text.toString();
       } else if (
         fieldName === "max_qty" ||
         fieldName === "min_qty" ||
@@ -389,7 +407,8 @@ const useProductDetail = ({ handleToggleSidePannel }) => {
 
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });
-  }, [form]);
+    setErrorData({});
+  }, [form, errorData]);
   const handleRemoveImage = useCallback(() => {
     setDefaultImg("");
     setForm({
