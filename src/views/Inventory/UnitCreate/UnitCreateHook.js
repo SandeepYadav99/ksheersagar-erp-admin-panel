@@ -130,7 +130,7 @@ const useUnitDetail = ({ handleToggleSidePannel, isSidePanel, empId }) => {
           if (!res.error) {
             const errors = JSON.parse(JSON.stringify(errorArr));
             if (res.data.is_exists) {
-              errors[fieldName] = `Display Name ${data} Exist`;
+              errors[fieldName] = `Unit name already exist`;
               setErrorData(errors);
             } else {
               delete errors[fieldName];

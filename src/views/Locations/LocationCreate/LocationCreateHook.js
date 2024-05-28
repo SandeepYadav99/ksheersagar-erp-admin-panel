@@ -82,7 +82,7 @@ const useLocationDetail = ({ isSidePanel, setSidePanel }) => {
   );
 
   useEffect(() => {
-    if (id) {
+    if (id && isSidePanel) {
       serviceGetLocationDetails({ id: id }).then((res) => {
         if (!res.error) {
           const data = res?.data?.details;
@@ -103,7 +103,7 @@ const useLocationDetail = ({ isSidePanel, setSidePanel }) => {
         }
       });
     }
-  }, [id]);
+  }, [id, isSidePanel]);
 
   useEffect(() => {
     if (mapAddress) {
@@ -122,13 +122,20 @@ const useLocationDetail = ({ isSidePanel, setSidePanel }) => {
       let req = serviceLocationCheck({
         ...filteredForm,
       });
-    
+    console.log(fieldName)
       req.then((res) => {
         if (!res.error) {
           const errors = JSON.parse(JSON.stringify(errorArr));
           if (res.data.is_exists) {
-            errors[fieldName] = `Location ${data} Exist`;
-            setErrorData(errors);
+            if(fieldName === "name_hi" || "name_en"){
+              errors[fieldName] = `Location name Exist`;
+              setErrorData(errors);
+            }
+             if(fieldName === "code"){
+              errors[fieldName] = `Location code Exist`;
+              setErrorData(errors);
+            }
+            // setErrorData(errors);
           } else {
             delete errors[fieldName];
             setErrorData(errors);

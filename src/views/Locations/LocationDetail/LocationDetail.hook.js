@@ -15,7 +15,7 @@ function useLocationDetail() {
   const { id } = useParams();
   const [isSidePanel, setSidePanel] = useState(false);
   const [editData, setEditData] = useState(null);
-  
+
   const [isApprovalPopUp, setIsApprovalPopUp] = useState(false);
   const toggleApprovalDialog = useCallback(() => {
     setIsApprovalPopUp((e) => !e);
@@ -58,8 +58,10 @@ function useLocationDetail() {
   };
   const handleEditBtn = useCallback(
     (data) => {
+    
       setEditData(data);
       setSidePanel((e) => !e);
+     
     },
     [setEditData, setSidePanel]
   );
@@ -81,7 +83,7 @@ function useLocationDetail() {
     isSidePanel,
     // handleToggleSidePannel,
     openGoogleMaps,
-    setSidePanel
+    setSidePanel,
   };
 }
 

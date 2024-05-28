@@ -92,7 +92,7 @@ const ProductCreate = ({ location, isSidePanel, handleToggleSidePannel }) => {
     );
   }, [form?.image, changeTextData]);
   console.log("form", form?.applicable_for);
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
   return (
     <>
       <>
@@ -102,7 +102,7 @@ const ProductCreate = ({ location, isSidePanel, handleToggleSidePannel }) => {
               <ButtonBase
                 onClick={() => {
                   history.push("/product");
-                  addSubcatData("")
+                  addSubcatData("");
                 }}
               >
                 <ArrowBackIosIcon fontSize={"small"} />{" "}
@@ -409,12 +409,15 @@ const ProductCreate = ({ location, isSidePanel, handleToggleSidePannel }) => {
                   errorText={errorData?.sub_category_id}
                   label={"Subcategory"}
                   value={form?.sub_category_id}
-                  handleChange={(value) => {
-                    if (form?.category_id) {
-                      changeTextData(value, "sub_category_id");
-                    } else {
-                      SnackbarUtils.error("Please select the category first");
+                  onOpen={() => {
+                    if (!form?.category_id) {
+                      setTimeout(() => {
+                        SnackbarUtils.error("Please select the category first");
+                      }, 500);
                     }
+                  }}
+                  handleChange={(value) => {
+                    changeTextData(value, "sub_category_id");
                   }}
                 >
                   {data?.map((dT) => {
@@ -437,6 +440,7 @@ const ProductCreate = ({ location, isSidePanel, handleToggleSidePannel }) => {
                   onTextChange={(text) => {
                     changeTextData(text, "min_qty");
                   }}
+                  type={"number"}
                   onBlur={() => {
                     onBlurHandler("min_qty");
                   }}
@@ -447,16 +451,13 @@ const ProductCreate = ({ location, isSidePanel, handleToggleSidePannel }) => {
               <div className={classNames("formGroup", styles.unitWrap)}>
                 <CustomTextField
                   isError={errorData?.max_qty}
-                  errorText={
-                    errorData?.max_qty &&
-                    form?.max_qty != "" &&
-                    "Max quantity should be greater than min quantity"
-                  }
+                  errorText={errorData?.max_qty}
                   label={"Max Quantity"}
                   value={form?.max_qty}
                   onTextChange={(text) => {
                     changeTextData(text, "max_qty");
                   }}
+                  type={"number"}
                   onBlur={() => {
                     onBlurHandler("max_qty");
                   }}
@@ -498,7 +499,7 @@ const ProductCreate = ({ location, isSidePanel, handleToggleSidePannel }) => {
                   isError={errorData?.gst_slab}
                   errorText={errorData?.gst_slab}
                   label={"GST Slab"}
-                  value={form?.gst_slab ?? subcategoryId}
+                  value={form?.gst_slab} //
                   handleChange={(value) => {
                     changeTextData(value, "gst_slab");
                   }}
@@ -561,7 +562,7 @@ const ProductCreate = ({ location, isSidePanel, handleToggleSidePannel }) => {
                     type="checkbox"
                     name={"is_negative_allowed"}
                     value={"is_negative_allowed"}
-                    onClick={() => {
+                    onChange={() => {
                       changeTextData(
                         !form?.is_negative_allowed,
                         "is_negative_allowed"
@@ -570,7 +571,7 @@ const ProductCreate = ({ location, isSidePanel, handleToggleSidePannel }) => {
                     id="vehicle1"
                     checked={form?.is_negative_allowed}
                   />{" "}
-                  <label htmlFor="vehicle1"> Is negative stock allowed?</label>
+                  <label htmlFor="vehicle"> Is negative stock allowed?</label>
                   {/* <br /> */}
                 </div>
               </div>
@@ -580,13 +581,13 @@ const ProductCreate = ({ location, isSidePanel, handleToggleSidePannel }) => {
                     type="checkbox"
                     name={"is_batch_wise"}
                     value={"is_batch_wise"}
-                    onClick={() => {
+                    onChange={() => {
                       changeTextData(!form?.is_batch_wise, "is_batch_wise");
                     }}
-                    id="vehicle1"
+                    id="vehicle2"
                     checked={form?.is_batch_wise}
                   />{" "}
-                  <label htmlFor="vehicle1"> Batch-wise stock?</label>
+                  <label htmlFor="vehicle"> Batch-wise stock?</label>
                   {/* <br /> */}
                 </div>
               </div>
@@ -596,16 +597,16 @@ const ProductCreate = ({ location, isSidePanel, handleToggleSidePannel }) => {
                     type="checkbox"
                     name={"is_first_in_first_out"}
                     value={"is_first_in_first_out"}
-                    onClick={() => {
+                    onChange={() => {
                       changeTextData(
                         !form?.is_first_in_first_out,
                         "is_first_in_first_out"
                       );
                     }}
-                    id="vehicle1"
+                    id="vehicle3"
                     checked={form?.is_first_in_first_out}
                   />{" "}
-                  <label htmlFor="vehicle1"> First-in, First-out?</label>
+                  <label htmlFor="vehicle"> First-in, First-out?</label>
                   {/* <br /> */}
                 </div>
               </div>
