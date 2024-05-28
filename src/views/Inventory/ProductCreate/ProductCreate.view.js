@@ -24,6 +24,7 @@ import { ArrowDropDown, Clear } from "@material-ui/icons";
 import SnackbarUtils from "../../../libs/SnackbarUtils";
 import { actionFetchProduct } from "../../../actions/Product.action";
 import { useDispatch } from "react-redux";
+import { isNum } from "../../../libs/RegexUtils";
 const useStyles = makeStyles((theme) => ({
   iconBtnError: {
     color: theme.palette.error.dark,
@@ -245,7 +246,7 @@ const ProductCreate = ({ location, isSidePanel, handleToggleSidePannel }) => {
                         isError={errorData?.dead_weight}
                         errorText={errorData?.dead_weight}
                         label={"Dead weight"}
-                        type={"number"}
+                        // type={"number"}
                         value={form?.dead_weight}
                         onTextChange={(text) => {
                           changeTextData(text, "dead_weight");
@@ -265,6 +266,7 @@ const ProductCreate = ({ location, isSidePanel, handleToggleSidePannel }) => {
                       type={"number"}
                       value={form?.selling_price}
                       onTextChange={(text) => {
+                        
                         changeTextData(text, "selling_price");
                       }}
                       onBlur={() => {

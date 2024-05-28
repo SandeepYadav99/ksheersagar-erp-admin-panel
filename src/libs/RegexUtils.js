@@ -71,6 +71,7 @@ function validateUrl(value) {
     return regex.test(esiNumber);
   }
 
+ 
 export {
     isUrl,
     isEmail,
@@ -87,5 +88,6 @@ export {
     isNumDec,
     validateUAN,
     validateESI,
-    isAlphaNumeric
+    isAlphaNumeric,
+   
 };

@@ -1,5 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { isAlphaNumChars, isNum, isAlpha } from "../../../libs/RegexUtils";
+import {
+  isAlphaNumChars,
+  isNum,
+  isAlpha,
+  positiveNumber,
+} from "../../../libs/RegexUtils";
 import { useSelector, useDispatch } from "react-redux";
 
 import SnackbarUtils from "../../../libs/SnackbarUtils";
@@ -212,11 +217,19 @@ const useProductDetail = ({ isSidePanel, handleToggleSidePannel }) => {
         errors[val] = true;
       }
     });
-   
-    if (form?.["max_qty"] < form?.["min_qty"]) {
+    console.log(form);
+    if (Number(form?.["max_qty"]) < Number(form?.["min_qty"])) {
       errors["max_qty"] = "Max quantity should be greater than min quantity";
+    } else if (Number(form?.["max_qty"]) === 0) {
+      errors["max_qty"] = true;
     } else {
-       delete errors.max_qty;
+      delete errors.max_qty;
+    }
+
+    if (Number(form?.["min_qty"]) === 0) {
+      errors["min_qty"] = true;
+    } else {
+      delete errors.min_qty;
     }
     if (form?.sub_category_id === " ") {
       errors.sub_category_id = true;
@@ -226,13 +239,6 @@ const useProductDetail = ({ isSidePanel, handleToggleSidePannel }) => {
     // if(!form?.category_id){
     //   SnackbarUtils.error("Please select the category first");
     // }
-    // if (form?.max_qty === "0") {
-    //   errors["max_qty"] = true;
-    // }
-
-    if (form?.min_qty === "0") {
-      errors["min_qty"] = true;
-    }
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
         delete errors[key];
@@ -357,9 +363,9 @@ const useProductDetail = ({ isSidePanel, handleToggleSidePannel }) => {
       } else if (
         // fieldName === "max_qty" ||
         // fieldName === "min_qty" ||
-        fieldName === "expire_day" ||
+        fieldName === "expire_day"
         // fieldName === "price" ||
-        fieldName === "lanes"
+        // fieldName === "lanes"
       ) {
         if (!text || (isNum(text) && text.toString().length <= 30)) {
           t[fieldName] = text;
@@ -368,11 +374,25 @@ const useProductDetail = ({ isSidePanel, handleToggleSidePannel }) => {
         const index = listData?.UNITS?.findIndex((obj) => obj.id === text);
         setUnitSelected(listData?.UNITS[index]?.name);
         t[fieldName] = text;
-      } else if (fieldName === "price") {
-        t[fieldName] = text;
-      } else if (fieldName === "max_qty") {
-        console.log(text);
-        t[fieldName] = text;
+      } else if (fieldName === "max_qty" || fieldName === "min_qty") {
+        if (isNum(text)) {
+          t[fieldName] = text;
+        }
+      } else if (
+        fieldName === "dead_weight" ||
+        fieldName === "max_capacity" ||
+        fieldName === "selling_price" ||
+        fieldName === "lanes" ||
+        fieldName === "price"
+      ) {
+        const value = parseFloat(text);
+        if (!isNaN(value) && value >= 0) {
+          t[fieldName] = text;
+        } else if (text === "") {
+          t[fieldName] = "";
+        } else {
+          t[fieldName] = ""; // Reset on invalid input
+        }
       } else if (fieldName === "category_id") {
         t["sub_category_id"] = " ";
         t[fieldName] = text;
@@ -416,6 +436,7 @@ const useProductDetail = ({ isSidePanel, handleToggleSidePannel }) => {
       setFinishedGood,
       addSubcatData,
       categoryIdSelect,
+      mithaiBox,
     ]
   );
   console.log(errorData);
