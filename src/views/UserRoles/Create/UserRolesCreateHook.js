@@ -13,7 +13,7 @@ import RouteName from "../../../routes/Route.name";
 import constants from "../../../config/constants";
 import { actionDeleteRoles } from "../../../actions/UserRoles.action";
 import { useDispatch } from "react-redux";
-import { isAlpha, isAlphaNumeric } from "../../../libs/RegexUtils";
+import { isAlpha, isAlphaNum, isAlphaNumeric } from "../../../libs/RegexUtils";
 import { useMemo } from "react";
 import debounce from "lodash.debounce";
 const initialForm = {
@@ -190,7 +190,7 @@ const useUserRolesCreateHook = () => {
       } else if (fieldName === "role_description") {
         t[fieldName] = text?.trimStart();
       } else if (fieldName === "role") {
-        if (!text || (isAlpha(text) && text.toString())) {
+        if (!text || (isAlphaNum(text) && text.toString())) {
           t[fieldName] = text;
         }
       } else {
