@@ -51,9 +51,9 @@ function EmployeeListCreateHook({ location }) {
     is_address_same: false,
     aadhaar_back: "",
     aadhaar_front: "",
-    uan_no:"",
-    esi_no:"",
-    external_emp_code:""
+    uan_no: "",
+    esi_no: "",
+    external_emp_code: "",
   };
   const [form, setForm] = useState({ ...initialForm });
   const [errorData, setErrorData] = useState({});
@@ -78,7 +78,7 @@ function EmployeeListCreateHook({ location }) {
     ROLES: [],
   });
   const [showPasswordCurrent, setShowPasswordCurrent] = useState(false);
- 
+
   useEffect(() => {
     serviceGetList([
       "LOCATION_DEPARTMENTS",
@@ -127,7 +127,7 @@ function EmployeeListCreateHook({ location }) {
       "password",
       "pin",
       // "department_id",
-       "role_id",
+      "role_id",
       "gender",
       "status",
       // "age",
@@ -150,6 +150,9 @@ function EmployeeListCreateHook({ location }) {
         delete errors[val];
       }
     });
+    if (form?.emp_code.length <= 3) {
+      errors.emp_code = "Employee ID must be longer than 3 characters.";
+    }
     if (form?.email && !isEmail(form?.email)) {
       errors["email"] = true;
     }
@@ -228,11 +231,11 @@ function EmployeeListCreateHook({ location }) {
         if (text >= 0 && text?.length <= 12) {
           t[fieldName] = text;
         }
-      }else if (fieldName === "uan_no") {
+      } else if (fieldName === "uan_no") {
         if (text >= 0 && text?.length <= 12) {
           t[fieldName] = text;
         }
-      }else if (fieldName === "esi_no") {
+      } else if (fieldName === "esi_no") {
         if (text >= 0 && text?.length <= 17) {
           t[fieldName] = text;
         }
@@ -245,6 +248,7 @@ function EmployeeListCreateHook({ location }) {
     [removeError, form, setForm]
   );
   const checkCodeValidation = useCallback(() => {
+    if(form?.emp_code?.length <= 3) return;
     if (form?.emp_code) {
       serviceCheckEmployeeExists({
         code: form?.emp_code,
@@ -387,7 +391,6 @@ function EmployeeListCreateHook({ location }) {
     isSubmitting,
     showPasswordCurrent,
     setShowPasswordCurrent,
-   
   };
 }
 

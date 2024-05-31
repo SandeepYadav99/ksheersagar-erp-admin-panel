@@ -154,7 +154,11 @@ console.log(form?.esi_no?.length)
         delete errors[val];
       }
     });
-   
+    if (form?.emp_code.length <= 3) {
+      errors.emp_code = "Employee ID must be longer than 3 characters.";
+    }else{
+      delete errors["emp_code"];
+    }
     if (form?.email && !isEmail(form?.email)) {
       errors["email"] = true;
     }
@@ -246,6 +250,7 @@ console.log(form?.esi_no?.length)
     [removeError, form, setForm]
   );
   const checkCodeValidation = useCallback(() => {
+    if (form?.emp_code.length <= 3)  return;
     if (form?.emp_code) {
       serviceCheckEmployeeExists({
         id: id ? id : null,
