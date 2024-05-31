@@ -46,7 +46,7 @@ const initialForm = {
   lanes: "",
   applicable_for: "",
 
-  selling_price: "",
+  // selling_price: "",
 };
 
 const useProductDetail = ({ isSidePanel, handleToggleSidePannel }) => {
@@ -90,7 +90,7 @@ const useProductDetail = ({ isSidePanel, handleToggleSidePannel }) => {
           setProductDetail(dataVal);
           setSubcategoryId(dataVal?.sub_category_id);
           setCategoryIdSelect(dataVal?.category?.id);
-          if (dataVal.type === "MITHAI_BOX") {
+          if (dataVal.type === "PACKAGING") {
             setMithaiBox(true);
           }
           if (dataVal.type === "FINISHED_GOODS") {
@@ -204,7 +204,7 @@ const useProductDetail = ({ isSidePanel, handleToggleSidePannel }) => {
       "unit_ids",
       "type",
       ...(mithaiBox
-        ? ["dead_weight", "lanes", "max_capacity", "selling_price"]
+        ? ["dead_weight", "lanes", "max_capacity", "price"]
         : []),
       ...(finishedGood ? ["price"] : []),
     ];
@@ -269,16 +269,16 @@ const useProductDetail = ({ isSidePanel, handleToggleSidePannel }) => {
           fd.append(key, form[key] ? form[key] : "");
         } else if (key === "selling_price") {
           fd.append(key, form[key] ? form[key] : "");
-          //  delete form[key];
+          
         } else if (key === "price") {
           fd.append(key, form[key] ? form[key] : "");
-          // delete form[key];
+         
         } else if (key === "applicable_for") {
           fd.append(key, JSON.stringify(industryID));
-          //  delete form[key];
+         
         } else if (key === "expire_day") {
           fd.append(key, form[key] ? form[key] : 0);
-          // delete form[key];
+        
         } else if (key === "unit_ids") {
           // if (["unit_ids"].indexOf(key) < 0) {
           fd.append(key, JSON.stringify(unitID));
@@ -405,7 +405,7 @@ const useProductDetail = ({ isSidePanel, handleToggleSidePannel }) => {
         if (text === "FINISHED_GOODS") {
           setFinishedGood(true);
           setMithaiBox(false);
-        } else if (text === "MITHAI_BOX") {
+        } else if (text === "PACKAGING") {
           setMithaiBox(true);
           setFinishedGood(false);
         } else {

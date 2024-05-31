@@ -88,15 +88,17 @@ const AddEmployRecord_Dilog = ({
         sortable: false,
         render: (temp, all) => (
           <>
-            {all?.employee?.image ? (
+            {all?.image ? (
               <img
                 src={all?.image}
                 style={{ width: "50px", height: "50px", borderRadius: "50px" }}
+                alt=".."
               />
             ) : (
               <img
                 src={defaultImage}
                 style={{ width: "50px", height: "50px", borderRadius: "50px" }}
+                alt=".."
               />
             )}
             ,

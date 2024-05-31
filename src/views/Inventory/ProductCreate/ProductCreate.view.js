@@ -208,7 +208,7 @@ const ProductCreate = ({ location, isSidePanel, handleToggleSidePannel }) => {
                       <MenuItem value="SERVICE">SERVICE</MenuItem>
                       <MenuItem value="CONTAINER">CONTAINER</MenuItem>
                       <MenuItem value="ASSETS">ASSETS</MenuItem>
-                      <MenuItem value="MITHAI_BOX"> MITHAI BOX</MenuItem>
+                      <MenuItem value="PACKAGING">PACKAGING</MenuItem>
                       <MenuItem value="MATERIAL">MATERIAL</MenuItem>
                     </CustomSelectField>
                   </div>
@@ -237,7 +237,7 @@ const ProductCreate = ({ location, isSidePanel, handleToggleSidePannel }) => {
                 </div>
               </div>
             )}
-            {(mithaiBox === true || form?.type === "MITHAI_BOX") && (
+            {(mithaiBox === true || form?.type === "PACKAGING") && (
               <>
                 <div className={"formFlex"}>
                   <div className={"formGroup"}>
@@ -260,17 +260,17 @@ const ProductCreate = ({ location, isSidePanel, handleToggleSidePannel }) => {
                   </div>
                   <div className={"formGroup"}>
                     <CustomTextField
-                      isError={errorData?.selling_price}
-                      errorText={errorData?.selling_price}
+                      isError={errorData?.price}
+                      errorText={errorData?.price}
                       label={"Selling price  "}
                       type={"number"}
-                      value={form?.selling_price}
+                      value={form?.price}
                       onTextChange={(text) => {
                         
-                        changeTextData(text, "selling_price");
+                        changeTextData(text, "price");
                       }}
                       onBlur={() => {
-                        onBlurHandler("selling_price");
+                        onBlurHandler("price");
                       }}
                     />
                   </div>
