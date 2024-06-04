@@ -56,22 +56,29 @@ const DownloadDialog = ({ isOpen, handleToggle, empId, data }) => {
     listData,
   } = useDownloadDialogHook({ isOpen, handleToggle, empId, data });
 
-  const getStartMonthFirstDay = () => {
+
+    const getMaxDate = () => {
+    const now = new Date();
     if (form.date) {
-      const selectedYear = form.date.getFullYear();
-      const selectedMonth = form.date.getMonth();
-      return new Date(selectedYear, selectedMonth, 1);
+      const selectedDate = new Date(form.date);
+      if (selectedDate.getMonth() === now.getMonth() && selectedDate.getFullYear() === now.getFullYear()) {
+        return now;
+      }
     }
-    return new Date();
+    return null;
   };
 
-  const getStartMonthLastDay = () => {
-    if (form.date) {
-      const selectedYear = form.date.getFullYear();
-      const selectedMonth = form.date.getMonth();
-      return new Date(selectedYear, selectedMonth + 2, 1);
-    }
-    return new Date();
+  const getStartOfMonth = (date) => {
+    const d = new Date(date);
+    d.setDate(1);
+    return d;
+  };
+
+  const getEndOfMonth = (date) => {
+    const d = new Date(date);
+    d.setMonth(d.getMonth() + 1);
+    d.setDate(0);
+    return d;
   };
 
   return (
@@ -111,6 +118,7 @@ const DownloadDialog = ({ isOpen, handleToggle, empId, data }) => {
                   maxDate={new Date()}
                   onChange={(date) => {
                     changeTextData(date, "date");
+                   
                   }}
                   format={"MM-yyyy"}
                   value={form?.date}
@@ -123,8 +131,8 @@ const DownloadDialog = ({ isOpen, handleToggle, empId, data }) => {
                 <CustomDatePicker
                   clearable
                   label={"Start Date"}
-                  minDate={getStartMonthFirstDay()}
-                  maxDate={new Date()}
+                  minDate={form?.date ? getStartOfMonth(form.date) : null}
+                  maxDate={form?.date ? getMaxDate() || getEndOfMonth(form.date) : null}
                   disabled={!form?.date ? true : false}
                   onChange={(date) => {
                     changeTextData(date, "startDate");
@@ -141,7 +149,8 @@ const DownloadDialog = ({ isOpen, handleToggle, empId, data }) => {
                   clearable
                   label={"End Date"}
                   disabled={!form?.date ? true : false}
-                  maxDate={new Date()}
+                  minDate={form?.date ? getStartOfMonth(form.date) : null}
+                  maxDate={form?.date ? getMaxDate() || getEndOfMonth(form.date) : null}
                   onChange={(date) => {
                     if (date < form?.startDate) {
                       SnackbarUtils.error(
@@ -181,7 +190,11 @@ const DownloadDialog = ({ isOpen, handleToggle, empId, data }) => {
           <div className={styles.printFlex}>
             <ButtonBase
               onClick={handleSubmit}
-              disabled={(form?.date && form?.endDate && form?.startDate && form?.location) ? false : true}
+              disabled={
+                form?.date && form?.endDate && form?.startDate && form?.location
+                  ? false
+                  : true
+              }
               className={
                 form?.date && form?.endDate && form?.startDate && form?.location
                   ? "createBtnreset"

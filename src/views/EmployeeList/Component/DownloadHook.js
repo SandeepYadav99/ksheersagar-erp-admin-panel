@@ -65,6 +65,11 @@ const useDownloadDialogHook = ({ isOpen, handleToggle, empId, data }) => {
         t["startDate"] = "";
         t["endDate"] = "";
         t[fieldName] = text;
+      }else if(fieldName === "startDate"){
+        console.log(text)
+        t[fieldName] = text;
+      }else if(fieldName === "endDate"){
+        t[fieldName] = text;
       }else {
         t[fieldName] = text;
       }

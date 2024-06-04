@@ -150,7 +150,7 @@ function EmployeeListCreateHook({ location }) {
         delete errors[val];
       }
     });
-    if (form?.emp_code.length <= 3) {
+    if (form?.emp_code.length <= 3 && form?.emp_code.length > 0) {
       errors.emp_code = "Employee ID must be longer than 3 characters.";
     }
     if (form?.email && !isEmail(form?.email)) {
