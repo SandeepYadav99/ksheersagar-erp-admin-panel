@@ -22,6 +22,7 @@ import EmployeeEdit from "../views/EmployeeEdit/EmployeeEdit.view";
 
 import UserRoleList from "../views/UserRoles/List/UserRoleList";
 import UserRolesCreate from "../views/UserRoles/Create/UserRolesCreate"
+import Machines from "../views/Machines/Lists/Machines";
 const NewDashboard = lazy(() => import("../views/dashboard/NewDashboard.view"));
 const LocationList = lazy(() =>
   import("../views/Locations/Location/LocationList.container")
@@ -150,6 +151,7 @@ const dashboardRoutes = [
     parent: "masters",
     // roles: [Roles.ADMIN, Roles.CORPORATE_HR],
   },
+ 
   {
     path: `${RouteName.LOCATIONS_DETAILS}:id`,
     sidebarName: "Location Detail",
@@ -166,6 +168,18 @@ const dashboardRoutes = [
     navbarName: "Departments",
     icon: PeopleOutlined,
     component: DepartmentList,
+    is_sidebar: true,
+    is_protect: true,
+    should_regex: true,
+    parent: "masters",
+    // roles: [Roles.ADMIN, Roles.CORPORATE_HR],
+  },
+  {
+    path: RouteName.MACHINES,
+    sidebarName: "Machines",
+    navbarName: "Machines",
+    icon: PeopleOutlined,
+    component: Machines,
     is_sidebar: true,
     is_protect: true,
     should_regex: true,
