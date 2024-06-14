@@ -413,7 +413,7 @@ const EmployeeEdit = ({ location }) => {
         <div className={"formFlex"}>
           <div className={"formGroup"}>
             <CustomTextField
-              type="number"
+              // type="number"
               isError={errorData?.uan_no}
               errorText={errorData?.uan_no}
               label={"Uan Number"}

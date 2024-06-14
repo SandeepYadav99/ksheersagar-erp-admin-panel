@@ -156,12 +156,12 @@ function EmployeeListCreateHook({ location }) {
     if (form?.email && !isEmail(form?.email)) {
       errors["email"] = true;
     }
-    if (form?.uan_no && !validateUAN(form?.uan_no)) {
+    if (form?.uan_no && form?.uan_no?.length < 12) {
       errors["uan_no"] = "Min 12 digit required";
     }
-    if (form?.esi_no && !validateESI(form?.esi_no)) {
-      errors["esi_no"] = "Min 17 digit required";
-    }
+    // if (form?.esi_no && !validateESI(form?.esi_no)) {
+    //   errors["esi_no"] = "Min 17 digit required";
+    // }
     if (
       form?.contact &&
       (!isNum(form?.contact) || form?.contact?.length !== 10)
@@ -232,13 +232,13 @@ function EmployeeListCreateHook({ location }) {
           t[fieldName] = text;
         }
       } else if (fieldName === "uan_no") {
-        if (text >= 0 && text?.length <= 12) {
+        if (!text ||  (isAlphaNum(text) && text?.length <= 12)) {
           t[fieldName] = text;
         }
       } else if (fieldName === "esi_no") {
-        if (text >= 0 && text?.length <= 17) {
+        // if (text >= 0 && text?.length <= 17) {
           t[fieldName] = text;
-        }
+        // }
       } else {
         t[fieldName] = text;
       }
