@@ -3,10 +3,10 @@
  */
 import React, {Component} from 'react';
 import classnames from 'classnames';
-import ReactDOM from 'react-dom';
+
 import styles from './style.module.css';
 import {ButtonBase, withTheme} from '@material-ui/core';
-import {Close} from '@material-ui/icons';
+import { ArrowBackIos, Close} from '@material-ui/icons';
 
 class ResizablePanels extends React.Component {
 
@@ -132,7 +132,8 @@ class SidePanelComponent extends Component {
                 }}>
                     <div className={styles.sideUpper}>
                         <ButtonBase className={styles.btnIcon} onClick={this._handleOpen}>
-                            <Close></Close>
+                            {this.props.arrowBack ? <ArrowBackIos/> : <Close></Close>}
+                            
                         </ButtonBase>
                         <div style={{padding: '0px 15px', flex: 1}}>
                         <h3 style={{}}>

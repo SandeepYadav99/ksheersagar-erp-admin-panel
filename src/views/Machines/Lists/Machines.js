@@ -1,8 +1,8 @@
-import React, {  useCallback,  useMemo } from "react";
-import { IconButton,  ButtonBase } from "@material-ui/core";
+import React, { useCallback, useMemo } from "react";
+import { IconButton, ButtonBase } from "@material-ui/core";
 import classNames from "classnames";
-import {  useSelector } from "react-redux";
-import { Add, InfoOutlined, } from "@material-ui/icons";
+import { useSelector } from "react-redux";
+import { Add, Edit, InfoOutlined } from "@material-ui/icons";
 import PageBox from "../../../components/PageBox/PageBox.component";
 import styles from "./Style.module.css";
 import DataTables from "../../../Datatables/Datatable.table";
@@ -12,8 +12,8 @@ import FilterComponent from "../../../components/Filter/Filter.component";
 import StatusPill from "../../../components/Status/StatusPill.component";
 import useAuthenticate from "../../../hooks/AuthenticateHook";
 import useMachinesHook from "./MachinesHook";
-
-
+import SidePanelComponent from "../../../components/SidePanel/SidePanel.component";
+import MachinesCreate from "../Create/MachinesCreate";
 
 const Machines = ({}) => {
   const {
@@ -36,11 +36,10 @@ const Machines = ({}) => {
 
   const { isCorporateHR } = useAuthenticate();
   const {
-    present:data,
+    present: data,
     all: allData,
     currentPage,
     is_fetching: isFetching,
-    
   } = useSelector((state) => state?.userRoles);
 
   const renderStatus = useCallback((status) => {
@@ -52,7 +51,8 @@ const Machines = ({}) => {
       return (
         <div className={styles.firstCellFlex}>
           <div className={classNames(styles.firstCellInfo, "openSans")}>
-            <span className={styles.productName}>{obj?.name || "N/A"}</span> <br />
+            <span className={styles.productName}>{obj?.name || "N/A"}</span>{" "}
+            <br />
           </div>
         </div>
       );
@@ -60,6 +60,16 @@ const Machines = ({}) => {
     return null;
   }, []);
 
+  const renderTile = () => {
+    return (
+      <div>
+        <div>
+          <span className={styles.title}>Add Machine</span>
+          <div className={styles.newLine} />
+        </div>
+      </div>
+    );
+  };
   const tableStructure = useMemo(() => {
     return [
       {
@@ -72,27 +82,28 @@ const Machines = ({}) => {
         key: "td_id",
         label: "TD ID",
         sortable: false,
-        render: (temp, all) => <div style={{width:"15rem"}}>{all?.description || "N/A"}</div>,
+        render: (temp, all) => (
+          <div style={{ width: "15rem" }}>{all?.description || "N/A"}</div>
+        ),
       },
       {
         key: "serial_number",
         label: "SERIAL NUMBER",
         sortable: false,
-        render: (temp, all) =>     <div style={{width:"20rem"}}>
-        {all?.users?.length > 0 ? (
-          all?.users?.map((user, index) => (
-            <span key={user.id}>
-              {user.name}
-              {index < all.users.length - 1 && ", "}
-            </span>
-          ))
-        ) : (
-          "N/A"
-        )}
-      </div>
+        render: (temp, all) => (
+          <div style={{ width: "20rem" }}>
+            {all?.users?.length > 0
+              ? all?.users?.map((user, index) => (
+                  <span key={user.id}>
+                    {user.name}
+                    {index < all.users.length - 1 && ", "}
+                  </span>
+                ))
+              : "N/A"}
+          </div>
+        ),
       },
-    
-     
+
       {
         key: "user_id",
         label: "Action",
@@ -106,8 +117,7 @@ const Machines = ({}) => {
                 // handleViewDetails(all);
               }}
             >
-             
-              <InfoOutlined fontSize={"small"} />
+              <Edit fontSize={"small"} />
             </IconButton>
           </div>
         ),
@@ -150,8 +160,11 @@ const Machines = ({}) => {
             <div className={styles.newLine} />
           </div>
           <div>
-            <ButtonBase onClick={handleToggleSidePannel} className={"createBtn"}>
-            ADD MACHINE <Add fontSize={"small"} className={"plusIcon"}></Add>
+            <ButtonBase
+              onClick={handleToggleSidePannel}
+              className={"createBtn"}
+            >
+              ADD MACHINE <Add fontSize={"small"} className={"plusIcon"}></Add>
             </ButtonBase>
           </div>
         </div>
@@ -172,10 +185,17 @@ const Machines = ({}) => {
               />
             </div>
           </div>
-          
         </div>
-    
       </PageBox>
+      <SidePanelComponent
+        handleToggle={handleToggleSidePannel}
+        title={renderTile()}
+        open={isSidePanel}
+        side={"right"}
+        arrowBack={true}
+      >
+        <MachinesCreate isSidePanel={isSidePanel} />
+      </SidePanelComponent>
     </div>
   );
 };

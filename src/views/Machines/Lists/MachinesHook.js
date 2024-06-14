@@ -136,7 +136,7 @@ const useMachinesHook= ({}) => {
   );
 
   const handleToggleSidePannel = useCallback(() => {
-   historyUtils.push(RouteName.USER_ROLES_CREATE)
+    setSidePanel((e) => !e);
   }, [setSidePanel]);
 
   const handleSideToggle = useCallback(
