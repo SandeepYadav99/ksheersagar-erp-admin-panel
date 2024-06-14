@@ -2,16 +2,14 @@ import React, { useCallback, useEffect, useRef } from "react";
 import { useState } from "react";
 import {
   isAadhar,
-  isAccountNum,
-  isAlpha,
+
   isAlphaNum,
   isAlphaNumChars,
   isEmail,
-  IsIFSCCode,
+
   isNum,
   isSpace,
-  validateESI,
-  validateUAN,
+ 
 } from "../../libs/RegexUtils";
 import { useParams } from "react-router";
 import { serviceGetList } from "../../services/Common.service";
@@ -64,6 +62,7 @@ function EmployeeEditHook({ location }) {
   const [remotePath, setRemotePath] = useState("");
   const codeDebouncer = useDebounce(form?.emp_code, 500);
   const codeDebouncerExternalCode = useDebounce(form?.external_emp_code, 500);
+ 
   const empFlag = location?.state?.isOnboard;
   const [listData, setListData] = useState({
     LOCATION_DEPARTMENTS: [],
@@ -382,7 +381,9 @@ console.log(form?.esi_no?.length)
       );
     });
   }, [form?.location_id, form?.department_id, listData]);
+
   return {
+ 
     form,
     errorData,
     listData,
@@ -399,6 +400,7 @@ console.log(form?.esi_no?.length)
     frontImg,
     backImg,
     isSubmitting,
+  
   };
 }
 

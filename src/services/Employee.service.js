@@ -79,6 +79,10 @@ export async function serviceGetEmployCardDetails(params) { // employees/id/card
     return await postRequest('employees/id/card', params);
 }
 
-export async function serviceGetEmployAttendesReport(params) { // employees/id/card
+export async function serviceGetEmployAttendesReport(params) { 
     return await postRequest('attendance/monthly/attendance/report', params);
+}
+
+export async function serviceResetPasswordEmpMaster(params) { 
+    return await postRequest('auth/update/password', params);
 }

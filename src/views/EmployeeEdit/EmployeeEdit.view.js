@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import {
-  Button,
+
   ButtonBase,
   CircularProgress,
   InputAdornment,
@@ -14,8 +14,9 @@ import history from "../../libs/history.utils";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import CustomDatePicker from "../../components/FormFields/DatePicker/CustomDatePicker";
 import File from "../../components/FileComponent/FileComponent.component";
-import constants from "../../config/constants";
+
 import EmployeeEditHook from "./EmployeeEdit.hook";
+
 
 const useStyles = makeStyles((theme) => ({
   iconBtnError: {
@@ -35,11 +36,12 @@ const EmployeeEdit = ({ location }) => {
     onBlurHandler,
     handleSubmit,
     filteredDepartments,
-   
+  
     defaultImg,
     frontImg,
     backImg,
     isSubmitting,
+   
   } = EmployeeEditHook({ location });
 
   const image = useMemo(() => {
@@ -511,6 +513,7 @@ const EmployeeEdit = ({ location }) => {
           </ButtonBase>
         </div>
       </div>
+  
     </div>
   );
 };

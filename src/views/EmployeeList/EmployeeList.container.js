@@ -1,13 +1,12 @@
-import React, { Component, useCallback, useEffect, useMemo } from "react";
-import { IconButton, MenuItem, ButtonBase, Menu } from "@material-ui/core";
+import React, {  useCallback,  useMemo } from "react";
+import { IconButton,  ButtonBase } from "@material-ui/core";
 import classNames from "classnames";
-import { connect, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import {
   Add,
-  FontDownload,
-  GetApp,
+
   InfoOutlined,
-  PrintOutlined,
+
 } from "@material-ui/icons";
 import PageBox from "../../components/PageBox/PageBox.component";
 import SidePanelComponent from "../../components/SidePanel/SidePanel.component";
@@ -21,7 +20,9 @@ import StatusPill from "../../components/Status/StatusPill.component";
 import CreateView from "./Employee.view";
 import defaultImage from "../../assets/img/ic_user_pic.png";
 import Download from "../../assets/img/ic_download_report@2x.png";
+import ResetPassword from "../../assets/img/ic_reset_password@2x.png";
 import DownloadDialog from "./Component/Download";
+import ResetPasswordPopup from "../EmployeeEdit/Component/ResetPasswordPopup";
 
 const EmployeeList = ({}) => {
   const {
@@ -40,9 +41,11 @@ const EmployeeList = ({}) => {
     isSidePanel,
     isCalling,
     configFilter,
-    handleDownload,
+ 
     createDD,
     handleCreate,
+    isRejectPopUp,
+    toggleRejectDialog,
     id,
 
     isApprovalPopUp,
@@ -98,11 +101,13 @@ const EmployeeList = ({}) => {
   const renderContact = useCallback((obj) => {
     return (
       <div>
-        {obj?.contact ?  (
+        {obj?.contact ? (
           <div>
             <strong>{obj?.contact} </strong>
           </div>
-        ) : "N/A"}
+        ) : (
+          "N/A"
+        )}
         {obj?.email ? <div>{obj?.email}</div> : ""}
       </div>
     );
@@ -159,7 +164,8 @@ const EmployeeList = ({}) => {
         style: { width: "12%" },
         render: (temp, all) => (
           <div className={styles.captialize}>
-            {all?.department?.name || "N/A"}{ all?.role?.name && `/${all?.role?.name}`}
+            {all?.department?.name || "N/A"}
+            {all?.role?.name && `/${all?.role?.name}`}
           </div>
         ),
       },
@@ -195,6 +201,16 @@ const EmployeeList = ({}) => {
               }}
             >
               <Edit fontSize={"small"} />
+            </IconButton>
+            <IconButton
+              className={"tableActionBtn"}
+              color="secondary"
+              disabled={isCalling}
+              onClick={() => {
+                toggleRejectDialog(all);
+              }}
+            >
+              <img src={ResetPassword} alt="" width={20} />
             </IconButton>
           </div>
         ),
@@ -302,6 +318,11 @@ const EmployeeList = ({}) => {
       >
         {renderCreateForm}
       </SidePanelComponent>
+      <ResetPasswordPopup
+        handleDialog={toggleRejectDialog}
+        isOpen={isRejectPopUp}
+        empId={id}
+      />
     </div>
   );
 };

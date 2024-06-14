@@ -21,7 +21,9 @@ const useEmployeeList = ({}) => {
   const [createDD, setCreateDD] = useState(null);
   const dispatch = useDispatch();
   const { role } = useSelector((state) => state.auth);
-
+  const [isRejectPopUp, setIsRejectPopUp] = useState(false);
+  const [showPasswordCurrent, setShowPasswordCurrent] = useState(false);
+  const [empId, setEmpId]=useState("")
   const [listData, setListData] = useState({
     LOCATIONS: [],
     GRADES: [],
@@ -181,6 +183,14 @@ const useEmployeeList = ({}) => {
     serviceDownloadReport({})
   }, []); // serviceDownloadReport
 
+  const toggleRejectDialog = useCallback(
+    (all) => {
+      setIsRejectPopUp((e) => !e);
+      setEmpId(all?.id)
+    },
+    [isRejectPopUp, setEmpId]
+  );
+
 
   const configFilter = useMemo(() => {
     return [
@@ -232,6 +242,11 @@ const useEmployeeList = ({}) => {
     handleDownload,
     isApprovalPopUp,
     toggleApprovalDialog,
+     id:empId,
+    showPasswordCurrent,
+    setShowPasswordCurrent,
+    isRejectPopUp,
+    toggleRejectDialog,
   };
 };
 
