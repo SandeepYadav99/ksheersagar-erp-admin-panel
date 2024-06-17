@@ -16,36 +16,42 @@ import { useDispatch } from "react-redux";
 import { isAlpha, isAlphaNum, isAlphaNumeric } from "../../../libs/RegexUtils";
 import { useMemo } from "react";
 import debounce from "lodash.debounce";
-import { serviceCreatePaytmMachines, serviceGetPaytmMachinesDetails, servicePaytmMachinesCheck, serviceUpdatePaytmMachines } from "../../../services/Machines.service";
+import {
+  serviceCreatePaytmMachines,
+  serviceGetPaytmMachinesDetails,
+  servicePaytmMachinesCheck,
+  serviceUpdatePaytmMachines,
+} from "../../../services/Machines.service";
 import { actionFetchPaytmMachines } from "../../../actions/Machines.action";
 const initialForm = {
   machineName: "",
   td_id: "",
   serial_number: "",
 };
-const useMachinesCreateHook = ({handleToggleSidePannel, isSidePanel, machineId}) => {
+const useMachinesCreateHook = ({
+  handleToggleSidePannel,
+  isSidePanel,
+  machineId,
+}) => {
   const [form, setForm] = useState({ ...initialForm });
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [permission, setPermissions] = useState([]);
-
+ 
 
   const dispatch = useDispatch();
   useEffect(() => {
     if (machineId) {
       serviceGetPaytmMachinesDetails({ id: machineId }).then((res) => {
         if (!res.error) {
-      
           const data = res?.data?.details;
 
           setForm({
             ...form,
             machineName: data?.name,
             td_id: data?.t_id,
-            serial_number:data?.serial_no,
-          
+            serial_number: data?.serial_no,
           });
         } else {
           SnackbarUtils.error(res?.message);
@@ -53,10 +59,12 @@ const useMachinesCreateHook = ({handleToggleSidePannel, isSidePanel, machineId})
       });
     }
   }, [machineId]);
-console.log(machineId)
- 
 
-  
+  useEffect(() => {
+    if (!isSidePanel) {
+      handleReset();
+    }
+  }, [isSidePanel]);
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
@@ -88,7 +96,6 @@ console.log(machineId)
       name: form?.machineName,
       t_id: form?.td_id,
       serial_no: form?.serial_number,
-     
     };
 
     let req;
@@ -103,17 +110,19 @@ console.log(machineId)
     req.then((res) => {
       if (!res.error) {
         handleToggleSidePannel();
-        dispatch(
-        actionFetchPaytmMachines(1, {}, {
-        }))
-      
-      
+        dispatch(actionFetchPaytmMachines(1, {}, {}));
       } else {
         SnackbarUtils.error(res.message);
       }
       setIsSubmitting(false);
     });
-  }, [form, isSubmitting, setIsSubmitting, machineId, permission, setPermissions]);
+  }, [
+    form,
+    isSubmitting,
+    setIsSubmitting,
+    machineId,
+ 
+  ]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
@@ -129,8 +138,7 @@ console.log(machineId)
     setErrorData,
     form,
     errorData,
-    permission,
-    setPermissions,
+    
   ]);
 
   const removeError = useCallback(
@@ -179,7 +187,7 @@ console.log(machineId)
       const t = { ...form };
       if (fieldName === "machineName") {
         t[fieldName] = text?.trimStart();
-      }else {
+      } else {
         t[fieldName] = text;
       }
       if (["td_id"].includes(fieldName)) {
@@ -208,10 +216,12 @@ console.log(machineId)
     // historyUtils.push("/product");
     historyUtils.push(RouteName.USER_ROLES);
   }, [machineId]);
+ 
 
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });
-  }, [form]);
+    setErrorData({});
+  }, [form, errorData, setErrorData]);
 
   return {
     form,
@@ -219,7 +229,7 @@ console.log(machineId)
     changeTextData,
     onBlurHandler,
     handleSubmit,
-   
+
     machineId,
     handleDelete,
   };

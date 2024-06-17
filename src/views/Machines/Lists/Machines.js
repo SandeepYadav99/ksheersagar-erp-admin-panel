@@ -36,12 +36,12 @@ const Machines = ({}) => {
 
   const { isCorporateHR } = useAuthenticate();
   const {
-     data,
+    data,
     all: allData,
     currentPage,
     is_fetching: isFetching,
   } = useSelector((state) => state?.PaytmMachines);
-console.log(data)
+  console.log(data);
   const renderStatus = useCallback((status) => {
     return <StatusPill status={status} />;
   }, []);
@@ -63,10 +63,8 @@ console.log(data)
   const renderTile = () => {
     return (
       <div>
-        <div>
-          <span className={styles.title}>{id ? "Update" :"Add"} Machine</span>
-          <div className={styles.newLine} />
-        </div>
+        <span className={styles.title}>{id ? "Update" : "Add"} Machine</span>
+        <div className={styles.newLine} />
       </div>
     );
   };
@@ -90,12 +88,7 @@ console.log(data)
         key: "serial_number",
         label: "SERIAL NUMBER",
         sortable: false,
-        render: (temp, all) => 
-          <div >
-          {all?.serial_no || "N/A"
-          }
-          </div>
-        ,
+        render: (temp, all) => <div>{all?.serial_no || "N/A"}</div>,
       },
 
       {
@@ -108,7 +101,7 @@ console.log(data)
               color="secondary"
               disabled={isCalling}
               onClick={() => {
-                 handleViewDetails(all);
+                handleViewDetails(all);
               }}
             >
               <Edit fontSize={"small"} />
@@ -188,7 +181,11 @@ console.log(data)
         side={"right"}
         arrowBack={true}
       >
-        <MachinesCreate isSidePanel={isSidePanel} handleToggleSidePannel={handleToggleSidePannel} machineId={id}/>
+        <MachinesCreate
+          isSidePanel={isSidePanel}
+          handleToggleSidePannel={handleToggleSidePannel}
+          machineId={id}
+        />
       </SidePanelComponent>
     </div>
   );
