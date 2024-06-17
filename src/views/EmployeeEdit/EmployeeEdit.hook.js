@@ -133,7 +133,7 @@ console.log(form?.esi_no?.length)
       "name_en",
       "name_hi",
       "location_id",
-      "pin",
+      // "pin",
       // "department_id",
       "gender",
       "status",
