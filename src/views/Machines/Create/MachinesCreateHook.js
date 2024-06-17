@@ -16,59 +16,47 @@ import { useDispatch } from "react-redux";
 import { isAlpha, isAlphaNum, isAlphaNumeric } from "../../../libs/RegexUtils";
 import { useMemo } from "react";
 import debounce from "lodash.debounce";
+import { serviceCreatePaytmMachines, serviceGetPaytmMachinesDetails, servicePaytmMachinesCheck, serviceUpdatePaytmMachines } from "../../../services/Machines.service";
+import { actionFetchPaytmMachines } from "../../../actions/Machines.action";
 const initialForm = {
   machineName: "",
   td_id: "",
   serial_number: "",
 };
-const useMachinesCreateHook = () => {
+const useMachinesCreateHook = ({handleToggleSidePannel, isSidePanel, machineId}) => {
   const [form, setForm] = useState({ ...initialForm });
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
   const [permission, setPermissions] = useState([]);
-  const [permissionUpdate, setPermissionsUpdate] = useState(null);
-  const { id } = useParams();
+
+
   const dispatch = useDispatch();
   useEffect(() => {
-    if (id) {
-      serviceRolesDetails({ id: id }).then((res) => {
+    if (machineId) {
+      serviceGetPaytmMachinesDetails({ id: machineId }).then((res) => {
         if (!res.error) {
+      
           const data = res?.data?.details;
 
           setForm({
             ...form,
-            role: data?.name,
-            role_description: data?.description,
-            is_active: data?.status === "ACTIVE" ? true : false,
+            machineName: data?.name,
+            td_id: data?.t_id,
+            serial_number:data?.serial_no,
+          
           });
         } else {
           SnackbarUtils.error(res?.message);
         }
       });
     }
-  }, [id]);
+  }, [machineId]);
+console.log(machineId)
+ 
 
-  useEffect(() => {
-    serviceRolesPermissions({ id: id ? id : "" }).then((res) => {
-      if (!res?.error) {
-        setPermissions(res?.data);
-      }
-    });
-  }, [id]);
-
-  console.log(permission, "int");
-  const permisionChangeHandler = useCallback(
-    (index, data) => {
-      const t = [...permission];
-      console.log(data, "t");
-      t[index] = { ...t[index], ...data };
-
-      setPermissions(t);
-    },
-    [permission, setPermissions]
-  );
+  
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
@@ -97,31 +85,35 @@ const useMachinesCreateHook = () => {
     }
 
     const fd = {
-      name: form?.role,
-      description: form?.role_description,
-      permissions: permission,
-      is_active: form?.is_active === true ? true : false,
+      name: form?.machineName,
+      t_id: form?.td_id,
+      serial_no: form?.serial_number,
+     
     };
 
     let req;
-    if (id) {
-      fd.id = id;
+    if (machineId) {
+      fd.id = machineId;
 
-      req = serviceUpdateRoles(fd);
+      req = serviceUpdatePaytmMachines(fd);
     } else {
-      req = serviceCreateRoles(fd);
+      req = serviceCreatePaytmMachines(fd);
     }
 
     req.then((res) => {
       if (!res.error) {
-        //  handleToggleSidePannel();
-        historyUtils.push(RouteName.USER_ROLES);
+        handleToggleSidePannel();
+        dispatch(
+        actionFetchPaytmMachines(1, {}, {
+        }))
+      
+      
       } else {
         SnackbarUtils.error(res.message);
       }
       setIsSubmitting(false);
     });
-  }, [form, isSubmitting, setIsSubmitting, id, permission, setPermissions]);
+  }, [form, isSubmitting, setIsSubmitting, machineId, permission, setPermissions]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
@@ -153,19 +145,19 @@ const useMachinesCreateHook = () => {
   const checkForSalaryInfo = (data, fieldName, errorArr) => {
     if (data) {
       // if (!id) return;
-      let filteredForm = { id: id ? id : "" };
+      let filteredForm = { id: machineId ? machineId : "" };
       filteredForm[fieldName] = data;
 
-      let req = serviceRolesCheckIsExist({
-        id: id ? id : "",
-        name: data,
+      let req = servicePaytmMachinesCheck({
+        id: machineId ? machineId : "",
+        t_id: data,
       });
 
       req.then((res) => {
         if (!res.error) {
           const errors = JSON.parse(JSON.stringify(errorArr));
           if (res.data.is_exists) {
-            errors[fieldName] = `Role  name already exist`;
+            errors[fieldName] = `Td id already exist`;
             setErrorData(errors);
           } else {
             delete errors[fieldName];
@@ -185,19 +177,13 @@ const useMachinesCreateHook = () => {
       let shouldRemoveError = true;
 
       const t = { ...form };
-      if (fieldName === "name") {
+      if (fieldName === "machineName") {
         t[fieldName] = text?.trimStart();
-      } else if (fieldName === "role_description") {
-        t[fieldName] = text?.trimStart();
-      } else if (fieldName === "role") {
-        if (!text || (isAlphaNum(text) && text.toString())) {
-          t[fieldName] = text;
-        }
-      } else {
+      }else {
         t[fieldName] = text;
       }
-      if (["role"].includes(fieldName)) {
-        if (fieldName === "role") {
+      if (["td_id"].includes(fieldName)) {
+        if (fieldName === "td_id") {
           checkSalaryInfoDebouncer(text, fieldName, errorData);
         }
       }
@@ -217,11 +203,11 @@ const useMachinesCreateHook = () => {
   );
 
   const handleDelete = useCallback(() => {
-    dispatch(actionDeleteRoles(id));
+    dispatch(actionDeleteRoles(machineId));
     // setIsDialog(false);
     // historyUtils.push("/product");
     historyUtils.push(RouteName.USER_ROLES);
-  }, [id]);
+  }, [machineId]);
 
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });
@@ -233,9 +219,8 @@ const useMachinesCreateHook = () => {
     changeTextData,
     onBlurHandler,
     handleSubmit,
-    permission,
-    permisionChangeHandler,
-    id,
+   
+    machineId,
     handleDelete,
   };
 };

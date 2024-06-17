@@ -30,18 +30,18 @@ const Machines = ({}) => {
     handleCreate,
     isCalling,
     configFilter,
-    warehouses,
+    id,
     handleToggleSidePannel,
   } = useMachinesHook({});
 
   const { isCorporateHR } = useAuthenticate();
   const {
-    present: data,
+     data,
     all: allData,
     currentPage,
     is_fetching: isFetching,
-  } = useSelector((state) => state?.userRoles);
-
+  } = useSelector((state) => state?.PaytmMachines);
+console.log(data)
   const renderStatus = useCallback((status) => {
     return <StatusPill status={status} />;
   }, []);
@@ -64,7 +64,7 @@ const Machines = ({}) => {
     return (
       <div>
         <div>
-          <span className={styles.title}>Add Machine</span>
+          <span className={styles.title}>{id ? "Update" :"Add"} Machine</span>
           <div className={styles.newLine} />
         </div>
       </div>
@@ -76,32 +76,26 @@ const Machines = ({}) => {
         key: "name",
         label: "MACHINE NAME",
         sortable: false,
-        render: (value, all) => <div>{renderFirstCell(all)}</div>,
+        render: (value, all) => <div>{all?.name || "N/A"}</div>,
       },
       {
         key: "td_id",
         label: "TD ID",
         sortable: false,
         render: (temp, all) => (
-          <div style={{ width: "15rem" }}>{all?.description || "N/A"}</div>
+          <div style={{ width: "15rem" }}>{all?.t_id}</div>
         ),
       },
       {
         key: "serial_number",
         label: "SERIAL NUMBER",
         sortable: false,
-        render: (temp, all) => (
-          <div style={{ width: "20rem" }}>
-            {all?.users?.length > 0
-              ? all?.users?.map((user, index) => (
-                  <span key={user.id}>
-                    {user.name}
-                    {index < all.users.length - 1 && ", "}
-                  </span>
-                ))
-              : "N/A"}
+        render: (temp, all) => 
+          <div >
+          {all?.serial_no || "N/A"
+          }
           </div>
-        ),
+        ,
       },
 
       {
@@ -114,7 +108,7 @@ const Machines = ({}) => {
               color="secondary"
               disabled={isCalling}
               onClick={() => {
-                // handleViewDetails(all);
+                 handleViewDetails(all);
               }}
             >
               <Edit fontSize={"small"} />
@@ -194,7 +188,7 @@ const Machines = ({}) => {
         side={"right"}
         arrowBack={true}
       >
-        <MachinesCreate isSidePanel={isSidePanel} />
+        <MachinesCreate isSidePanel={isSidePanel} handleToggleSidePannel={handleToggleSidePannel} machineId={id}/>
       </SidePanelComponent>
     </div>
   );

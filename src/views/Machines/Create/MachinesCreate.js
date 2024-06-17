@@ -7,18 +7,18 @@ import CustomTextField from "../../../components/FormFields/TextField/TextField.
 import historyUtils from "../../../libs/history.utils";
 import CustomSwitch from "../../../components/FormFields/CustomSwitch";
 import useMachinesCreateHook from "./MachinesCreateHook";
-const MachinesCreate = () => {
+const MachinesCreate = ({handleToggleSidePannel, isSidePanel, machineId}) => {
   const {
     form,
     errorData,
     changeTextData,
     onBlurHandler,
-    handleDelete,
-    permission,
+   
     handleSubmit,
     id,
-    permisionChangeHandler,
-  } = useMachinesCreateHook();
+   
+  } = useMachinesCreateHook({handleToggleSidePannel, isSidePanel, machineId});
+ 
   return (
  
 <div className={styles.container}>
@@ -63,6 +63,7 @@ const MachinesCreate = () => {
               isError={errorData?.serial_number}
               errorText={errorData?.serial_number}
               label={"Serial Number*"}
+              // type={"number"}
               value={form?.serial_number}
               onTextChange={(text) => {
                 changeTextData(text, "serial_number");
@@ -78,7 +79,7 @@ const MachinesCreate = () => {
        
         <div style={{ textAlign:"end", marginTop:"20px", marginRight:"10px"}}>
         <ButtonBase className={"createBtnreset"} onClick={handleSubmit}>
-           {id ? "Update" : " ADD"}
+           {machineId ? "Update" : " ADD"}
             </ButtonBase>
          
         </div>

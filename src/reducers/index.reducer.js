@@ -14,6 +14,7 @@ import CategoryReducer from "./Category.reducer";
 import SubcategoryReducer from "./Subcategory.reducer";
 import ProductReducer from "./Product.reducer";
 import UserRolesReducer from "./UserRoles.reducer";
+import MachinesReducer from "./Machines.reducer";
 
 const rootReducer = combineReducers({
   state: (state = {}) => state,
@@ -31,7 +32,8 @@ const rootReducer = combineReducers({
   category:CategoryReducer,
   subcategory:SubcategoryReducer,
   product:ProductReducer,
-  userRoles:UserRolesReducer
+  userRoles:UserRolesReducer,
+  PaytmMachines:MachinesReducer
 });
 
 export default rootReducer;

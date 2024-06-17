@@ -10,13 +10,18 @@ import {
 import historyUtils from "../../../libs/history.utils";
 import RouteName from "../../../routes/Route.name";
 import { actionFetchUserRoles, actionSetPageRoles } from "../../../actions/UserRoles.action";
+import { actionFetchPaytmMachines, actionSetPagePaytmMachines } from "../../../actions/Machines.action";
+import { useParams } from "react-router-dom/";
 
 const useMachinesHook= ({}) => {
   const [isSidePanel, setSidePanel] = useState(false);
   const [isCalling, setIsCalling] = useState(false);
   const [editData, setEditData] = useState(null);
+  const [machineId,setMachineId]=useState("")
   const dispatch = useDispatch();
   const { role } = useSelector((state) => state.auth);
+  const {id}=useParams();
+  console.log(id)
   const [listData, setListData] = useState({
     LOCATIONS: [],
     GRADES: [],
@@ -30,7 +35,7 @@ const useMachinesHook= ({}) => {
     is_fetching: isFetching,
     query,
     query_data: queryData,
-  } = useSelector((state) => state?.userRoles);
+  } = useSelector((state) => state?.PaytmMachines);
 
   useEffect(() => {
     // dispatch(actionFetchLocation());
@@ -38,7 +43,7 @@ const useMachinesHook= ({}) => {
 
   useEffect(() => {
     dispatch(
-      actionFetchUserRoles(1, sortingData, {
+      actionFetchPaytmMachines(1, sortingData, {
         query: isMountRef.current ? query : null,
         query_data: isMountRef.current ? queryData : null,
       })
@@ -48,7 +53,7 @@ const useMachinesHook= ({}) => {
 
   const handlePageChange = useCallback((type) => {
     console.log("_handlePageChange", type);
-    dispatch(actionSetPageRoles(type));
+    dispatch(actionSetPagePaytmMachines(type));
   }, []);
 
   const handleDataSave = useCallback(
@@ -101,7 +106,7 @@ const useMachinesHook= ({}) => {
       console.log(`handleSortOrderChange key:${row} order: ${order}`);
       dispatch(actionSetPageRoles(1));
       dispatch(
-        actionFetchUserRoles(
+        actionFetchPaytmMachines(
           1,
           { row, order },
           {
@@ -147,8 +152,9 @@ const useMachinesHook= ({}) => {
   );
 
   const handleViewDetails = useCallback((data) => {
-    historyUtils.push(RouteName.USER_ROLES_UPDATE + data?.id); //+data.id
-  }, []);
+    setSidePanel((e) => !e);
+    setMachineId(data?.id)
+  }, [setSidePanel, setMachineId]);
 
   const handleCreate = useCallback(() => {
     historyUtils.push(RouteName.LOCATIONS_CREATE);
@@ -180,7 +186,7 @@ const useMachinesHook= ({}) => {
        {label: 'Status', name: 'status', type: 'select', fields: ['INACTIVE', 'ACTIVE']},
     ];
   }, [listData, role]);
-
+console.log(machineId)
   return {
     handlePageChange,
     handleDataSave,
@@ -197,7 +203,8 @@ const useMachinesHook= ({}) => {
     isSidePanel,
     configFilter,
     handleCreate,
-    handleToggleSidePannel
+    handleToggleSidePannel,
+    id:machineId
   };
 };
 
