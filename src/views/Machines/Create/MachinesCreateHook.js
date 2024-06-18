@@ -1,19 +1,9 @@
-import React, { useCallback, useState, useEffect } from "react";
-import {
-  serviceCreateRoles,
-  serviceRolesCheckIsExist,
-  serviceRolesDetails,
-  serviceRolesPermissions,
-  serviceUpdateRoles,
-} from "../../../services/UserRoles.service";
-import { useParams } from "react-router-dom";
+import  { useCallback, useState, useEffect } from "react";
 import historyUtils from "../../../libs/history.utils";
 import SnackbarUtils from "../../../libs/SnackbarUtils";
 import RouteName from "../../../routes/Route.name";
-import constants from "../../../config/constants";
 import { actionDeleteRoles } from "../../../actions/UserRoles.action";
 import { useDispatch } from "react-redux";
-import { isAlpha, isAlphaNum, isAlphaNumeric } from "../../../libs/RegexUtils";
 import { useMemo } from "react";
 import debounce from "lodash.debounce";
 import {
@@ -23,11 +13,14 @@ import {
   serviceUpdatePaytmMachines,
 } from "../../../services/Machines.service";
 import { actionFetchPaytmMachines } from "../../../actions/Machines.action";
+import useDebounce from "../../../hooks/DebounceHook";
+
 const initialForm = {
   machineName: "",
   td_id: "",
   serial_number: "",
 };
+
 const useMachinesCreateHook = ({
   handleToggleSidePannel,
   isSidePanel,
@@ -36,7 +29,7 @@ const useMachinesCreateHook = ({
   const [form, setForm] = useState({ ...initialForm });
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const codeDebouncerUnicTdId = useDebounce(form?.td_id, 500);
   const [isLoading, setIsLoading] = useState(false);
  
 
@@ -46,7 +39,6 @@ const useMachinesCreateHook = ({
       serviceGetPaytmMachinesDetails({ id: machineId }).then((res) => {
         if (!res.error) {
           const data = res?.data?.details;
-
           setForm({
             ...form,
             machineName: data?.name,
@@ -150,36 +142,34 @@ const useMachinesCreateHook = ({
     [setErrorData, errorData]
   );
 
-  const checkForSalaryInfo = (data, fieldName, errorArr) => {
-    if (data) {
-      // if (!id) return;
-      let filteredForm = { id: machineId ? machineId : "" };
-      filteredForm[fieldName] = data;
 
-      let req = servicePaytmMachinesCheck({
+  const checkCodeValidationTId = useCallback(() => {
+    if (form?.td_id) {
+      servicePaytmMachinesCheck({
         id: machineId ? machineId : "",
-        t_id: data,
-      });
-
-      req.then((res) => {
+        t_id: form?.td_id,
+      }).then((res) => {
         if (!res.error) {
-          const errors = JSON.parse(JSON.stringify(errorArr));
+          const errors = JSON.parse(JSON.stringify(errorData));
           if (res.data.is_exists) {
-            errors[fieldName] = `Td id already exist`;
+            errors.td_id= "Td id already exist";
             setErrorData(errors);
           } else {
-            delete errors[fieldName];
+            delete errors.td_id;
             setErrorData(errors);
           }
         }
       });
     }
-  };
-  const checkSalaryInfoDebouncer = useMemo(() => {
-    return debounce((e, fieldName, errorArr) => {
-      checkForSalaryInfo(e, fieldName, errorArr);
-    }, 1000);
-  }, [checkForSalaryInfo]);
+  }, [errorData, setErrorData, form.td_id, machineId]);
+
+  useEffect(() => {
+    if (codeDebouncerUnicTdId) {
+      checkCodeValidationTId();
+    }
+  }, [codeDebouncerUnicTdId]);
+
+ 
   const changeTextData = useCallback(
     (text, fieldName) => {
       let shouldRemoveError = true;
@@ -190,11 +180,7 @@ const useMachinesCreateHook = ({
       } else {
         t[fieldName] = text;
       }
-      if (["td_id"].includes(fieldName)) {
-        if (fieldName === "td_id") {
-          checkSalaryInfoDebouncer(text, fieldName, errorData);
-        }
-      }
+   
       setForm(t);
       shouldRemoveError && removeError(fieldName);
     },
@@ -207,7 +193,7 @@ const useMachinesCreateHook = ({
         changeTextData(form?.[type].trim(), type);
       }
     },
-    [changeTextData]
+    [changeTextData, checkCodeValidationTId]
   );
 
   const handleDelete = useCallback(() => {

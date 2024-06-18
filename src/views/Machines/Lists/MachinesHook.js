@@ -1,15 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import {
-  actionCreateLocation,
-  actionDeleteLocation,
-  actionFetchLocation,
-  actionSetPageLocation,
-  actionUpdateLocation,
-} from "../../../actions/Location.action";
 import historyUtils from "../../../libs/history.utils";
 import RouteName from "../../../routes/Route.name";
-import { actionFetchUserRoles, actionSetPageRoles } from "../../../actions/UserRoles.action";
+import {  actionSetPageRoles } from "../../../actions/UserRoles.action";
 import { actionFetchPaytmMachines, actionSetPagePaytmMachines } from "../../../actions/Machines.action";
 import { useParams } from "react-router-dom/";
 
@@ -20,15 +13,9 @@ const useMachinesHook= ({}) => {
   const [machineId,setMachineId]=useState("")
   const dispatch = useDispatch();
   const { role } = useSelector((state) => state.auth);
-  const {id}=useParams();
-  console.log(id)
-  const [listData, setListData] = useState({
-    LOCATIONS: [],
-    GRADES: [],
-    DEPARTMENTS: [],
-    JOINING_CANDIDATES: [],
-    TRAINEE_EMPLOYEES: [],
-  });
+
+ 
+ 
   const isMountRef = useRef(false);
   const {
     sorting_data: sortingData,
@@ -37,9 +24,6 @@ const useMachinesHook= ({}) => {
     query_data: queryData,
   } = useSelector((state) => state?.PaytmMachines);
 
-  useEffect(() => {
-    // dispatch(actionFetchLocation());
-  }, []);
 
   useEffect(() => {
     dispatch(
@@ -52,42 +36,28 @@ const useMachinesHook= ({}) => {
   }, []);
 
   const handlePageChange = useCallback((type) => {
-    console.log("_handlePageChange", type);
+   
     dispatch(actionSetPagePaytmMachines(type));
   }, []);
-
-  const handleDataSave = useCallback(
-    (data, type) => {
-      // this.props.actionChangeStatus({...data, type: type});
-      if (type == "CREATE") {
-        dispatch(actionCreateLocation(data));
-      } else {
-        dispatch(actionUpdateLocation(data));
-      }
-      setSidePanel((e) => !e);
-      setEditData(null);
-    },
-    [setSidePanel, setEditData]
-  );
 
   const queryFilter = useCallback(
     (key, value) => {
       console.log("_queryFilter", key, value);
-      // dispatch(actionSetPageLocationRequests(1));
+    
       dispatch(
-        actionFetchUserRoles(1, sortingData, {
+        actionFetchPaytmMachines(1, sortingData, {
           query: key == "SEARCH_TEXT" ? value : query,
           query_data: key == "FILTER_DATA" ? value : queryData,
         })
       );
-      // dispatch(actionFetchLocation(1, sortingData))
+     
     },
     [sortingData, query, queryData]
   );
 
   const handleFilterDataChange = useCallback(
     (value) => {
-      console.log("_handleFilterDataChange", value);
+    
       queryFilter("FILTER_DATA", value);
     },
     [queryFilter]
@@ -95,7 +65,7 @@ const useMachinesHook= ({}) => {
 
   const handleSearchValueChange = useCallback(
     (value) => {
-      console.log("_handleSearchValueChange", value);
+     
       queryFilter("SEARCH_TEXT", value);
     },
     [queryFilter]
@@ -103,7 +73,7 @@ const useMachinesHook= ({}) => {
 
   const handleSortOrderChange = useCallback(
     (row, order) => {
-      console.log(`handleSortOrderChange key:${row} order: ${order}`);
+     
       dispatch(actionSetPageRoles(1));
       dispatch(
         actionFetchPaytmMachines(
@@ -125,7 +95,7 @@ const useMachinesHook= ({}) => {
 
   const handleDelete = useCallback(
     (id) => {
-      dispatch(actionDeleteLocation(id));
+     
       setSidePanel(false);
       setEditData(null);
     },
@@ -142,7 +112,8 @@ const useMachinesHook= ({}) => {
 
   const handleToggleSidePannel = useCallback(() => {
     setSidePanel((e) => !e);
-  }, [setSidePanel]);
+    setMachineId("")
+  }, [setSidePanel, setMachineId]);
 
   const handleSideToggle = useCallback(
     (data) => {
@@ -162,21 +133,7 @@ const useMachinesHook= ({}) => {
 
   const configFilter = useMemo(() => {
     return [
-      // {
-      //   label: "Location",
-      //   name: "location_id",
-      //   type: "selectObject",
-      //   custom: { extract: { id: "id", title: "name" } },
-      //   fields: listData?.LOCATIONS,
-      // },
-
-      // {
-      //   label: "Department",
-      //   name: "department_id",
-      //   type: "selectObject",
-      //   custom: { extract: { id: "id", title: "name" } },
-      //   fields: listData?.DEPARTMENTS,
-      // },
+    
       {
         label: "Created Date",
         options: { maxDate: new Date() },
@@ -185,11 +142,11 @@ const useMachinesHook= ({}) => {
       },
        {label: 'Status', name: 'status', type: 'select', fields: ['INACTIVE', 'ACTIVE']},
     ];
-  }, [listData, role]);
-console.log(machineId)
+  }, [ role]);
+
   return {
     handlePageChange,
-    handleDataSave,
+   
     handleFilterDataChange,
     handleSearchValueChange,
     handleRowSize,
@@ -204,7 +161,7 @@ console.log(machineId)
     configFilter,
     handleCreate,
     handleToggleSidePannel,
-    id:machineId
+    id:machineId,
   };
 };
 

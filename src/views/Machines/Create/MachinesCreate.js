@@ -1,11 +1,8 @@
 import React from "react";
-import { Button, ButtonBase, IconButton, Tooltip } from "@material-ui/core";
+import {  ButtonBase } from "@material-ui/core";
 import styles from "./Style.module.css";
-import { ArrowBackIos, Delete, Info } from "@material-ui/icons";
-import CustomTextField from "../../../components/FormFields/TextField/TextField.component";
 
-import historyUtils from "../../../libs/history.utils";
-import CustomSwitch from "../../../components/FormFields/CustomSwitch";
+import CustomTextField from "../../../components/FormFields/TextField/TextField.component";
 import useMachinesCreateHook from "./MachinesCreateHook";
 const MachinesCreate = ({handleToggleSidePannel, isSidePanel, machineId}) => {
   const {
@@ -13,10 +10,7 @@ const MachinesCreate = ({handleToggleSidePannel, isSidePanel, machineId}) => {
     errorData,
     changeTextData,
     onBlurHandler,
-   
     handleSubmit,
-    id,
-   
   } = useMachinesCreateHook({handleToggleSidePannel, isSidePanel, machineId});
  
   return (
@@ -50,9 +44,9 @@ const MachinesCreate = ({handleToggleSidePannel, isSidePanel, machineId}) => {
               onTextChange={(text) => {
                 changeTextData(text, "td_id");
               }}
-              onBlur={() => {
-                onBlurHandler("td_id");
-              }}
+              // onBlur={() => {
+              //   onBlurHandler("td_id");
+              // }}
            
             />
           </div>
@@ -75,9 +69,7 @@ const MachinesCreate = ({handleToggleSidePannel, isSidePanel, machineId}) => {
             />
           </div>
         </div>
-
-       
-        <div style={{ textAlign:"end", marginTop:"20px", marginRight:"10px"}}>
+        <div className={styles.actionButton} >
         <ButtonBase className={"createBtnreset"} onClick={handleSubmit}>
            {machineId ? "Update" : " ADD"}
             </ButtonBase>

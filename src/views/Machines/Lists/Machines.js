@@ -23,25 +23,23 @@ const Machines = ({}) => {
     handleEdit,
     handleFilterDataChange,
     handleSearchValueChange,
-    handleSideToggle,
     handleViewDetails,
-    editData,
     isSidePanel,
-    handleCreate,
     isCalling,
     configFilter,
     id,
     handleToggleSidePannel,
+   
   } = useMachinesHook({});
 
-  const { isCorporateHR } = useAuthenticate();
+
   const {
     data,
     all: allData,
     currentPage,
     is_fetching: isFetching,
   } = useSelector((state) => state?.PaytmMachines);
-  console.log(data);
+
   const renderStatus = useCallback((status) => {
     return <StatusPill status={status} />;
   }, []);
@@ -60,14 +58,14 @@ const Machines = ({}) => {
     return null;
   }, []);
 
-  const renderTile = () => {
+  const renderTile = useCallback(() => {
     return (
       <div>
         <span className={styles.title}>{id ? "Update" : "Add"} Machine</span>
         <div className={styles.newLine} />
       </div>
     );
-  };
+  },[id]);
   const tableStructure = useMemo(() => {
     return [
       {
