@@ -32,6 +32,7 @@ function EmployeeEditHook({ location }) {
     name_en: "",
     name_hi: "",
     doj: "",
+    dob:"",
     age: "",
     location_id: "",
     department_id: "",
@@ -50,7 +51,12 @@ function EmployeeEditHook({ location }) {
     aadhaar_front: "",
     uan_no:"",
     esi_no:"",
-    external_emp_code:""
+    external_emp_code:"",
+    bank_name: "",
+   
+    account_no:"",
+    bank_branch: "",
+    ifsc: "",
   };
   const [form, setForm] = useState({ ...initialForm });
   const [errorData, setErrorData] = useState({});
@@ -125,7 +131,7 @@ function EmployeeEditHook({ location }) {
       });
     });
   }, [id]);
-console.log(form?.esi_no?.length)
+
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
     let required = [
@@ -234,6 +240,10 @@ console.log(form?.esi_no?.length)
         }
       }else if (fieldName === "uan_no") {
         if (!text ||  (isAlphaNum(text) && text?.length <= 12)) {
+          t[fieldName] = text;
+        }
+      }else if (fieldName === "ifsc") {
+        if (text.length < 12 && isAlphaNum(text)) {
           t[fieldName] = text;
         }
       }else if (fieldName === "esi_no") {

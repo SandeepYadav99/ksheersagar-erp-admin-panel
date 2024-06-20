@@ -35,6 +35,7 @@ function EmployeeListCreateHook({ location }) {
     name_en: "",
     name_hi: "",
     doj: "",
+    dob: "",
     age: "",
     location_id: "",
     department_id: "",
@@ -54,6 +55,10 @@ function EmployeeListCreateHook({ location }) {
     uan_no: "",
     esi_no: "",
     external_emp_code: "",
+    bank_name: "",
+    account_no: "",
+    bank_branch: "",
+    ifsc: "",
   };
   const [form, setForm] = useState({ ...initialForm });
   const [errorData, setErrorData] = useState({});
@@ -232,13 +237,17 @@ function EmployeeListCreateHook({ location }) {
           t[fieldName] = text;
         }
       } else if (fieldName === "uan_no") {
-        if (!text ||  (isAlphaNum(text) && text?.length <= 12)) {
+        if (!text || (isAlphaNum(text) && text?.length <= 12)) {
           t[fieldName] = text;
         }
       } else if (fieldName === "esi_no") {
         // if (text >= 0 && text?.length <= 17) {
-          t[fieldName] = text;
+        t[fieldName] = text;
         // }
+      } else if (fieldName === "ifsc") {
+        if (text.length < 12 && isAlphaNum(text)) {
+          t[fieldName] = text;
+        }
       } else {
         t[fieldName] = text;
       }
@@ -248,7 +257,7 @@ function EmployeeListCreateHook({ location }) {
     [removeError, form, setForm]
   );
   const checkCodeValidation = useCallback(() => {
-    if(form?.emp_code?.length <= 3) return;
+    if (form?.emp_code?.length <= 3) return;
     if (form?.emp_code) {
       serviceCheckEmployeeExists({
         code: form?.emp_code,

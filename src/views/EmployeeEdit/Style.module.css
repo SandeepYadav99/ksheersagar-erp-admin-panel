@@ -15,6 +15,10 @@
   color: grey;
   margin-bottom: 5px;
 }
+.titleBank{
+  margin-top: 10px !important;
+  font-weight: 600  !important;
+}
 .headerContainer {
   display: flex;
   justify-content: space-between;

@@ -20,6 +20,10 @@
   justify-content: space-between;
   align-items: center;
 }
+.titleBank{
+  margin-top: 10px !important;
+  font-weight: 600  !important;
+}
 .firstCellFlex {
   display: flex;
   align-items: center;

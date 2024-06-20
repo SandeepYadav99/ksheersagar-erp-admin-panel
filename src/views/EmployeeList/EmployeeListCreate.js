@@ -173,8 +173,7 @@ const EmployeeListCreate = ({ location }) => {
           </div>
         </div>
         <div className={"formFlex"}>
-
-        <div className={"formGroup"}>
+          <div className={"formGroup"}>
             {" "}
             <CustomTextField
               // type="number"
@@ -188,6 +187,19 @@ const EmployeeListCreate = ({ location }) => {
               onBlur={() => {
                 onBlurHandler("external_emp_code");
               }}
+            />
+          </div>
+          <div className={"formGroup"}>
+            {" "}
+            <CustomDatePicker
+              clearable
+              label={"DOB"}
+              maxDate={new Date()}
+              onChange={(date) => {
+                changeTextData(date, "dob");
+              }}
+              value={form?.dob}
+              isError={errorData?.dob}
             />
           </div>
         </div>
@@ -475,7 +487,7 @@ const EmployeeListCreate = ({ location }) => {
               }}
             />
           </div>
-      <div className={"formGroup"}></div>
+          <div className={"formGroup"}></div>
         </div>
         <div className={"formFlex"}>
           <div className={styles.adharBack}>
@@ -524,6 +536,72 @@ const EmployeeListCreate = ({ location }) => {
               />
               {/* <div>Upload Aadhar Back</div> */}
             </div>
+          </div>
+        </div>
+        <div className={"formFlex"}>
+          <div className={"formGroup"}>
+            <div className={styles.titleBank}>Bank Details</div>
+          </div>
+        </div>
+        <div className={"formFlex"}>
+          <div className={"formGroup"}>
+            <CustomTextField
+              isError={errorData?.bank_name}
+              errorText={errorData?.bank_name}
+              label={"Bank Name"}
+              value={form?.bank_name}
+              onTextChange={(text) => {
+                changeTextData(text, "bank_name");
+              }}
+              onBlur={() => {
+                onBlurHandler("bank_name");
+              }}
+            />
+          </div>
+          <div className={"formGroup"}>
+            <CustomTextField
+              type="number"
+              isError={errorData?.account_no}
+              errorText={errorData?.account_no}
+              label={"A/c No"}
+              value={form?.account_no}
+              onTextChange={(text) => {
+                changeTextData(text, "account_no");
+              }}
+              onBlur={() => {
+                onBlurHandler("account_no");
+              }}
+            />
+          </div>
+        </div>
+        <div className={"formFlex"}>
+          <div className={"formGroup"}>
+            <CustomTextField
+              isError={errorData?.bank_branch}
+              errorText={errorData?.bank_branch}
+              label={"Branch"}
+              value={form?.bank_branch}
+              onTextChange={(text) => {
+                changeTextData(text, "bank_branch");
+              }}
+              onBlur={() => {
+                onBlurHandler("bank_branch");
+              }}
+            />
+          </div>
+          <div className={"formGroup"}>
+            <CustomTextField
+              isError={errorData?.ifsc}
+              errorText={errorData?.ifsc}
+              label={"IFSC"}
+              value={form?.ifsc}
+              onTextChange={(text) => {
+                changeTextData(text, "ifsc");
+              }}
+              onBlur={() => {
+                onBlurHandler("ifsc");
+              }}
+            />
           </div>
         </div>
       </div>
