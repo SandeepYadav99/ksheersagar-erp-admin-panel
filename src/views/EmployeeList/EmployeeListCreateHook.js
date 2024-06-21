@@ -127,7 +127,7 @@ function EmployeeListCreateHook({ location }) {
       "emp_code",
       "name_en",
       "name_hi",
-      // "doj",
+      "doj",
       "location_id",
       "password",
       // "pin",
@@ -163,6 +163,9 @@ function EmployeeListCreateHook({ location }) {
     }
     if (form?.uan_no && form?.uan_no?.length < 12) {
       errors["uan_no"] = "Min 12 digit required";
+    }
+    if(form?.ifsc && form?.ifsc?.length !== 11){
+      errors.ifsc = true
     }
     // if (form?.esi_no && !validateESI(form?.esi_no)) {
     //   errors["esi_no"] = "Min 17 digit required";
@@ -316,6 +319,9 @@ function EmployeeListCreateHook({ location }) {
   const submitToServer = useCallback(() => {
     if (!isSubmitting) {
       setIsSubmitting(true);
+      if(!form?.dob){
+        delete form?.dob
+      }
       const fd = new FormData();
       Object.keys(form).forEach((key) => {
         LogUtils.log("key", key);

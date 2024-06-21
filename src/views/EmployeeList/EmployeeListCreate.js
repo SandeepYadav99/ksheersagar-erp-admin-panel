@@ -162,7 +162,7 @@ const EmployeeListCreate = ({ location }) => {
           <div className={"formGroup"}>
             <CustomDatePicker
               clearable
-              label={"DOJ"}
+              label={"DOJ*"}
               maxDate={new Date()}
               onChange={(date) => {
                 changeTextData(date, "doj");
@@ -224,7 +224,7 @@ const EmployeeListCreate = ({ location }) => {
             <CustomSelectField
               isError={errorData?.gender}
               errorText={errorData?.gender}
-              label={"Gender"}
+              label={"Gender*"}
               value={form?.gender}
               handleChange={(value) => {
                 changeTextData(value, "gender");
@@ -232,6 +232,7 @@ const EmployeeListCreate = ({ location }) => {
             >
               <MenuItem value="MALE">Male</MenuItem>
               <MenuItem value="FEMALE">Female</MenuItem>
+              <MenuItem value="OTHER">Other</MenuItem>
             </CustomSelectField>
           </div>
         </div>
@@ -376,7 +377,7 @@ const EmployeeListCreate = ({ location }) => {
             <CustomSelectField
               isError={errorData?.role_id}
               errorText={errorData?.role_id}
-              label={"Role"}
+              label={"Role*"}
               value={form?.role_id}
               handleChange={(value) => {
                 changeTextData(value, "role_id");
@@ -477,7 +478,7 @@ const EmployeeListCreate = ({ location }) => {
               type="number"
               isError={errorData?.pin}
               errorText={errorData?.pin}
-              label={"Pin*"}
+              label={"Pin"}
               value={form?.pin}
               onTextChange={(text) => {
                 changeTextData(text, "pin");

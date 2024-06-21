@@ -43,7 +43,7 @@ const useMachinesCreateHook = ({
             machineName: data?.name,
             td_id: data?.t_id,
             serial_number: data?.serial_no,
-            status:data?.status
+            status:data?.status === "ACTIVE" ? true : false 
           });
         } else {
           SnackbarUtils.error(res?.message);
@@ -88,7 +88,7 @@ const useMachinesCreateHook = ({
       name: form?.machineName,
       t_id: form?.td_id,
       serial_no: form?.serial_number,
-      is_active:form?.status === "ACTIVE" ? true : false 
+      is_active:form?.status
     };
 
     let req;
@@ -109,7 +109,7 @@ const useMachinesCreateHook = ({
       }
       setIsSubmitting(false);
     });
-  }, [form, isSubmitting, setIsSubmitting, machineId]);
+  }, [form, isSubmitting, setIsSubmitting, machineId, handleToggleSidePannel]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();

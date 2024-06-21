@@ -156,7 +156,7 @@ const EmployeeEdit = ({ location }) => {
           <div className={"formGroup"}>
             <CustomDatePicker
               clearable
-              label={"DOJ"}
+              label={"DOJ*"}
               maxDate={new Date()}
               onChange={(date) => {
                 changeTextData(date, "doj");
@@ -226,6 +226,7 @@ const EmployeeEdit = ({ location }) => {
             >
               <MenuItem value="MALE">Male</MenuItem>
               <MenuItem value="FEMALE">Female</MenuItem>
+              <MenuItem value="OTHER">Other</MenuItem>
             </CustomSelectField>
           </div>
         </div>
@@ -395,7 +396,7 @@ const EmployeeEdit = ({ location }) => {
               type="number"
               isError={errorData?.pin}
               errorText={errorData?.pin}
-              label={"Pin*"}
+              label={"Pin"}
               value={form?.pin}
               onTextChange={(text) => {
                 changeTextData(text, "pin");

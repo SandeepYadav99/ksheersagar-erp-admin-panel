@@ -170,7 +170,9 @@ function EmployeeEditHook({ location }) {
     if (form?.uan_no && form?.uan_no?.length < 12) {
       errors["uan_no"] = "Min 12 digit required";
     }
-    
+    if(form?.ifsc && form?.ifsc?.length !== 11){
+      errors.ifsc = true
+    }
     // if (form?.esi_no && !validateESI(form?.esi_no)) {
     //   errors["esi_no"] = "Min 17 digit required";
     // }
@@ -323,6 +325,10 @@ function EmployeeEditHook({ location }) {
     if (!isSubmitting) {
       setIsSubmitting(true);
       const fd = new FormData();
+    
+      if(!form?.dob){
+        delete form?.dob
+      }
       Object.keys(form).forEach((key) => {
         LogUtils.log("key", key);
         if (key !== "is_address_same") {
