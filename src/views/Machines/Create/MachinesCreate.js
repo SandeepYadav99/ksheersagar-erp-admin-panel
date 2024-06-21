@@ -1,22 +1,23 @@
 import React from "react";
-import {  ButtonBase } from "@material-ui/core";
+import { ButtonBase, CircularProgress } from "@material-ui/core";
 import styles from "./Style.module.css";
-
 import CustomTextField from "../../../components/FormFields/TextField/TextField.component";
 import useMachinesCreateHook from "./MachinesCreateHook";
-const MachinesCreate = ({handleToggleSidePannel, isSidePanel, machineId}) => {
+import CustomSwitch from "../../../components/FormFields/CustomSwitch";
+
+const MachinesCreate = ({ handleToggleSidePannel, isSidePanel, machineId }) => {
   const {
     form,
     errorData,
     changeTextData,
     onBlurHandler,
     handleSubmit,
-  } = useMachinesCreateHook({handleToggleSidePannel, isSidePanel, machineId});
- 
+    isSubmitting
+  } = useMachinesCreateHook({ handleToggleSidePannel, isSidePanel, machineId });
+
   return (
- 
-<div className={styles.container}>
-      <div >
+    <div className={styles.container}>
+    
         <div className={"formFlex"} style={{ alignItems: "center" }}>
           <div className={"formGroup"}>
             <CustomTextField
@@ -47,7 +48,6 @@ const MachinesCreate = ({handleToggleSidePannel, isSidePanel, machineId}) => {
               // onBlur={() => {
               //   onBlurHandler("td_id");
               // }}
-           
             />
           </div>
         </div>
@@ -65,18 +65,39 @@ const MachinesCreate = ({handleToggleSidePannel, isSidePanel, machineId}) => {
               onBlur={() => {
                 onBlurHandler("serial_number");
               }}
-           
             />
           </div>
         </div>
-        <div className={styles.actionButton} >
-        <ButtonBase className={"createBtnreset"} onClick={handleSubmit}>
-           {machineId ? "Update" : " ADD"}
-            </ButtonBase>
-         
+        <div className={"headerFlex"}>
+          <h4 className={"infoTitle"}>
+            <div className={"heading"}>Status</div>
+          </h4>
+        </div>
+
+        <div className={"formFlex"}>
+          <div className={"formGroup"}>
+            <CustomSwitch
+              value={form?.status}
+              handleChange={() => {
+                changeTextData(!form?.status, "status");
+              }}
+              label={form?.status ? `Active` : `Inactive`}
+            />
+          </div>
+        </div>
+        <div className={styles.actionButton}>
+          <ButtonBase className={"createBtnreset"} onClick={handleSubmit} >
+            {isSubmitting ? (
+              <CircularProgress color="success" size="20px" />
+            ) : machineId ? (
+              "Update"
+            ) : (
+              " ADD"
+            )}
+          </ButtonBase>
         </div>
       </div>
-      </div>
+   
   );
 };
 

@@ -1,11 +1,10 @@
-import  { useCallback, useState, useEffect } from "react";
+import { useCallback, useState, useEffect } from "react";
 import historyUtils from "../../../libs/history.utils";
 import SnackbarUtils from "../../../libs/SnackbarUtils";
 import RouteName from "../../../routes/Route.name";
 import { actionDeleteRoles } from "../../../actions/UserRoles.action";
 import { useDispatch } from "react-redux";
-import { useMemo } from "react";
-import debounce from "lodash.debounce";
+
 import {
   serviceCreatePaytmMachines,
   serviceGetPaytmMachinesDetails,
@@ -19,6 +18,7 @@ const initialForm = {
   machineName: "",
   td_id: "",
   serial_number: "",
+  status:true
 };
 
 const useMachinesCreateHook = ({
@@ -31,7 +31,6 @@ const useMachinesCreateHook = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const codeDebouncerUnicTdId = useDebounce(form?.td_id, 500);
   const [isLoading, setIsLoading] = useState(false);
- 
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -44,6 +43,7 @@ const useMachinesCreateHook = ({
             machineName: data?.name,
             td_id: data?.t_id,
             serial_number: data?.serial_no,
+            status:data?.status
           });
         } else {
           SnackbarUtils.error(res?.message);
@@ -60,7 +60,7 @@ const useMachinesCreateHook = ({
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = ["td_id", "serial_number"];
+    let required = ["td_id", "serial_number", "machineName"];
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -88,6 +88,7 @@ const useMachinesCreateHook = ({
       name: form?.machineName,
       t_id: form?.td_id,
       serial_no: form?.serial_number,
+      is_active:form?.status === "ACTIVE" ? true : false 
     };
 
     let req;
@@ -108,13 +109,7 @@ const useMachinesCreateHook = ({
       }
       setIsSubmitting(false);
     });
-  }, [
-    form,
-    isSubmitting,
-    setIsSubmitting,
-    machineId,
- 
-  ]);
+  }, [form, isSubmitting, setIsSubmitting, machineId]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
@@ -125,13 +120,7 @@ const useMachinesCreateHook = ({
     }
 
     await submitToServer();
-  }, [
-    checkFormValidation,
-    setErrorData,
-    form,
-    errorData,
-    
-  ]);
+  }, [checkFormValidation, setErrorData, form, errorData]);
 
   const removeError = useCallback(
     (title) => {
@@ -142,7 +131,6 @@ const useMachinesCreateHook = ({
     [setErrorData, errorData]
   );
 
-
   const checkCodeValidationTId = useCallback(() => {
     if (form?.td_id) {
       servicePaytmMachinesCheck({
@@ -152,7 +140,7 @@ const useMachinesCreateHook = ({
         if (!res.error) {
           const errors = JSON.parse(JSON.stringify(errorData));
           if (res.data.is_exists) {
-            errors.td_id= "Td id already exist";
+            errors.td_id = "Td id already exist";
             setErrorData(errors);
           } else {
             delete errors.td_id;
@@ -169,7 +157,6 @@ const useMachinesCreateHook = ({
     }
   }, [codeDebouncerUnicTdId]);
 
- 
   const changeTextData = useCallback(
     (text, fieldName) => {
       let shouldRemoveError = true;
@@ -180,7 +167,7 @@ const useMachinesCreateHook = ({
       } else {
         t[fieldName] = text;
       }
-   
+
       setForm(t);
       shouldRemoveError && removeError(fieldName);
     },
@@ -202,7 +189,6 @@ const useMachinesCreateHook = ({
     // historyUtils.push("/product");
     historyUtils.push(RouteName.USER_ROLES);
   }, [machineId]);
- 
 
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });
@@ -215,9 +201,10 @@ const useMachinesCreateHook = ({
     changeTextData,
     onBlurHandler,
     handleSubmit,
-
+    isLoading,
     machineId,
     handleDelete,
+    isSubmitting
   };
 };
 

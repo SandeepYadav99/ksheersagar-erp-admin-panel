@@ -29,9 +29,7 @@ const Machines = ({}) => {
     configFilter,
     id,
     handleToggleSidePannel,
-   
   } = useMachinesHook({});
-
 
   const {
     data,
@@ -65,14 +63,14 @@ const Machines = ({}) => {
         <div className={styles.newLine} />
       </div>
     );
-  },[id]);
+  }, [id]);
   const tableStructure = useMemo(() => {
     return [
       {
         key: "name",
         label: "MACHINE NAME",
         sortable: false,
-        render: (value, all) => <div>{all?.name || "N/A"}</div>,
+        render: (value, all) => <div>{all?.name}</div>,
       },
       {
         key: "td_id",
@@ -86,9 +84,14 @@ const Machines = ({}) => {
         key: "serial_number",
         label: "SERIAL NUMBER",
         sortable: false,
-        render: (temp, all) => <div>{all?.serial_no || "N/A"}</div>,
+        render: (temp, all) => <div>{all?.serial_no}</div>,
       },
-
+      {
+        key: "status",
+        label: "STATUS",
+        sortable: false,
+        render: (temp, all) => <div>{<StatusPill status={all?.status} />}</div>,
+      },
       {
         key: "user_id",
         label: "Action",

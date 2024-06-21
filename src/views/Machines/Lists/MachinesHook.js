@@ -4,7 +4,7 @@ import historyUtils from "../../../libs/history.utils";
 import RouteName from "../../../routes/Route.name";
 import {  actionSetPageRoles } from "../../../actions/UserRoles.action";
 import { actionFetchPaytmMachines, actionSetPagePaytmMachines } from "../../../actions/Machines.action";
-import { useParams } from "react-router-dom/";
+
 
 const useMachinesHook= ({}) => {
   const [isSidePanel, setSidePanel] = useState(false);
