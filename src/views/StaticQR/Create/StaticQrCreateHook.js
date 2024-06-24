@@ -88,7 +88,10 @@ const useStaticQrCreateHook = ({
         errors[val] = true;
       }
     });
-
+    if (form?.upi_id && isUpiID(form?.upi_id)) {
+      errors.upi_id = true;
+      SnackbarUtils.error("Invalid upi id ");
+    }
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
         delete errors[key];
@@ -103,7 +106,6 @@ const useStaticQrCreateHook = ({
       setIsSubmitting(true);
     }
 
-   
     let req;
     if (qrId) {
       req = serviceUpdateStaticQr({ ...form, id: qrId });
@@ -145,7 +147,7 @@ const useStaticQrCreateHook = ({
   const checkCodeValidationMId = useCallback(() => {
     if (form?.code) {
       serviceStaticQrCheck({
-        id: qrId ? qrId : "",
+        id: qrId,
         code: form?.code,
       }).then((res) => {
         if (!res.error) {
@@ -175,10 +177,10 @@ const useStaticQrCreateHook = ({
       const t = { ...form };
       if (fieldName === "name") {
         t[fieldName] = text?.trimStart();
-      }else if(fieldName === "upi_id"){
-        if(!isUpiID(text)){
-          t[fieldName]=text;
-        }
+      } else if (fieldName === "upi_id") {
+        // if(!isUpiID(text)){
+        t[fieldName] = text;
+        // }
       } else {
         t[fieldName] = text;
       }
