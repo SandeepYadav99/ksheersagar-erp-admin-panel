@@ -23,7 +23,6 @@ import UserRoleList from "../views/UserRoles/List/UserRoleList";
 import UserRolesCreate from "../views/UserRoles/Create/UserRolesCreate";
 import Machines from "../views/Machines/Lists/Machines";
 import Dashboard from "../views/dashboard/Dashboard";
-// import StaticQr from "../views/StaticQR/Lists/StaticQr";
 const NewDashboard = lazy(() => import("../views/dashboard/NewDashboard.view"));
 const LocationList = lazy(() =>
   import("../views/Locations/Location/LocationList.container")
