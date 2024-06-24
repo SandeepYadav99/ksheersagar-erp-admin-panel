@@ -21,6 +21,7 @@ import {
   serviceUpdateStaticQr,
 } from "../../../services/StaticQr.service";
 import { actionFetchStaticQr } from "../../../actions/StaticQr.action";
+import { isUpiID } from "../../../libs/RegexUtils";
 
 const initialForm = {
   name: "",
@@ -102,13 +103,7 @@ const useStaticQrCreateHook = ({
       setIsSubmitting(true);
     }
 
-    // let fd = {
-    //   name: form?.name,
-    //   upi_id: form?.upi_id,
-    //   code: form?.code,
-    //   location_id: form?.location_id,
-    // };
-
+   
     let req;
     if (qrId) {
       req = serviceUpdateStaticQr({ ...form, id: qrId });
@@ -178,8 +173,12 @@ const useStaticQrCreateHook = ({
       let shouldRemoveError = true;
 
       const t = { ...form };
-      if (fieldName === "machineName") {
+      if (fieldName === "name") {
         t[fieldName] = text?.trimStart();
+      }else if(fieldName === "upi_id"){
+        if(!isUpiID(text)){
+          t[fieldName]=text;
+        }
       } else {
         t[fieldName] = text;
       }

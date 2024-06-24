@@ -20,6 +20,10 @@ const isAlpha = (value) => {
     return /^[a-zA-Z ]*$/.test(value);
 }
 
+const isUpiID =(value)=>{
+    return /^[a-zA-Z0-9._-]+@[a-zA-Z]{3,}\.[a-zA-Z]{2,}$/.test(value)
+}
+
 const isNum = (value) => {
     return /^[0-9]*$/.test(value);
 }
@@ -89,5 +93,6 @@ export {
     validateUAN,
     validateESI,
     isAlphaNumeric,
+    isUpiID
    
 };
