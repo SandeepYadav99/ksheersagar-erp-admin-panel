@@ -71,7 +71,7 @@ const StaticQr = ({}) => {
         key: "upi_id",
         label: "UPI ID",
         sortable: false,
-        render: (value, all) => <div>{all?.name || "N/A"}</div>,
+        render: (value, all) => <div>{all?.upi_id || "N/A"}</div>,
       },
       {
         key: "location",
