@@ -88,7 +88,8 @@ const useStaticQrCreateHook = ({
         errors[val] = true;
       }
     });
-    if (!form?.upi_id || !isUpiID(form?.upi_id)) {
+
+    if (form?.upi_id && !isUpiID(form?.upi_id)) {
       errors.upi_id = true;
       SnackbarUtils.error("Invalid upi id ");
     }
