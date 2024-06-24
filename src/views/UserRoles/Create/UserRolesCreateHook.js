@@ -31,6 +31,7 @@ const useUserRolesCreateHook = () => {
   const [permissionUpdate, setPermissionsUpdate] = useState(null);
   const { id } = useParams();
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (id) {
       serviceRolesDetails({ id: id }).then((res) => {
