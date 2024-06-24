@@ -45,6 +45,7 @@ const useMachinesCreateHook = ({
             machineName: data?.name,
             td_id: data?.t_id,
             serial_number: data?.serial_no,
+            location_id:data?.location.id,
             status: data?.status === "ACTIVE" ? true : false,
           });
         } else {

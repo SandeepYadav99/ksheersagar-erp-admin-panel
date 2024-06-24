@@ -23,6 +23,7 @@ import EmployeeEdit from "../views/EmployeeEdit/EmployeeEdit.view";
 import UserRoleList from "../views/UserRoles/List/UserRoleList";
 import UserRolesCreate from "../views/UserRoles/Create/UserRolesCreate"
 import Machines from "../views/Machines/Lists/Machines";
+import Dashboard from "../views/dashboard/Dashboard";
 const NewDashboard = lazy(() => import("../views/dashboard/NewDashboard.view"));
 const LocationList = lazy(() =>
   import("../views/Locations/Location/LocationList.container")
