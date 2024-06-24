@@ -10,7 +10,7 @@ export default {
   LOCATIONS_CREATE: "/locations/create",
   LOCATIONS_UPDATE: "/locations/update/",
   LOCATIONS_DETAILS: "/locations/details/",
-  MACHINES: "/Machines",
+  MACHINES: "/machines",
   DEPARTMENT: "/department",
   DEPARTMENT_CREATE: "/department/create",
   DEPARTMENT_UPDATE: "/department/update/",
@@ -30,4 +30,5 @@ export default {
   USER_ROLES: "/roles/",
   USER_ROLES_CREATE: "/roles/create",
   USER_ROLES_UPDATE: "/roles/update/",
+   STATIC_QR:"/static/qr"
 };

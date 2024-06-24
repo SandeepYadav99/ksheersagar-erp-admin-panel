@@ -19,15 +19,16 @@ import LocationDetail from "../views/Locations/LocationDetail/LocationDetail.vie
 import EmployeeDetail from "../views/EmployeeDetail/EmployeeDetail.view";
 import EmployeeEdit from "../views/EmployeeEdit/EmployeeEdit.view";
 
-
 import UserRoleList from "../views/UserRoles/List/UserRoleList";
-import UserRolesCreate from "../views/UserRoles/Create/UserRolesCreate"
+import UserRolesCreate from "../views/UserRoles/Create/UserRolesCreate";
 import Machines from "../views/Machines/Lists/Machines";
 import Dashboard from "../views/dashboard/Dashboard";
+// import StaticQr from "../views/StaticQR/Lists/StaticQr";
 const NewDashboard = lazy(() => import("../views/dashboard/NewDashboard.view"));
 const LocationList = lazy(() =>
   import("../views/Locations/Location/LocationList.container")
 );
+const StaticQr = lazy(() => import("../views/StaticQR/Lists/StaticQr"));
 
 const Roles = Constants.ROLES;
 
@@ -50,7 +51,6 @@ const dashboardRoutes = [
     is_sidebar: true,
     is_protect: true,
     should_regex: true,
-
 
     // roles: [Roles.ADMIN, Roles.RECRUITER, Roles.CORPORATE_HR],
   },
@@ -105,8 +105,8 @@ const dashboardRoutes = [
     icon: DashboardOutlined,
     component: EmployeeListCreate,
     is_sidebar: false,
-     is_protect: true,
-     should_regex: false,
+    is_protect: true,
+    should_regex: false,
     // roles: [Roles.ADMIN, Roles.RECRUITER, Roles.CORPORATE_HR],
   },
   {
@@ -152,7 +152,7 @@ const dashboardRoutes = [
     parent: "masters",
     // roles: [Roles.ADMIN, Roles.CORPORATE_HR],
   },
- 
+
   {
     path: `${RouteName.LOCATIONS_DETAILS}:id`,
     sidebarName: "Location Detail",
@@ -162,7 +162,7 @@ const dashboardRoutes = [
     is_sidebar: false,
     is_protect: true,
     // roles: [Roles.ADMIN, Roles.CORPORATE_HR],
-},
+  },
   {
     path: RouteName.DEPARTMENT,
     sidebarName: "Departments",
@@ -181,6 +181,18 @@ const dashboardRoutes = [
     navbarName: "Machines",
     icon: PeopleOutlined,
     component: Machines,
+    is_sidebar: true,
+    is_protect: true,
+    should_regex: true,
+    parent: "masters",
+    // roles: [Roles.ADMIN, Roles.CORPORATE_HR],
+  },
+  {
+    path: RouteName.STATIC_QR,
+    sidebarName: "Static QR",
+    navbarName: "Static QR",
+    icon: PeopleOutlined,
+    component: StaticQr,
     is_sidebar: true,
     is_protect: true,
     should_regex: true,
@@ -263,8 +275,6 @@ const dashboardRoutes = [
     is_sidebar: false,
   },
 
-
-
   // {
   //   path: `${RouteName.PRODUCT_LIST}:id`,
   //   sidebarName: "Products",
@@ -277,7 +287,6 @@ const dashboardRoutes = [
   //   parent: "inventory",
   //   // roles: [Roles.ADMIN, Roles.CORPORATE_HR],
   // },
-
 ];
 
 export default dashboardRoutes;
