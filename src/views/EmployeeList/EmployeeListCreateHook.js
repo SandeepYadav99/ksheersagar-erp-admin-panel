@@ -319,9 +319,7 @@ function EmployeeListCreateHook({ location }) {
   const submitToServer = useCallback(() => {
     if (!isSubmitting) {
       setIsSubmitting(true);
-      if(!form?.dob){
-        delete form?.dob
-      }
+   
       const fd = new FormData();
       Object.keys(form).forEach((key) => {
         LogUtils.log("key", key);

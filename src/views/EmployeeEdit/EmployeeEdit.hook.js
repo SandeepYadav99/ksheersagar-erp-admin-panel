@@ -326,9 +326,7 @@ function EmployeeEditHook({ location }) {
       setIsSubmitting(true);
       const fd = new FormData();
     
-      if(!form?.dob){
-        delete form?.dob
-      }
+     
       Object.keys(form).forEach((key) => {
         LogUtils.log("key", key);
         if (key !== "is_address_same") {
