@@ -13,12 +13,14 @@ import {
 } from "../../../services/Machines.service";
 import { actionFetchPaytmMachines } from "../../../actions/Machines.action";
 import useDebounce from "../../../hooks/DebounceHook";
+import { serviceGetList } from "../../../services/Common.service";
 
 const initialForm = {
   machineName: "",
   td_id: "",
   serial_number: "",
-  status:true
+  location_id: "",
+  status: true,
 };
 
 const useMachinesCreateHook = ({
@@ -31,7 +33,7 @@ const useMachinesCreateHook = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const codeDebouncerUnicTdId = useDebounce(form?.td_id, 500);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [listData, setListData] = useState({ LOCATIONS: [] });
   const dispatch = useDispatch();
   useEffect(() => {
     if (machineId) {
@@ -43,7 +45,7 @@ const useMachinesCreateHook = ({
             machineName: data?.name,
             td_id: data?.t_id,
             serial_number: data?.serial_no,
-            status:data?.status === "ACTIVE" ? true : false 
+            status: data?.status === "ACTIVE" ? true : false,
           });
         } else {
           SnackbarUtils.error(res?.message);
@@ -58,9 +60,17 @@ const useMachinesCreateHook = ({
     }
   }, [isSidePanel]);
 
+  useEffect(() => {
+    serviceGetList(["LOCATIONS"]).then((res) => {
+      if (!res.error) {
+        setListData(res.data);
+      }
+    });
+  }, []);
+
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = ["td_id", "serial_number", "machineName"];
+    let required = ["td_id", "serial_number", "machineName", "location_id"];
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -88,7 +98,8 @@ const useMachinesCreateHook = ({
       name: form?.machineName,
       t_id: form?.td_id,
       serial_no: form?.serial_number,
-      is_active:form?.status
+      is_active: form?.status,
+      location_id:form?.location_id,
     };
 
     let req;
@@ -204,7 +215,8 @@ const useMachinesCreateHook = ({
     isLoading,
     machineId,
     handleDelete,
-    isSubmitting
+    isSubmitting,
+    listData,
   };
 };
 
