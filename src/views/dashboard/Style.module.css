@@ -342,6 +342,7 @@
   flex-direction: column !important;
   margin-left: 12px !important;
   margin-top: 8px !important;
+  margin-bottom: 8px !important;
 }
 .rightContainer {
   flex: 1 1 !important;
@@ -351,7 +352,7 @@
 }
 .CircularProgressbar {
   margin: auto !important;
-  width: 220px !important;
+  width: 210px !important;
 }
 @media (max-width: 1024px) {
   .gridContainer {
