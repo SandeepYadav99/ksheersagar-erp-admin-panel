@@ -178,12 +178,12 @@ input[type=radio] + label:hover {
 }
 
 .dashActionBtn {
-    padding: 6px !important;
+    padding: 8px !important;
     color: black !important;
     border: 1px solid #B8C5D3 !important;
     border-radius: 5px !important;
+   font-size: 1rem !important;
    
-    margin-top: 15px !important;
 }
 .iconTabs .MuiTab-wrapper {
     display: flex;

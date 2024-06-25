@@ -279,9 +279,7 @@
   align-items: last baseline !important;
   margin-top: 20px !important;
 }
-.gridContainer {
-  background-color: #e7f0fb !important;
-}
+
 .cardHeader {
   display: flex !important;
   justify-content: space-between !important;
@@ -295,39 +293,56 @@
   color: #161616 !important;
 }
 
-.titleGrid{
+.titleGrid {
   font-size: 1.2rem !important;
   font-weight: 600 !important;
   color: #161616 !important;
- 
 }
-.actionButton{
+.actionButton {
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
   flex-wrap: wrap !important;
+  gap: 15px !important;
+  margin-top: 15% !important;
+  padding: 0px 10px !important;
 }
-.finshedGood{
-  color: #48AAF3 !important;
+.finshedGood {
+  color: #48aaf3 !important;
 }
-.rawMa{
-  color: #FC8C5A !important;
+.rawMa {
+  color: #fc8c5a !important;
 }
-.gridContainer{
+.gridContainer {
   display: flex !important;
   gap: 20px !important;
-
-
 }
-.rightContainer{
+.newLine {
+  height: 5px;
+  width: 30px;
+  border-radius: 10px;
+  /* 
+  margin: auto; */
+  background-image: linear-gradient(265deg, #7467f0, #2896e9) !important;
+}
+.headerNewLine {
+  display: flex !important;
+  flex-direction: column !important;
+  margin-left: 12px !important;
+  margin-top: 8px !important;
+}
+.rightContainer {
   flex: 1 1 !important;
 }
-.leftContainer{
-  flex: 0.5  !important;
+.leftContainer {
+  flex: 0.5 !important;
 }
-@media (max-width: 1568px) {
-  .gridContainer{
+.CircularProgressbar {
+  margin: auto !important;
+  width: 220px !important;
+}
+@media (max-width: 1024px) {
+  .gridContainer {
     flex-direction: column !important;
-  
   }
 }

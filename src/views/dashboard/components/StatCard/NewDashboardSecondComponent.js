@@ -11,8 +11,8 @@ const NewDashboardSecondComponent = ({
   subTitle,
   ...rest
 }) => {
-  const totalPersentage = total / 100 ;
-  console.log(totalPersentage)
+  const totalPersentage = total / 100;
+
   return (
     <Card
       {...rest}
@@ -42,12 +42,7 @@ const NewDashboardSecondComponent = ({
               className={styles.avatorSecond}
             />
             <div className={styles.subContainer}>
-              <div
-               
-                className={styles.totalCount}
-              >
-                {total}
-              </div>
+              <div className={styles.totalCount}>{total}</div>
               <Typography variant="h5" fontSize={18}>
                 {subTitle}
               </Typography>
@@ -62,7 +57,8 @@ const NewDashboardSecondComponent = ({
               styles={buildStyles({
                 textColor: isShowRoom ? "#1285F9" : "#723AD4",
                 pathColor: isShowRoom ? "#1285F9" : "#723AD4",
-                // trailColor: "gold"
+                // trailColor: "gold",
+                textSize: "1.8rem",
               })}
             />
             ;

@@ -62,7 +62,7 @@ const useMachinesCreateHook = ({
   }, [isSidePanel]);
 
   useEffect(() => {
-    serviceGetList(["LOCATIONS"]).then((res) => {
+    serviceGetList(["LOCATIONS"], {location_types: ["SHOWROOM"]}).then((res) => {
       if (!res.error) {
         setListData(res.data);
       }

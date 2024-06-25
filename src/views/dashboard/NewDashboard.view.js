@@ -32,11 +32,10 @@ const NewDashboard = () => {
     dispatch(actionKsDashboard());
   }, []);
 
-  
   const productTotal = useMemo(() => {
     if (dashboard?.products) {
       return (
-        (dashboard.products.finished_goods + dashboard.products.raw_material) /
+        (dashboard.products.finished_goods ) /
         100
       );
     }
@@ -70,7 +69,7 @@ const NewDashboard = () => {
             />
           </Grid>
         </Grid>
-        <Grid lg={12} style={{ marginTop: "14px" }}>
+        <Grid  style={{ marginTop: "15px" }}>
           <Card square className={styles.card}>
             <CardContent>
               <div
@@ -79,13 +78,17 @@ const NewDashboard = () => {
                   justifyContent: "space-between",
                 }}
               >
-                <div className={styles.titleGrid}>Total Locations</div>
+                <div>
+                  <div className={styles.titleGrid}>Total Locations</div>
+                  <div className={styles.newLine}/>
+                </div>
+
                 <div className={styles.totalCount}>
                   {dashboard?.locations?.total}
                 </div>
               </div>
-              <Grid container spacing={3} style={{ marginTop: "10px" }}>
-                <Grid item lg={6} md={5} sm={6} xs={12}>
+              <Grid container spacing={3} >
+                <Grid item  sm={6} xs={12}>
                   <NewDashboardSecondComponent
                     subTitle={"Showrooms"}
                     image={showRoomEmpImg}
@@ -93,7 +96,7 @@ const NewDashboard = () => {
                     isShowRoom={true}
                   />
                 </Grid>
-                <Grid item lg={6} md={5} sm={6} xs={12}>
+                <Grid item  sm={6} xs={12}>
                   <NewDashboardSecondComponent
                     subTitle={"Factory"}
                     image={factoryEmpImg}
@@ -115,15 +118,18 @@ const NewDashboard = () => {
         className={styles.leftContainer}
         // style={{ marginTop: "2px" ,  flex:"0.5"}}
       >
-        <Card>
+        <Card style={{ height: "100%" , borderRadius:"10px"}}>
           <CardContent>
-            <div className={styles.titleGridTotal}>Total Products</div>
-            <div style={{ width: "45%", height: "340px", margin: "auto" }}>
+            <div className={styles.headerNewLine}>
+              <div className={styles.titleGrid}>Total Products</div>
+              <div className={styles.newLine} />
+            </div>
+            <div className={styles.CircularProgressbar}>
               <CircularProgressbar
                 value={productTotal}
                 maxValue={1}
                 text={`${productTotal * 100}%`}
-                strokeWidth={"12"}
+                strokeWidth={"15"}
                 styles={buildStyles({
                   textColor: true ? "#1285F9" : "#723AD4",
                   pathColor: "#FC8C5A",

@@ -36,7 +36,8 @@ const initialForm = {
   is_department_attendance: false,
   google_page_url: "",
   contact: "",
-  landline_number:""
+  landline_number:"",
+  fssai_number:""
 };
 const useLocationDetail = ({ isSidePanel, setSidePanel }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -234,6 +235,7 @@ const useLocationDetail = ({ isSidePanel, setSidePanel }) => {
           is_department_attendance: form?.is_department_attendance,
           is_active: form?.is_active,
           geofence_coordinates: geoLocation ? geoLocation : [],
+          fssai_number:form?.fssai_number
         };
 
         req = serviceUpdateLocation({
