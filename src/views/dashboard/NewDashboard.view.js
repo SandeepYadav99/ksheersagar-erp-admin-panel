@@ -14,6 +14,7 @@ import totalEmpImg from "../../assets/img/ic_total_employees@2x.png";
 import activeEmpImg from "../../assets/img/ic_active_employees@2x.png";
 import inactiveEmpImg from "../../assets/img/ic_inactive_employees@2x.png";
 import factoryEmpImg from "../../assets/img/ic_factory@2x.png";
+import showRoomEmpImg from "../../assets/img/ic_showroom@2x.png";
 import NewDashboardSecondComponent from "./components/StatCard/NewDashboardSecondComponent";
 const NewDashboard = () => {
   const [data, setData] = useState([]);
@@ -77,10 +78,10 @@ const NewDashboard = () => {
               </Typography>
             </div>
             <Grid container spacing={3}>
-              <Grid item lg={6} md={5} sm={8} xs={12}>
+              <Grid item lg={6} md={6} sm={8} xs={12}>
                 <NewDashboardSecondComponent
                   subTitle={"Showrooms"}
-                  image={factoryEmpImg}
+                  image={showRoomEmpImg}
                   total={"48"}
                   isShowRoom={true}
                 />

@@ -1,5 +1,8 @@
 import { Avatar, Card, CardContent, Grid, Typography } from "@material-ui/core";
 import styles from "./Styles.module.css";
+import { CircularProgressbar } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
+
 const NewDashboardSecondComponent = ({
   title,
   image,
@@ -45,8 +48,13 @@ const NewDashboardSecondComponent = ({
               >
                 {total}
               </Typography>
-              <Typography>{subTitle}</Typography>
+              <Typography variant="h5" fontSize={18}>
+                {subTitle}
+              </Typography>
             </div>
+          </div>
+          <div style={{height:"23%", width:"23%"}}>
+          <CircularProgressbar value={"0.66"} maxValue={1} text={`${"0.66" * 100}%`} strokeWidth={"12"}/>;
           </div>
         </div>
       </CardContent>
