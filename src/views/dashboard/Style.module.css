@@ -279,13 +279,37 @@
   align-items: last baseline !important;
   margin-top: 20px !important;
 }
-.gridContainer{
-    background-color: #e7f0fb !important; 
+.gridContainer {
+  background-color: #e7f0fb !important;
 }
 .cardHeader {
   display: flex !important;
   justify-content: space-between !important;
 }
-.secondContainer{
-    background-color: #E7F0FB !important;
+.secondContainer {
+  background-color: #e7f0fb !important;
+}
+.totalCount {
+  font-size: 2.5rem !important;
+  font-weight: 600 !important;
+  color: #161616 !important;
+}
+
+.titleGrid{
+  font-size: 1.2rem !important;
+  font-weight: 600 !important;
+  color: #161616 !important;
+ 
+}
+.actionButton{
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+}
+.finshedGood{
+  color: #48AAF3 !important;
+}
+.rawMa{
+  color: #FC8C5A !important;
 }

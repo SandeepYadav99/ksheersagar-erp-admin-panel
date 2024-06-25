@@ -8,21 +8,16 @@ export const NewDashboardComponent = ({ title, image, total, ...rest }) => {
         {/* className={classes.cardContent} */}
         <Grid>
           <Grid item>
-            <Typography
-              variant="h6"
-              // className={classes.title}
-              color="#161616"
-              gutterBottom
-              fontSize={16}
+            <div className={styles.titleGrid}
             >
               {title}
-            </Typography>
+            </div>
           </Grid>
         </Grid>
         <div className={styles.difference}>
           <Avatar src={image} variant="square" className={styles.avator} />
 
-          <Typography variant="h1" fontWaight={900} fontSize={44} color="#161616">
+          <Typography className={styles.totalCount}>
             {total}
           </Typography>
         </div>

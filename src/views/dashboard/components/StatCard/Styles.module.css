@@ -5,8 +5,14 @@ border-radius: 10px !important;
 .difference{
     display: flex !important;
     justify-content: space-between !important;
+   align-items: flex-end !important;
+    margin-top: 15px !important;
+}
+.difference1{
+    display: flex !important;
+    justify-content: space-between !important;
     align-items: center !important;
-    margin-top: 5px !important;
+    margin-top: 15px !important;
 }
 .avator{
     width: 68px !important;
@@ -33,4 +39,16 @@ border-radius: 10px !important;
 .subContainer{
     display: flex !important;
     flex-direction: column !important;
+}
+.totalCount{
+    font-size: 2.5rem !important;
+    font-weight: 600 !important;
+    color: #161616 !important;
+}
+
+.titleGrid{
+    font-size: 1.2rem !important;
+    font-weight: 600 !important;
+    color: #161616 !important;
+   
 }

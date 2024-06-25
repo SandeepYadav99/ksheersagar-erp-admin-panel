@@ -177,6 +177,14 @@ input[type=radio] + label:hover {
     color: rgb(147, 154, 191) !important;
 }
 
+.dashActionBtn {
+    padding: 6px !important;
+    color: black !important;
+    border: 1px solid #B8C5D3 !important;
+    border-radius: 5px !important;
+   
+    margin-top: 15px !important;
+}
 .iconTabs .MuiTab-wrapper {
     display: flex;
     flex-direction: row;
