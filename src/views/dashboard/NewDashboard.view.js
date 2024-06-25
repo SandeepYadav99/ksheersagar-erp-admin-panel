@@ -1,13 +1,9 @@
 import React, { useEffect, useMemo } from "react";
-import { useState } from "react";
 import {
-  Box,
   Card,
   CardContent,
-  CardHeader,
   Grid,
   IconButton,
-  Typography,
 } from "@material-ui/core";
 import NewDashboardComponent from "./components/StatCard/NewDashboardComponent";
 import styles from "./Style.module.css";
@@ -20,10 +16,10 @@ import NewDashboardSecondComponent from "./components/StatCard/NewDashboardSecon
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { FiberManualRecord } from "@material-ui/icons";
-import { serviceGetDashboard } from "../../services/Dashboard.service";
 import { actionKsDashboard } from "../../actions/Dashboard.action";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+
 const NewDashboard = () => {
   const dispatch = useDispatch();
   const { dashboard } = useSelector((state) => state?.dashboard);
@@ -116,9 +112,9 @@ const NewDashboard = () => {
         xs={12}
         sm={8}
         className={styles.leftContainer}
-        // style={{ marginTop: "2px" ,  flex:"0.5"}}
+       
       >
-        <Card style={{ height: "100%" , borderRadius:"10px"}}>
+        <Card  className={styles.circularContainer}>
           <CardContent>
             <div className={styles.headerNewLine}>
               <div className={styles.titleGrid}>Total Products</div>
