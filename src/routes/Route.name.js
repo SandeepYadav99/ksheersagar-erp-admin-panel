@@ -30,5 +30,7 @@ export default {
   USER_ROLES: "/roles/",
   USER_ROLES_CREATE: "/roles/create",
   USER_ROLES_UPDATE: "/roles/update/",
-   STATIC_QR:"/static/qr"
+  STATIC_QR:"/static/qr",
+  CALENDAR:"/calendar",
+
 };

@@ -23,6 +23,9 @@ import UserRoleList from "../views/UserRoles/List/UserRoleList";
 import UserRolesCreate from "../views/UserRoles/Create/UserRolesCreate";
 import Machines from "../views/Machines/Lists/Machines";
 import Dashboard from "../views/dashboard/Dashboard";
+import { CalendarMonth } from "@mui/icons-material";
+import CalendarList from "../views/Calendar/CalendarList.view";
+
 const NewDashboard = lazy(() => import("../views/dashboard/NewDashboard.view"));
 const LocationList = lazy(() =>
   import("../views/Locations/Location/LocationList.container")
@@ -264,6 +267,16 @@ const dashboardRoutes = [
     component: ProductCreate,
     is_sidebar: false,
     // roles: [Roles.ADMIN, Roles.RECRUITER, Roles.CORPORATE_HR],
+  },
+  {
+    path: `${RouteName.CALENDAR}`,
+    sidebarName: "Calendar",
+    // navbarName: "Calendar",
+    icon: CalendarMonth,
+    component: CalendarList,
+    is_sidebar: true,
+    is_protect: true,
+    should_regex: true,
   },
   {
     path: `${RouteName.PRODUCT_UPDATE}:id`,
