@@ -5,6 +5,30 @@ border-radius: 10px !important;
 .difference{
     display: flex !important;
     justify-content: space-between !important;
-    align-items: last baseline !important;
-    margin-top: 20px !important;
+    align-items: flex-end !important;
+    margin-top: 5px !important;
+}
+.avator{
+    width: 68px !important;
+    height: 68px !important;
+}
+.avatorSecond{
+    width: 88px !important;
+    height: 88px !important;
+}
+.cardShowRoom{
+    background-color: #E7F0FB !important;
+}
+
+.cardFactory{
+    background-color: #EBE4F6 !important;
+}
+
+.subDifference{
+    display: flex !important;
+    gap: 10px !important;
+}
+.subContainer{
+    display: flex !important;
+    flex-direction: column !important;
 }
