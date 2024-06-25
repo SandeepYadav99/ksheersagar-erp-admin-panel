@@ -313,3 +313,21 @@
 .rawMa{
   color: #FC8C5A !important;
 }
+.gridContainer{
+  display: flex !important;
+  gap: 20px !important;
+
+
+}
+.rightContainer{
+  flex: 1 1 !important;
+}
+.leftContainer{
+  flex: 0.5  !important;
+}
+@media (max-width: 1568px) {
+  .gridContainer{
+    flex-direction: column !important;
+  
+  }
+}

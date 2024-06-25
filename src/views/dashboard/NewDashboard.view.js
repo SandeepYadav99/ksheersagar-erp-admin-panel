@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useState } from "react";
 import {
   Box,
@@ -21,7 +21,7 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { FiberManualRecord } from "@material-ui/icons";
 import { serviceGetDashboard } from "../../services/Dashboard.service";
-import {  actionKsDashboard } from "../../actions/Dashboard.action";
+import { actionKsDashboard } from "../../actions/Dashboard.action";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 const NewDashboard = () => {
@@ -32,19 +32,27 @@ const NewDashboard = () => {
     dispatch(actionKsDashboard());
   }, []);
 
+  
+  const productTotal = useMemo(() => {
+    if (dashboard?.products) {
+      return (
+        (dashboard.products.finished_goods + dashboard.products.raw_material) /
+        100
+      );
+    }
+    return 0;
+  }, [dashboard]);
 
-console.log(dashboard)
   return (
-    <Grid container style={{ gap:"20px" }}>
+    <div className={styles.gridContainer}>
       {/*<PageTitle title="Dashboard"/>*/}
-      <Grid >
+      <Grid className={styles.rightContainer}>
         <Grid container spacing={3}>
           <Grid item lg={4} md={4} sm={6} xs={12}>
             <NewDashboardComponent
               title={"Total Employees"}
               image={totalEmpImg}
-              total={dashboard?.employees?.total
-              }
+              total={dashboard?.employees?.total}
             />
           </Grid>
           <Grid item lg={4} md={4} sm={6} xs={12}>
@@ -72,7 +80,9 @@ console.log(dashboard)
                 }}
               >
                 <div className={styles.titleGrid}>Total Locations</div>
-                <div className={styles.totalCount}>{dashboard?.locations?.total}</div>
+                <div className={styles.totalCount}>
+                  {dashboard?.locations?.total}
+                </div>
               </div>
               <Grid container spacing={3} style={{ marginTop: "10px" }}>
                 <Grid item lg={6} md={5} sm={6} xs={12}>
@@ -100,43 +110,41 @@ console.log(dashboard)
 
       <Grid
         item
-        // md={6}
-        // lg={3}
-        // sm={8}
-        // xs={12}
-      md={4}
-      lg={4}
-      // xs={12}
-      // sm={8}
-      style={{marginTop:'2px'}}
+        xs={12}
+        sm={8}
+        className={styles.leftContainer}
+        // style={{ marginTop: "2px" ,  flex:"0.5"}}
       >
         <Card>
           <CardContent>
-           <div className={styles.titleGridTotal}>Total Products</div>
-           <div style={{width:"50%", height:"auto", margin:"auto"}}>
-
-            <CircularProgressbar
-              value={"0.66"}
-              maxValue={1}
-              text={`${"0.66" * 100}%`}
-              strokeWidth={"12"}
-              styles={buildStyles({
-                textColor: true ? "#1285F9" : "#723AD4",
-                pathColor: "#FC8C5A",
-                 trailColor: "#48AAF3"
-              })}
-            />
-           </div>
+            <div className={styles.titleGridTotal}>Total Products</div>
+            <div style={{ width: "45%", height: "340px", margin: "auto" }}>
+              <CircularProgressbar
+                value={productTotal}
+                maxValue={1}
+                text={`${productTotal * 100}%`}
+                strokeWidth={"12"}
+                styles={buildStyles({
+                  textColor: true ? "#1285F9" : "#723AD4",
+                  pathColor: "#FC8C5A",
+                  trailColor: "#48AAF3",
+                })}
+              />
+            </div>
             <div className={styles.actionButton}>
-              <IconButton   className={"dashActionBtn"}
-              color="secondary"><FiberManualRecord className={styles.finshedGood} />  Finished Goods</IconButton>
-              <IconButton   className={"dashActionBtn"}
-              color="secondary"><FiberManualRecord className={styles.rawMa}/>Raw Material</IconButton>
+              <IconButton className={"dashActionBtn"} color="secondary">
+                <FiberManualRecord className={styles.finshedGood} /> Finished
+                Goods
+              </IconButton>
+              <IconButton className={"dashActionBtn"} color="secondary">
+                <FiberManualRecord className={styles.rawMa} />
+                Raw Material
+              </IconButton>
             </div>
           </CardContent>
         </Card>
       </Grid>
-    </Grid>
+    </div>
   );
 };
 
