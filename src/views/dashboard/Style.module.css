@@ -302,10 +302,19 @@
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
-  flex-wrap: wrap !important;
+  /* flex-wrap: wrap !important; */
   gap: 15px !important;
   margin-top: 15% !important;
   padding: 0px 10px !important;
+}
+@media screen and (max-width:1314px) and (min-width:1024px){
+  .actionButton{
+    flex-wrap: wrap !important;
+    text-align: center !important;
+    margin-top: 1% !important;
+    gap: 10px !important;
+    justify-content: center !important;
+  }
 }
 .finshedGood {
   color: #48aaf3 !important;
