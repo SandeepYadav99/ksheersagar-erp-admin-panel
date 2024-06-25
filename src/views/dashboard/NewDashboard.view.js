@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import {
   Box,
@@ -20,9 +20,20 @@ import NewDashboardSecondComponent from "./components/StatCard/NewDashboardSecon
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { FiberManualRecord } from "@material-ui/icons";
+import { serviceGetDashboard } from "../../services/Dashboard.service";
+import {  actionKsDashboard } from "../../actions/Dashboard.action";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 const NewDashboard = () => {
-  const [data, setData] = useState([]);
+  const dispatch = useDispatch();
+  const { dashboard } = useSelector((state) => state?.dashboard);
 
+  useEffect(() => {
+    dispatch(actionKsDashboard());
+  }, []);
+
+
+console.log(dashboard)
   return (
     <Grid container style={{ gap:"20px" }}>
       {/*<PageTitle title="Dashboard"/>*/}
@@ -32,21 +43,22 @@ const NewDashboard = () => {
             <NewDashboardComponent
               title={"Total Employees"}
               image={totalEmpImg}
-              total={52}
+              total={dashboard?.employees?.total
+              }
             />
           </Grid>
           <Grid item lg={4} md={4} sm={6} xs={12}>
             <NewDashboardComponent
               title={"Active Employees"}
               image={activeEmpImg}
-              total={"48"}
+              total={dashboard?.employees?.active}
             />
           </Grid>
           <Grid item lg={4} md={4} sm={6} xs={12}>
             <NewDashboardComponent
               title={"Inactive Employees"}
               image={inactiveEmpImg}
-              total={"06"}
+              total={dashboard?.employees?.inactive}
             />
           </Grid>
         </Grid>
@@ -59,15 +71,15 @@ const NewDashboard = () => {
                   justifyContent: "space-between",
                 }}
               >
-                <div className={styles.titleGrid}>Total Employees</div>
-                <div className={styles.totalCount}>52</div>
+                <div className={styles.titleGrid}>Total Locations</div>
+                <div className={styles.totalCount}>{dashboard?.locations?.total}</div>
               </div>
               <Grid container spacing={3} style={{ marginTop: "10px" }}>
                 <Grid item lg={6} md={5} sm={6} xs={12}>
                   <NewDashboardSecondComponent
                     subTitle={"Showrooms"}
                     image={showRoomEmpImg}
-                    total={"48"}
+                    total={dashboard?.locations?.showroom}
                     isShowRoom={true}
                   />
                 </Grid>
@@ -75,7 +87,7 @@ const NewDashboard = () => {
                   <NewDashboardSecondComponent
                     subTitle={"Factory"}
                     image={factoryEmpImg}
-                    total={"48"}
+                    total={dashboard?.locations?.factory}
                     isShowRoom={false}
                   />
                 </Grid>

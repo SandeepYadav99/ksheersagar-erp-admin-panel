@@ -11,6 +11,8 @@ const NewDashboardSecondComponent = ({
   subTitle,
   ...rest
 }) => {
+  const totalPersentage = total / 100 ;
+  console.log(totalPersentage)
   return (
     <Card
       {...rest}
@@ -53,9 +55,9 @@ const NewDashboardSecondComponent = ({
           </div>
           <div style={{ height: "23%", width: "23%" }}>
             <CircularProgressbar
-              value={"0.66"}
+              value={totalPersentage}
               maxValue={1}
-              text={`${"0.66" * 100}%`}
+              text={`${totalPersentage * 100}%`}
               strokeWidth={"12"}
               styles={buildStyles({
                 textColor: isShowRoom ? "#1285F9" : "#723AD4",
