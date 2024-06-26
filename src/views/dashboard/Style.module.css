@@ -361,6 +361,7 @@
 .CircularProgressbar {
   margin: auto !important;
   width: 230px !important;
+  margin-top: 10px !important;
 }
 @media (max-width: 1024px) {
   .gridContainer {
