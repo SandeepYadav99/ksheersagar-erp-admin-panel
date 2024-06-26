@@ -49,21 +49,7 @@ const NewDashboard = () => {
       tooltips: {
         enabled: true
       },
-    plugins: {
-      legend: {
-        display: false,
-      },
-      tooltip: {
-        callbacks: {
-          label: function (tooltipItem) {
-            if (tooltipItem.raw) {
-              return `${tooltipItem.label}: ${tooltipItem.raw}`;
-            }
-            return ""; // Return an empty string if data is not available
-          },
-        },
-      },
-    },
+ 
   };
 
   const totalPercentagePlugin = {
@@ -79,9 +65,9 @@ const NewDashboard = () => {
       const width = chart.width;
       const height = chart.height;
       const fontSize = (height / 114).toFixed(2);
-      ctx.font = `${fontSize}em sans-serif`;
+      ctx.font = `bold ${fontSize}em sans-serif`;
       ctx.textBaseline = "middle";
-
+  
       const text = `${total}`;
       const textX = Math.round((width - ctx.measureText(text).width) / 2);
       const textY = height / 2;
@@ -121,10 +107,8 @@ const NewDashboard = () => {
           <Card square className={styles.card}>
             <CardContent>
               <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
+              className={styles.container12}
+              
               >
                 <div className={styles.location}>
                   <div className={styles.titleGrid}>Total Locations</div>
