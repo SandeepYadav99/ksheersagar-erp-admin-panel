@@ -10,6 +10,7 @@ const useAssociatedEmployeeHook = ({id}) => {
   const [editData, setEditData] = useState(null);
   const [editId, setEditId] = useState("");
   const dispatch = useDispatch();
+  const [isRejectPopUp,setIsRejectPopUp]=useState(false)
   const [currentPage,setCurrentPage] = useState(1);
     const [data, setData] = useState([]);
     const [currentData,setCurrentData] = useState([]);
@@ -108,8 +109,18 @@ const useAssociatedEmployeeHook = ({id}) => {
     ];
   }, []);
 
+  const toggleRejectDialog = useCallback(
+    (all) => {
+      setIsRejectPopUp((e) => !e);
+      // setEmpId(all?.id)
+    },
+    [isRejectPopUp]
+  );
+
   return {
     handlePageChange,
+    isRejectPopUp,
+    toggleRejectDialog,
     // handleFilterDataChange,
     // handleSearchValueChange,
     handleSortOrderChange,
