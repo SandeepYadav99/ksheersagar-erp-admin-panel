@@ -43,12 +43,12 @@ const NewDashboardSecondComponent = ({
             />
             <div className={styles.subContainer}>
               <div className={styles.totalCount}>{total}</div>
-              <Typography variant="h5" fontSize={16}>
+              <div className={styles.subTitle}>
                 {subTitle}
-              </Typography>
+              </div>
             </div>
           </div>
-          <div style={{ height: "23%", width: "23%" }}>
+          <div style={{ height: "30%", width: "30%" }}>
             <CircularProgressbar
               value={totalPersentage}
               maxValue={1}
@@ -58,7 +58,9 @@ const NewDashboardSecondComponent = ({
                 textColor: isShowRoom ? "#1285F9" : "#723AD4",
                 pathColor: isShowRoom ? "#1285F9" : "#723AD4",
                 // trailColor: "gold",
-                textSize: "1.8rem",
+                textSize: "1.3rem",
+           
+                
               })}
             />
             ;
