@@ -12,7 +12,7 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 
 const localizer = momentLocalizer(moment);
 
-const CalendarDetail = ({ data, selectedDate }) => {
+const CalendarDetail = ({ data, selectedDate, handleSideToggle }) => {
   const [events, setEvents] = useState([...data]);
   const [activeMonth, setActiveMonth] = useState("month");
 
@@ -23,7 +23,7 @@ const CalendarDetail = ({ data, selectedDate }) => {
           ...item,
           title: item?.name,
           start: new Date(item?.start_date),
-          end:  new Date (item?.end_date),
+          end: new Date(item?.end_date),
         };
       });
       setEvents(updated);
@@ -31,13 +31,11 @@ const CalendarDetail = ({ data, selectedDate }) => {
   }, [data]);
 
   console.log("data21", data);
-  const handleEventAdd = (event) => {
-    // setEvents([...events, event]);
-  };
 
   const handleEventRemove = (eventToRemove) => {
-    console.log("eventToRemove", eventToRemove);
-    // setEvents(events.filter((event) => event !== eventToRemove));
+    if (eventToRemove) {
+      handleSideToggle(eventToRemove);
+    }
   };
   console.log("events", activeMonth);
 
@@ -53,7 +51,6 @@ const CalendarDetail = ({ data, selectedDate }) => {
   };
 
   const CustomToolbar = ({ label, onNavigate, onView }) => {
-    // console.log("onView",onView)
     return (
       <div className={styles.toolWrapper}>
         <div className={styles.upperWrap}>
@@ -92,7 +89,11 @@ const CalendarDetail = ({ data, selectedDate }) => {
     );
   };
   const handleSlotSelect = (slotInfo) => {
-    console.log(">>>>", slotInfo);
+    const values = {
+      start_date: slotInfo?.start,
+      end_date: slotInfo?.end,
+    };
+    handleSideToggle(values);
     // setActiveDate(slotInfo.start); // Update state with selected date
   };
   return (
@@ -110,7 +111,7 @@ const CalendarDetail = ({ data, selectedDate }) => {
         popup
         style={{ padding: "10px" }}
         components={{
-          toolbar: CustomToolbar, // Replace default toolbar with custom toolbar
+          toolbar: CustomToolbar,
         }}
         onView={(view) => setActiveMonth(view)}
         date={selectedDate?.$d && selectedDate?.$d}

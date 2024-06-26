@@ -13,7 +13,7 @@ import {
   RadioGroup,
 } from "@material-ui/core";
 
-const EventForm = ({ isOpen, handleToggle, candidateId }) => {
+const EventForm = ({ isOpen, handleToggle, editData }) => {
   const {
     changeTextData,
     errorData,
@@ -24,7 +24,7 @@ const EventForm = ({ isOpen, handleToggle, candidateId }) => {
     isSubmitted,
     isSubmitting,
     listData,
-  } = useEventFormHook({ isOpen, handleToggle, candidateId });
+  } = useEventFormHook({ isOpen, handleToggle, editData });
 
   return (
     <div>
@@ -79,7 +79,7 @@ const EventForm = ({ isOpen, handleToggle, candidateId }) => {
               <CustomDatePicker
                 clearable
                 label={"Start Date"}
-                minDate={new Date()}
+                // minDate={new Date()}
                 onChange={(date) => {
                   changeTextData(date, "start_date");
                 }}
@@ -89,7 +89,7 @@ const EventForm = ({ isOpen, handleToggle, candidateId }) => {
               <CustomDatePicker
                 clearable
                 label={"End Date"}
-                minDate={new Date()}
+                // minDate={new Date()}
                 onChange={(date) => {
                   changeTextData(date, "end_date");
                 }}

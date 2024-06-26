@@ -20,6 +20,7 @@ function CalendarList() {
     filteredData,
     selectedDate,
     handleDateChange,
+    editData
   } = useCalendarList({});
   const useStyles = makeStyles((theme) => ({
     checkboxLabel: {
@@ -115,7 +116,11 @@ function CalendarList() {
           </div>
         </div>
         <div className={styles.right}>
-          <CalendarDetail data={filteredData} selectedDate={selectedDate} />
+          <CalendarDetail
+            data={filteredData}
+            selectedDate={selectedDate}
+            handleSideToggle={handleSideToggle}
+          />
         </div>
       </div>
       <SidePanelComponent
@@ -124,7 +129,7 @@ function CalendarList() {
         open={isSidePanel}
         side={"right"}
       >
-        <EventForm isOpen={isSidePanel} handleToggle={handleSideToggle} />
+        <EventForm isOpen={isSidePanel} handleToggle={handleSideToggle} editData={editData}/>
       </SidePanelComponent>
     </PageBox>
   );

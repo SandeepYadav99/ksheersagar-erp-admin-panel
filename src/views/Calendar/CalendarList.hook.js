@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { calenderData } from "../../helper/calenderData";
+// import { calenderData } from "../../helper/calenderData";
 import { serviceGetCalendar } from "../../services/Calendar.service";
 
 function useCalendarList() {
@@ -15,7 +15,7 @@ function useCalendarList() {
     OPTIONAL: true,
   });
 
-  useEffect(() => {
+  const renderList = useCallback(() => {
     serviceGetCalendar({
       index: 1,
       row: "createdAt",
@@ -28,6 +28,10 @@ function useCalendarList() {
       }
     });
   }, []);
+  useEffect(() => {
+    renderList();
+  }, []);
+
   const handleDateChange = (date) => {
     console.log(">>>>", date);
     setSelectedDate(date);
@@ -67,11 +71,15 @@ function useCalendarList() {
     (data) => {
       setSidePanel((e) => !e);
       if (data) {
-        setEditData(data?.id);
+        setEditData(data);
+      } else {
+        setEditData(null);
       }
     },
     [setEditData, setSidePanel]
   );
+
+  console.log("editdata", editData);
   return {
     isSidePanel,
     handleSideToggle,
@@ -80,6 +88,7 @@ function useCalendarList() {
     filteredData,
     selectedDate,
     handleDateChange,
+    editData
   };
 }
 

@@ -7,13 +7,13 @@ import { serviceCreateCalendar } from "../../../../services/Calendar.service";
 const initialForm = {
   name: "",
   holiday_type: "",
-  type: "",
+  type: "FULL_DAY",
   start_date: "",
   end_date: "",
   applies_locations: "",
   excluded_employees: [],
 };
-const useEventFormHook = ({ isOpen, handleToggle, candidateId }) => {
+const useEventFormHook = ({ isOpen, handleToggle, editData }) => {
   const [form, setForm] = useState(
     JSON.parse(JSON.stringify({ ...initialForm }))
   );
@@ -34,6 +34,15 @@ const useEventFormHook = ({ isOpen, handleToggle, candidateId }) => {
   }, []);
   useEffect(() => {
     if (isOpen) {
+      if (editData) {
+        setForm({
+          ...form,
+          ...editData,
+        });
+      } else {
+        setForm({ ...initialForm });
+      }
+    } else {
       setForm({ ...initialForm });
       setErrorData({});
     }
@@ -87,14 +96,14 @@ const useEventFormHook = ({ isOpen, handleToggle, candidateId }) => {
         delete errors[val];
       }
     });
-    if(form?.type === "FULL_DAY"){
-      if(!form?.end_date){
+    if (form?.type === "FULL_DAY") {
+      if (!form?.end_date) {
         errors["end_date"] = true;
       }
     }
-    if(!form?.type){
+    if (!form?.type) {
       errors["type"] = true;
-      SnackbarUtils.error("Please select the Nature of leave")
+      SnackbarUtils.error("Please select the Nature of leave");
     }
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
@@ -110,7 +119,7 @@ const useEventFormHook = ({ isOpen, handleToggle, candidateId }) => {
       const getEmpID = form?.excluded_employees?.map((item) => item?.id);
       serviceCreateCalendar({
         ...form,
-        excluded_employees: getEmpID ? getEmpID : []
+        excluded_employees: getEmpID ? getEmpID : [],
       }).then((res) => {
         if (!res.error) {
           handleToggle();
