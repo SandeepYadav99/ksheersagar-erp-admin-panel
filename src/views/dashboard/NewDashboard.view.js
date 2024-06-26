@@ -68,15 +68,23 @@ const NewDashboard = () => {
   };
   const options = {
     responsive: true,
-    cutout: "50%",
+    cutout: '50%',
     cutoutPercentage: 65,
     plugins: {
       legend: {
         display: false,
       },
-      tooltip: {},
+      tooltip: {
+       
+        callbacks: {
+          label: function (tooltipItem) {
+            console.log(tooltipItem)
+          },
+        },
+      },
     },
   };
+  
   const totalPercentagePlugin = {
     id: "totalPercentage",
     beforeDraw: (chart) => {
