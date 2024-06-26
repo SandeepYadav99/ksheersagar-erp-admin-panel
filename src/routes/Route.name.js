@@ -32,5 +32,7 @@ export default {
   USER_ROLES_UPDATE: "/roles/update/",
    STATIC_QR:"/static/qr",
      SHIFTS:"/shifts",
-     SHIFTS_DETAILS:"/shifts/detail/"
+     SHIFTS_DETAILS:"/shifts/detail/",
+  CALENDAR:"/calendar",
+
 };

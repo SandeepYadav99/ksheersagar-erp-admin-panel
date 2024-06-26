@@ -113,7 +113,7 @@ class SidePanelComponent extends Component {
             color: theme.palette.textColor,
             top: '0px',
             position: 'fixed',
-            zIndex: '3',
+            zIndex: '10',
         };
         if (this.props.side == 'left') {
             tempStyle['left'] = (this.props.open ? '0px' : 'calc(-45vw)');
