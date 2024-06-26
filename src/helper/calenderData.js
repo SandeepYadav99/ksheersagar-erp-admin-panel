@@ -1,31 +1,26 @@
 export const getTextColor = (title) => {
   switch (title) {
-    case "personal":
+    case "RESTRICTED":
       return "#ff4d49"; // Personal events color
-    case "business":
+    case "OPTIONAL":
       return "#666cff"; // Business events color
-    case "family":
-      return "#fdb528"; // Family events color
-    case "holiday":
+    case "GAZETTED":
       return "#72e128"; // Holiday events color
-    case "etc":
-      return "#26c6f9"; // Etc events color
+
     default:
       return "#3174ad";
   }
 };
 export const getBgColor = (title) => {
   switch (title) {
-    case "personal":
+    case "RESTRICTED":
       return "#ffe4e4"; // Personal events color
-    case "business":
+    case "OPTIONAL":
       return "#e8e9ff"; // Business events color
-    case "family":
-      return "#fff4df"; // Family events color
-    case "holiday":
+    // Family events color
+    case "GAZETTED":
       return "#eafbdf"; // Holiday events color
-    case "etc":
-      return "#def6fe"; // Etc events color
+
     default:
       return "#3174ad";
   }
@@ -96,24 +91,24 @@ export const calenderData = [
   },
 ];
 export const guestList = [
-    {
-      id:1,
-      label :"Raman",
-      title:"Raman"
-    },
-    {
-      id:2,
-      label :"Raj",
-      title:"Raj"
-    },
-    {
-      id:3,
-      label :"Pankaj",
-      title:"Pankaj"
-    },
-    {
-      id:4,
-      label :"Shivam",
-      title:"Shivam"
-    }
-  ]
+  {
+    id: 1,
+    label: "Raman",
+    title: "Raman",
+  },
+  {
+    id: 2,
+    label: "Raj",
+    title: "Raj",
+  },
+  {
+    id: 3,
+    label: "Pankaj",
+    title: "Pankaj",
+  },
+  {
+    id: 4,
+    label: "Shivam",
+    title: "Shivam",
+  },
+];

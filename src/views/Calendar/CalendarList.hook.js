@@ -1,33 +1,47 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { calenderData } from "../../helper/calenderData";
+import { serviceGetCalendar } from "../../services/Calendar.service";
 
 function useCalendarList() {
   const [isSidePanel, setSidePanel] = useState(false);
-  const [data, setData] = useState(calenderData);
+  const [data, setData] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
 
   const [editData, setEditData] = useState(null);
   const [checkedItems, setCheckedItems] = useState({
     all: true,
-    personal: true,
-    holiday: true,
-    business: true,
+    GAZETTED: true,
+    RESTRICTED: true,
+    OPTIONAL: true,
   });
 
+  useEffect(() => {
+    serviceGetCalendar({
+      index: 1,
+      row: "createdAt",
+      order: "desc",
+      query: "",
+      query_data: null,
+    }).then((res) => {
+      if (!res.error) {
+        setData(res.data);
+      }
+    });
+  }, []);
   const handleDateChange = (date) => {
     console.log(">>>>", date);
     setSelectedDate(date);
   };
-
+  console.log("data", data);
   const handleCheckboxChange = useCallback(
     (event) => {
       const { name, checked } = event.target;
       if (name === "all") {
         setCheckedItems({
           all: checked,
-          personal: checked,
-          holiday: checked,
-          business: checked,
+          GAZETTED: checked,
+          RESTRICTED: checked,
+          OPTIONAL: checked,
         });
       } else {
         setCheckedItems({
@@ -40,11 +54,12 @@ function useCalendarList() {
     [checkedItems, setCheckedItems, data]
   );
 
+  console.log("checkedItems", checkedItems);
   const filteredData = useMemo(() => {
     if (checkedItems?.all) {
       return data;
     } else {
-      return data?.filter((item) => checkedItems[item?.type]);
+      return data?.filter((item) => checkedItems[item?.holiday_type]);
     }
   }, [data, setData, checkedItems, setCheckedItems]);
 

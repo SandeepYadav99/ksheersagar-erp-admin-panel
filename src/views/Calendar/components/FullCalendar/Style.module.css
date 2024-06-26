@@ -16,3 +16,7 @@
 .detailWrap {
   height: 100%;
 }
+.label{
+  font-weight: 600;
+  font-size: .9rem;
+}

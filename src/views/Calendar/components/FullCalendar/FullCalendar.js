@@ -17,23 +17,33 @@ const CalendarDetail = ({ data, selectedDate }) => {
   const [activeMonth, setActiveMonth] = useState("month");
 
   useEffect(() => {
-    setEvents(data);
+    if (data) {
+      const updated = data?.map((item) => {
+        return {
+          ...item,
+          title: item?.name,
+          start: new Date(item?.start_date),
+          end:  new Date (item?.end_date),
+        };
+      });
+      setEvents(updated);
+    }
   }, [data]);
 
-  console.log("data", data);
+  console.log("data21", data);
   const handleEventAdd = (event) => {
     // setEvents([...events, event]);
   };
 
   const handleEventRemove = (eventToRemove) => {
-    console.log("eventToRemove",eventToRemove)
+    console.log("eventToRemove", eventToRemove);
     // setEvents(events.filter((event) => event !== eventToRemove));
   };
   console.log("events", activeMonth);
 
   const eventStyleGetter = (event) => {
-    let backgroundColor = getBgColor(event?.type); // Default color
-    let textColor = getTextColor(event?.type);
+    let backgroundColor = getBgColor(event?.holiday_type); // Default color
+    let textColor = getTextColor(event?.holiday_type);
     return {
       style: {
         backgroundColor: backgroundColor,
@@ -56,7 +66,7 @@ const CalendarDetail = ({ data, selectedDate }) => {
               className={styles.backIcon}
             />
           </ButtonBase>
-          <Typography variant="h5">{label}</Typography>
+          <span className={styles.label}>{label}</span>
         </div>
         <div>
           <ButtonGroup
@@ -82,7 +92,7 @@ const CalendarDetail = ({ data, selectedDate }) => {
     );
   };
   const handleSlotSelect = (slotInfo) => {
-    console.log(">>>>",slotInfo);
+    console.log(">>>>", slotInfo);
     // setActiveDate(slotInfo.start); // Update state with selected date
   };
   return (

@@ -75,8 +75,8 @@ function CalendarList() {
                 control={
                   <Checkbox
                     style={{ color: "#72e128" }}
-                    name="holiday"
-                    checked={checkedItems?.holiday}
+                    name="GAZETTED"
+                    checked={checkedItems?.GAZETTED}
                     onChange={handleCheckboxChange}
                   />
                 }
@@ -89,8 +89,8 @@ function CalendarList() {
                 control={
                   <Checkbox
                     style={{ color: "#ff4d49" }}
-                    name="personal"
-                    checked={checkedItems?.personal}
+                    name="RESTRICTED"
+                    checked={checkedItems?.RESTRICTED}
                     onChange={handleCheckboxChange}
                   />
                 }
@@ -103,8 +103,8 @@ function CalendarList() {
                 control={
                   <Checkbox
                     style={{ color: "#666cff" }}
-                    name="business"
-                    checked={checkedItems?.business}
+                    name="OPTIONAL"
+                    checked={checkedItems?.OPTIONAL}
                     onChange={handleCheckboxChange}
                   />
                 }
