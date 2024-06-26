@@ -14,18 +14,19 @@ const localizer = momentLocalizer(moment);
 
 const CalendarDetail = ({ data, selectedDate }) => {
   const [events, setEvents] = useState([...data]);
+  const [activeMonth, setActiveMonth] = useState("month");
 
   useEffect(() => {
     setEvents(data);
   }, [data]);
 
-  const [activeMonth, setActiveMonth] = useState("month");
   console.log("data", data);
   const handleEventAdd = (event) => {
     // setEvents([...events, event]);
   };
 
   const handleEventRemove = (eventToRemove) => {
+    console.log("eventToRemove",eventToRemove)
     // setEvents(events.filter((event) => event !== eventToRemove));
   };
   console.log("events", activeMonth);
@@ -81,7 +82,7 @@ const CalendarDetail = ({ data, selectedDate }) => {
     );
   };
   const handleSlotSelect = (slotInfo) => {
-    console.log(slotInfo);
+    console.log(">>>>",slotInfo);
     // setActiveDate(slotInfo.start); // Update state with selected date
   };
   return (
@@ -102,7 +103,7 @@ const CalendarDetail = ({ data, selectedDate }) => {
           toolbar: CustomToolbar, // Replace default toolbar with custom toolbar
         }}
         onView={(view) => setActiveMonth(view)}
-        // date={selectedDate?.$d && selectedDate?.$d}
+        date={selectedDate?.$d && selectedDate?.$d}
       />
     </div>
   );

@@ -31,8 +31,8 @@ function CalendarMui({ selectedDate, handleDateChange }) {
             showDaysOutsideCurrentMonth
             fixedWeekNumber={6}
             className="custom-date-calendar"
-            value={selectedDate} // Pass the selectedDate to the DateCalendar
-            onChange={handleDateChange} // Handle date change
+            value={selectedDate}
+            onChange={handleDateChange}
             format={"dd-MM-yyyy"}
           />
         </div>

@@ -5,7 +5,6 @@ import useEventFormHook from "./EventForm.hook";
 import CustomSelectField from "../../../../components/FormFields/SelectField/SelectField.component";
 import { Autocomplete, MenuItem, TextField } from "@mui/material";
 import CustomDatePicker from "../../../../components/FormFields/DatePicker/CustomDatePicker";
-import CustomSwitch from "../../../../components/FormFields/CustomSwitch";
 import {
   Button,
   ButtonBase,
@@ -104,10 +103,10 @@ const EventForm = ({ isOpen, handleToggle, candidateId }) => {
               label={"Date"}
               minDate={new Date()}
               onChange={(date) => {
-                changeTextData(date, "date");
+                changeTextData(date, "start_date");
               }}
-              value={form?.date}
-              isError={errorData?.date}
+              value={form?.start_date}
+              isError={errorData?.start_date}
             />
           )}
 
@@ -120,6 +119,7 @@ const EventForm = ({ isOpen, handleToggle, candidateId }) => {
               changeTextData(value, "applies_locations");
             }}
           >
+            <MenuItem value="ALL_LOCATIONS">ALL LOCATIONS</MenuItem>
             <MenuItem value="SHOWROOM">SHOWROOM</MenuItem>
             <MenuItem value="FACTORY">FACTORY</MenuItem>
             <MenuItem value="WAREHOUSE">WAREHOUSE</MenuItem>
@@ -132,7 +132,7 @@ const EventForm = ({ isOpen, handleToggle, candidateId }) => {
             }}
             value={form?.excluded_employees}
             // id="tags-standard"
-            options={listData?.LOCATIONS ? listData?.LOCATIONS : []}
+            options={listData?.EMPLOYEES ? listData?.EMPLOYEES : []}
             getOptionLabel={(option) => option.name}
             defaultValue={form?.excluded_employees}
             renderInput={(params) => (

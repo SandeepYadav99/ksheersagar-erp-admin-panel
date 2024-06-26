@@ -1,10 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import SnackbarUtils from "../../../../libs/SnackbarUtils";
-// import { serviceApproveCLaim } from "../../../../services/Claims.service";
 import RouteName from "../../../../routes/Route.name";
-import historyUtils from "../../../../libs/history.utils";
-import { guestList } from "../../../../helper/calenderData";
 import { serviceGetList } from "../../../../services/index.services";
+import { serviceCreateCalendar } from "../../../../services/Calendar.service";
 
 const initialForm = {
   name: "",
@@ -12,7 +10,6 @@ const initialForm = {
   type: "",
   start_date: "",
   end_date: "",
-  date: "",
   applies_locations: "",
   excluded_employees: [],
 };
@@ -25,11 +22,11 @@ const useEventFormHook = ({ isOpen, handleToggle, candidateId }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [declaration, setDeclaration] = useState(false);
   const [listData, setListData] = useState({
-    LOCATIONS: [],
+    EMPLOYEES: [],
   });
 
   useEffect(() => {
-    serviceGetList(["LOCATIONS"]).then((res) => {
+    serviceGetList(["EMPLOYEES"]).then((res) => {
       if (!res.error) {
         setListData(res.data);
       }
@@ -57,12 +54,8 @@ const useEventFormHook = ({ isOpen, handleToggle, candidateId }) => {
       let shouldRemoveError = true;
       const t = { ...form };
       if (fieldName === "type") {
-        if (text === "FULL_DAY") {
-          t["date"] = "";
-        } else {
-          t["start_date"] = "";
-          t["end_date"] = "";
-        }
+        t["start_date"] = "";
+        t["end_date"] = "";
         t[fieldName] = text;
       } else {
         t[fieldName] = text;
@@ -81,7 +74,7 @@ const useEventFormHook = ({ isOpen, handleToggle, candidateId }) => {
       "type",
       "excluded_employees",
       "applies_locations",
-      // "start_date",
+      "start_date",
       // "end_date",
     ];
     required.forEach((val) => {
@@ -94,6 +87,15 @@ const useEventFormHook = ({ isOpen, handleToggle, candidateId }) => {
         delete errors[val];
       }
     });
+    if(form?.type === "FULL_DAY"){
+      if(!form?.end_date){
+        errors["end_date"] = true;
+      }
+    }
+    if(!form?.type){
+      errors["type"] = true;
+      SnackbarUtils.error("Please select the Nature of leave")
+    }
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
         delete errors[key];
@@ -105,21 +107,19 @@ const useEventFormHook = ({ isOpen, handleToggle, candidateId }) => {
   const submitToServer = useCallback(() => {
     if (!isSubmitting) {
       setIsSubmitting(true);
-      //   serviceApproveCLaim({
-      //     review_id: candidateId,
-      //     ...form,
-      //   }).then((res) => {
-      //     if (!res.error) {
-      //       SnackbarUtils.success("Request Approved");
-      //       historyUtils.goBack();
-      //       // historyUtils.push(RouteName.CLAIMS_LIST);
-      //       handleToggle();
-      //       SnackbarUtils.success("Request Approved");
-      //     } else {
-      //       SnackbarUtils.error(res?.message);
-      //     }
-      setIsSubmitting(false);
-      //   });
+      const getEmpID = form?.excluded_employees?.map((item) => item?.id);
+      serviceCreateCalendar({
+        ...form,
+        excluded_employees: getEmpID ? getEmpID : []
+      }).then((res) => {
+        if (!res.error) {
+          handleToggle();
+          SnackbarUtils.success("Request Approved");
+        } else {
+          SnackbarUtils.error(res?.message);
+        }
+        setIsSubmitting(false);
+      });
     }
   }, [form, isSubmitting, setIsSubmitting, handleToggle]);
 
