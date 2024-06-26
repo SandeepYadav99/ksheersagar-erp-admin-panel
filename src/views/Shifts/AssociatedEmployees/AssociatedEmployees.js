@@ -10,6 +10,7 @@ import PageBoxComponent from "../../../components/PageBox/PageBox.component";
 import useAssociatedEmployeeHook from "./AssociatedEmployeeHook";
 import { Info } from "@material-ui/icons";
 import { IconButton } from "@material-ui/core";
+import DeletePopup from "./Component/DeleteModal";
 
 const AssociatedEmployees = ({ listData, id }) => {
   const {
@@ -21,7 +22,9 @@ const AssociatedEmployees = ({ listData, id }) => {
     isCalling,
     data,
     currentData,
-    currentPage
+    currentPage,
+    isRejectPopUp,
+    toggleRejectDialog
   } = useAssociatedEmployeeHook({ listData, id });
  
   // const {
@@ -115,7 +118,8 @@ const AssociatedEmployees = ({ listData, id }) => {
         sortable: false,
         render: (temp, all) => (
           <div>
-            <IconButton onClick={()=>history.push(`/profile/?id=${all?.id}`)}>
+            <IconButton onClick={()=>
+    toggleRejectDialog}>
               <Info fontSize="small" />
             </IconButton>
           </div>
@@ -163,6 +167,11 @@ const AssociatedEmployees = ({ listData, id }) => {
           {...tableData.datatableFunctions}
         />
       </div>
+      <DeletePopup
+        handleDialog={toggleRejectDialog}
+        isOpen={isRejectPopUp}
+        empId={id}
+      />
     </PageBoxComponent>
   );
 };

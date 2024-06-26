@@ -44,7 +44,7 @@ const ShiftsLists = ({}) => {
     isSidePanelHours,
     handleToggleSidePannelHours,
     handleToggleSidePannel,
-    handleViewShiftDetail
+    handleViewShiftDetail,
   } = useShiftsListsHook({});
 
   const {
@@ -101,15 +101,18 @@ const ShiftsLists = ({}) => {
         key: "assigned_employees",
         label: "ASSIGNED EMPLOYEES",
         sortable: false,
-        render: (temp, all) => (
-          <div >{all?.location?.name}</div>
-        ),
+        render: (temp, all) => <div>{all?.location?.name}</div>,
       },
       {
         key: "shift_days",
         label: "SHIFT DAYS",
         sortable: false,
-        render: (temp, all) => <div className={styles.avatorFlex}><Avatar className={styles.avator} >Su</Avatar> <Avatar className={styles.avatorSeleted} >Mo</Avatar></div>,
+        render: (temp, all) => (
+          <div className={styles.avatorFlex}>
+            <Avatar className={styles.avator}>Su</Avatar>{" "}
+            <Avatar className={styles.avatorSeleted}>Mo</Avatar>
+          </div>
+        ),
       },
 
       {
@@ -151,7 +154,14 @@ const ShiftsLists = ({}) => {
         ),
       },
     ];
-  }, [renderStatus, renderFirstCell, handleViewDetails, handleEdit, isCalling, handleViewShiftDetail]);
+  }, [
+    renderStatus,
+    renderFirstCell,
+    handleViewDetails,
+    handleEdit,
+    isCalling,
+    handleViewShiftDetail,
+  ]);
 
   const tableData = useMemo(() => {
     const datatableFunctions = {
@@ -206,27 +216,28 @@ const ShiftsLists = ({}) => {
             </ButtonBase>
           </div>
         </div>
+     
         <div className={styles.actionTime}>
           <div className={styles.weekSection}>
             <WeekSection />
           </div>
         </div>
-        <div>
-          <FilterComponent
+        <div >
+          {/* <FilterComponent
             is_progress={isFetching}
             filters={configFilter}
             handleSearchValueChange={handleSearchValueChange}
             handleFilterDataChange={handleFilterDataChange}
-          />
-          <div>
-            <br />
+          /> */}
+       
+           
             <div style={{ width: "100%" }}>
               <DataTables
                 {...tableData.datatable}
                 {...tableData.datatableFunctions}
               />
             </div>
-          </div>
+          
         </div>
       </PageBox>
       <SidePanelComponent
