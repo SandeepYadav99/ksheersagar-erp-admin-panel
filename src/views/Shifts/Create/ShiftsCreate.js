@@ -40,6 +40,9 @@ const ShiftsCreate = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
       </div>
 
       <div className={styles.actionButton}>
+        <ButtonBase className={"createBtnDeletOutland"}>
+        DELETE
+        </ButtonBase>
         <ButtonBase className={"createBtnreset"} onClick={handleSubmit}>
           {isSubmitting ? (
             <CircularProgress color="success" size="20px" />

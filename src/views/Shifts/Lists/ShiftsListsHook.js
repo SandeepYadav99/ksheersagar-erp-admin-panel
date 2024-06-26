@@ -136,6 +136,9 @@ const useShiftsListsHook= ({}) => {
     historyUtils.push(RouteName.LOCATIONS_CREATE);
   }, []);
 
+  const handleViewShiftDetail = useCallback(() => {
+    historyUtils.push(RouteName.SHIFTS_DETAILS);
+  }, []);
   const configFilter = useMemo(() => {
     return [
     
@@ -169,6 +172,7 @@ const useShiftsListsHook= ({}) => {
     id:machineId,
     isSidePanelHours,
     handleToggleSidePannelHours,
+    handleViewShiftDetail
   };
 };
 

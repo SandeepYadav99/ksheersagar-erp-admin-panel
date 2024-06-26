@@ -25,7 +25,9 @@
 }
 .trdata{
   border-bottom: 1px solid #E0E0E0 !important;
+  margin-bottom: -100px !important;
 }
+
 .table {
   border-collapse: collapse;
   width: 100%;
@@ -33,10 +35,13 @@
 .tableContainer {
   margin-top: 20px;
 }
+tbody td {
+  text-align: justify !important;
+}
 .td,
 .th {
   text-align: left;
-  padding: 20px;
+  padding: 10px;
 }
 .td1 {
   display: flex;

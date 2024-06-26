@@ -31,5 +31,6 @@ export default {
   USER_ROLES_CREATE: "/roles/create",
   USER_ROLES_UPDATE: "/roles/update/",
    STATIC_QR:"/static/qr",
-     SHIFTS:"/shifts"
+     SHIFTS:"/shifts",
+     SHIFTS_DETAILS:"/shifts/detail/"
 };

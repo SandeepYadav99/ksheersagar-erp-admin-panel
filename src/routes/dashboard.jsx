@@ -22,6 +22,7 @@ import EmployeeEdit from "../views/EmployeeEdit/EmployeeEdit.view";
 import UserRoleList from "../views/UserRoles/List/UserRoleList";
 import UserRolesCreate from "../views/UserRoles/Create/UserRolesCreate";
 import Machines from "../views/Machines/Lists/Machines";
+import ShiftDetail from "../views/Shifts/ShiftDetail/ShiftDetail";
 
 const NewDashboard = lazy(() => import("../views/dashboard/NewDashboard.view"));
 const LocationList = lazy(() =>
@@ -194,6 +195,18 @@ const dashboardRoutes = [
     icon: PeopleOutlined,
     component: ShiftsLists,
     is_sidebar: true,
+    is_protect: true,
+    should_regex: true,
+    parent: "masters",
+    // roles: [Roles.ADMIN, Roles.CORPORATE_HR],
+  },
+  {
+    path: RouteName.SHIFTS_DETAILS,
+   
+    navbarName: "Shifts",
+    
+    component: ShiftDetail,
+   
     is_protect: true,
     should_regex: true,
     parent: "masters",

@@ -69,7 +69,7 @@ const HoursCreate = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
           ) : qrId ? (
             "Update"
           ) : (
-            " ADD"
+            " SAVE"
           )}
         </ButtonBase>
       </div>

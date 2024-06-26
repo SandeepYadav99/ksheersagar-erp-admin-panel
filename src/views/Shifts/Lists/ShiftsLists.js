@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from "react";
-import { IconButton, ButtonBase } from "@material-ui/core";
+import { IconButton, ButtonBase, Avatar } from "@material-ui/core";
 import classNames from "classnames";
 import { useSelector } from "react-redux";
 import {
@@ -44,6 +44,7 @@ const ShiftsLists = ({}) => {
     isSidePanelHours,
     handleToggleSidePannelHours,
     handleToggleSidePannel,
+    handleViewShiftDetail
   } = useShiftsListsHook({});
 
   const {
@@ -94,21 +95,21 @@ const ShiftsLists = ({}) => {
         key: "shift_name",
         label: "SHIFT NAME",
         sortable: false,
-        render: (value, all) => <div>{all?.upi_id || "N/A"}</div>,
+        render: (value, all) => <div>{}</div>,
       },
       {
         key: "assigned_employees",
         label: "ASSIGNED EMPLOYEES",
         sortable: false,
         render: (temp, all) => (
-          <div style={{ width: "15rem" }}>{all?.location?.name}</div>
+          <div >{all?.location?.name}</div>
         ),
       },
       {
         key: "shift_days",
         label: "SHIFT DAYS",
         sortable: false,
-        render: (temp, all) => <div>{all?.code}</div>,
+        render: (temp, all) => <div className={styles.avatorFlex}><Avatar className={styles.avator} >Su</Avatar> <Avatar className={styles.avatorSeleted} >Mo</Avatar></div>,
       },
 
       {
@@ -121,7 +122,7 @@ const ShiftsLists = ({}) => {
               color="secondary"
               disabled={isCalling}
               onClick={() => {
-                // handleViewDetails(all);
+                handleViewShiftDetail(all);
               }}
             >
               <InfoOutlined fontSize={"small"} />
@@ -150,7 +151,7 @@ const ShiftsLists = ({}) => {
         ),
       },
     ];
-  }, [renderStatus, renderFirstCell, handleViewDetails, handleEdit, isCalling]);
+  }, [renderStatus, renderFirstCell, handleViewDetails, handleEdit, isCalling, handleViewShiftDetail]);
 
   const tableData = useMemo(() => {
     const datatableFunctions = {
