@@ -4,36 +4,40 @@ import SnackbarUtils from "../../../../libs/SnackbarUtils";
 import RouteName from "../../../../routes/Route.name";
 import historyUtils from "../../../../libs/history.utils";
 import { guestList } from "../../../../helper/calenderData";
+import { serviceGetList } from "../../../../services/index.services";
 
 const initialForm = {
-  title: "",
+  name: "",
+  holiday_type: "",
   type: "",
   start_date: "",
   end_date: "",
-  description: "",
-  location: "",
-  guest_name: [],
-  event_url: "",
-  is_all_day: false,
+  date: "",
+  applies_locations: "",
+  excluded_employees: [],
 };
 const useEventFormHook = ({ isOpen, handleToggle, candidateId }) => {
   const [form, setForm] = useState(
     JSON.parse(JSON.stringify({ ...initialForm }))
   );
   const [errorData, setErrorData] = useState({});
-  const [isVerified, setIsVerified] = useState(false);
-  const [resData, setResData] = useState([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [declaration, setDeclaration] = useState(false);
-  const [listData, setListData] = useState([...guestList]);
+  const [listData, setListData] = useState({
+    LOCATIONS: [],
+  });
 
+  useEffect(() => {
+    serviceGetList(["LOCATIONS"]).then((res) => {
+      if (!res.error) {
+        setListData(res.data);
+      }
+    });
+  }, []);
   useEffect(() => {
     if (isOpen) {
       setForm({ ...initialForm });
-      setResData([]);
-      setIsSubmitted(false);
-      setIsVerified(false);
       setErrorData({});
     }
   }, [isOpen]);
@@ -52,25 +56,33 @@ const useEventFormHook = ({ isOpen, handleToggle, candidateId }) => {
     (text, fieldName) => {
       let shouldRemoveError = true;
       const t = { ...form };
-      t[fieldName] = text;
+      if (fieldName === "type") {
+        if (text === "FULL_DAY") {
+          t["date"] = "";
+        } else {
+          t["start_date"] = "";
+          t["end_date"] = "";
+        }
+        t[fieldName] = text;
+      } else {
+        t[fieldName] = text;
+      }
       setForm(t);
       shouldRemoveError && removeError(fieldName);
-      setIsVerified(false);
     },
-    [removeError, form, setForm, setIsVerified]
+    [removeError, form, setForm]
   );
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
     let required = [
-      "title",
+      "name",
+      "holiday_type",
       "type",
-      "location",
-      "guest_name",
-      "event_url",
-      "description",
-      "start_date",
-      "end_date"
+      "excluded_employees",
+      "applies_locations",
+      // "start_date",
+      // "end_date",
     ];
     required.forEach((val) => {
       if (
@@ -138,9 +150,7 @@ const useEventFormHook = ({ isOpen, handleToggle, candidateId }) => {
     handleSubmit,
     errorData,
     isSubmitting,
-    resData,
     isSubmitted,
-    isVerified,
     listData,
   };
 };

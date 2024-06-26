@@ -6,9 +6,15 @@ import CustomSelectField from "../../../../components/FormFields/SelectField/Sel
 import { Autocomplete, MenuItem, TextField } from "@mui/material";
 import CustomDatePicker from "../../../../components/FormFields/DatePicker/CustomDatePicker";
 import CustomSwitch from "../../../../components/FormFields/CustomSwitch";
-import { Button } from "@material-ui/core";
+import {
+  Button,
+  ButtonBase,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+} from "@material-ui/core";
 
-const EventForm = ({ isOpen, handleToggle, candidateId, isInterview }) => {
+const EventForm = ({ isOpen, handleToggle, candidateId }) => {
   const {
     changeTextData,
     errorData,
@@ -16,75 +22,102 @@ const EventForm = ({ isOpen, handleToggle, candidateId, isInterview }) => {
     handleSubmit,
     onBlurHandler,
     removeError,
-    resData,
     isSubmitted,
     isSubmitting,
     listData,
-  } = useEventFormHook({ isOpen, handleToggle, candidateId, isInterview });
+  } = useEventFormHook({ isOpen, handleToggle, candidateId });
 
   return (
     <div>
       <div className={styles.resetPasswordWrapper}>
         <div className={styles.fieldWrapper}>
           <CustomTextField
-            isError={errorData?.title}
-            errorText={errorData?.title}
+            isError={errorData?.name}
+            errorText={errorData?.name}
             label={"Holiday Name*"}
-            value={form?.title}
+            value={form?.name}
             onTextChange={(text) => {
-              changeTextData(text, "title");
+              changeTextData(text, "name");
             }}
             onBlur={() => {
-              onBlurHandler("title");
+              onBlurHandler("name");
             }}
           />
           <CustomSelectField
-            isError={errorData?.type}
-            errorText={errorData?.type}
+            isError={errorData?.holiday_type}
+            errorText={errorData?.holiday_type}
             label={"Choose Holiday Type*"}
-            value={form?.type}
+            value={form?.holiday_type}
             handleChange={(value) => {
-              changeTextData(value, "type");
+              changeTextData(value, "holiday_type");
             }}
           >
             <MenuItem value="GAZETTED">GAZETTED</MenuItem>
             <MenuItem value="OPTIONAL">OPTIONAL</MenuItem>
             <MenuItem value="RESTRICTED">RESTRICTED</MenuItem>
           </CustomSelectField>
-          <CustomSwitch
-            value={form?.is_all_day}
-            handleChange={() => {
-              changeTextData(!form?.is_all_day, "is_all_day");
-            }}
-            label={`All Day`}
-          />
-          <CustomDatePicker
-            clearable
-            label={"Start Date"}
-            // maxDate={new Date()}
-            onChange={(date) => {
-              changeTextData(date, "start_date");
-            }}
-            value={form?.start_date}
-            isError={errorData?.start_date}
-          />
-          <CustomDatePicker
-            clearable
-            label={"End Date"}
-            // maxDate={new Date()}
-            onChange={(date) => {
-              changeTextData(date, "end_date");
-            }}
-            value={form?.end_date}
-            isError={errorData?.end_date}
-          />
-          <CustomSelectField
-            isError={errorData?.type}
-            errorText={errorData?.type}
-            label={"Applies to"}
+          <RadioGroup
+            aria-label="option"
+            name="type"
             value={form?.type}
+            onChange={(e) => changeTextData(e.target.value, "type")}
+            row
+            className={styles.radioWrap}
+          >
+            <FormControlLabel
+              value="FULL_DAY"
+              control={<Radio />}
+              label="Full Day"
+            />
+            <FormControlLabel
+              value="HALF_DAY"
+              control={<Radio />}
+              label="Half Day"
+            />
+          </RadioGroup>
+          {form?.type === "FULL_DAY" ? (
+            <>
+              <CustomDatePicker
+                clearable
+                label={"Start Date"}
+                minDate={new Date()}
+                onChange={(date) => {
+                  changeTextData(date, "start_date");
+                }}
+                value={form?.start_date}
+                isError={errorData?.start_date}
+              />
+              <CustomDatePicker
+                clearable
+                label={"End Date"}
+                minDate={new Date()}
+                onChange={(date) => {
+                  changeTextData(date, "end_date");
+                }}
+                value={form?.end_date}
+                isError={errorData?.end_date}
+              />
+            </>
+          ) : (
+            <CustomDatePicker
+              clearable
+              label={"Date"}
+              minDate={new Date()}
+              onChange={(date) => {
+                changeTextData(date, "date");
+              }}
+              value={form?.date}
+              isError={errorData?.date}
+            />
+          )}
+
+          <CustomSelectField
+            isError={errorData?.applies_locations}
+            errorText={errorData?.applies_locations}
+            label={"Applies to"}
+            value={form?.applies_locations}
             handleChange={(value) => {
-              changeTextData(value, "type");
+              changeTextData(value, "applies_locations");
             }}
           >
             <MenuItem value="SHOWROOM">SHOWROOM</MenuItem>
@@ -95,28 +128,30 @@ const EventForm = ({ isOpen, handleToggle, candidateId, isInterview }) => {
             multiple
             id="tags-outlined"
             onChange={(e, value) => {
-              changeTextData(value, "guest_name");
+              changeTextData(value, "excluded_employees");
             }}
-            value={form?.guest_name}
+            value={form?.excluded_employees}
             // id="tags-standard"
-            options={listData ? listData : []}
-            getOptionLabel={(option) => option.title}
-            defaultValue={form?.guest_name}
+            options={listData?.LOCATIONS ? listData?.LOCATIONS : []}
+            getOptionLabel={(option) => option.name}
+            defaultValue={form?.excluded_employees}
             renderInput={(params) => (
               <TextField
                 {...params}
                 variant="outlined"
                 label="Excluded Employees"
-                error={errorData?.guest_name}
+                error={errorData?.excluded_employees}
               />
             )}
           />
         </div>
         <div className={styles.printFlex}>
+          <ButtonBase className={styles.edit} onClick={handleToggle}>
+            Cancel
+          </ButtonBase>
           <Button className={styles.createBtn} onClick={handleSubmit}>
             ADD
           </Button>
-          <Button>CANCEL</Button>
         </div>
       </div>
     </div>

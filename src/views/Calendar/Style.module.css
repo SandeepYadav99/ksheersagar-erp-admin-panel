@@ -30,9 +30,11 @@
   width: 100%;
 }
 .title {
-  margin: 20px 0;
-  color: #bbbcc4 !important;
-}
+  margin-top: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom:10px;
+  }
 .lowerWrap{
   margin-top: 20px;
   border-top: 1px solid #eaeaec;
