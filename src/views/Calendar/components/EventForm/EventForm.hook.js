@@ -1,8 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import SnackbarUtils from "../../../../libs/SnackbarUtils";
-import RouteName from "../../../../routes/Route.name";
 import { serviceGetList } from "../../../../services/index.services";
-import { serviceCreateCalendar } from "../../../../services/Calendar.service";
+import {
+  serviceCreateCalendar,
+  serviceUpdateCalendar,
+} from "../../../../services/Calendar.service";
 
 const initialForm = {
   name: "",
@@ -13,7 +15,7 @@ const initialForm = {
   applies_locations: "",
   excluded_employees: [],
 };
-const useEventFormHook = ({ isOpen, handleToggle, editData }) => {
+const useEventFormHook = ({ isOpen, handleToggle, editData, renderList }) => {
   const [form, setForm] = useState(
     JSON.parse(JSON.stringify({ ...initialForm }))
   );
@@ -32,15 +34,31 @@ const useEventFormHook = ({ isOpen, handleToggle, editData }) => {
       }
     });
   }, []);
+
+  const getEmpData = useMemo(() => {
+    if (editData) {
+      const obj = { id: editData?.id ? editData?.id : null };
+      Object.keys({ ...initialForm }).forEach((key) => {
+        if (key === "excluded_employees") {
+          obj[key] = editData["excludedEmployees"]
+            ? editData["excludedEmployees"]
+            : [];
+        } else {
+          obj[key] = editData[key] ? editData[key] : "";
+        }
+      });
+      return obj;
+    }
+    return {};
+  }, [editData]);
+
   useEffect(() => {
     if (isOpen) {
       if (editData) {
         setForm({
           ...form,
-          ...editData,
+          ...getEmpData,
         });
-      } else {
-        setForm({ ...initialForm });
       }
     } else {
       setForm({ ...initialForm });
@@ -65,6 +83,11 @@ const useEventFormHook = ({ isOpen, handleToggle, editData }) => {
       if (fieldName === "type") {
         t["start_date"] = "";
         t["end_date"] = "";
+        t[fieldName] = text;
+      } else if (fieldName === "start_date") {
+        if ((t["type"] = "HALF_DAY")) {
+          t["end_date"] = text;
+        }
         t[fieldName] = text;
       } else {
         t[fieldName] = text;
@@ -117,12 +140,17 @@ const useEventFormHook = ({ isOpen, handleToggle, editData }) => {
     if (!isSubmitting) {
       setIsSubmitting(true);
       const getEmpID = form?.excluded_employees?.map((item) => item?.id);
-      serviceCreateCalendar({
+      let req = serviceCreateCalendar;
+      if (editData?.id) {
+        req = serviceUpdateCalendar;
+      }
+      req({
         ...form,
         excluded_employees: getEmpID ? getEmpID : [],
       }).then((res) => {
         if (!res.error) {
           handleToggle();
+          renderList();
           SnackbarUtils.success("Request Approved");
         } else {
           SnackbarUtils.error(res?.message);
@@ -130,7 +158,7 @@ const useEventFormHook = ({ isOpen, handleToggle, editData }) => {
         setIsSubmitting(false);
       });
     }
-  }, [form, isSubmitting, setIsSubmitting, handleToggle]);
+  }, [form, isSubmitting, setIsSubmitting, handleToggle, editData, renderList]);
 
   const handleSubmit = useCallback(() => {
     const errors = checkFormValidation();
@@ -140,7 +168,7 @@ const useEventFormHook = ({ isOpen, handleToggle, editData }) => {
       return true;
     }
     submitToServer();
-  }, [checkFormValidation, setErrorData, form, submitToServer]);
+  }, [checkFormValidation, setErrorData, form, submitToServer, editData]);
 
   const onBlurHandler = useCallback(
     (type) => {

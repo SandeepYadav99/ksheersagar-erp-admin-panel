@@ -88,7 +88,8 @@ function useCalendarList() {
     filteredData,
     selectedDate,
     handleDateChange,
-    editData
+    editData,
+    renderList
   };
 }
 
