@@ -28,7 +28,7 @@ const CustomDateTimePicker = ({onChange, minDate, isError, maxDate, value, label
 
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <KeyboardDateTimePicker
+            <KeyboardTimePicker
                 clearable
                 margin="dense"
                 variant="inline"
@@ -38,9 +38,9 @@ const CustomDateTimePicker = ({onChange, minDate, isError, maxDate, value, label
                 value={value ? value : (null)}
                 onChange={handleOnChange}
                 inputVariant={'outlined'}
-                format={
-                    "dd-MM-yyyy HH:mm"
-                }
+                // format={
+                //     "dd-MM-yyyy HH:mm"
+                // }
                 error={isError ? true : false}
                 minDate={minDate}
                 maxDate={mD}

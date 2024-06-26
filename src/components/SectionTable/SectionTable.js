@@ -45,7 +45,7 @@ const SessionTable = ({ data, form, listData, errorData }) => {
             <tr className={styles.trdata}>
               <td className={styles.td}>Sunday</td>
               <td className={styles.td}>
-                <div>
+                <div style={{marginBottom:"20px "}}>
                   <CustomDateTimePicker
                     label={"Choose Time"}
                     style={{ width: "40%" }}
