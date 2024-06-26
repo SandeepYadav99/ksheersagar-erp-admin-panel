@@ -354,6 +354,7 @@ const ProductCreate = ({ location, isSidePanel, handleToggleSidePannel }) => {
                     /> */}
                     <Autocomplete
                       multiple
+                      size="small"
                       id="tags-outlined"
                       onChange={(e, value) => {
                         changeTextData(value, "applicable_for");

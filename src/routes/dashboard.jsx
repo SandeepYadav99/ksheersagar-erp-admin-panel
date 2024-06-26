@@ -189,8 +189,8 @@ const dashboardRoutes = [
   },
   {
     path: RouteName.SHIFTS,
-    sidebarName: "SHIFTS",
-    navbarName: "SHIFTS",
+    sidebarName: "Shifts",
+    navbarName: "Shifts",
     icon: PeopleOutlined,
     component: ShiftsLists,
     is_sidebar: true,

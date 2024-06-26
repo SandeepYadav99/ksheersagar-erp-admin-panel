@@ -7,7 +7,7 @@ const WeekSection = () => {
       {" "}
       <CustomRadio label={"Week off"} />
       <CustomRadio label={"Occasional Working"} />
-      <CustomRadio label={"Working Day"} />
+      <CustomRadio label={"Working Day"} checked/>
     </>
   );
 };

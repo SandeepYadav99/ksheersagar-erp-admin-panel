@@ -26,6 +26,7 @@ import useShiftsListsHook from "./ShiftsListsHook";
 import HoursCreate from "../WorkingHoursCreate/HoursCreate";
 import CustomRadio from "../../../components/FormFields/CustomRadio";
 import WeekSection from "../Componet/WeekSection";
+import ShiftsCreate from "../Create/ShiftsCreate";
 
 const ShiftsLists = ({}) => {
   const {
@@ -82,7 +83,7 @@ const ShiftsLists = ({}) => {
   const renderTile = useCallback(() => {
     return (
       <div>
-        <span className={styles.title}>{id ? "Update" : "Add"} UPI ID</span>
+        <span className={styles.title}>{id ? "Update" : "Add"} Shift</span>
         <div className={styles.newLine} />
       </div>
     );
@@ -234,11 +235,11 @@ const ShiftsLists = ({}) => {
         side={"right"}
         arrowBack={true}
       >
-        {/* <StaticQrCreate
+        <ShiftsCreate
           isSidePanel={isSidePanel}
           handleToggleSidePannel={handleToggleSidePannel}
           qrId={id}
-        /> */}
+        />
       </SidePanelComponent>
       <SidePanelComponent
         handleToggle={handleToggleSidePannelHours}
