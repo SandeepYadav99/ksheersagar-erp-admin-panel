@@ -15,35 +15,6 @@ import { actionKsDashboard } from "../../actions/Dashboard.action";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Doughnut } from "react-chartjs-2";
-const data = {
-  datasets: [
-    {
-      data: [24, 10],
-      backgroundColor: ["#FC8C5A", "#48AAF3"],
-      borderColor: ["#FC8C5A", "#48AAF3"],
-      borderWidth: 1,
-    },
-  ],
-};
-
-const options = {
-  responsive: false,
-  cutout: "50%",
-  cutoutPercentage: 65,
-
-  plugins: {
-    legend: {
-      display: false,
-    },
-    title: {
-      display: false,
-      text: "Custom Doughnut Chart",
-    },
-    tooltip: {
-      enabled: false,
-    },
-  },
-};
 
 const NewDashboard = () => {
   const dispatch = useDispatch();
@@ -54,11 +25,12 @@ const NewDashboard = () => {
   }, []);
 
   const data = {
+    labels: [],
     datasets: [
       {
         data: [
-          dashboard?.products?.finished_goods,
-          dashboard?.products?.raw_material,
+          dashboard?.products?.finished_goods || 0,
+          dashboard?.products?.raw_material || 0,
         ],
         backgroundColor: ["#FC8C5A", "#48AAF3"],
         borderColor: ["#FC8C5A", "#48AAF3"],
@@ -68,23 +40,25 @@ const NewDashboard = () => {
   };
   const options = {
     responsive: true,
-    cutout: '50%',
+    cutout: "50%",
     cutoutPercentage: 65,
     plugins: {
       legend: {
         display: false,
       },
       tooltip: {
-       
         callbacks: {
           label: function (tooltipItem) {
-            console.log(tooltipItem)
+            if (tooltipItem.raw) {
+              return `${tooltipItem.label}: ${tooltipItem.raw}`;
+            }
+            return ""; // Return an empty string if data is not available
           },
         },
       },
     },
   };
-  
+
   const totalPercentagePlugin = {
     id: "totalPercentage",
     beforeDraw: (chart) => {
@@ -101,7 +75,7 @@ const NewDashboard = () => {
       ctx.font = `${fontSize}em sans-serif`;
       ctx.textBaseline = "middle";
 
-      const text = `${total}%`;
+      const text = `${total}`;
       const textX = Math.round((width - ctx.measureText(text).width) / 2);
       const textY = height / 2;
 
@@ -143,7 +117,6 @@ const NewDashboard = () => {
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
-                 
                 }}
               >
                 <div className={styles.location}>

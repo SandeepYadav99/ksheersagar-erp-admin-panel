@@ -22,12 +22,13 @@ import EmployeeEdit from "../views/EmployeeEdit/EmployeeEdit.view";
 import UserRoleList from "../views/UserRoles/List/UserRoleList";
 import UserRolesCreate from "../views/UserRoles/Create/UserRolesCreate";
 import Machines from "../views/Machines/Lists/Machines";
-import Dashboard from "../views/dashboard/Dashboard";
+
 const NewDashboard = lazy(() => import("../views/dashboard/NewDashboard.view"));
 const LocationList = lazy(() =>
   import("../views/Locations/Location/LocationList.container")
 );
 const StaticQr = lazy(() => import("../views/StaticQR/Lists/StaticQr"));
+const ShiftsLists = lazy(() => import("../views/Shifts/Lists/ShiftsLists"));
 
 const Roles = Constants.ROLES;
 
@@ -187,6 +188,18 @@ const dashboardRoutes = [
     // roles: [Roles.ADMIN, Roles.CORPORATE_HR],
   },
   {
+    path: RouteName.SHIFTS,
+    sidebarName: "SHIFTS",
+    navbarName: "SHIFTS",
+    icon: PeopleOutlined,
+    component: ShiftsLists,
+    is_sidebar: true,
+    is_protect: true,
+    should_regex: true,
+    parent: "masters",
+    // roles: [Roles.ADMIN, Roles.CORPORATE_HR],
+  },
+  {
     path: RouteName.STATIC_QR,
     sidebarName: "Static QR",
     navbarName: "Static QR",
@@ -198,6 +211,7 @@ const dashboardRoutes = [
     parent: "masters",
     // roles: [Roles.ADMIN, Roles.CORPORATE_HR],
   },
+
   {
     path: "null",
     sidebarName: "Inventory Master",
