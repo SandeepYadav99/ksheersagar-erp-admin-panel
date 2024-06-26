@@ -310,6 +310,9 @@
   margin-top: 15% !important;
   padding: 0px 10px !important;
 }
+.location{
+  
+}
 @media screen and (max-width:1314px) and (min-width:1024px){
   .actionButton{
     flex-wrap: wrap !important;
@@ -352,7 +355,7 @@
 }
 .CircularProgressbar {
   margin: auto !important;
-  width: 210px !important;
+  width: 230px !important;
 }
 @media (max-width: 1024px) {
   .gridContainer {

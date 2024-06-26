@@ -43,7 +43,7 @@ const NewDashboardSecondComponent = ({
             />
             <div className={styles.subContainer}>
               <div className={styles.totalCount}>{total}</div>
-              <Typography variant="h5" fontSize={18}>
+              <Typography variant="h5" fontSize={16}>
                 {subTitle}
               </Typography>
             </div>

@@ -1,10 +1,5 @@
 import React, { useEffect, useMemo } from "react";
-import {
-  Card,
-  CardContent,
-  Grid,
-  IconButton,
-} from "@material-ui/core";
+import { Card, CardContent, Grid, IconButton } from "@material-ui/core";
 import NewDashboardComponent from "./components/StatCard/NewDashboardComponent";
 import styles from "./Style.module.css";
 import totalEmpImg from "../../assets/img/ic_total_employees@2x.png";
@@ -19,6 +14,36 @@ import { FiberManualRecord } from "@material-ui/icons";
 import { actionKsDashboard } from "../../actions/Dashboard.action";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { Doughnut } from "react-chartjs-2";
+const data = {
+  datasets: [
+    {
+      data: [24, 10],
+      backgroundColor: ["#FC8C5A", "#48AAF3"],
+      borderColor: ["#FC8C5A", "#48AAF3"],
+      borderWidth: 1,
+    },
+  ],
+};
+
+const options = {
+  responsive: false,
+  cutout: "50%",
+  cutoutPercentage: 65,
+
+  plugins: {
+    legend: {
+      display: false,
+    },
+    title: {
+      display: false,
+      text: "Custom Doughnut Chart",
+    },
+    tooltip: {
+      enabled: false,
+    },
+  },
+};
 
 const NewDashboard = () => {
   const dispatch = useDispatch();
@@ -28,16 +53,54 @@ const NewDashboard = () => {
     dispatch(actionKsDashboard());
   }, []);
 
-  const productTotal = useMemo(() => {
-    if (dashboard?.products) {
-      return (
-        (dashboard.products.finished_goods ) /
-        100
-      );
-    }
-    return 0;
-  }, [dashboard]);
+  const data = {
+    datasets: [
+      {
+        data: [
+          dashboard?.products?.finished_goods,
+          dashboard?.products?.raw_material,
+        ],
+        backgroundColor: ["#FC8C5A", "#48AAF3"],
+        borderColor: ["#FC8C5A", "#48AAF3"],
+        borderWidth: 1,
+      },
+    ],
+  };
+  const options = {
+    responsive: true,
+    cutout: "50%",
+    cutoutPercentage: 65,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      tooltip: {},
+    },
+  };
+  const totalPercentagePlugin = {
+    id: "totalPercentage",
+    beforeDraw: (chart) => {
+      const { ctx, data } = chart;
+      ctx.save();
 
+      const total = data?.datasets[0].data.reduce(
+        (sum, value) => sum + value,
+        0
+      );
+      const width = chart.width;
+      const height = chart.height;
+      const fontSize = (height / 114).toFixed(2);
+      ctx.font = `${fontSize}em sans-serif`;
+      ctx.textBaseline = "middle";
+
+      const text = `${total}%`;
+      const textX = Math.round((width - ctx.measureText(text).width) / 2);
+      const textY = height / 2;
+
+      ctx.fillText(text, textX, textY);
+      ctx.restore();
+    },
+  };
   return (
     <div className={styles.gridContainer}>
       {/*<PageTitle title="Dashboard"/>*/}
@@ -65,26 +128,27 @@ const NewDashboard = () => {
             />
           </Grid>
         </Grid>
-        <Grid  style={{ marginTop: "15px" }}>
+        <Grid style={{ marginTop: "15px" }}>
           <Card square className={styles.card}>
             <CardContent>
               <div
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
+                 
                 }}
               >
-                <div>
+                <div className={styles.location}>
                   <div className={styles.titleGrid}>Total Locations</div>
-                  <div className={styles.newLine}/>
+                  <div className={styles.newLine} />
                 </div>
 
                 <div className={styles.totalCount}>
                   {dashboard?.locations?.total}
                 </div>
               </div>
-              <Grid container spacing={3} >
-                <Grid item  sm={6} xs={12}>
+              <Grid container spacing={3}>
+                <Grid item sm={6} xs={12}>
                   <NewDashboardSecondComponent
                     subTitle={"Showrooms"}
                     image={showRoomEmpImg}
@@ -92,7 +156,7 @@ const NewDashboard = () => {
                     isShowRoom={true}
                   />
                 </Grid>
-                <Grid item  sm={6} xs={12}>
+                <Grid item sm={6} xs={12}>
                   <NewDashboardSecondComponent
                     subTitle={"Factory"}
                     image={factoryEmpImg}
@@ -107,23 +171,18 @@ const NewDashboard = () => {
       </Grid>
       {/* Second section  */}
 
-      <Grid
-        item
-        xs={12}
-        sm={8}
-        className={styles.leftContainer}
-       
-      >
-        <Card  className={styles.circularContainer}>
+      <Grid item xs={12} sm={8} className={styles.leftContainer}>
+        <Card className={styles.circularContainer}>
           <CardContent>
             <div className={styles.headerNewLine}>
               <div className={styles.titleGrid}>Total Products</div>
               <div className={styles.newLine} />
             </div>
             <div className={styles.CircularProgressbar}>
-              <CircularProgressbar
-                value={productTotal}
+              {/* <CircularProgressbar
+                value={data}
                 maxValue={1}
+                minValue={1}
                 text={`${productTotal * 100}%`}
                 strokeWidth={"15"}
                 styles={buildStyles({
@@ -131,7 +190,15 @@ const NewDashboard = () => {
                   pathColor: "#FC8C5A",
                   trailColor: "#48AAF3",
                 })}
+              /> */}
+              {/* <div className={styles.container}> */}
+              <Doughnut
+                data={data}
+                options={options}
+                height={250}
+                plugins={[totalPercentagePlugin]}
               />
+              {/* </div> */}
             </div>
             <div className={styles.actionButton}>
               <IconButton className={"dashActionBtn"} color="secondary">
