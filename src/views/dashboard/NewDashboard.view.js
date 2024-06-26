@@ -25,9 +25,10 @@ const NewDashboard = () => {
   }, []);
 
   const data = {
-    labels: [],
+    labels: ['Finished Goods', 'Raw Material'],
     datasets: [
       {
+
         data: [
           dashboard?.products?.finished_goods || 0,
           dashboard?.products?.raw_material || 0,
@@ -42,6 +43,12 @@ const NewDashboard = () => {
     responsive: true,
     cutout: "50%",
     cutoutPercentage: 65,
+      legend: {
+        display: false
+      },
+      tooltips: {
+        enabled: true
+      },
     plugins: {
       legend: {
         display: false,
