@@ -23,9 +23,9 @@ import UserRoleList from "../views/UserRoles/List/UserRoleList";
 import UserRolesCreate from "../views/UserRoles/Create/UserRolesCreate";
 import Machines from "../views/Machines/Lists/Machines";
 import ShiftDetail from "../views/Shifts/ShiftDetail/ShiftDetail";
+import CalendarList from "../views/Calendar/CalendarList.view";
 import Dashboard from "../views/dashboard/Dashboard";
 import { CalendarMonth } from "@mui/icons-material";
-import CalendarList from "../views/Calendar/CalendarList.view";
 
 const NewDashboard = lazy(() => import("../views/dashboard/NewDashboard.view"));
 const LocationList = lazy(() =>

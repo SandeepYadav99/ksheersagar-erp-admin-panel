@@ -23,15 +23,17 @@ const HoursCreate = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
       <div className={"formFlex"} style={{ alignItems: "center" }}>
         <div className={"formGroup"}>
           <CustomTextField
-            isError={errorData?.name}
-            errorText={errorData?.name}
+            type="number"
+            isError={errorData?.full_day}
+            errorText={errorData?.full_day}
             label={"Full Day Hours"}
-            value={form?.name}
+            value={form?.full_day}
             onTextChange={(text) => {
-              changeTextData(text, "name");
+             
+              changeTextData(text, "full_day");
             }}
             onBlur={() => {
-              onBlurHandler("name");
+              onBlurHandler("full_day");
             }}
           />
         </div>
@@ -40,12 +42,13 @@ const HoursCreate = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
       <div className={"formFlex"}>
         <div className={"formGroup"}>
           <CustomTextField
-            isError={errorData?.upi_id}
-            errorText={errorData?.upi_id}
+            type="number"
+            isError={errorData?.half_day}
+            errorText={errorData?.half_day}
             label={"Half Day Hours"}
-            value={form?.upi_id}
+            value={form?.half_day}
             onTextChange={(text) => {
-              changeTextData(text, "upi_id");
+              changeTextData(text, "half_day");
             }}
             // onBlur={() => {
             //   onBlurHandler("td_id");
@@ -55,7 +58,7 @@ const HoursCreate = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
       </div>
       <div className={"formFlex"}>
         <div className={"formGroup"}>
-          <div>
+          <div className={styles.notesDes}>
             <strong>Note: </strong>
             By Default, Full-day hours are set by the maximum hours in any
             shift, while half-day hours are half of that.

@@ -34,5 +34,4 @@ export default {
      SHIFTS:"/shifts",
      SHIFTS_DETAILS:"/shifts/detail/",
   CALENDAR:"/calendar",
-
 };

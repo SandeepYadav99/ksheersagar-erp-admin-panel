@@ -13,7 +13,10 @@
     justify-content: space-between;
     align-items: center;
 }
-
+.notesDes{
+  font-size: 12px !important;
+  font-weight: 500 !important;
+}
 .outerFlex {
     display: flex;
     align-items: center;

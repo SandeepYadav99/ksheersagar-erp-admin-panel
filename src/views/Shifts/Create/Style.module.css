@@ -25,6 +25,31 @@
     margin-top: 20px !important;
     padding: 10px !important;
   }
+  .shiftcontainer{
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+  }
+  .shiftHeader{
+    background: #ECF7FF 0% 0% no-repeat padding-box;
+    height: 58px;
+    font-size: .75rem;
+    font-weight: 600;
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    padding:  0 1.2rem;
+  }
+  .divHead{
+    flex: 1;
+  }
+  .divHead1{
+    flex: 2;
+  }
+  .divHead21{
+    text-align: center;
+    flex: 1;
+  }
   .actionButton{
     display: flex ;
     justify-content: space-between;

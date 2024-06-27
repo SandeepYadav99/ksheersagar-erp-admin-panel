@@ -1,67 +1,51 @@
-import { useCallback, useState, useEffect } from "react";
+import { useCallback, useState, useEffect, useRef, useMemo } from "react";
 import historyUtils from "../../../libs/history.utils";
 import SnackbarUtils from "../../../libs/SnackbarUtils";
 import RouteName from "../../../routes/Route.name";
 import { actionDeleteRoles } from "../../../actions/UserRoles.action";
 import { useDispatch } from "react-redux";
-
-import {
-  serviceCreatePaytmMachines,
-  serviceGetPaytmMachinesDetails,
-  servicePaytmMachinesCheck,
-  serviceUpdatePaytmMachines,
-} from "../../../services/Machines.service";
-import { actionFetchPaytmMachines } from "../../../actions/Machines.action";
-import useDebounce from "../../../hooks/DebounceHook";
 import { serviceGetList } from "../../../services/Common.service";
 import {
-  serviceCreateStaticQr,
-  serviceGetStaticQrDetails,
-  serviceStaticQrCheck,
   serviceUpdateStaticQr,
 } from "../../../services/StaticQr.service";
 import { actionFetchStaticQr } from "../../../actions/StaticQr.action";
-import { isUpiID } from "../../../libs/RegexUtils";
+import { shiftdays } from "../../../helper/helper";
+import { serviceCreateShifts } from "../../../services/Shifts.service";
 
 const initialForm = {
   name: "",
-  upi_id: "",
-  code: "",
-  location_id: "",
 };
 
-const useShiftsCreateHook = ({
-  handleToggleSidePannel,
-  isSidePanel,
-  qrId,
-}) => {
+const days = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+const useShiftsCreateHook = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
   const [form, setForm] = useState({ ...initialForm });
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const codeDebouncerUnicMId = useDebounce(form?.code, 500);
   const [isLoading, setIsLoading] = useState(false);
   const [listData, setListData] = useState({ LOCATIONS: [] });
+  const shiftRef = useRef(null);
   const dispatch = useDispatch();
 
+  const getdays = useMemo(() => {
+    return days?.map((item) => {
+      return {
+        ...shiftdays,
+        name: item,
+      };
+    });
+  }, [shiftdays]);
+
   useEffect(() => {
-    if (qrId) {
-      serviceGetStaticQrDetails({ id: qrId }).then((res) => {
-        if (!res.error) {
-          const data = res?.data?.details;
-          setForm({
-            ...form,
-            name: data?.name,
-            upi_id: data?.upi_id,
-            code: data?.code,
-            location_id: data?.location.id,
-            // status: data?.status === "ACTIVE" ? true : false,
-          });
-        } else {
-          SnackbarUtils.error(res?.message);
-        }
-      });
-    }
-  }, [qrId]);
+    shiftRef.current?.setData(getdays);
+  }, []);
 
   useEffect(() => {
     if (!isSidePanel) {
@@ -79,7 +63,7 @@ const useShiftsCreateHook = ({
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = ["upi_id", "code", "location_id"];
+    let required = ["name"];
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -88,11 +72,6 @@ const useShiftsCreateHook = ({
         errors[val] = true;
       }
     });
-
-    if (form?.upi_id && !isUpiID(form?.upi_id)) {
-      errors.upi_id = true;
-      SnackbarUtils.error("Invalid upi id ");
-    }
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
         delete errors[key];
@@ -106,12 +85,16 @@ const useShiftsCreateHook = ({
     if (!isSubmitting) {
       setIsSubmitting(true);
     }
-
+    const shiftData = shiftRef.current.getData();
+    const updatedData = {
+      ...form,
+      shift_days: [...shiftData],
+    };
     let req;
     if (qrId) {
       req = serviceUpdateStaticQr({ ...form, id: qrId });
     } else {
-      req = serviceCreateStaticQr({ ...form });
+      req = serviceCreateShifts({ ...updatedData });
     }
 
     req.then((res) => {
@@ -127,8 +110,8 @@ const useShiftsCreateHook = ({
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
-    // console.log('dff',errors)
-    if (Object.keys(errors).length > 0) {
+    const isShiftValid = shiftRef.current.isValid();
+    if (!isShiftValid || Object.keys(errors).length > 0) {
       setErrorData(errors);
       return true;
     }
@@ -144,32 +127,6 @@ const useShiftsCreateHook = ({
     },
     [setErrorData, errorData]
   );
-
-  const checkCodeValidationMId = useCallback(() => {
-    if (form?.code) {
-      serviceStaticQrCheck({
-        id: qrId,
-        code: form?.code,
-      }).then((res) => {
-        if (!res.error) {
-          const errors = JSON.parse(JSON.stringify(errorData));
-          if (res.data.is_exists) {
-            errors.code = "M id already exist";
-            setErrorData(errors);
-          } else {
-            delete errors.code;
-            setErrorData(errors);
-          }
-        }
-      });
-    }
-  }, [errorData, setErrorData, form.code, qrId]);
-
-  useEffect(() => {
-    if (codeDebouncerUnicMId) {
-      checkCodeValidationMId();
-    }
-  }, [codeDebouncerUnicMId]);
 
   const changeTextData = useCallback(
     (text, fieldName) => {
@@ -198,7 +155,7 @@ const useShiftsCreateHook = ({
         changeTextData(form?.[type].trim(), type);
       }
     },
-    [changeTextData, checkCodeValidationMId]
+    [changeTextData]
   );
 
   const handleDelete = useCallback(() => {
@@ -224,6 +181,7 @@ const useShiftsCreateHook = ({
     handleDelete,
     isSubmitting,
     listData,
+    shiftRef,
   };
 };
 

@@ -8,6 +8,8 @@ const CustomRadio = ({ handleChange, label, ...rest }) => {
     <FormControlLabel
       control={
         <Radio
+        size="small"
+       style={{height:"11px"}}
           onChange={(e) => {
             handleChange(e.target.checked);
           }}
