@@ -160,3 +160,11 @@
     font-size:14px;
     color: #FFFFFF;
 }
+.avatorSeletedCircle{
+    background-color: #fff;
+    border: 1px solid #1285F9;
+    width:32px; 
+    height:32px;
+    font-size:14px;
+    color: #161616;
+}
