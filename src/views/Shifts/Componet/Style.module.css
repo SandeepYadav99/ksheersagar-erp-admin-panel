@@ -36,5 +36,35 @@
   .fontSize{
     font-size: 12px !important;
     font-weight: 500 !important;
-    margin-left: -5px !important;
+   
   }
+  .mainContainer{
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+  .radioFlex{
+    display: flex !important;
+    gap: 5px !important;
+    align-items: center !important;
+  }
+
+  .radioButtonSelected{
+    background-color: #1285F9 !important;
+    border: 1px solid #B8C5D3 !important;
+    width:12px !important; 
+    height:12px !important;
+    border-radius: 12px !important;
+
+    /* color: #FFFFFF !important; */
+}
+
+.radioButtonUnSelected{
+  background-color: #fff !important;
+  border: 1px solid #B8C5D3 !important;
+  width:12px  !important; 
+  height:12px !important;
+  border-radius: 12px !important;
+  font-size:14px !important;
+  color: #161616 !important;
+}

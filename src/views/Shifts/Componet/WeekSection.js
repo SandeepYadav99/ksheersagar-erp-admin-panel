@@ -1,15 +1,24 @@
 import React from "react";
-import CustomRadio from "../../../components/FormFields/CustomRadio";
-import { Typography } from "@material-ui/core";
 import styles from "./Style.module.css"
+
 const WeekSection = () => {
   return (
-    <>
+    <div className={styles.mainContainer}>
       {" "}
-      <CustomRadio  label={<span className={styles.fontSize}>Week off</span>} />
-      <CustomRadio label={<span className={styles.fontSize}>Occasional Working</span>} />
-      <CustomRadio label={<span className={styles.fontSize}>Working Day</span>} checked/>
-    </>
+      <div className={styles.radioFlex}>
+      <div className={styles.radioButtonUnSelected}/>
+        <div className={styles.fontSize}>Week off</div>
+      </div>
+     <div className={styles.radioFlex}>
+        <div className={styles.radioButtonUnSelected}/>
+        <div className={styles.fontSize}>Occasional Working</div>
+      </div>
+      <div className={styles.radioFlex}>
+        <div className={styles.radioButtonSelected}/>
+        <div className={styles.fontSize}>Working Day</div>
+      </div> 
+    
+    </div>
   );
 };
 

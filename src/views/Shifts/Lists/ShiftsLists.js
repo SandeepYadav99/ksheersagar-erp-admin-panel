@@ -52,7 +52,7 @@ const ShiftsLists = ({}) => {
     all: allData,
     currentPage,
     is_fetching: isFetching,
-  } = useSelector((state) => state?.StaticQr);
+  } = useSelector((state) => state?.Shifts);
 
   const renderStatus = useCallback((status) => {
     return <StatusPill status={status} />;
@@ -223,13 +223,13 @@ const ShiftsLists = ({}) => {
           </div>
         </div>
         <div >
-          {/* <FilterComponent
+         {/* <FilterComponent
             is_progress={isFetching}
             filters={configFilter}
             handleSearchValueChange={handleSearchValueChange}
             handleFilterDataChange={handleFilterDataChange}
-          /> */}
-       
+          />  */}
+     
            
             <div style={{ width: "100%" }}>
               <DataTables
