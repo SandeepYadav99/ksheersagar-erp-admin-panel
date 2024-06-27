@@ -6,15 +6,15 @@ import styles from "./Style.module.css";
 import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme) => ({
-  customCalendar: {
-    background: "yellow",
-  },
-  textField: {
-    width: "100%",
-  },
-  closeBtn: {
-    background: "yellow",
-  },
+  // customCalendar: {
+  //   background: "yellow",
+  // },
+  // textField: {
+  //   width: "100%",
+  // },
+  // closeBtn: {
+  //   background: "yellow",
+  // },
 }));
 
 function CalendarMui({ selectedDate, handleDateChange }) {
