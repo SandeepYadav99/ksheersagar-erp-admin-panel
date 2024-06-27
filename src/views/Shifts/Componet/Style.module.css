@@ -1,0 +1,35 @@
+.avatorFlex{
+    display: grid  !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    row-gap: 30px !important;
+    column-gap: 20px !important;
+}
+.avatorSubFlex{
+    display: flex ;
+    gap: 10px !important;
+    align-items: center  !important;
+}
+.avator{
+    background-color: #fff !important;
+    border: 1px solid #B8C5D3 !important;
+    width:32px  !important; 
+    height:32px !important;
+    font-size:14px !important;
+    color: #161616 !important;
+}
+.avatorSeleted{
+    background-color: #1285F9 !important;
+    border: 1px solid #B8C5D3 !important;
+    width:32px !important; 
+    height:32px !important;
+    font-size:14px !important;
+    color: #FFFFFF !important;
+}
+.container{
+    margin-bottom: 24px !important;
+    font-weight: 600 !important;
+  }
+  .title{
+    color: #161616 !important;
+    font-size: 14px !important;
+  }

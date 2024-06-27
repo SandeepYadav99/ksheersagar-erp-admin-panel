@@ -32,6 +32,7 @@
     "react": "^18.1.0",
     "react-big-calendar": "^1.8.4",
     "react-chartjs-2": "^2.9.0",
+    "react-circular-progressbar": "^2.1.0",
     "react-dom": "^18.1.0",
     "react-dropdown-cascade": "^2.0.0",
     "react-pdf": "^6.2.2",

@@ -1,12 +1,13 @@
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import React from "react";
+import { Radio } from "@material-ui/core";
 
-const CustomCheckbox = ({ handleChange, label, ...rest }) => {
+const CustomRadio = ({ handleChange, label, ...rest }) => {
   return (
     <FormControlLabel
       control={
-        <Checkbox
+        <Radio
           onChange={(e) => {
             handleChange(e.target.checked);
           }}
@@ -18,4 +19,4 @@ const CustomCheckbox = ({ handleChange, label, ...rest }) => {
   );
 };
 
-export default CustomCheckbox;
+export default CustomRadio;

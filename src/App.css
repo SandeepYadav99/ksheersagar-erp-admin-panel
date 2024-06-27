@@ -177,6 +177,15 @@ input[type=radio] + label:hover {
     color: rgb(147, 154, 191) !important;
 }
 
+.dashActionBtn {
+    padding: 8px !important;
+    color: black !important;
+    border: 1px solid #B8C5D3 !important;
+    border-radius: 5px !important;
+   font-size: 0.9rem !important;
+   font-weight: 600 !important;
+   
+}
 .iconTabs .MuiTab-wrapper {
     display: flex;
     flex-direction: row;
@@ -243,6 +252,17 @@ input[type=radio] + label:hover {
 .createBtnreset{
     background-color: #29CB97 !important;
     color: #ffffff !important;
+    padding: 10px 30px !important;
+    font-size: 0.8rem !important;
+    border-radius: 30px !important;
+    text-transform: uppercase !important;
+    font-weight: 600 !important;
+}
+
+.createBtnDeletOutland{
+    border: 1px solid #FF493F !important;
+   
+    color: #FF493F !important;
     padding: 10px 30px !important;
     font-size: 0.8rem !important;
     border-radius: 30px !important;

@@ -1,0 +1,13 @@
+.newLine {
+    height: 4px;
+    width: 30px;
+    border-radius: 10px;
+    margin-left: 20px;
+    background-image: linear-gradient(265deg, #7467f0, #2896e9) !important;
+  }
+  .container{
+    margin-bottom: 24px !important;
+  }
+  .employe{
+    margin-top: 20px !important;
+  }

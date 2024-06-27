@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LocationCreateView = ({ isSidePanel , setSidePanel}) => {
+const LocationCreateView = ({ isSidePanel, setSidePanel }) => {
   const {
     form,
     errorData,
@@ -47,11 +47,10 @@ const LocationCreateView = ({ isSidePanel , setSidePanel}) => {
     geofence,
     handleToggleSidePannel,
     geoLocation,
-    setGeoFence
-  } = useLocationDetail({ isSidePanel , setSidePanel});
+    setGeoFence,
+  } = useLocationDetail({ isSidePanel, setSidePanel });
   // const geofence = [];
   console.log(geofence, "GEOFENCE");
-
 
   return (
     <div className={styles.locationWeap}>
@@ -194,7 +193,23 @@ const LocationCreateView = ({ isSidePanel , setSidePanel}) => {
           </div>
         </div>
       </div>
-
+      <div className="formFlex">
+        <div className={"formGroup"}>
+          <CustomTextField
+            isError={errorData?.fssai_number}
+            errorText={errorData?.fssai_number}
+            label={"Fssai id"}
+            value={form?.fssai_number}
+            onTextChange={(text) => {
+              changeTextData(text, "fssai_number");
+            }}
+            type={"number"}
+            onBlur={() => {
+              onBlurHandler("fssai_number");
+            }}
+          />
+        </div>
+      </div>
       <div className={"formFlex"}>
         <div className={"formGroup"}>
           <CustomTextField
@@ -223,7 +238,6 @@ const LocationCreateView = ({ isSidePanel , setSidePanel}) => {
       </div>
       <div className={"formFlex"}>
         <div className="formGroup">
-        
           <Geofencing polygon={geofence} handleSave={handleCoordinate} />
         </div>
       </div>
@@ -268,7 +282,7 @@ const LocationCreateView = ({ isSidePanel , setSidePanel}) => {
             handleChange={() => {
               changeTextData(!form?.is_active, "is_active");
             }}
-            label={form?.is_active ? `Active` :"Inactive"}
+            label={form?.is_active ? `Active` : "Inactive"}
           />
         </h4>
       </div>

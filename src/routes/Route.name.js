@@ -33,4 +33,6 @@ export default {
   STATIC_QR:"/static/qr",
   CALENDAR:"/calendar",
 
+     SHIFTS:"/shifts",
+     SHIFTS_DETAILS:"/shifts/detail/"
 };

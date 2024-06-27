@@ -14,46 +14,54 @@ import {
 import { actionFetchPaytmMachines } from "../../../actions/Machines.action";
 import useDebounce from "../../../hooks/DebounceHook";
 import { serviceGetList } from "../../../services/Common.service";
+import {
+  serviceCreateStaticQr,
+  serviceGetStaticQrDetails,
+  serviceStaticQrCheck,
+  serviceUpdateStaticQr,
+} from "../../../services/StaticQr.service";
+import { actionFetchStaticQr } from "../../../actions/StaticQr.action";
+import { isUpiID } from "../../../libs/RegexUtils";
 
 const initialForm = {
-  machineName: "",
-  td_id: "",
-  serial_number: "",
+  name: "",
+  upi_id: "",
+  code: "",
   location_id: "",
-  status: true,
 };
 
-const useMachinesCreateHook = ({
+const useShiftsCreateHook = ({
   handleToggleSidePannel,
   isSidePanel,
-  machineId,
+  qrId,
 }) => {
   const [form, setForm] = useState({ ...initialForm });
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const codeDebouncerUnicTdId = useDebounce(form?.td_id, 500);
+  const codeDebouncerUnicMId = useDebounce(form?.code, 500);
   const [isLoading, setIsLoading] = useState(false);
   const [listData, setListData] = useState({ LOCATIONS: [] });
   const dispatch = useDispatch();
+
   useEffect(() => {
-    if (machineId) {
-      serviceGetPaytmMachinesDetails({ id: machineId }).then((res) => {
+    if (qrId) {
+      serviceGetStaticQrDetails({ id: qrId }).then((res) => {
         if (!res.error) {
           const data = res?.data?.details;
           setForm({
             ...form,
-            machineName: data?.name,
-            td_id: data?.t_id,
-            serial_number: data?.serial_no,
-            location_id:data?.location.id,
-            status: data?.status === "ACTIVE" ? true : false,
+            name: data?.name,
+            upi_id: data?.upi_id,
+            code: data?.code,
+            location_id: data?.location.id,
+            // status: data?.status === "ACTIVE" ? true : false,
           });
         } else {
           SnackbarUtils.error(res?.message);
         }
       });
     }
-  }, [machineId]);
+  }, [qrId]);
 
   useEffect(() => {
     if (!isSidePanel) {
@@ -62,7 +70,7 @@ const useMachinesCreateHook = ({
   }, [isSidePanel]);
 
   useEffect(() => {
-    serviceGetList(["LOCATIONS"], {location_types: ["SHOWROOM"]}).then((res) => {
+    serviceGetList(["LOCATIONS"]).then((res) => {
       if (!res.error) {
         setListData(res.data);
       }
@@ -71,7 +79,7 @@ const useMachinesCreateHook = ({
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = ["td_id", "serial_number", "machineName", "location_id"];
+    let required = ["upi_id", "code", "location_id"];
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -81,6 +89,10 @@ const useMachinesCreateHook = ({
       }
     });
 
+    if (form?.upi_id && !isUpiID(form?.upi_id)) {
+      errors.upi_id = true;
+      SnackbarUtils.error("Invalid upi id ");
+    }
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
         delete errors[key];
@@ -95,33 +107,23 @@ const useMachinesCreateHook = ({
       setIsSubmitting(true);
     }
 
-    const fd = {
-      name: form?.machineName,
-      t_id: form?.td_id,
-      serial_no: form?.serial_number,
-      is_active: form?.status,
-      location_id:form?.location_id,
-    };
-
     let req;
-    if (machineId) {
-      fd.id = machineId;
-
-      req = serviceUpdatePaytmMachines(fd);
+    if (qrId) {
+      req = serviceUpdateStaticQr({ ...form, id: qrId });
     } else {
-      req = serviceCreatePaytmMachines(fd);
+      req = serviceCreateStaticQr({ ...form });
     }
 
     req.then((res) => {
       if (!res.error) {
         handleToggleSidePannel();
-        dispatch(actionFetchPaytmMachines(1, {}, {}));
+        dispatch(actionFetchStaticQr(1, {}, {}));
       } else {
         SnackbarUtils.error(res.message);
       }
       setIsSubmitting(false);
     });
-  }, [form, isSubmitting, setIsSubmitting, machineId, handleToggleSidePannel]);
+  }, [form, isSubmitting, setIsSubmitting, qrId, handleToggleSidePannel]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
@@ -143,39 +145,43 @@ const useMachinesCreateHook = ({
     [setErrorData, errorData]
   );
 
-  const checkCodeValidationTId = useCallback(() => {
-    if (form?.td_id) {
-      servicePaytmMachinesCheck({
-        id: machineId ? machineId : "",
-        t_id: form?.td_id,
+  const checkCodeValidationMId = useCallback(() => {
+    if (form?.code) {
+      serviceStaticQrCheck({
+        id: qrId,
+        code: form?.code,
       }).then((res) => {
         if (!res.error) {
           const errors = JSON.parse(JSON.stringify(errorData));
           if (res.data.is_exists) {
-            errors.td_id = "Td id already exist";
+            errors.code = "M id already exist";
             setErrorData(errors);
           } else {
-            delete errors.td_id;
+            delete errors.code;
             setErrorData(errors);
           }
         }
       });
     }
-  }, [errorData, setErrorData, form.td_id, machineId]);
+  }, [errorData, setErrorData, form.code, qrId]);
 
   useEffect(() => {
-    if (codeDebouncerUnicTdId) {
-      checkCodeValidationTId();
+    if (codeDebouncerUnicMId) {
+      checkCodeValidationMId();
     }
-  }, [codeDebouncerUnicTdId]);
+  }, [codeDebouncerUnicMId]);
 
   const changeTextData = useCallback(
     (text, fieldName) => {
       let shouldRemoveError = true;
 
       const t = { ...form };
-      if (fieldName === "machineName") {
+      if (fieldName === "name") {
         t[fieldName] = text?.trimStart();
+      } else if (fieldName === "upi_id") {
+        // if(!isUpiID(text)){
+        t[fieldName] = text;
+        // }
       } else {
         t[fieldName] = text;
       }
@@ -192,15 +198,15 @@ const useMachinesCreateHook = ({
         changeTextData(form?.[type].trim(), type);
       }
     },
-    [changeTextData, checkCodeValidationTId]
+    [changeTextData, checkCodeValidationMId]
   );
 
   const handleDelete = useCallback(() => {
-    dispatch(actionDeleteRoles(machineId));
+    dispatch(actionDeleteRoles(qrId));
     // setIsDialog(false);
     // historyUtils.push("/product");
     historyUtils.push(RouteName.USER_ROLES);
-  }, [machineId]);
+  }, [qrId]);
 
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });
@@ -214,11 +220,11 @@ const useMachinesCreateHook = ({
     onBlurHandler,
     handleSubmit,
     isLoading,
-    machineId,
+    qrId,
     handleDelete,
     isSubmitting,
     listData,
   };
 };
 
-export default useMachinesCreateHook;
+export default useShiftsCreateHook;

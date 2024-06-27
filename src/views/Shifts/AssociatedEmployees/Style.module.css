@@ -1,0 +1,227 @@
+.flexCont {
+    display: flex;
+    align-items: center;
+  }
+  .imageCont img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  .card {
+    padding: 2rem 2rem;
+  }
+  
+  .plain {
+    border-radius: 10px;
+    padding: 1.2rem 1.2rem;
+    margin-bottom: 20px;
+    background-color: white;
+    box-shadow: 0 0 8px rgb(0 0 0 / 15%);
+  }
+ 
+  .bottomSection{
+    flex: 1 1 100% !important;
+  }
+  .leftSection{
+    flex: 0.4 1 25%;
+  }
+  .detailContainer {
+    display: flex !important;
+    width: 100% !important;
+    gap: 10px !important;
+    margin-top: 20px !important;
+  }
+  .hyperlinkText{
+    color: #2896E9;
+    text-decoration-line: underline;
+    cursor: pointer;
+  }
+  .btnWrap{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .caseFlex {
+    display: flex;
+    align-items: center;
+    /*justify-content: space-between;*/
+    font-size: 0.8rem;
+  }
+  
+  .weight {
+    font-weight: 600;
+  }
+  
+  .plus {
+    border-radius: 30px;
+    height: 25px;
+    width: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+    margin-right: 5px;
+  }
+  
+  .plusFlex {
+    display: flex;
+    align-items: center;
+  }
+  
+  .infoTitle {
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    margin-left: 15px;
+    width: 100%;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+  }
+  
+  .upperFlex {
+    display: flex;
+    align-items: center;
+  }
+  
+  .innerFlex {
+    display: flex;
+    flex: 1;
+  }
+  
+  .skuFlex {
+    display: flex;
+    font-size: 0.8rem;
+    flex: 1;
+    margin-left: 15px;
+  }
+  
+  .avbl {
+    flex: 1;
+  }
+  
+  .bottomFlex {
+    display: flex;
+  }
+  
+  .barFlex {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    /*width: 500px;*/
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .heading {
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-right: 5px;
+    text-transform: capitalize;
+  }
+  
+  .desc {
+    color: #4f4f4f;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    text-align: justify;
+  }
+  
+  .productInfo {
+    margin-bottom: 7px;
+  }
+  
+  .headerContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .firstCellFlex {
+    display: flex;
+    align-items: center;
+  }
+  .firstCellFlex img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  .firstCellInfo {
+    margin-left: 10px;
+  }
+  
+  .headerFlex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .edit {
+    color: #29cb97 !important;
+    border: 2px solid #29cb97 !important;
+    padding: 10px 40px !important;
+    border-radius: 30px !important;
+    font-weight: 600 !important;
+  }
+  .editDisabled {
+    color: #c1bfbf !important;
+    border: 2px solid #c1bfbf !important;
+    padding: 10px 40px !important;
+    border-radius: 30px !important;
+    font-weight: 600 !important;
+  }
+  .editBtn1 {
+    display: flex;
+    justify-content: space-between;
+    height: 40px;
+    align-items: center;
+    gap: 20px;
+  }
+  .FilterBtnWrapper {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    /* justify-content: space-between; */
+  }
+  .disabledBtn {
+    background-color: #c1bfbf !important;
+    color: #ffffff !important;
+    padding: 12px 35px !important;
+    font-size: 0.8rem !important;
+    border-radius: 30px !important;
+    text-transform: uppercase !important;
+    font-weight: 600 !important;
+  }
+  
+  @media (max-width: 1500px) {
+    .FilterBtnWrapper {
+      margin-top: 15px;
+      justify-content: space-between;
+    }
+  }
+  .headerContainer {
+    display: flex;
+  }
+  .InfoWrap {
+    display: flex;
+    flex-direction: column;
+  }
+  .addButton {
+    margin-right: 45%;
+    display: inline-block;
+  }
+  .image{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .imageContainer{
+    height: 30px;
+    width: 30px;
+    border-radius: 30px;
+  }
+  .title_is::first-letter{
+    text-transform: capitalize !important;
+  }
+  .employeTitle{
+    margin-bottom: 20px !important;
+  }

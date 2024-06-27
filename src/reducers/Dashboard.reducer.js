@@ -1,12 +1,13 @@
 /**
  * Created by charnjeetelectrovese@gmail.com on 4/30/2020.
  */
-import {DASHBOARD_INIT, DASHBOARD_DONE, DASHBOARD_ADMIN_TILES_DONE, DASHBOARD_ADMIN_TILES_INIT} from "../actions/Dashboard.action";
+import {DASHBOARD_INIT, DASHBOARD_DONE, DASHBOARD_ADMIN_TILES_DONE, DASHBOARD_ADMIN_TILES_INIT, DASHBOARD_KS, DASHBOARD_KS_DONE} from "../actions/Dashboard.action";
 
 const initialState = {
     error: false,
     is_calling: true,
     isTilesLoading: false,
+    dashboard:null,
     tiles: {
         employees: 0,
         locations: 0,
@@ -40,6 +41,13 @@ export default function (state = JSON.parse(JSON.stringify(initialState)), actio
                     ...state.tiles,
                     ...action.payload,
                 }
+            }
+        }
+        case DASHBOARD_KS:{
+           
+            return {
+                ...state,
+                dashboard:action.payload
             }
         }
         default: {

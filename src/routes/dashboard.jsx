@@ -25,12 +25,14 @@ import Machines from "../views/Machines/Lists/Machines";
 import Dashboard from "../views/dashboard/Dashboard";
 import { CalendarMonth } from "@mui/icons-material";
 import CalendarList from "../views/Calendar/CalendarList.view";
+import ShiftDetail from "../views/Shifts/ShiftDetail/ShiftDetail";
 
 const NewDashboard = lazy(() => import("../views/dashboard/NewDashboard.view"));
 const LocationList = lazy(() =>
   import("../views/Locations/Location/LocationList.container")
 );
 const StaticQr = lazy(() => import("../views/StaticQR/Lists/StaticQr"));
+const ShiftsLists = lazy(() => import("../views/Shifts/Lists/ShiftsLists"));
 
 const Roles = Constants.ROLES;
 
@@ -190,6 +192,30 @@ const dashboardRoutes = [
     // roles: [Roles.ADMIN, Roles.CORPORATE_HR],
   },
   {
+    path: RouteName.SHIFTS,
+    sidebarName: "Shifts",
+    navbarName: "Shifts",
+    icon: PeopleOutlined,
+    component: ShiftsLists,
+    is_sidebar: true,
+    is_protect: true,
+    should_regex: true,
+    parent: "masters",
+    // roles: [Roles.ADMIN, Roles.CORPORATE_HR],
+  },
+  {
+    path: RouteName.SHIFTS_DETAILS,
+   
+    navbarName: "Shifts",
+    
+    component: ShiftDetail,
+   
+    is_protect: true,
+    should_regex: true,
+    parent: "masters",
+    // roles: [Roles.ADMIN, Roles.CORPORATE_HR],
+  },
+  {
     path: RouteName.STATIC_QR,
     sidebarName: "Static QR",
     navbarName: "Static QR",
@@ -201,6 +227,7 @@ const dashboardRoutes = [
     parent: "masters",
     // roles: [Roles.ADMIN, Roles.CORPORATE_HR],
   },
+
   {
     path: "null",
     sidebarName: "Inventory Master",
