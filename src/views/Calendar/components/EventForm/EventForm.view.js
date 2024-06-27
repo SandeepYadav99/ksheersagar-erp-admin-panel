@@ -8,12 +8,13 @@ import CustomDatePicker from "../../../../components/FormFields/DatePicker/Custo
 import {
   Button,
   ButtonBase,
+  CircularProgress,
   FormControlLabel,
   Radio,
   RadioGroup,
 } from "@material-ui/core";
 
-const EventForm = ({ isOpen, handleToggle, editData }) => {
+const EventForm = ({ isOpen, handleToggle, editData,renderList }) => {
   const {
     changeTextData,
     errorData,
@@ -24,7 +25,7 @@ const EventForm = ({ isOpen, handleToggle, editData }) => {
     isSubmitted,
     isSubmitting,
     listData,
-  } = useEventFormHook({ isOpen, handleToggle, editData });
+  } = useEventFormHook({ isOpen, handleToggle, editData ,renderList});
 
   return (
     <div>
@@ -101,7 +102,7 @@ const EventForm = ({ isOpen, handleToggle, editData }) => {
             <CustomDatePicker
               clearable
               label={"Date"}
-              minDate={new Date()}
+              // minDate={new Date()}
               onChange={(date) => {
                 changeTextData(date, "start_date");
               }}
@@ -149,8 +150,16 @@ const EventForm = ({ isOpen, handleToggle, editData }) => {
           <ButtonBase className={styles.edit} onClick={handleToggle}>
             Cancel
           </ButtonBase>
-          <Button className={styles.createBtn} onClick={handleSubmit}>
-            ADD
+          <Button
+            className={styles.createBtn}
+            onClick={handleSubmit}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? (
+              <CircularProgress color="success" size="20px" />
+            ) : (
+              "ADD"
+            )}
           </Button>
         </div>
       </div>

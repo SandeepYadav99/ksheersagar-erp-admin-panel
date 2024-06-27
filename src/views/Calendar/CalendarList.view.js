@@ -20,7 +20,8 @@ function CalendarList() {
     filteredData,
     selectedDate,
     handleDateChange,
-    editData
+    editData,
+    renderList
   } = useCalendarList({});
   const useStyles = makeStyles((theme) => ({
     checkboxLabel: {
@@ -38,13 +39,12 @@ function CalendarList() {
           <div className={styles.calContainer}>
             <ButtonBase
               type={"button"}
-              onClick={handleSideToggle}
+              onClick={()=>handleSideToggle()}
               className={styles.createBtn}
             >
               <Add
                 fontSize={"small"}
                 className={"plusIcon"}
-                onClick={handleSideToggle}
               ></Add>
               ADD HOLIDAY
             </ButtonBase>
@@ -129,7 +129,7 @@ function CalendarList() {
         open={isSidePanel}
         side={"right"}
       >
-        <EventForm isOpen={isSidePanel} handleToggle={handleSideToggle} editData={editData}/>
+        <EventForm isOpen={isSidePanel} handleToggle={handleSideToggle} editData={editData} renderList={renderList}/>
       </SidePanelComponent>
     </PageBox>
   );
