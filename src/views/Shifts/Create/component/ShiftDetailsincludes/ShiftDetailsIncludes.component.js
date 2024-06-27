@@ -49,9 +49,7 @@ const ShiftDetailsIncludeForm = ({ data, errorData: errorForm }, ref) => {
       if (!val?.is_week_off) {
         required.push("start_time", "end_time");
       }
-      if (val?.is_sunday_occasional_working) {
-        required.push("working_sundays");
-      }
+
       required.forEach((key) => {
         if (!val[key]) {
           err[key] = true;
@@ -66,7 +64,12 @@ const ShiftDetailsIncludeForm = ({ data, errorData: errorForm }, ref) => {
           err[key] = true;
         }
       });
-
+      if (
+        val?.is_sunday_occasional_working &&
+        val?.working_sundays?.length === 0
+      ) {
+        err["working_sundays"] = true;
+      }
       if (Object.keys(err)?.length > 0) {
         errors[index] = err;
       }
