@@ -49,7 +49,9 @@ const CalendarDetail = ({ data, selectedDate, handleSideToggle }) => {
       },
     };
   };
-
+  const activeClass = {
+    background: "#ECF7FF 0% 0% no-repeat padding-box",
+  };
   const CustomToolbar = ({ label, onNavigate, onView }) => {
     return (
       <div className={styles.toolWrapper}>
@@ -71,16 +73,28 @@ const CalendarDetail = ({ data, selectedDate, handleSideToggle }) => {
             size="large"
             aria-label="Medium-sized button group"
           >
-            <Button onClick={() => onView("month")}>
+            <Button
+              onClick={() => onView("month")}
+              style={activeMonth === "month" ? activeClass : {}}
+            >
               <Typography variant="body1">MONTH</Typography>
             </Button>
-            <Button onClick={() => onView("week")}>
+            <Button
+              onClick={() => onView("week")}
+              style={activeMonth === "week" ? activeClass : {}}
+            >
               <Typography variant="body1">WEEK</Typography>
             </Button>
-            <Button onClick={() => onView("day")}>
+            <Button
+              onClick={() => onView("day")}
+              style={activeMonth === "day" ? activeClass : {}}
+            >
               <Typography variant="body1">DAY</Typography>
             </Button>
-            <Button onClick={() => onView("agenda")}>
+            <Button
+              onClick={() => onView("agenda")}
+              style={activeMonth === "agenda" ? activeClass : {}}
+            >
               <Typography variant="body1">LIST</Typography>
             </Button>
           </ButtonGroup>
