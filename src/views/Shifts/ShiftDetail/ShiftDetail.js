@@ -9,6 +9,7 @@ import AssociatedEmployees from "../AssociatedEmployees/AssociatedEmployees";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { actionDetailShifts } from "../../../actions/ShiftsLists.action";
+import WaitingComponent from "../../../components/Waiting.component";
 
 const ShiftDetail = () => {
   const dispatch = useDispatch();
@@ -18,8 +19,11 @@ const ShiftDetail = () => {
   useEffect(() => {
     dispatch(actionDetailShifts(id));
   }, [id]);
-  const { shiftDays } = shiftDetail?.details || [];
 
+
+  if(!shiftDetail){
+    return <WaitingComponent/>
+  }
   return (
 
     <div>
@@ -32,7 +36,7 @@ const ShiftDetail = () => {
         </ButtonBase>
         <div className={styles.newLine} />
       </div>
-      <ShiftDetailView shiftDays={shiftDays}/>
+      <ShiftDetailView shiftDays={shiftDetail?.details?.shiftDays}/>
       <div className={styles.employe}>
         <AssociatedEmployees />
       </div>
