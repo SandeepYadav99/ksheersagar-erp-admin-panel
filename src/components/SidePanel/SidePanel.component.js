@@ -132,7 +132,7 @@ class SidePanelComponent extends Component {
                 }}>
                     <div className={styles.sideUpper}>
                         <ButtonBase className={styles.btnIcon} onClick={this._handleOpen}>
-                            {this.props.arrowBack ? <ArrowBackIos/> : <Close></Close>}
+                            {this.props.arrowBack ? <ArrowBackIos color='action'/> : <Close></Close>}
                             
                         </ButtonBase>
                         <div style={{padding: '0px 15px', flex: 1}}>

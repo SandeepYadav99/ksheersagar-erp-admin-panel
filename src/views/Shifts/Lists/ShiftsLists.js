@@ -75,7 +75,7 @@ const ShiftsLists = ({}) => {
   const renderTileHours = useCallback(() => {
     return (
       <div>
-        <span className={styles.title}>Adjust Full Day/Half Day Hours</span>
+        <div className={styles.titleTime}>Adjust Full Day/Half Day Hours</div>
         <div className={styles.newLine} />
       </div>
     );

@@ -55,8 +55,8 @@ const HoursCreate = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
       </div>
       <div className={"formFlex"}>
         <div className={"formGroup"}>
-          <div>
-            <strong>Note: </strong>
+          <div className={styles.notesDes}>
+            <strong>Note:  </strong>
             By Default, Full-day hours are set by the maximum hours in any
             shift, while half-day hours are half of that.
           </div>
