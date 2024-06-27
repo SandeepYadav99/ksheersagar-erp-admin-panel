@@ -44,15 +44,14 @@ const ShiftDetailsIncludeForm = ({ data, errorData: errorForm }, ref) => {
   const validateData = (index, type) => {
     const errors = {};
     fields.forEach((val, index) => {
-      const err =
-        index in errorData ? JSON.parse(JSON.stringify(errorData[index])) : {};
-      const required = [
-        "name",
-        "week_day",
-        "start_time",
-        "end_time",
-        "total_hours",
-      ];
+      const err = {};
+      const required = [];
+      if (!val?.is_week_off) {
+        required.push("start_time", "end_time");
+      }
+      if (val?.is_sunday_occasional_working) {
+        required.push("working_sundays");
+      }
       required.forEach((key) => {
         if (!val[key]) {
           err[key] = true;
@@ -76,7 +75,6 @@ const ShiftDetailsIncludeForm = ({ data, errorData: errorForm }, ref) => {
     setErrorData(errors);
     return !(Object.keys(errors).length > 0);
   };
-  
   useEffect(() => {
     if (data) {
       setFields({ ...data });

@@ -6,13 +6,11 @@ import { actionDeleteRoles } from "../../../actions/UserRoles.action";
 import { useDispatch } from "react-redux";
 import { serviceGetList } from "../../../services/Common.service";
 import {
-  serviceCreateStaticQr,
-  serviceGetStaticQrDetails,
-  serviceStaticQrCheck,
   serviceUpdateStaticQr,
 } from "../../../services/StaticQr.service";
 import { actionFetchStaticQr } from "../../../actions/StaticQr.action";
 import { shiftdays } from "../../../helper/helper";
+import { serviceCreateShifts } from "../../../services/Shifts.service";
 
 const initialForm = {
   name: "",
@@ -88,12 +86,15 @@ const useShiftsCreateHook = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
       setIsSubmitting(true);
     }
     const shiftData = shiftRef.current.getData();
-
+    const updatedData = {
+      ...form,
+      shift_days: [...shiftData],
+    };
     let req;
     if (qrId) {
       req = serviceUpdateStaticQr({ ...form, id: qrId });
     } else {
-      req = serviceCreateStaticQr({ ...form });
+      req = serviceCreateShifts({ ...updatedData });
     }
 
     req.then((res) => {
@@ -127,26 +128,6 @@ const useShiftsCreateHook = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
     [setErrorData, errorData]
   );
 
-  const checkCodeValidationMId = useCallback(() => {
-    if (form?.code) {
-      serviceStaticQrCheck({
-        id: qrId,
-        code: form?.code,
-      }).then((res) => {
-        if (!res.error) {
-          const errors = JSON.parse(JSON.stringify(errorData));
-          if (res.data.is_exists) {
-            errors.code = "M id already exist";
-            setErrorData(errors);
-          } else {
-            delete errors.code;
-            setErrorData(errors);
-          }
-        }
-      });
-    }
-  }, [errorData, setErrorData, form.code, qrId]);
-
   const changeTextData = useCallback(
     (text, fieldName) => {
       let shouldRemoveError = true;
@@ -174,7 +155,7 @@ const useShiftsCreateHook = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
         changeTextData(form?.[type].trim(), type);
       }
     },
-    [changeTextData, checkCodeValidationMId]
+    [changeTextData]
   );
 
   const handleDelete = useCallback(() => {
