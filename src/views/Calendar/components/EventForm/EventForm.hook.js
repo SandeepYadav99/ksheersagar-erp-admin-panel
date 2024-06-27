@@ -37,7 +37,10 @@ const useEventFormHook = ({ isOpen, handleToggle, editData, renderList }) => {
 
   const getEmpData = useMemo(() => {
     if (editData) {
-      const obj = { id: editData?.id ? editData?.id : null };
+      const obj = {};
+      if (editData?.id) {
+        obj.id = editData?.id;
+      }
       Object.keys({ ...initialForm }).forEach((key) => {
         if (key === "excluded_employees") {
           obj[key] = editData["excludedEmployees"]
@@ -85,7 +88,7 @@ const useEventFormHook = ({ isOpen, handleToggle, editData, renderList }) => {
         t["end_date"] = "";
         t[fieldName] = text;
       } else if (fieldName === "start_date") {
-        if ((t["type"] = "HALF_DAY")) {
+        if ((form?.type === "HALF_DAY")) {
           t["end_date"] = text;
         }
         t[fieldName] = text;
