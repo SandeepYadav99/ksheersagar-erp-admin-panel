@@ -200,7 +200,7 @@ const ShiftsLists = ({}) => {
           <div className={styles.actionButton}>
             <ButtonBase
               onClick={handleToggleSidePannelHours}
-              className={"createBtnOutland"}
+              className={styles.setWorking}
             >
               SET WORKING HOURS{" "}
               <AccessTime
