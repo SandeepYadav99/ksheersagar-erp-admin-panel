@@ -242,3 +242,12 @@ export function dataURLtoFile(dataurl, filename) {
 export const removeUnderScore = (value) => {
   return value ? value.replace(/_/g, " ") : "";
 };
+export const shiftdays= {
+  week_day: "",
+  start_time: null,
+  end_time: null,
+  total_hours: null,
+  is_week_off: false,
+  is_sunday_occasional_working: false,
+  working_sundays: [],
+}

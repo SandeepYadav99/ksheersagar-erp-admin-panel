@@ -6,22 +6,19 @@ import React, {
   useCallback,
   useMemo,
 } from "react";
-import styles from "./style.module.css";
-import { ButtonBase, } from "@material-ui/core";
 import LogUtils from "../../../../../libs/LogUtils";
-import { Add } from "@material-ui/icons";
 import { useParams } from "react-router";
 import ShiftDetailsIncludeFields from "./ShiftDetailsIncludeFields.component";
 
-
 const TEMP_OBJ = {
-  bill_date: "",
-  bill_no: "",
-  amount: "",
-  details: "",
-  relocation_documents: null,
-  payment_mode: "",
-  relocation_payment_proof: null,
+  name: "",
+  week_day: "",
+  start_time: new Date(0, 0, 0, 10, 0),
+  end_time: new Date(0, 0, 0, 10, 0),
+  total_hours: null,
+  is_week_off: false,
+  is_sunday_occasional_working: false,
+  working_sundays: [],
 };
 
 const ShiftDetailsIncludeForm = ({ data, errorData: errorForm }, ref) => {
@@ -44,31 +41,23 @@ const ShiftDetailsIncludeForm = ({ data, errorData: errorForm }, ref) => {
     },
   }));
 
-  const getState = () => {
-    return fields;
-  };
-
   const validateData = (index, type) => {
     const errors = {};
     fields.forEach((val, index) => {
       const err =
         index in errorData ? JSON.parse(JSON.stringify(errorData[index])) : {};
       const required = [
-        "bill_date",
-        "bill_no",
-        "amount",
-        "details",
-        "relocation_documents",
-        "payment_mode",
-        "relocation_payment_proof",
+        "name",
+        "week_day",
+        "start_time",
+        "end_time",
+        "total_hours",
       ];
       required.forEach((key) => {
         if (!val[key]) {
           err[key] = true;
-        } else if (key === "amount" || key === "details") {
-          // Check for empty space in "amount" and "details"
+        } else if (key === "details") {
           if (val[key].trim() === "") {
-            // || /^\s/.test(val[key]) if not want starting space
             err[key] = true;
           }
         }
@@ -78,44 +67,21 @@ const ShiftDetailsIncludeForm = ({ data, errorData: errorForm }, ref) => {
           err[key] = true;
         }
       });
-      if (val?.payment_mode === "Cash" && !val?.relocation_payment_proof) {
-        delete err["relocation_payment_proof"];
-      }
-      // if (val?.bill_date && !isDate(val?.bill_date)) {
-      //   if (isInvalidDateFormat(val?.bill_date)) {
-      //     err["bill_date"] = true;
-      //   }
-      // }
-      // if (val?.check_in && val?.check_out) {
-      //   const joinDate = new Date(val?.check_in);
-      //   const expectedDate = new Date(val?.check_out);
-      //   joinDate.setHours(0, 0, 0, 0);
-      //   expectedDate.setHours(0, 0, 0, 0);
-      //   if (joinDate.getTime() > expectedDate.getTime()) {
-      //     err["check_out"] = true;
-      //     SnackbarUtils.error(
-      //       "CheckOut Date should not be Less than CheckIn Date"
-      //     );
-      //   }
-      // }
+
       if (Object.keys(err)?.length > 0) {
         errors[index] = err;
       }
     });
 
-    console.log("othererroros", errors);
     setErrorData(errors);
     return !(Object.keys(errors).length > 0);
   };
+  
   useEffect(() => {
     if (data) {
       setFields({ ...data });
     }
   }, [data]);
-
-  const isValid = () => {
-    return validateData();
-  };
 
   const removeErrors = useCallback(
     (index, key) => {
@@ -183,6 +149,7 @@ const ShiftDetailsIncludeForm = ({ data, errorData: errorForm }, ref) => {
             data={val}
             index={index}
             onBlur={onBlur}
+            fieldLendth={fields?.length}
           />
         </div>
       );
@@ -197,22 +164,7 @@ const ShiftDetailsIncludeForm = ({ data, errorData: errorForm }, ref) => {
     fields,
   ]);
 
-  return (
-    <>
-      {renderFields}
-      <div className={styles.btnWrapper}>
-        <ButtonBase
-          className={styles.addition}
-          label={"+"}
-          onClick={() => {
-            handlePress("ADDITION", 0);
-          }}
-        >
-          <Add fontSize={"small"} /> <span>Add More</span>
-        </ButtonBase>
-      </div>
-    </>
-  );
+  return <>{renderFields}</>;
 };
 
 export default forwardRef(ShiftDetailsIncludeForm);

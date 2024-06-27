@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from "react";
+import { useCallback, useState, useEffect, useRef, useMemo } from "react";
 import historyUtils from "../../../libs/history.utils";
 import SnackbarUtils from "../../../libs/SnackbarUtils";
 import RouteName from "../../../routes/Route.name";
@@ -12,42 +12,42 @@ import {
   serviceUpdateStaticQr,
 } from "../../../services/StaticQr.service";
 import { actionFetchStaticQr } from "../../../actions/StaticQr.action";
-import { isUpiID } from "../../../libs/RegexUtils";
+import { shiftdays } from "../../../helper/helper";
 
 const initialForm = {
   name: "",
-  upi_id: "",
-  code: "",
-  location_id: "",
 };
 
+const days = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
 const useShiftsCreateHook = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
   const [form, setForm] = useState({ ...initialForm });
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [listData, setListData] = useState({ LOCATIONS: [] });
+  const shiftRef = useRef(null);
   const dispatch = useDispatch();
 
+  const getdays = useMemo(() => {
+    return days?.map((item) => {
+      return {
+        ...shiftdays,
+        name: item,
+      };
+    });
+  }, [shiftdays]);
+
   useEffect(() => {
-    if (qrId) {
-      serviceGetStaticQrDetails({ id: qrId }).then((res) => {
-        if (!res.error) {
-          const data = res?.data?.details;
-          setForm({
-            ...form,
-            name: data?.name,
-            upi_id: data?.upi_id,
-            code: data?.code,
-            location_id: data?.location.id,
-            // status: data?.status === "ACTIVE" ? true : false,
-          });
-        } else {
-          SnackbarUtils.error(res?.message);
-        }
-      });
-    }
-  }, [qrId]);
+    shiftRef.current?.setData(getdays);
+  }, []);
 
   useEffect(() => {
     if (!isSidePanel) {
@@ -65,7 +65,7 @@ const useShiftsCreateHook = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = ["upi_id", "code", "location_id"];
+    let required = ["name"];
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -74,11 +74,6 @@ const useShiftsCreateHook = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
         errors[val] = true;
       }
     });
-
-    if (form?.upi_id && !isUpiID(form?.upi_id)) {
-      errors.upi_id = true;
-      SnackbarUtils.error("Invalid upi id ");
-    }
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
         delete errors[key];
@@ -92,6 +87,7 @@ const useShiftsCreateHook = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
     if (!isSubmitting) {
       setIsSubmitting(true);
     }
+    const shiftData = shiftRef.current.getData();
 
     let req;
     if (qrId) {
@@ -113,8 +109,8 @@ const useShiftsCreateHook = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
-    // console.log('dff',errors)
-    if (Object.keys(errors).length > 0) {
+    const isShiftValid = shiftRef.current.isValid();
+    if (!isShiftValid || Object.keys(errors).length > 0) {
       setErrorData(errors);
       return true;
     }
@@ -204,6 +200,7 @@ const useShiftsCreateHook = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
     handleDelete,
     isSubmitting,
     listData,
+    shiftRef,
   };
 };
 

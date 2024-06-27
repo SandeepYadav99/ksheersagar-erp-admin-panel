@@ -190,6 +190,10 @@
   font-size: .75rem;
   font-weight: 500;
 }
+.horizontalLine {
+  border: 1px solid #B8C5D3;
+  margin: 20px 0;
+}
 .checkBox{
   display: flex;
   align-items: center;

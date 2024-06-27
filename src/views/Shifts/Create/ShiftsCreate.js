@@ -14,6 +14,7 @@ const ShiftsCreate = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
     handleSubmit,
     isSubmitting,
     listData,
+    shiftRef,
   } = useShiftsCreateHook({ handleToggleSidePannel, isSidePanel, qrId });
 
   return (
@@ -42,13 +43,7 @@ const ShiftsCreate = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
           <div className={styles.divHead}>TOTAL HOURS</div>
           <div className={styles.divHead21}>WEEK OFF</div>
         </div>
-        <ShiftDetailsIncludeForm
-        // ref={travelRef}
-        />
-      </div>
-
-      <div>
-        {/* <SessionTable /> */}
+        <ShiftDetailsIncludeForm ref={shiftRef} />
       </div>
 
       <div className={styles.actionButton}>
