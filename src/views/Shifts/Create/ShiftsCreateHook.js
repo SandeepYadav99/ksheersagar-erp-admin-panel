@@ -4,15 +4,6 @@ import SnackbarUtils from "../../../libs/SnackbarUtils";
 import RouteName from "../../../routes/Route.name";
 import { actionDeleteRoles } from "../../../actions/UserRoles.action";
 import { useDispatch } from "react-redux";
-
-import {
-  serviceCreatePaytmMachines,
-  serviceGetPaytmMachinesDetails,
-  servicePaytmMachinesCheck,
-  serviceUpdatePaytmMachines,
-} from "../../../services/Machines.service";
-import { actionFetchPaytmMachines } from "../../../actions/Machines.action";
-import useDebounce from "../../../hooks/DebounceHook";
 import { serviceGetList } from "../../../services/Common.service";
 import {
   serviceCreateStaticQr,
@@ -30,15 +21,10 @@ const initialForm = {
   location_id: "",
 };
 
-const useShiftsCreateHook = ({
-  handleToggleSidePannel,
-  isSidePanel,
-  qrId,
-}) => {
+const useShiftsCreateHook = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
   const [form, setForm] = useState({ ...initialForm });
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const codeDebouncerUnicMId = useDebounce(form?.code, 500);
   const [isLoading, setIsLoading] = useState(false);
   const [listData, setListData] = useState({ LOCATIONS: [] });
   const dispatch = useDispatch();
@@ -164,12 +150,6 @@ const useShiftsCreateHook = ({
       });
     }
   }, [errorData, setErrorData, form.code, qrId]);
-
-  useEffect(() => {
-    if (codeDebouncerUnicMId) {
-      checkCodeValidationMId();
-    }
-  }, [codeDebouncerUnicMId]);
 
   const changeTextData = useCallback(
     (text, fieldName) => {

@@ -2,9 +2,8 @@ import React from "react";
 import { ButtonBase, CircularProgress, MenuItem } from "@material-ui/core";
 import styles from "./Style.module.css";
 import CustomTextField from "../../../components/FormFields/TextField/TextField.component";
-
+import ShiftDetailsIncludeForm from "./component/ShiftDetailsincludes/ShiftDetailsIncludes.component";
 import useShiftsCreateHook from "./ShiftsCreateHook";
-import SessionTable from "../../../components/SectionTable/SectionTable";
 
 const ShiftsCreate = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
   const {
@@ -35,14 +34,25 @@ const ShiftsCreate = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
           />
         </div>
       </div>
-      <div >
-        <SessionTable />
+      <div className={styles.shiftcontainer}>
+        <div className={styles.shiftHeader}>
+          <div className={styles.divHead}>DAY</div>
+          <div className={styles.divHead1}>START TIME</div>
+          <div className={styles.divHead1}>END TIME</div>
+          <div className={styles.divHead}>TOTAL HOURS</div>
+          <div className={styles.divHead21}>WEEK OFF</div>
+        </div>
+        <ShiftDetailsIncludeForm
+        // ref={travelRef}
+        />
+      </div>
+
+      <div>
+        {/* <SessionTable /> */}
       </div>
 
       <div className={styles.actionButton}>
-        <ButtonBase className={"createBtnDeletOutland"}>
-        DELETE
-        </ButtonBase>
+        <ButtonBase className={"createBtnDeletOutland"}>DELETE</ButtonBase>
         <ButtonBase className={"createBtnreset"} onClick={handleSubmit}>
           {isSubmitting ? (
             <CircularProgress color="success" size="20px" />
