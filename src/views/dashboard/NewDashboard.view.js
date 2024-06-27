@@ -8,7 +8,7 @@ import inactiveEmpImg from "../../assets/img/ic_inactive_employees@2x.png";
 import factoryEmpImg from "../../assets/img/ic_factory@2x.png";
 import showRoomEmpImg from "../../assets/img/ic_showroom@2x.png";
 import NewDashboardSecondComponent from "./components/StatCard/NewDashboardSecondComponent";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+
 import "react-circular-progressbar/dist/styles.css";
 import { FiberManualRecord } from "@material-ui/icons";
 import { actionKsDashboard } from "../../actions/Dashboard.action";
@@ -124,6 +124,7 @@ const NewDashboard = () => {
                   <NewDashboardSecondComponent
                     subTitle={"Showrooms"}
                     image={showRoomEmpImg}
+                    totalLocations={dashboard?.locations?.total}
                     total={dashboard?.locations?.showroom}
                     isShowRoom={true}
                   />
@@ -133,6 +134,7 @@ const NewDashboard = () => {
                     subTitle={"Factory"}
                     image={factoryEmpImg}
                     total={dashboard?.locations?.factory}
+                    totalLocations={dashboard?.locations?.total}
                     isShowRoom={false}
                   />
                 </Grid>
@@ -167,7 +169,7 @@ const NewDashboard = () => {
               <Doughnut
                 data={data}
                 options={options}
-                height={250}
+                height={200}
                 plugins={[totalPercentagePlugin]}
               />
               {/* </div> */}

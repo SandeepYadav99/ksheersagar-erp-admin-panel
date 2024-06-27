@@ -2,6 +2,7 @@ import { Avatar, Card, CardContent, Grid, Typography } from "@material-ui/core";
 import styles from "./Styles.module.css";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { useMemo } from "react";
 
 const NewDashboardSecondComponent = ({
   title,
@@ -9,17 +10,22 @@ const NewDashboardSecondComponent = ({
   total,
   isShowRoom,
   subTitle,
+  totalLocations,
   ...rest
 }) => {
-  const totalPersentage = total / 100;
-
+  console.log(total, totalLocations);
+  const totalPersentage = total / totalLocations;
+  const totalFixedValue =useMemo(()=>{
+    return totalPersentage * 100;
+  },[totalPersentage]) 
+  console.log(totalFixedValue)
+  
   return (
-    <Card
+    <div
       {...rest}
-      square
       className={isShowRoom === true ? styles.cardShowRoom : styles.cardFactory}
     >
-      <CardContent>
+      <div>
         {/* className={classes.cardContent} */}
         <Grid>
           <Grid item>
@@ -34,6 +40,7 @@ const NewDashboardSecondComponent = ({
             </Typography>
           </Grid>
         </Grid>
+        {/* <div style={{ display: "inline-block" }}> */}
         <div className={styles.difference1}>
           <div className={styles.subDifference}>
             <Avatar
@@ -43,31 +50,28 @@ const NewDashboardSecondComponent = ({
             />
             <div className={styles.subContainer}>
               <div className={styles.totalCount}>{total}</div>
-              <div className={styles.subTitle}>
-                {subTitle}
-              </div>
+              <div className={styles.subTitle}>{subTitle}</div>
             </div>
           </div>
-          <div style={{ height: "30%", width: "30%" }}>
+          <div style={{ width: "90px" }}>
             <CircularProgressbar
-              value={totalPersentage}
-              maxValue={1}
-              text={`${totalPersentage * 100}%`}
-              strokeWidth={"12"}
+              value={totalFixedValue?.toFixed(0)}
+              // maxValue={1}
+              text={`${totalFixedValue?.toFixed(0)}%`}
+              strokeWidth={"9"}
               styles={buildStyles({
                 textColor: isShowRoom ? "#1285F9" : "#723AD4",
                 pathColor: isShowRoom ? "#1285F9" : "#723AD4",
-                // trailColor: "gold",
+                trailColor: isShowRoom ? "#CCE5FF" : "#DECDFE",
                 textSize: "1.3rem",
-           
-                
               })}
             />
-            ;
+
+            {/* </div> */}
           </div>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 
