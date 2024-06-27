@@ -51,7 +51,8 @@ border-radius: 10px !important;
 
 .subDifference{
     display: flex !important;
-    gap: 8% !important;
+    gap: 5% !important;
+    /* flex-wrap: wrap !important; */
 }
 .subContainer{
     display: flex !important;
