@@ -5,7 +5,7 @@ import { ArrowBackIos } from "@material-ui/icons";
 import historyUtils from "../../../libs/history.utils";
 import styles from "./Style.module.css";
 import AssociatedEmployees from "../AssociatedEmployees/AssociatedEmployees";
-import { serviceGetShiftsDetail } from "../../../services/Shifts.service";
+
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { actionDetailShifts } from "../../../actions/ShiftsLists.action";
@@ -19,10 +19,9 @@ const ShiftDetail = () => {
     dispatch(actionDetailShifts(id));
   }, [id]);
   const { shiftDays } = shiftDetail?.details || [];
-if(!shiftDays){
-  return 
-}
+
   return (
+
     <div>
       <div className={styles.container}>
         <ButtonBase onClick={() => historyUtils.goBack()}>

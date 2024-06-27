@@ -5,17 +5,17 @@ import { useSelector } from "react-redux";
 import {
   AccessTime,
   Add,
-  Delete,
+
   DeleteOutline,
   Edit,
-  Info,
+
   InfoOutlined,
 } from "@material-ui/icons";
+
 import PageBox from "../../../components/PageBox/PageBox.component";
 import styles from "./Style.module.css";
 import DataTables from "../../../Datatables/Datatable.table";
 import Constants from "../../../config/constants";
-import FilterComponent from "../../../components/Filter/Filter.component";
 
 import StatusPill from "../../../components/Status/StatusPill.component";
 
@@ -24,7 +24,7 @@ import SidePanelComponent from "../../../components/SidePanel/SidePanel.componen
 // import StaticQrCreate from "../Create/StaticQrCreate";
 import useShiftsListsHook from "./ShiftsListsHook";
 import HoursCreate from "../WorkingHoursCreate/HoursCreate";
-import CustomRadio from "../../../components/FormFields/CustomRadio";
+
 import WeekSection from "../Componet/WeekSection";
 import ShiftsCreate from "../Create/ShiftsCreate";
 
@@ -34,12 +34,11 @@ const ShiftsLists = ({}) => {
     handleRowSize,
     handlePageChange,
     handleEdit,
-    handleFilterDataChange,
-    handleSearchValueChange,
+   
     handleViewDetails,
     isSidePanel,
     isCalling,
-    configFilter,
+
     id,
     isSidePanelHours,
     handleToggleSidePannelHours,
@@ -118,8 +117,7 @@ const ShiftsLists = ({}) => {
               );
             }
           })}
-          {/* <Avatar className={styles.avator}>Su</Avatar>{" "}
-      <Avatar className={styles.avatorSeleted}>Mo</Avatar> */}
+       
         </div>
       );
     },
@@ -194,6 +192,7 @@ const ShiftsLists = ({}) => {
     handleEdit,
     isCalling,
     handleViewShiftDetail,
+    workingDays
   ]);
 
   const tableData = useMemo(() => {
