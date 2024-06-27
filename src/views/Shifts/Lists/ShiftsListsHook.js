@@ -137,8 +137,8 @@ const useShiftsListsHook= ({}) => {
     historyUtils.push(RouteName.LOCATIONS_CREATE);
   }, []);
 
-  const handleViewShiftDetail = useCallback(() => {
-    historyUtils.push(RouteName.SHIFTS_DETAILS);
+  const handleViewShiftDetail = useCallback((shift) => {
+    historyUtils.push(`${RouteName.SHIFTS_DETAILS}${shift?.id}`);
   }, []);
   const configFilter = useMemo(() => {
     return [

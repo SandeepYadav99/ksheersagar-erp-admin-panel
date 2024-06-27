@@ -204,7 +204,7 @@ const dashboardRoutes = [
     // roles: [Roles.ADMIN, Roles.CORPORATE_HR],
   },
   {
-    path: RouteName.SHIFTS_DETAILS,
+    path: `${RouteName.SHIFTS_DETAILS}:id`,
    
     navbarName: "Shifts",
     
