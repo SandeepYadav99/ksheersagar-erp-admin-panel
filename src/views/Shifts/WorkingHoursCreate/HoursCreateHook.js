@@ -5,40 +5,30 @@ import RouteName from "../../../routes/Route.name";
 import { actionDeleteRoles } from "../../../actions/UserRoles.action";
 import { useDispatch } from "react-redux";
 
-import {
-  serviceCreatePaytmMachines,
-  serviceGetPaytmMachinesDetails,
-  servicePaytmMachinesCheck,
-  serviceUpdatePaytmMachines,
-} from "../../../services/Machines.service";
 import { actionFetchPaytmMachines } from "../../../actions/Machines.action";
 import useDebounce from "../../../hooks/DebounceHook";
 import { serviceGetList } from "../../../services/Common.service";
 import {
-  serviceCreateStaticQr,
+
   serviceGetStaticQrDetails,
-  serviceStaticQrCheck,
-  serviceUpdateStaticQr,
+ 
 } from "../../../services/StaticQr.service";
 import { actionFetchStaticQr } from "../../../actions/StaticQr.action";
 import { isUpiID } from "../../../libs/RegexUtils";
+import { serviceGetShiftsWorkingHours } from "../../../services/Shifts.service";
 
 const initialForm = {
-  name: "",
-  upi_id: "",
-  code: "",
-  location_id: "",
+  key: "",
+
+  full_day: '',
+  half_day: '',
 };
 
-const useHoursCreateHook = ({
-  handleToggleSidePannel,
-  isSidePanel,
-  qrId,
-}) => {
+const useHoursCreateHook = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
   const [form, setForm] = useState({ ...initialForm });
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const codeDebouncerUnicMId = useDebounce(form?.code, 500);
+
   const [isLoading, setIsLoading] = useState(false);
   const [listData, setListData] = useState({ LOCATIONS: [] });
   const dispatch = useDispatch();
@@ -51,10 +41,6 @@ const useHoursCreateHook = ({
           setForm({
             ...form,
             name: data?.name,
-            upi_id: data?.upi_id,
-            code: data?.code,
-            location_id: data?.location.id,
-            // status: data?.status === "ACTIVE" ? true : false,
           });
         } else {
           SnackbarUtils.error(res?.message);
@@ -69,17 +55,9 @@ const useHoursCreateHook = ({
     }
   }, [isSidePanel]);
 
-  useEffect(() => {
-    serviceGetList(["LOCATIONS"]).then((res) => {
-      if (!res.error) {
-        setListData(res.data);
-      }
-    });
-  }, []);
-
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
-    let required = ["upi_id", "code", "location_id"];
+    let required = [];
     required.forEach((val) => {
       if (
         !form?.[val] ||
@@ -89,10 +67,6 @@ const useHoursCreateHook = ({
       }
     });
 
-    if (form?.upi_id && !isUpiID(form?.upi_id)) {
-      errors.upi_id = true;
-      SnackbarUtils.error("Invalid upi id ");
-    }
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
         delete errors[key];
@@ -106,13 +80,18 @@ const useHoursCreateHook = ({
     if (!isSubmitting) {
       setIsSubmitting(true);
     }
-
+    const valueString = JSON.stringify({
+      full_day: Number(form.full_day),
+      half_day: Number(form.half_day) ,
+    }).replace(/"/g, "'");
+  
+    const formData = {
+      key: "WORKING_HOURS",
+      value: valueString,
+    };
     let req;
-    if (qrId) {
-      req = serviceUpdateStaticQr({ ...form, id: qrId });
-    } else {
-      req = serviceCreateStaticQr({ ...form });
-    }
+
+    req = serviceGetShiftsWorkingHours(formData);
 
     req.then((res) => {
       if (!res.error) {
@@ -145,32 +124,6 @@ const useHoursCreateHook = ({
     [setErrorData, errorData]
   );
 
-  const checkCodeValidationMId = useCallback(() => {
-    if (form?.code) {
-      serviceStaticQrCheck({
-        id: qrId,
-        code: form?.code,
-      }).then((res) => {
-        if (!res.error) {
-          const errors = JSON.parse(JSON.stringify(errorData));
-          if (res.data.is_exists) {
-            errors.code = "M id already exist";
-            setErrorData(errors);
-          } else {
-            delete errors.code;
-            setErrorData(errors);
-          }
-        }
-      });
-    }
-  }, [errorData, setErrorData, form.code, qrId]);
-
-  useEffect(() => {
-    if (codeDebouncerUnicMId) {
-      checkCodeValidationMId();
-    }
-  }, [codeDebouncerUnicMId]);
-
   const changeTextData = useCallback(
     (text, fieldName) => {
       let shouldRemoveError = true;
@@ -178,11 +131,7 @@ const useHoursCreateHook = ({
       const t = { ...form };
       if (fieldName === "name") {
         t[fieldName] = text?.trimStart();
-      } else if (fieldName === "upi_id") {
-        // if(!isUpiID(text)){
-        t[fieldName] = text;
-        // }
-      } else {
+      }  else {
         t[fieldName] = text;
       }
 
@@ -198,7 +147,7 @@ const useHoursCreateHook = ({
         changeTextData(form?.[type].trim(), type);
       }
     },
-    [changeTextData, checkCodeValidationMId]
+    [changeTextData]
   );
 
   const handleDelete = useCallback(() => {

@@ -52,7 +52,7 @@ const ShiftsLists = ({}) => {
     all: allData,
     currentPage,
     is_fetching: isFetching,
-  } = useSelector((state) => state?.StaticQr);
+  } = useSelector((state) => state?.Shifts);
 
   const renderStatus = useCallback((status) => {
     return <StatusPill status={status} />;
@@ -75,7 +75,7 @@ const ShiftsLists = ({}) => {
   const renderTileHours = useCallback(() => {
     return (
       <div>
-        <span className={styles.title}>Adjust Full Day/Half Day Hours</span>
+        <div className={styles.titleTime}>Adjust Full Day/Half Day Hours</div>
         <div className={styles.newLine} />
       </div>
     );
@@ -200,7 +200,7 @@ const ShiftsLists = ({}) => {
           <div className={styles.actionButton}>
             <ButtonBase
               onClick={handleToggleSidePannelHours}
-              className={"createBtnOutland"}
+              className={styles.setWorking}
             >
               SET WORKING HOURS{" "}
               <AccessTime
@@ -223,13 +223,13 @@ const ShiftsLists = ({}) => {
           </div>
         </div>
         <div >
-          {/* <FilterComponent
+         {/* <FilterComponent
             is_progress={isFetching}
             filters={configFilter}
             handleSearchValueChange={handleSearchValueChange}
             handleFilterDataChange={handleFilterDataChange}
-          /> */}
-       
+          />  */}
+     
            
             <div style={{ width: "100%" }}>
               <DataTables

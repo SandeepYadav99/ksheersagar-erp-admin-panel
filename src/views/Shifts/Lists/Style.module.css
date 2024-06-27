@@ -7,9 +7,24 @@
     align-items: center;
 }
 .headerContainer .title {
-    font-size: 0.8rem;
+    font-size: 1rem;
     font-weight: 600;
    
+}
+.titleTime{
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 5px !important;
+}
+.setWorking{
+    border: 1px solid #29CB97 !important;
+    color: #29CB97 !important;
+    padding: 8px 20px !important;
+    font-size: 0.8rem !important;
+    border-radius: 30px !important;
+    text-transform: uppercase !important;
+    font-weight: 600 !important;
+    width: 230px !important;
 }
 .bottomLine {
     opacity: 0.4;
@@ -99,22 +114,24 @@
 .actionTime{
    text-align: end !important;
    margin-top: 24px !important;
-  margin-bottom: 15px !important;
+   margin-bottom: 15px !important;
    
 }
 .weekSection{
     border: 1px solid #B8C5D3 !important;
     color: #182C40 !important;
-    padding: 1px 10px !important;
-    font-size: 0.5rem !important;
+    padding: 7px 8px !important;
+    /* font-size: 0.5rem !important; */
     border-radius: 30px !important;
     display: inline-block !important;
     font-weight: 600 !important;
+ 
 }
 .actionButton{
     display: flex !important;
-    gap: 15px !important;
+    gap: 22px !important;
     align-items: center !important;
+   
 }
 .newLine{
     height: 4px;

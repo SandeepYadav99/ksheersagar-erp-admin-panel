@@ -15,16 +15,39 @@ const NewDashboardSecondComponent = ({
 }) => {
   console.log(total, totalLocations);
   const totalPersentage = total / totalLocations;
-  const totalFixedValue =useMemo(()=>{
+  const totalFixedValue = useMemo(() => {
     return totalPersentage * 100;
-  },[totalPersentage]) 
-  console.log(totalFixedValue)
-  
+  }, [totalPersentage]);
+
+  const customColor = () => {
+    if (isShowRoom === true) {
+      return styles.cardShowRoom;
+    } else if (isShowRoom === false) {
+      return styles.cardFactory;
+    } else {
+      return styles.cardWareHouse;
+    }
+  };
+  const customPathColor = () => {
+    if (isShowRoom === true) {
+      return "#1285F9";
+    } else if (isShowRoom === false) {
+      return "#723AD4";
+    } else {
+      return "#E3BF2D";
+    }
+  };
+  const customTrackColor = () => {
+    if (isShowRoom === true) {
+      return "#CCE5FF";
+    } else if (isShowRoom === false) {
+      return "#DECDFE";
+    } else {
+      return "#FBE58A";
+    }
+  };
   return (
-    <div
-      {...rest}
-      className={isShowRoom === true ? styles.cardShowRoom : styles.cardFactory}
-    >
+    <div {...rest} className={customColor()}>
       <div>
         {/* className={classes.cardContent} */}
         <Grid>
@@ -61,8 +84,8 @@ const NewDashboardSecondComponent = ({
               strokeWidth={"9"}
               styles={buildStyles({
                 textColor: isShowRoom ? "#1285F9" : "#723AD4",
-                pathColor: isShowRoom ? "#1285F9" : "#723AD4",
-                trailColor: isShowRoom ? "#CCE5FF" : "#DECDFE",
+                pathColor: customPathColor(),
+                trailColor: customTrackColor(),
                 textSize: "1.3rem",
               })}
             />

@@ -4,6 +4,7 @@ import historyUtils from "../../../libs/history.utils";
 import RouteName from "../../../routes/Route.name";
 import {  actionSetPageRoles } from "../../../actions/UserRoles.action";
 import { actionFetchStaticQr, actionSetPageStaticQr } from "../../../actions/StaticQr.action";
+import { actionFetchShifts, actionSetPageShifts } from "../../../actions/ShiftsLists.action";
 
 
 const useShiftsListsHook= ({}) => {
@@ -22,12 +23,12 @@ const useShiftsListsHook= ({}) => {
     is_fetching: isFetching,
     query,
     query_data: queryData,
-  } = useSelector((state) => state?.StaticQr);
+  } = useSelector((state) => state?.Shifts);
 
 
   useEffect(() => {
     dispatch(
-      actionFetchStaticQr(1, sortingData, {
+      actionFetchShifts(1, sortingData, {
         query: isMountRef.current ? query : null,
         query_data: isMountRef.current ? queryData : null,
       })
@@ -37,7 +38,7 @@ const useShiftsListsHook= ({}) => {
 
   const handlePageChange = useCallback((type) => {
    
-    dispatch(actionSetPageStaticQr(type));
+    dispatch(actionSetPageShifts(type));
   }, []);
 
   const queryFilter = useCallback(
@@ -45,7 +46,7 @@ const useShiftsListsHook= ({}) => {
       console.log("_queryFilter", key, value);
     
       dispatch(
-        actionFetchStaticQr(1, sortingData, {
+        actionFetchShifts(1, sortingData, {
           query: key == "SEARCH_TEXT" ? value : query,
           query_data: key == "FILTER_DATA" ? value : queryData,
         })
@@ -74,9 +75,9 @@ const useShiftsListsHook= ({}) => {
   const handleSortOrderChange = useCallback(
     (row, order) => {
      
-      dispatch(actionSetPageRoles(1));
+      dispatch(actionSetPageShifts(1));
       dispatch(
-        actionFetchStaticQr(
+        actionFetchShifts(
           1,
           { row, order },
           {

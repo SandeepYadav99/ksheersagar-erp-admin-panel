@@ -7,6 +7,7 @@ import activeEmpImg from "../../assets/img/ic_active_employees@2x.png";
 import inactiveEmpImg from "../../assets/img/ic_inactive_employees@2x.png";
 import factoryEmpImg from "../../assets/img/ic_factory@2x.png";
 import showRoomEmpImg from "../../assets/img/ic_showroom@2x.png";
+import warehouseEmpImg from "../../assets/img/ic_warehouse@2x.png";
 import NewDashboardSecondComponent from "./components/StatCard/NewDashboardSecondComponent";
 
 import "react-circular-progressbar/dist/styles.css";
@@ -136,6 +137,15 @@ const NewDashboard = () => {
                     total={dashboard?.locations?.factory}
                     totalLocations={dashboard?.locations?.total}
                     isShowRoom={false}
+                  />
+                </Grid>
+                <Grid item sm={6} xs={12}>
+                  <NewDashboardSecondComponent
+                    subTitle={"Warehouse"}
+                    image={warehouseEmpImg}
+                    total={dashboard?.locations?.warehouse}
+                    totalLocations={dashboard?.locations?.total}
+                    
                   />
                 </Grid>
               </Grid>
