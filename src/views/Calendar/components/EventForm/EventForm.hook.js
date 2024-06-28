@@ -107,7 +107,7 @@ const useEventFormHook = ({ isOpen, handleToggle, editData, renderList }) => {
       "name",
       "holiday_type",
       "type",
-      "excluded_employees",
+      // "excluded_employees",
       "applies_locations",
       "start_date",
       // "end_date",
