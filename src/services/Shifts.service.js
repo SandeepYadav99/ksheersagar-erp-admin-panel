@@ -19,3 +19,6 @@ export async function serviceGetShiftsDetail(params) { // app/settings/update/ke
 export async function serviceGetShiftsWorkingHours(params) { // app/settings/update/keys
     return await postRequest('app/settings/update/keys', params);
 }
+export async function serviceAddEmployeeShift(params) { // app/settings/update/keys
+    return await postRequest('shifts/employees/add', params);
+}

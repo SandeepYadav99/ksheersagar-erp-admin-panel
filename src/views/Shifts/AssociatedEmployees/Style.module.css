@@ -19,7 +19,14 @@
     background-color: white;
     box-shadow: 0 0 8px rgb(0 0 0 / 15%);
   }
- 
+  .newLine {
+    height: 5px;
+    width: 30px;
+    border-radius: 10px;
+    text-align: center;
+    /* margin: auto; */
+    background-image: linear-gradient(265deg, #7467f0, #2896e9) !important;
+  }
   .bottomSection{
     flex: 1 1 100% !important;
   }
