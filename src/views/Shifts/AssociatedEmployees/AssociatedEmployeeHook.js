@@ -21,8 +21,9 @@ const useAssociatedEmployeeHook = ({id}) => {
 
 
   useEffect(() => {
+    
     dispatch(actionGetJobOpeningShiftEmp(1, {}, {},id))
-  }, []);
+  }, [isSidePanel]);
 
     useEffect(() => {
          setData(candidates);
