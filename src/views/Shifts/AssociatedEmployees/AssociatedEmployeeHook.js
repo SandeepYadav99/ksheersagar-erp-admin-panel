@@ -9,7 +9,7 @@ const useAssociatedEmployeeHook = ({id}) => {
   const [isSidePanel, setSidePanel] = useState(false);
   const [isCalling, setIsCalling] = useState(false);
   const [editData, setEditData] = useState(null);
-  const [editId, setEditId] = useState("");
+  const [editId, setEditId] = useState(null);
   const dispatch = useDispatch();
   const [isRejectPopUp,setIsRejectPopUp]=useState(false)
   const [currentPage,setCurrentPage] = useState(1);
@@ -113,7 +113,7 @@ const useAssociatedEmployeeHook = ({id}) => {
   const toggleRejectDialog = useCallback(
     (all) => {
       setIsRejectPopUp((e) => !e);
-      setEditId(all?.id)
+      setEditId(all)
     },
     [isRejectPopUp, setEditId]
   );

@@ -6,7 +6,7 @@ import SnackbarUtils from "../../../../libs/SnackbarUtils";
 import { serviceShiftEmpRemove } from "../../../../services/AssociatedEmplyees.service";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { actionDeleteShiftEmpDeleted } from "../../../../actions/AssociatedEmployees.action";
+import { actionDeleteShiftEmpDeleted, actionGetJobOpeningShiftEmp } from "../../../../actions/AssociatedEmployees.action";
 
 
 // import useResetPasswordHook from "./ResetPasswordPopup_Hook";
@@ -27,11 +27,12 @@ const DeletePopup = ({
   const {id}=useParams()
 const dispatch= useDispatch()
   const handleUpdate =useCallback(()=>{
-   
-    dispatch(actionDeleteShiftEmpDeleted(shiftId, id))
+   if(!isOpen) return;
+    dispatch(actionDeleteShiftEmpDeleted(shiftId?.shift_id, shiftId?.id))
+    dispatch(actionGetJobOpeningShiftEmp(1, {}, {}))
     handleDialog()
     SnackbarUtils.success("Successfully Deleted")
-  },[id, shiftId, handleDialog])
+  },[id, shiftId, isOpen, handleDialog])
 
 
   return (
