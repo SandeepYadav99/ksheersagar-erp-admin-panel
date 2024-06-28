@@ -39,7 +39,7 @@ const ShiftDetail = () => {
       <div className={styles.employe}>
         <AssociatedEmployees
           associatedEmployeesCount={
-            shiftDetail?.details?.associatedEmployeesCount || ""
+            shiftDetail?.details?.associatedEmployeesCount ?? ""
           }
         />
       </div>

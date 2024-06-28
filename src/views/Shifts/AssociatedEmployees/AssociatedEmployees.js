@@ -14,6 +14,7 @@ import DeletePopup from "./Component/DeleteModal";
 import SidePanelComponent from "../../../components/SidePanel/SidePanel.component";
 import AddEmployeeTable from "./Component/AddEmployeeTable/AddEmployeeTable.component";
 import StatusPill from "../../../components/Status/StatusPill.component";
+import { capitalizeFirstLetter } from "../../../hooks/CapsLetter";
 
 const AssociatedEmployees = ({ listData, id , associatedEmployeesCount}) => {
   const {
@@ -71,7 +72,7 @@ const AssociatedEmployees = ({ listData, id , associatedEmployeesCount}) => {
               alt="..."
             />
 
-            <div ><b>{all?.name_en} </b> <br/> {all?.emp_code}</div>
+            <div ><b>{capitalizeFirstLetter(all?.name_en)} </b> <br/> {all?.emp_code}</div>
           </div>
         ),
       },

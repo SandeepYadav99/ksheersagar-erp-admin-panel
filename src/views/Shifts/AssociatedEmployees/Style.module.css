@@ -216,6 +216,13 @@
     margin-right: 45%;
     display: inline-block;
   }
+  .empName{
+    font-size: 14px !important;
+    font-weight: 600 !important;
+  }
+  .empName::first-letter{
+    text-transform: uppercase !important;
+  }
   .image{
     display: flex;
     align-items: center;
