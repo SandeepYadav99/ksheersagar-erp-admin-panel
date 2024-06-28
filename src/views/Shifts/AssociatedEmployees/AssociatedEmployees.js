@@ -8,8 +8,8 @@ import classNames from "classnames";
 import history from "../../../libs/history.utils";
 import PageBoxComponent from "../../../components/PageBox/PageBox.component";
 import useAssociatedEmployeeHook from "./AssociatedEmployeeHook";
-import { Info } from "@material-ui/icons";
-import { IconButton } from "@material-ui/core";
+import { Add, Info } from "@material-ui/icons";
+import { ButtonBase, IconButton } from "@material-ui/core";
 import DeletePopup from "./Component/DeleteModal";
 
 const AssociatedEmployees = ({ listData, id }) => {
@@ -24,9 +24,9 @@ const AssociatedEmployees = ({ listData, id }) => {
     currentData,
     currentPage,
     isRejectPopUp,
-    toggleRejectDialog
+    toggleRejectDialog,
   } = useAssociatedEmployeeHook({ listData, id });
- 
+
   // const {
   //   present,
   //   all: allData,
@@ -34,7 +34,6 @@ const AssociatedEmployees = ({ listData, id }) => {
   //   is_fetching: isFetching,
   // } = useSelector((state) => state.associatedManufactures);
 
- 
   const renderFirstCell = useCallback((product) => {
     if (product) {
       return (
@@ -53,23 +52,23 @@ const AssociatedEmployees = ({ listData, id }) => {
 
   const tableStructure = useMemo(() => {
     return [
-      {
-        key: "user_info",
-        label: "User Info",
-        sortable: false,
-        render: (temp, all) => (
-          <div className={styles.image}>
-            <img
-              src={all?.image}
-              className={styles.imageContainer}
-              crossOrigin="anonymous"
-              alt="..."
-            />
+      // {
+      //   key: "user_info",
+      //   label: "User Info",
+      //   sortable: false,
+      //   render: (temp, all) => (
+      //     <div className={styles.image}>
+      //       <img
+      //         src={all?.image}
+      //         className={styles.imageContainer}
+      //         crossOrigin="anonymous"
+      //         alt="..."
+      //       />
 
-            <div variant="body1"> {all?.name} </div>
-          </div>
-        ),
-      },
+      //       <div variant="body1"> {all?.name} </div>
+      //     </div>
+      //   ),
+      // },
       {
         key: "employee_name",
         label: "EMPLOYEE NAME",
@@ -98,7 +97,7 @@ const AssociatedEmployees = ({ listData, id }) => {
           //   color={all?.status === "ACTIVE" ? "active" : "high"}
           // />
           <></>
-        )
+        ),
       },
       {
         key: "status",
@@ -110,7 +109,7 @@ const AssociatedEmployees = ({ listData, id }) => {
           //   color={all?.status === "ACTIVE" ? "active" : "high"}
           // />
           <></>
-        )
+        ),
       },
       {
         key: "action",
@@ -118,8 +117,7 @@ const AssociatedEmployees = ({ listData, id }) => {
         sortable: false,
         render: (temp, all) => (
           <div>
-            <IconButton onClick={()=>
-    toggleRejectDialog}>
+            <IconButton onClick={() => toggleRejectDialog}>
               <Info fontSize="small" />
             </IconButton>
           </div>
@@ -153,14 +151,23 @@ const AssociatedEmployees = ({ listData, id }) => {
     handleRowSize,
     data,
     currentPage,
-    currentData
+    currentData,
   ]);
 
   return (
     <PageBoxComponent>
-      <div  className={styles.employeTitle}>
-      Associated Employees (2)
+      <div className={styles.listAction}>
+        <div className={styles.employeTitle}>Associated Employees (2)</div>
+        <div>
+          <ButtonBase
+            // onClick={handleToggleSidePannel}
+            className={"createBtn"}
+          >
+            ADD EMPLOYEE<Add fontSize={"small"} className={"plusIcon"}></Add>
+          </ButtonBase>
+        </div>
       </div>
+
       <div style={{ width: "100%" }}>
         <DataTables
           {...tableData.datatable}

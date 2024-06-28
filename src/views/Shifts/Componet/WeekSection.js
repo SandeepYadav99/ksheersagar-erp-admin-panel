@@ -10,7 +10,7 @@ const WeekSection = () => {
         <div className={styles.fontSize}>Week off</div>
       </div>
      <div className={styles.radioFlex}>
-        <div className={styles.radioButtonUnSelected}/>
+        <div className={styles.radioButtonUnCircle}/>
         <div className={styles.fontSize}>Occasional Working</div>
       </div>
       <div className={styles.radioFlex}>

@@ -2,7 +2,7 @@ import store from "../store";
 import Constants from "../config/constants";
 
 
-import { serviceCreateShifts, serviceGetShifts, serviceUpdateShifts } from "../services/Shifts.service";
+import { serviceCreateShifts, serviceGetShifts, serviceGetShiftsDetail, serviceUpdateShifts } from "../services/Shifts.service";
 
 export const FETCH_INIT = "FETCH_INIT_SHIFTS";
 export const FETCHED = "FETCHED_SHIFTS";
@@ -20,6 +20,7 @@ export const SET_SERVER_PAGE = "SET_SERVER_PAGE_SHIFTS";
 export const CREATE_DATA = "CREATE_SHIFTS";
 export const UPDATE_DATA = "UPDATE_SHIFTS";
 export const DELETE_ITEM = "DELETE_SHIFTS";
+export const SHIFT_DETAIL ="SHIFT_DETAIL";
 
 export function actionFetchShifts(
   index = 1,
@@ -79,12 +80,23 @@ export function actionUpdateShifts(data) {
   };
 }
 
-export function actionDeleteShifts(id) {
-  // const request = serviceDeleteLocation({ id: id });
-  // return (dispatch) => {
-  //   dispatch({ type: DELETE_ITEM, payload: id });
-  // };
+export function actionDetailShifts(data) {
+  const request = serviceGetShiftsDetail({id:data});
+  return (dispatch) => {
+    request.then((data) => {
+      if (!data.error) {
+        dispatch({ type: SHIFT_DETAIL, payload: data.data });
+      }
+    });
+  };
 }
+
+// export function actionDeleteShifts(id) {
+//   const request = serviceGetShiftsDetail({ id: id });
+//   return (dispatch) => {
+//     dispatch({ type: SHIFT_DETAIL, payload: id });
+//   };
+// }
 
 export function actionChangePageShifts(page) {
   return (dispatch) => {

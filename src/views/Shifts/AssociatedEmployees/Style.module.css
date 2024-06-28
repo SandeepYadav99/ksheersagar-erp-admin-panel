@@ -224,4 +224,12 @@
   }
   .employeTitle{
     margin-bottom: 20px !important;
+    font-weight: 500;
+  }
+
+  .listAction{
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 15px !important;
   }

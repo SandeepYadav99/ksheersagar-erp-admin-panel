@@ -5,17 +5,17 @@ import { useSelector } from "react-redux";
 import {
   AccessTime,
   Add,
-  Delete,
+
   DeleteOutline,
   Edit,
-  Info,
+
   InfoOutlined,
 } from "@material-ui/icons";
+
 import PageBox from "../../../components/PageBox/PageBox.component";
 import styles from "./Style.module.css";
 import DataTables from "../../../Datatables/Datatable.table";
 import Constants from "../../../config/constants";
-import FilterComponent from "../../../components/Filter/Filter.component";
 
 import StatusPill from "../../../components/Status/StatusPill.component";
 
@@ -24,7 +24,7 @@ import SidePanelComponent from "../../../components/SidePanel/SidePanel.componen
 // import StaticQrCreate from "../Create/StaticQrCreate";
 import useShiftsListsHook from "./ShiftsListsHook";
 import HoursCreate from "../WorkingHoursCreate/HoursCreate";
-import CustomRadio from "../../../components/FormFields/CustomRadio";
+
 import WeekSection from "../Componet/WeekSection";
 import ShiftsCreate from "../Create/ShiftsCreate";
 
@@ -34,12 +34,11 @@ const ShiftsLists = ({}) => {
     handleRowSize,
     handlePageChange,
     handleEdit,
-    handleFilterDataChange,
-    handleSearchValueChange,
+   
     handleViewDetails,
     isSidePanel,
     isCalling,
-    configFilter,
+
     id,
     isSidePanelHours,
     handleToggleSidePannelHours,
@@ -89,30 +88,62 @@ const ShiftsLists = ({}) => {
       </div>
     );
   }, [id]);
+
+  const workingDays = useCallback(
+    (all) => {
+      return (
+        <div className={styles.avatorFlex}>
+          {all?.shiftDays?.map((shift) => {
+            if (shift?.is_week_off && !shift?.is_sunday_occasional_working) {
+              return (
+                <Avatar className={styles.avator}>
+                  {shift?.name?.substring(0, 2)}
+                </Avatar>
+              );
+            } else if (
+              shift?.is_sunday_occasional_working &&
+              shift?.is_week_off
+            ) {
+              return (
+                <Avatar className={styles.avatorSeletedCircle}>
+                  {shift?.name?.substring(0, 2)}
+                </Avatar>
+              );
+            } else {
+              return (
+                <Avatar className={styles.avatorSeleted}>
+                  {shift?.name?.substring(0, 2)}
+                </Avatar>
+              );
+            }
+          })}
+       
+        </div>
+      );
+    },
+    []
+  );
   const tableStructure = useMemo(() => {
     return [
       {
         key: "shift_name",
         label: "SHIFT NAME",
         sortable: false,
-        render: (value, all) => <div>{}</div>,
+        render: (value, all) => <div>{all?.name}</div>,
       },
       {
         key: "assigned_employees",
         label: "ASSIGNED EMPLOYEES",
         sortable: false,
-        render: (temp, all) => <div>{all?.location?.name}</div>,
+        render: (temp, all) => (
+          <div>{all?.associatedEmployeesCount ?? "N/A"}</div>
+        ),
       },
       {
         key: "shift_days",
         label: "SHIFT DAYS",
         sortable: false,
-        render: (temp, all) => (
-          <div className={styles.avatorFlex}>
-            <Avatar className={styles.avator}>Su</Avatar>{" "}
-            <Avatar className={styles.avatorSeleted}>Mo</Avatar>
-          </div>
-        ),
+        render: (temp, all) => workingDays(all),
       },
 
       {
@@ -161,6 +192,7 @@ const ShiftsLists = ({}) => {
     handleEdit,
     isCalling,
     handleViewShiftDetail,
+    workingDays
   ]);
 
   const tableData = useMemo(() => {
@@ -216,28 +248,26 @@ const ShiftsLists = ({}) => {
             </ButtonBase>
           </div>
         </div>
-     
+
         <div className={styles.actionTime}>
           <div className={styles.weekSection}>
             <WeekSection />
           </div>
         </div>
-        <div >
-         {/* <FilterComponent
+        <div>
+          {/* <FilterComponent
             is_progress={isFetching}
             filters={configFilter}
             handleSearchValueChange={handleSearchValueChange}
             handleFilterDataChange={handleFilterDataChange}
           />  */}
-     
-           
-            <div style={{ width: "100%" }}>
-              <DataTables
-                {...tableData.datatable}
-                {...tableData.datatableFunctions}
-              />
-            </div>
-          
+
+          <div style={{ width: "100%" }}>
+            <DataTables
+              {...tableData.datatable}
+              {...tableData.datatableFunctions}
+            />
+          </div>
         </div>
       </PageBox>
       <SidePanelComponent

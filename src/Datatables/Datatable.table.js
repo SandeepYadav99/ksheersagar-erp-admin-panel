@@ -210,7 +210,7 @@ const useStyles = {
         width: '100%',
     },
     centerText: {
-        textAlign: 'center'
+        textAlign: 'center !important'
     },
     paper: {
         width: '100%',

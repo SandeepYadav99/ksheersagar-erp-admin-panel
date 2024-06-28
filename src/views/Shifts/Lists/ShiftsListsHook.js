@@ -2,8 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import historyUtils from "../../../libs/history.utils";
 import RouteName from "../../../routes/Route.name";
-import {  actionSetPageRoles } from "../../../actions/UserRoles.action";
-import { actionFetchStaticQr, actionSetPageStaticQr } from "../../../actions/StaticQr.action";
+
 import { actionFetchShifts, actionSetPageShifts } from "../../../actions/ShiftsLists.action";
 
 
@@ -137,8 +136,8 @@ const useShiftsListsHook= ({}) => {
     historyUtils.push(RouteName.LOCATIONS_CREATE);
   }, []);
 
-  const handleViewShiftDetail = useCallback(() => {
-    historyUtils.push(RouteName.SHIFTS_DETAILS);
+  const handleViewShiftDetail = useCallback((shift) => {
+    historyUtils.push(`${RouteName.SHIFTS_DETAILS}${shift?.id}`);
   }, []);
   const configFilter = useMemo(() => {
     return [
