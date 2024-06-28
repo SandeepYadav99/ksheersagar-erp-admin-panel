@@ -1,6 +1,7 @@
 
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { actionGetJobOpeningShiftEmp } from "../../../actions/AssociatedEmployees.action";
 
 
 const totalShow =10;
@@ -16,16 +17,16 @@ const useAssociatedEmployeeHook = ({id}) => {
     const [currentData,setCurrentData] = useState([]);
 
 
-//   const {isCandidatesFetching, associatedUser:candidates } = useSelector(state => state.associatedManufactures);
+  const {isCandidatesFetching, associatedUser:candidates } = useSelector(state => state.associatedEmployee);
 
 
-//   useEffect(() => {
-//     dispatch('actionGetJobOpeningCandidates'(1, {}, {},id))
-//   }, []);
+  useEffect(() => {
+    dispatch(actionGetJobOpeningShiftEmp(1, {}, {},id))
+  }, []);
 
-    // useEffect(() => {
-    //     // setData(candidates);
-    // }, [candidates]);
+    useEffect(() => {
+         setData(candidates);
+    }, [candidates]);
 
     useEffect(() => {
         _processData();
@@ -112,9 +113,9 @@ const useAssociatedEmployeeHook = ({id}) => {
   const toggleRejectDialog = useCallback(
     (all) => {
       setIsRejectPopUp((e) => !e);
-      // setEmpId(all?.id)
+      setEditId(all?.id)
     },
-    [isRejectPopUp]
+    [isRejectPopUp, setEditId]
   );
 
   return {
@@ -131,7 +132,7 @@ const useAssociatedEmployeeHook = ({id}) => {
     configFilter,
     editId,
     handleEditHubMaster,
-    // data:candidates,
+     data:candidates,
     currentData,
     currentPage
   };

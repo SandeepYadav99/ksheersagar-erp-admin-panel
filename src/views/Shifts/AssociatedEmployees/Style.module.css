@@ -221,6 +221,9 @@
     align-items: center;
     gap: 8px;
   }
+  .locationName::first-letter{
+    text-transform: uppercase !important;
+  }
   .imageContainer{
     height: 30px;
     width: 30px;

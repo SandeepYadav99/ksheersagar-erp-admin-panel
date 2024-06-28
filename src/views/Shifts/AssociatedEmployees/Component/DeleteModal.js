@@ -1,7 +1,13 @@
 import styles from "./Style.module.css";
 import { Close, Visibility, VisibilityOff } from "@material-ui/icons";
 import { ButtonBase, Dialog, IconButton, InputAdornment, MenuItem, Slide } from "@material-ui/core";
-import React from "react";
+import React, { useCallback, useEffect } from "react";
+import SnackbarUtils from "../../../../libs/SnackbarUtils";
+import { serviceShiftEmpRemove } from "../../../../services/AssociatedEmplyees.service";
+import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { actionDeleteShiftEmpDeleted } from "../../../../actions/AssociatedEmployees.action";
+
 
 // import useResetPasswordHook from "./ResetPasswordPopup_Hook";
 
@@ -15,19 +21,18 @@ const DeletePopup = ({
   handleDialog,
  
   empId,
-  isSidePanel,
+  shiftId,
   handleToggleSidePannel
 }) => {
-//   const {
-//     form,
-//     errorData,
-//     isSubmitting,
-//     onBlurHandler,
-//     changeTextData,
-//     showPasswordCurrent,
-//     setShowPasswordCurrent,
-//     handleUpdate,
-//   } = useResetPasswordHook({ handleDialog, isOpen, empId });
+  const {id}=useParams()
+const dispatch= useDispatch()
+  const handleUpdate =useCallback(()=>{
+   
+    dispatch(actionDeleteShiftEmpDeleted(shiftId, id))
+    handleDialog()
+    SnackbarUtils.success("Successfully Deleted")
+  },[id, shiftId, handleDialog])
+
 
   return (
     <Dialog
@@ -42,22 +47,27 @@ const DeletePopup = ({
       // classes={{paper: classes.dialog}}
     >
       <div className={styles.InterviewPopUpWrapper}>
-        <div className={styles.closeWrap}>
-          <Close style={{ cursor: "pointer" }} onClick={handleDialog}></Close>
-        </div>
+       
 
         <div className={styles.loginSignupText}>
           <h1 className={styles.headingText}>Reset Password</h1>
           <div className={styles.newLine} />
         </div>
         <div className={"formGroup"}>
-        
+        <div className={styles.title}>Do you want to remove this employee?</div>
         </div>
         <div className={styles.confirmedWrapper}>
+        <ButtonBase
+            // disabled={isSubmitting}
+            className={"createBtnOutland"}
+             onClick={handleDialog}
+          >
+            CANCEL
+          </ButtonBase>
           <ButtonBase
             // disabled={isSubmitting}
             className={styles.createBtn}
-            // onClick={handleUpdate}
+             onClick={()=>handleUpdate()}
           >
             UPDATE
           </ButtonBase>
