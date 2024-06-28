@@ -3,18 +3,20 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import historyUtils from "../../../libs/history.utils";
 import RouteName from "../../../routes/Route.name";
 
-import { actionFetchShifts, actionSetPageShifts } from "../../../actions/ShiftsLists.action";
+import {
+  actionFetchShifts,
+  actionSetPageShifts,
+} from "../../../actions/ShiftsLists.action";
 
-
-const useShiftsListsHook= ({}) => {
+const useShiftsListsHook = ({}) => {
   const [isSidePanel, setSidePanel] = useState(false);
   const [isSidePanelHours, setSidePanelHours] = useState(false);
   const [isCalling, setIsCalling] = useState(false);
   const [editData, setEditData] = useState(null);
-  const [machineId,setMachineId]=useState("")
+  const [updateData, setUpdateData] = useState(null);
+  const [machineId, setMachineId] = useState("");
   const dispatch = useDispatch();
   const { role } = useSelector((state) => state.auth);
-
 
   const isMountRef = useRef(false);
   const {
@@ -23,7 +25,6 @@ const useShiftsListsHook= ({}) => {
     query,
     query_data: queryData,
   } = useSelector((state) => state?.Shifts);
-
 
   useEffect(() => {
     dispatch(
@@ -36,28 +37,25 @@ const useShiftsListsHook= ({}) => {
   }, []);
 
   const handlePageChange = useCallback((type) => {
-   
     dispatch(actionSetPageShifts(type));
   }, []);
 
   const queryFilter = useCallback(
     (key, value) => {
       console.log("_queryFilter", key, value);
-    
+
       dispatch(
         actionFetchShifts(1, sortingData, {
           query: key == "SEARCH_TEXT" ? value : query,
           query_data: key == "FILTER_DATA" ? value : queryData,
         })
       );
-     
     },
     [sortingData, query, queryData]
   );
 
   const handleFilterDataChange = useCallback(
     (value) => {
-    
       queryFilter("FILTER_DATA", value);
     },
     [queryFilter]
@@ -65,7 +63,6 @@ const useShiftsListsHook= ({}) => {
 
   const handleSearchValueChange = useCallback(
     (value) => {
-     
       queryFilter("SEARCH_TEXT", value);
     },
     [queryFilter]
@@ -73,7 +70,6 @@ const useShiftsListsHook= ({}) => {
 
   const handleSortOrderChange = useCallback(
     (row, order) => {
-     
       dispatch(actionSetPageShifts(1));
       dispatch(
         actionFetchShifts(
@@ -95,7 +91,6 @@ const useShiftsListsHook= ({}) => {
 
   const handleDelete = useCallback(
     (id) => {
-     
       setSidePanel(false);
       setEditData(null);
     },
@@ -110,16 +105,19 @@ const useShiftsListsHook= ({}) => {
     [setEditData, setSidePanel]
   );
 
-  const handleToggleSidePannel = useCallback(() => {
-    setSidePanel((e) => !e);
-    setMachineId("")
-  }, [setSidePanel, setMachineId]);
+  const handleToggleSidePannel = useCallback(
+    (data) => {
+      setSidePanel((e) => !e);
+      data ? setUpdateData(data) : setUpdateData(null);
+    },
+    [setSidePanel, setUpdateData]
+  );
 
   const handleToggleSidePannelHours = useCallback(() => {
     setSidePanelHours((e) => !e);
-    setMachineId("")
+    setMachineId("");
   }, [setSidePanelHours, setMachineId]);
-
+  console.log("updateData", updateData);
   const handleSideToggle = useCallback(
     (data) => {
       historyUtils.push(RouteName.LOCATIONS_UPDATE + data?.id);
@@ -127,10 +125,10 @@ const useShiftsListsHook= ({}) => {
     [setEditData, setSidePanel]
   );
 
-  const handleViewDetails = useCallback((data) => {
-    setSidePanel((e) => !e);
-    setMachineId(data?.id)
-  }, [setSidePanel, setMachineId]);
+  // const handleViewDetails = useCallback((data) => {
+  //   setSidePanel((e) => !e);
+  //   setMachineId(data?.id)
+  // }, [setSidePanel, setMachineId]);
 
   const handleCreate = useCallback(() => {
     historyUtils.push(RouteName.LOCATIONS_CREATE);
@@ -141,20 +139,24 @@ const useShiftsListsHook= ({}) => {
   }, []);
   const configFilter = useMemo(() => {
     return [
-    
       {
         label: "Created Date",
         options: { maxDate: new Date() },
         name: "createdAt",
         type: "date",
       },
-       {label: 'Status', name: 'status', type: 'select', fields: ['INACTIVE', 'ACTIVE']},
+      {
+        label: "Status",
+        name: "status",
+        type: "select",
+        fields: ["INACTIVE", "ACTIVE"],
+      },
     ];
-  }, [ role]);
+  }, [role]);
 
   return {
     handlePageChange,
-   
+
     handleFilterDataChange,
     handleSearchValueChange,
     handleRowSize,
@@ -162,17 +164,18 @@ const useShiftsListsHook= ({}) => {
     handleDelete,
     handleEdit,
     handleSideToggle,
-    handleViewDetails,
+    // handleViewDetails,
     isCalling,
     editData,
     isSidePanel,
     configFilter,
     handleCreate,
     handleToggleSidePannel,
-    id:machineId,
+    id: machineId,
     isSidePanelHours,
     handleToggleSidePannelHours,
-    handleViewShiftDetail
+    handleViewShiftDetail,
+    updateData,
   };
 };
 

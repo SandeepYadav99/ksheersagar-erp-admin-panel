@@ -5,12 +5,9 @@ import RouteName from "../../../routes/Route.name";
 import { actionDeleteRoles } from "../../../actions/UserRoles.action";
 import { useDispatch } from "react-redux";
 import { serviceGetList } from "../../../services/Common.service";
-import {
-  serviceUpdateStaticQr,
-} from "../../../services/StaticQr.service";
-import { actionFetchStaticQr } from "../../../actions/StaticQr.action";
 import { shiftdays } from "../../../helper/helper";
-import { serviceCreateShifts } from "../../../services/Shifts.service";
+import { serviceCreateShifts, serviceUpdateShifts } from "../../../services/Shifts.service";
+import { actionFetchShifts } from "../../../actions/ShiftsLists.action";
 
 const initialForm = {
   name: "",
@@ -25,7 +22,11 @@ const days = [
   "Friday",
   "Saturday",
 ];
-const useShiftsCreateHook = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
+const useShiftsCreateHook = ({
+  handleToggleSidePannel,
+  isSidePanel,
+  editData,
+}) => {
   const [form, setForm] = useState({ ...initialForm });
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -44,12 +45,21 @@ const useShiftsCreateHook = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
   }, [shiftdays]);
 
   useEffect(() => {
-    shiftRef.current?.setData(getdays);
-  }, []);
+    if (editData?.id) {
+      setForm({
+        name: editData?.name ? editData?.name : "",
+      });
+      shiftRef.current?.setData(editData?.shiftDays);
+    } else {
+      shiftRef.current?.setData(getdays);
+    }
+  }, [editData]);
 
   useEffect(() => {
     if (!isSidePanel) {
       handleReset();
+      shiftRef.current?.setData([...getdays])
+      setErrorData({})
     }
   }, [isSidePanel]);
 
@@ -91,8 +101,8 @@ const useShiftsCreateHook = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
       shift_days: [...shiftData],
     };
     let req;
-    if (qrId) {
-      req = serviceUpdateStaticQr({ ...form, id: qrId });
+    if (editData?.id) {
+      req = serviceUpdateShifts({ ...updatedData, id: editData?.id });
     } else {
       req = serviceCreateShifts({ ...updatedData });
     }
@@ -100,13 +110,13 @@ const useShiftsCreateHook = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
     req.then((res) => {
       if (!res.error) {
         handleToggleSidePannel();
-        dispatch(actionFetchStaticQr(1, {}, {}));
+        dispatch(actionFetchShifts(1, {}, {}));
       } else {
         SnackbarUtils.error(res.message);
       }
       setIsSubmitting(false);
     });
-  }, [form, isSubmitting, setIsSubmitting, qrId, handleToggleSidePannel]);
+  }, [form, isSubmitting, setIsSubmitting, editData, handleToggleSidePannel]);
 
   const handleSubmit = useCallback(async () => {
     const errors = checkFormValidation();
@@ -159,11 +169,11 @@ const useShiftsCreateHook = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
   );
 
   const handleDelete = useCallback(() => {
-    dispatch(actionDeleteRoles(qrId));
+    dispatch(actionDeleteRoles(editData));
     // setIsDialog(false);
     // historyUtils.push("/product");
     historyUtils.push(RouteName.USER_ROLES);
-  }, [qrId]);
+  }, [editData]);
 
   const handleReset = useCallback(() => {
     setForm({ ...initialForm });
@@ -177,7 +187,6 @@ const useShiftsCreateHook = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
     onBlurHandler,
     handleSubmit,
     isLoading,
-    qrId,
     handleDelete,
     isSubmitting,
     listData,
