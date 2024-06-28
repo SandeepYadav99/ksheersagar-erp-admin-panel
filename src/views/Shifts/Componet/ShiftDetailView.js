@@ -3,9 +3,23 @@ import PageBoxComponent from "../../../components/PageBox/PageBox.component";
 import { Avatar } from "@material-ui/core";
 import styles from "./Style.module.css";
 
+const formatTime = (timestamp) => {
+  const date = new Date(timestamp);
+  let hours = date.getUTCHours();
+  const minutes = ("0" + date.getUTCMinutes()).slice(-2);
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12; 
+  const formattedHours = ("0" + hours).slice(-2);
+  return `${formattedHours}:${minutes} ${ampm}`;
+};
+
 const ShiftDetailView = ({ shiftDays }) => {
 
   const renderShift = useCallback((shift) => {
+    const endTime = shift?.end_time ? formatTime(shift?.end_time) : "N/A";
+    const startTime = shift?.start_time ? formatTime(shift?.start_time) : "N/A";
+    
     if (shift?.is_week_off && !shift?.is_sunday_occasional_working) {
       return (
         <div className={styles.avatorSubFlex} key={shift?.name}>
@@ -22,11 +36,11 @@ const ShiftDetailView = ({ shiftDays }) => {
             {shift?.name?.substring(0, 2)}
           </Avatar>
           <div>
-            <div className={styles.title}>
-              {shift?.start_time || "N/A"}-{shift?.end_time || "N/A"}
+            <div className={styles.titleTime}>
+              {startTime} - {endTime}
             </div>
             <div className={styles.fontSize}>
-              (Occasional Working Days: 1st, 3rd)
+              (Occasional Working Days: {shift?.working_sundays?.map((res, i, arr)=><span>{res}{i !== (arr.length-1) ? ', ' : ''}</span>)})
             </div>
           </div>
         </div>
@@ -37,8 +51,8 @@ const ShiftDetailView = ({ shiftDays }) => {
           <Avatar className={styles.avatorSeleted}>
             {shift?.name?.substring(0, 2)}
           </Avatar>
-          <div className={styles.title}>
-            {shift?.start_time || "N/A"}-{shift?.end_time || "N/A"}
+          <div className={styles.titleTime}>
+          {startTime} - {endTime}
           </div>
         </div>
       );
