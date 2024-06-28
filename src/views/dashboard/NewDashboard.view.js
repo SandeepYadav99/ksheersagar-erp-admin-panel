@@ -26,16 +26,16 @@ const NewDashboard = () => {
   }, []);
 
   const data = {
-    labels: ['Finished Goods', 'Raw Material'],
+    labels: ['Finished Goods', 'Raw Material', "Material", "Packaging", "Service"],
     datasets: [
       {
 
         data: [
-          dashboard?.products?.finished_goods || 0,
-          dashboard?.products?.raw_material || 0,
+          (dashboard?.products?.finished_goods || 0),
+          (dashboard?.products?.raw_material || 0) , (dashboard?.products?.material || 0), (dashboard?.products?.packaging || 0), (dashboard?.products?.service || 0)
         ],
-        backgroundColor: ["#48AAF3", "#FC8C5A"],
-        borderColor: ["#48AAF3", "#FC8C5A"],
+        backgroundColor: ["#48AAF3", "#FC8C5A", "#353973", "#7f219e", "#734135"],
+        borderColor: ["#48AAF3", "#FC8C5A", "#353973", "#7f219e", "#734135"],
         borderWidth: 1,
       },
     ],
@@ -193,7 +193,20 @@ const NewDashboard = () => {
                 <FiberManualRecord className={styles.rawMa} />
                 Raw Material
               </IconButton>
+              <IconButton className={"dashActionBtn"} color="secondary">
+                <FiberManualRecord className={styles.material} />
+                Material
+              </IconButton>
+              <IconButton style={{marginLeft:"-5px"}} className={"dashActionBtn"} color="secondary">
+                <FiberManualRecord className={styles.packaging} />
+                Packaging
+              </IconButton>
+              <IconButton className={"dashActionBtn"} color="secondary">
+                <FiberManualRecord className={styles.service} />
+                Service
+              </IconButton>
             </div>
+           
           </CardContent>
         </Card>
       </Grid>

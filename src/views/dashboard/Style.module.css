@@ -298,7 +298,7 @@
   color: #161616 !important;
 }
 .circularContainer{
-  height: 70% !important;
+  height: 85% !important;
   border-radius: 10px !important;
 }
 .titleGrid {
@@ -307,13 +307,18 @@
   color: #161616 !important;
 }
 .actionButton {
-  display: flex !important;
+  /* display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
+  flex-wrap: wrap !important;
   /* flex-wrap: wrap !important; */
-  gap: 15px !important;
-  margin-top: 90px !important;
-  padding: 0px 10px !important;
+  /* gap: 15px !important; */ 
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  grid-gap: 15px !important;
+  margin-top: 30px !important;
+  padding: 0px 8px !important;
+
 }
 .location{
   
@@ -332,6 +337,15 @@
 }
 .rawMa {
   color: #fc8c5a !important;
+}
+.material{
+  color: #353973 !important;
+}
+.packaging{
+  color: #7f219e!important;
+}
+.service{
+  color: #734135 !important;
 }
 .gridContainer {
   display: flex !important;
