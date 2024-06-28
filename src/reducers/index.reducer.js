@@ -17,6 +17,7 @@ import UserRolesReducer from "./UserRoles.reducer";
 import MachinesReducer from "./Machines.reducer";
 import StaticQrReducer from "./StaticQr.reducer";
 import ShiftsReducer from "./Shifts.reducer";
+import AssociatedEmployeesReducer from "./AssociatedEmployees.reducer";
 
 const rootReducer = combineReducers({
   state: (state = {}) => state,
@@ -37,7 +38,8 @@ const rootReducer = combineReducers({
   userRoles:UserRolesReducer,
   PaytmMachines:MachinesReducer,
   StaticQr:StaticQrReducer,
-  Shifts:ShiftsReducer
+  Shifts:ShiftsReducer, 
+  associatedEmployee:AssociatedEmployeesReducer
 });
 
 export default rootReducer;

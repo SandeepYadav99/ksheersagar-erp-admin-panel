@@ -8,13 +8,15 @@ import classNames from "classnames";
 import history from "../../../libs/history.utils";
 import PageBoxComponent from "../../../components/PageBox/PageBox.component";
 import useAssociatedEmployeeHook from "./AssociatedEmployeeHook";
-import { Add, Info } from "@material-ui/icons";
+import { Add, Delete, DeleteOutline, Info } from "@material-ui/icons";
 import { ButtonBase, IconButton } from "@material-ui/core";
 import DeletePopup from "./Component/DeleteModal";
 import SidePanelComponent from "../../../components/SidePanel/SidePanel.component";
 import AddEmployeeTable from "./Component/AddEmployeeTable/AddEmployeeTable.component";
+import StatusPill from "../../../components/Status/StatusPill.component";
+import { capitalizeFirstLetter } from "../../../hooks/CapsLetter";
 
-const AssociatedEmployees = ({ listData, id }) => {
+const AssociatedEmployees = ({ listData, id , associatedEmployeesCount}) => {
   const {
     handleSortOrderChange,
     handleRowSize,
@@ -29,6 +31,7 @@ const AssociatedEmployees = ({ listData, id }) => {
     toggleRejectDialog,
     isSidePanel,
     handleSideToggle,
+    editId
   } = useAssociatedEmployeeHook({ listData, id });
 
   // const {
@@ -56,36 +59,31 @@ const AssociatedEmployees = ({ listData, id }) => {
 
   const tableStructure = useMemo(() => {
     return [
-      // {
-      //   key: "user_info",
-      //   label: "User Info",
-      //   sortable: false,
-      //   render: (temp, all) => (
-      //     <div className={styles.image}>
-      //       <img
-      //         src={all?.image}
-      //         className={styles.imageContainer}
-      //         crossOrigin="anonymous"
-      //         alt="..."
-      //       />
-
-      //       <div variant="body1"> {all?.name} </div>
-      //     </div>
-      //   ),
-      // },
       {
         key: "employee_name",
         label: "EMPLOYEE NAME",
         sortable: false,
-        render: (temp, all) => <div>{all?.contact}</div>,
+        render: (temp, all) => (
+          <div className={styles.image}>
+            <img
+              src={all?.image}
+              className={styles.imageContainer}
+              crossOrigin="anonymous"
+              alt="..."
+            />
+
+            <div ><b>{capitalizeFirstLetter(all?.name_en)} </b> <br/> {all?.emp_code}</div>
+          </div>
+        ),
       },
+     
       {
         key: "location",
         label: "LOCATION",
         sortable: false,
         render: (temp, all) => (
-          <div>
-            {all?.depatment || "N/A"} / {all?.designation || "N/A"}
+          <div className={styles.locationName}>
+             {all?.location?.name || "N/A"}
           </div>
         ),
         //  candidate?.applied_date
@@ -96,11 +94,11 @@ const AssociatedEmployees = ({ listData, id }) => {
         label: "DEPARTMENT/ROLE",
         sortable: false,
         render: (temp, all) => (
-          // <StatusPill
-          //   status={all?.status}
-          //   color={all?.status === "ACTIVE" ? "active" : "high"}
-          // />
-          <></>
+         
+         <div>
+        
+          {all?.department?.name || "N/A"} / {all?.role?.name || "N/A"}
+         </div>
         ),
       },
       {
@@ -108,11 +106,11 @@ const AssociatedEmployees = ({ listData, id }) => {
         label: "STATUS",
         sortable: false,
         render: (temp, all) => (
-          // <StatusPill
-          //   status={all?.status}
-          //   color={all?.status === "ACTIVE" ? "active" : "high"}
-          // />
-          <></>
+          <StatusPill
+            status={all?.status}
+            color={all?.status}
+          />
+        
         ),
       },
       {
@@ -121,14 +119,15 @@ const AssociatedEmployees = ({ listData, id }) => {
         sortable: false,
         render: (temp, all) => (
           <div>
-            <IconButton onClick={() => toggleRejectDialog}>
-              <Info fontSize="small" />
+            <IconButton  className={"tableActionBtn"}
+              color="secondary" onClick={() => toggleRejectDialog(all)}>
+              <DeleteOutline fontSize="small" />
             </IconButton>
           </div>
         ),
       },
     ];
-  }, [renderFirstCell, handleViewDetails, handleEdit, isCalling]);
+  }, [renderFirstCell, handleViewDetails, handleEdit, isCalling, toggleRejectDialog]);
 
   const tableData = useMemo(() => {
     const datatableFunctions = {
@@ -168,7 +167,7 @@ const AssociatedEmployees = ({ listData, id }) => {
   return (
     <PageBoxComponent>
       <div className={styles.listAction}>
-        <div className={styles.employeTitle}>Associated Employees (2)</div>
+        <div className={styles.employeTitle}>Associated Employees ({associatedEmployeesCount})</div>
         <div>
           <ButtonBase onClick={handleSideToggle} className={"createBtn"}>
             ADD EMPLOYEE<Add fontSize={"small"} className={"plusIcon"}></Add>
@@ -185,6 +184,7 @@ const AssociatedEmployees = ({ listData, id }) => {
       <DeletePopup
         handleDialog={toggleRejectDialog}
         isOpen={isRejectPopUp}
+        shiftId={editId}
         empId={id}
       />
       <SidePanelComponent

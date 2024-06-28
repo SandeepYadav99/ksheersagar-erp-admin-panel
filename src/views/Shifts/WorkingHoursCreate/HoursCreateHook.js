@@ -61,7 +61,16 @@ const useHoursCreateHook = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
         errors[val] = true;
       }
     });
+    let fullDayValue = parseFloat(form?.full_day);
+  let halfDayValue = parseFloat(form?.half_day);
 
+  if (isNaN(fullDayValue) || fullDayValue > 24) {
+    errors.full_day = "Full day hours cann't be greater than 24";
+  }
+
+  if (!isNaN(fullDayValue) && !isNaN(halfDayValue) && halfDayValue > fullDayValue) {
+    errors.half_day = "Half day hours can't be more than full day hours";
+  }
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
         delete errors[key];
