@@ -5,7 +5,7 @@ import CustomTextField from "../../../components/FormFields/TextField/TextField.
 import ShiftDetailsIncludeForm from "./component/ShiftDetailsincludes/ShiftDetailsIncludes.component";
 import useShiftsCreateHook from "./ShiftsCreateHook";
 
-const ShiftsCreate = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
+const ShiftsCreate = ({ handleToggleSidePannel, isSidePanel, editData }) => {
   const {
     form,
     errorData,
@@ -15,7 +15,7 @@ const ShiftsCreate = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
     isSubmitting,
     listData,
     shiftRef,
-  } = useShiftsCreateHook({ handleToggleSidePannel, isSidePanel, qrId });
+  } = useShiftsCreateHook({ handleToggleSidePannel, isSidePanel, editData });
 
   return (
     <div className={styles.container}>
@@ -47,11 +47,11 @@ const ShiftsCreate = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
       </div>
 
       <div className={styles.actionButton}>
-        <ButtonBase className={"createBtnDeletOutland"}>DELETE</ButtonBase>
+        {/* <ButtonBase className={"createBtnDeletOutland"}>DELETE</ButtonBase> */}
         <ButtonBase className={"createBtnreset"} onClick={handleSubmit}>
           {isSubmitting ? (
             <CircularProgress color="success" size="20px" />
-          ) : qrId ? (
+          ) : editData?.id ? (
             "Update"
           ) : (
             " ADD"

@@ -11,6 +11,8 @@ import useAssociatedEmployeeHook from "./AssociatedEmployeeHook";
 import { Add, Info } from "@material-ui/icons";
 import { ButtonBase, IconButton } from "@material-ui/core";
 import DeletePopup from "./Component/DeleteModal";
+import SidePanelComponent from "../../../components/SidePanel/SidePanel.component";
+import AddEmployeeTable from "./Component/AddEmployeeTable/AddEmployeeTable.component";
 
 const AssociatedEmployees = ({ listData, id }) => {
   const {
@@ -25,6 +27,8 @@ const AssociatedEmployees = ({ listData, id }) => {
     currentPage,
     isRejectPopUp,
     toggleRejectDialog,
+    isSidePanel,
+    handleSideToggle,
   } = useAssociatedEmployeeHook({ listData, id });
 
   // const {
@@ -153,16 +157,20 @@ const AssociatedEmployees = ({ listData, id }) => {
     currentPage,
     currentData,
   ]);
-
+  const renderTitle = useMemo(() => {
+    return (
+      <div>
+        <div className={styles.titleTime}>Add Employee</div>
+        <div className={styles.newLine} />
+      </div>
+    );
+  }, [id]);
   return (
     <PageBoxComponent>
       <div className={styles.listAction}>
         <div className={styles.employeTitle}>Associated Employees (2)</div>
         <div>
-          <ButtonBase
-            // onClick={handleToggleSidePannel}
-            className={"createBtn"}
-          >
+          <ButtonBase onClick={handleSideToggle} className={"createBtn"}>
             ADD EMPLOYEE<Add fontSize={"small"} className={"plusIcon"}></Add>
           </ButtonBase>
         </div>
@@ -179,6 +187,15 @@ const AssociatedEmployees = ({ listData, id }) => {
         isOpen={isRejectPopUp}
         empId={id}
       />
+      <SidePanelComponent
+        handleToggle={handleSideToggle}
+        title={renderTitle}
+        open={isSidePanel}
+        side={"right"}
+        arrowBack={true}
+      >
+        <AddEmployeeTable isOpen={isSidePanel} handleClose={handleSideToggle} />
+      </SidePanelComponent>
     </PageBoxComponent>
   );
 };

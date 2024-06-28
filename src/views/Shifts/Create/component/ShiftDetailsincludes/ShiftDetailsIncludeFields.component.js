@@ -46,7 +46,6 @@ const ShiftDetailsIncludeFields = ({
     }
   }, [data?.start_time, data?.end_time]);
 
-  console.log("data", data);
   return (
     <div>
       <div className={styles.flexContainer}>
@@ -145,7 +144,7 @@ const ShiftDetailsIncludeFields = ({
                 checked={data?.is_sunday_occasional_working}
               />{" "}
               <label className={styles.checkboxlabel}>
-                Do you want Occasional Working On Sunday?
+                Do you want Occasional Working On {data?.name}?
               </label>
               <br />
             </div>

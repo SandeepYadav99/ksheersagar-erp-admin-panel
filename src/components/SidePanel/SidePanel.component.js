@@ -107,7 +107,7 @@ class SidePanelComponent extends Component {
     render() {
         const { theme } = this.props;
         const tempStyle = {
-            width: (this.state.delta == 0 || !this.props.open) ? 'calc(45vw)' : (window.innerWidth - this.state.delta),
+            width: (this.state.delta == 0 || !this.props.open) ? 'calc(55vw)' : (window.innerWidth - this.state.delta),
             height: '100%',
             backgroundColor: theme.palette.bgColor.main,
             color: theme.palette.textColor,
@@ -116,9 +116,9 @@ class SidePanelComponent extends Component {
             zIndex: '10',
         };
         if (this.props.side == 'left') {
-            tempStyle['left'] = (this.props.open ? '0px' : 'calc(-45vw)');
+            tempStyle['left'] = (this.props.open ? '0px' : 'calc(-55vw)');
         } else {
-            tempStyle['right'] = (this.props.open ? '0px' : 'calc(-45vw)');
+            tempStyle['right'] = (this.props.open ? '0px' : 'calc(-55vw)');
         }
         return (
             <div className={classnames(!this.props.open ? styles.LPTransition: '', styles.noScrollbar)} style={tempStyle}>

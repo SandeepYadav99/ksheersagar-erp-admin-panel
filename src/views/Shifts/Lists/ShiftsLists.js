@@ -35,7 +35,7 @@ const ShiftsLists = ({}) => {
     handlePageChange,
     handleEdit,
    
-    handleViewDetails,
+    // handleViewDetails,
     isSidePanel,
     isCalling,
 
@@ -44,6 +44,7 @@ const ShiftsLists = ({}) => {
     handleToggleSidePannelHours,
     handleToggleSidePannel,
     handleViewShiftDetail,
+    updateData
   } = useShiftsListsHook({});
 
   const {
@@ -166,7 +167,7 @@ const ShiftsLists = ({}) => {
               color="secondary"
               disabled={isCalling}
               onClick={() => {
-                handleViewDetails(all);
+                handleToggleSidePannel(all);
               }}
             >
               <Edit fontSize={"small"} />
@@ -188,11 +189,12 @@ const ShiftsLists = ({}) => {
   }, [
     renderStatus,
     renderFirstCell,
-    handleViewDetails,
+    // handleViewDetails,
     handleEdit,
     isCalling,
     handleViewShiftDetail,
-    workingDays
+    workingDays,
+    handleToggleSidePannel
   ]);
 
   const tableData = useMemo(() => {
@@ -241,7 +243,7 @@ const ShiftsLists = ({}) => {
               ></AccessTime>
             </ButtonBase>
             <ButtonBase
-              onClick={handleToggleSidePannel}
+              onClick={()=>handleToggleSidePannel()}
               className={"createBtn"}
             >
               ADD SHIFT<Add fontSize={"small"} className={"plusIcon"}></Add>
@@ -271,7 +273,7 @@ const ShiftsLists = ({}) => {
         </div>
       </PageBox>
       <SidePanelComponent
-        handleToggle={handleToggleSidePannel}
+        handleToggle={()=>handleToggleSidePannel()}
         title={renderTile()}
         open={isSidePanel}
         side={"right"}
@@ -280,7 +282,7 @@ const ShiftsLists = ({}) => {
         <ShiftsCreate
           isSidePanel={isSidePanel}
           handleToggleSidePannel={handleToggleSidePannel}
-          qrId={id}
+          editData={updateData}
         />
       </SidePanelComponent>
       <SidePanelComponent
