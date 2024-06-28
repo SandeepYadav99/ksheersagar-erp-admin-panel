@@ -15,7 +15,7 @@ import SidePanelComponent from "../../../components/SidePanel/SidePanel.componen
 import AddEmployeeTable from "./Component/AddEmployeeTable/AddEmployeeTable.component";
 import StatusPill from "../../../components/Status/StatusPill.component";
 
-const AssociatedEmployees = ({ listData, id }) => {
+const AssociatedEmployees = ({ listData, id , associatedEmployeesCount}) => {
   const {
     handleSortOrderChange,
     handleRowSize,
@@ -166,7 +166,7 @@ const AssociatedEmployees = ({ listData, id }) => {
   return (
     <PageBoxComponent>
       <div className={styles.listAction}>
-        <div className={styles.employeTitle}>Associated Employees (2)</div>
+        <div className={styles.employeTitle}>Associated Employees ({associatedEmployeesCount})</div>
         <div>
           <ButtonBase onClick={handleSideToggle} className={"createBtn"}>
             ADD EMPLOYEE<Add fontSize={"small"} className={"plusIcon"}></Add>

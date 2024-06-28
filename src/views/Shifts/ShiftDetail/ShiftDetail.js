@@ -20,12 +20,11 @@ const ShiftDetail = () => {
     dispatch(actionDetailShifts(id));
   }, [id]);
 
-
-  if(!shiftDetail){
-    return <WaitingComponent/>
+  if (!shiftDetail) {
+    return <WaitingComponent />;
   }
-  return (
 
+  return (
     <div>
       <div className={styles.container}>
         <ButtonBase onClick={() => historyUtils.goBack()}>
@@ -36,9 +35,13 @@ const ShiftDetail = () => {
         </ButtonBase>
         <div className={styles.newLine} />
       </div>
-      <ShiftDetailView shiftDays={shiftDetail?.details?.shiftDays}/>
+      <ShiftDetailView shiftDays={shiftDetail?.details?.shiftDays} />
       <div className={styles.employe}>
-        <AssociatedEmployees />
+        <AssociatedEmployees
+          associatedEmployeesCount={
+            shiftDetail?.details?.associatedEmployeesCount || ""
+          }
+        />
       </div>
     </div>
   );
