@@ -3,19 +3,12 @@ import historyUtils from "../../../libs/history.utils";
 import SnackbarUtils from "../../../libs/SnackbarUtils";
 import RouteName from "../../../routes/Route.name";
 import { actionDeleteRoles } from "../../../actions/UserRoles.action";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { actionFetchPaytmMachines } from "../../../actions/Machines.action";
-import useDebounce from "../../../hooks/DebounceHook";
-import { serviceGetList } from "../../../services/Common.service";
-import {
-
-  serviceGetStaticQrDetails,
- 
-} from "../../../services/StaticQr.service";
 import { actionFetchStaticQr } from "../../../actions/StaticQr.action";
-import { isUpiID } from "../../../libs/RegexUtils";
+
 import { serviceGetShiftsWorkingHours } from "../../../services/Shifts.service";
+import { serviceGetAppSettings } from "../../../services/AppSettings.service";
 
 const initialForm = {
   key: "",
@@ -32,22 +25,24 @@ const useHoursCreateHook = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [listData, setListData] = useState({ LOCATIONS: [] });
   const dispatch = useDispatch();
-
+  
   useEffect(() => {
-    if (qrId) {
-      serviceGetStaticQrDetails({ id: qrId }).then((res) => {
+ if(!isSidePanel) return;
+      serviceGetAppSettings({ }).then((res) => {
         if (!res.error) {
-          const data = res?.data?.details;
+          const data = JSON.parse(res?.data?.WORKING_HOURS);
+        
           setForm({
             ...form,
-            name: data?.name,
+             full_day: data?.full_day,
+             half_day:data?.half_day
           });
         } else {
           SnackbarUtils.error(res?.message);
         }
       });
-    }
-  }, [qrId]);
+    
+  }, [isSidePanel]);
 
   useEffect(() => {
     if (!isSidePanel) {
@@ -83,7 +78,7 @@ const useHoursCreateHook = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
     const valueString = JSON.stringify({
       full_day: Number(form.full_day),
       half_day: Number(form.half_day) ,
-    }).replace(/"/g, "'");
+    })
   
     const formData = {
       key: "WORKING_HOURS",
