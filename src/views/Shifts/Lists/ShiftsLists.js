@@ -5,10 +5,8 @@ import { useSelector } from "react-redux";
 import {
   AccessTime,
   Add,
-
   DeleteOutline,
   Edit,
-
   InfoOutlined,
 } from "@material-ui/icons";
 
@@ -34,17 +32,17 @@ const ShiftsLists = ({}) => {
     handleRowSize,
     handlePageChange,
     handleEdit,
-   
+
     // handleViewDetails,
     isSidePanel,
     isCalling,
-
+    handleViewDelete,
     id,
     isSidePanelHours,
     handleToggleSidePannelHours,
     handleToggleSidePannel,
     handleViewShiftDetail,
-    updateData
+    updateData,
   } = useShiftsListsHook({});
 
   const {
@@ -90,40 +88,36 @@ const ShiftsLists = ({}) => {
     );
   }, [id]);
 
-  const workingDays = useCallback(
-    (all) => {
-      return (
-        <div className={styles.avatorFlex}>
-          {all?.shiftDays?.map((shift) => {
-            if (shift?.is_week_off && !shift?.is_sunday_occasional_working) {
-              return (
-                <Avatar className={styles.avator}>
-                  {shift?.name?.substring(0, 2)}
-                </Avatar>
-              );
-            } else if (
-              shift?.is_sunday_occasional_working &&
-              shift?.is_week_off
-            ) {
-              return (
-                <Avatar className={styles.avatorSeletedCircle}>
-                  {shift?.name?.substring(0, 2)}
-                </Avatar>
-              );
-            } else {
-              return (
-                <Avatar className={styles.avatorSeleted}>
-                  {shift?.name?.substring(0, 2)}
-                </Avatar>
-              );
-            }
-          })}
-       
-        </div>
-      );
-    },
-    []
-  );
+  const workingDays = useCallback((all) => {
+    return (
+      <div className={styles.avatorFlex}>
+        {all?.shiftDays?.map((shift) => {
+          if (shift?.is_week_off && !shift?.is_sunday_occasional_working) {
+            return (
+              <Avatar className={styles.avator}>
+                {shift?.name?.substring(0, 2)}
+              </Avatar>
+            );
+          } else if (
+            shift?.is_sunday_occasional_working &&
+            shift?.is_week_off
+          ) {
+            return (
+              <Avatar className={styles.avatorSeletedCircle}>
+                {shift?.name?.substring(0, 2)}
+              </Avatar>
+            );
+          } else {
+            return (
+              <Avatar className={styles.avatorSeleted}>
+                {shift?.name?.substring(0, 2)}
+              </Avatar>
+            );
+          }
+        })}
+      </div>
+    );
+  }, []);
   const tableStructure = useMemo(() => {
     return [
       {
@@ -177,7 +171,7 @@ const ShiftsLists = ({}) => {
               color="secondary"
               disabled={isCalling}
               onClick={() => {
-                // handleViewDetails(all);
+                handleViewDelete(all);
               }}
             >
               <DeleteOutline fontSize={"small"} />
@@ -189,12 +183,12 @@ const ShiftsLists = ({}) => {
   }, [
     renderStatus,
     renderFirstCell,
-    // handleViewDetails,
+    handleViewDelete,
     handleEdit,
     isCalling,
     handleViewShiftDetail,
     workingDays,
-    handleToggleSidePannel
+    handleToggleSidePannel,
   ]);
 
   const tableData = useMemo(() => {
@@ -243,7 +237,7 @@ const ShiftsLists = ({}) => {
               ></AccessTime>
             </ButtonBase>
             <ButtonBase
-              onClick={()=>handleToggleSidePannel()}
+              onClick={() => handleToggleSidePannel()}
               className={"createBtn"}
             >
               ADD SHIFT<Add fontSize={"small"} className={"plusIcon"}></Add>
@@ -273,7 +267,7 @@ const ShiftsLists = ({}) => {
         </div>
       </PageBox>
       <SidePanelComponent
-        handleToggle={()=>handleToggleSidePannel()}
+        handleToggle={() => handleToggleSidePannel()}
         title={renderTile()}
         open={isSidePanel}
         side={"right"}

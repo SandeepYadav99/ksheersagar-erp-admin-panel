@@ -12,13 +12,17 @@ export async function serviceUpdateShifts(params) {
     return await postRequest('shifts/update', params);
 }
 
-export async function serviceGetShiftsDetail(params) { // app/settings/update/keys
+export async function serviceGetShiftsDetail(params) { 
     return await postRequest('shifts/detail', params);
 }
 
-export async function serviceGetShiftsWorkingHours(params) { // app/settings/update/keys
+export async function serviceGetShiftsDelete(params) { 
+    return await postRequest('shifts/delete', params);
+}
+
+export async function serviceGetShiftsWorkingHours(params) { 
     return await postRequest('app/settings/update/keys', params);
 }
-export async function serviceAddEmployeeShift(params) { // app/settings/update/keys
+export async function serviceAddEmployeeShift(params) { 
     return await postRequest('shifts/employees/add', params);
 }

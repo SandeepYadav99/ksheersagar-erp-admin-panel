@@ -2,7 +2,7 @@ import store from "../store";
 import Constants from "../config/constants";
 
 
-import { serviceCreateShifts, serviceGetShifts, serviceGetShiftsDetail, serviceUpdateShifts } from "../services/Shifts.service";
+import { serviceCreateShifts, serviceGetShifts, serviceGetShiftsDelete, serviceGetShiftsDetail, serviceUpdateShifts } from "../services/Shifts.service";
 
 export const FETCH_INIT = "FETCH_INIT_SHIFTS";
 export const FETCHED = "FETCHED_SHIFTS";
@@ -91,13 +91,12 @@ export function actionDetailShifts(data) {
   };
 }
 
-// export function actionDeleteShifts(id) {
-//   const request = serviceGetShiftsDetail({ id: id });
-//   return (dispatch) => {
-//     dispatch({ type: SHIFT_DETAIL, payload: id });
-//   };
-// }
-
+export function actionDeleteShift(id) {
+  const request = serviceGetShiftsDelete({ id: id});
+  return (dispatch) => {
+      dispatch({type: DELETE_ITEM, payload: id})
+  }
+}
 export function actionChangePageShifts(page) {
   return (dispatch) => {
     dispatch({ type: CHANGE_PAGE, payload: page });

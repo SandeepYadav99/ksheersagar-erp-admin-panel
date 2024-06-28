@@ -4,6 +4,7 @@ import historyUtils from "../../../libs/history.utils";
 import RouteName from "../../../routes/Route.name";
 
 import {
+  actionDeleteShift,
   actionFetchShifts,
   actionSetPageShifts,
 } from "../../../actions/ShiftsLists.action";
@@ -117,7 +118,7 @@ const useShiftsListsHook = ({}) => {
     setSidePanelHours((e) => !e);
     setMachineId("");
   }, [setSidePanelHours, setMachineId]);
-  console.log("updateData", updateData);
+
   const handleSideToggle = useCallback(
     (data) => {
       historyUtils.push(RouteName.LOCATIONS_UPDATE + data?.id);
@@ -136,6 +137,11 @@ const useShiftsListsHook = ({}) => {
 
   const handleViewShiftDetail = useCallback((shift) => {
     historyUtils.push(`${RouteName.SHIFTS_DETAILS}${shift?.id}`);
+  }, []);
+
+  const handleViewDelete = useCallback((shift) => {
+    dispatch(actionDeleteShift(shift?.id));
+    dispatch(actionFetchShifts(1, {}, {}));
   }, []);
   const configFilter = useMemo(() => {
     return [
@@ -164,7 +170,7 @@ const useShiftsListsHook = ({}) => {
     handleDelete,
     handleEdit,
     handleSideToggle,
-    // handleViewDetails,
+    handleViewDelete,
     isCalling,
     editData,
     isSidePanel,
