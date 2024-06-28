@@ -19,6 +19,7 @@ const ShiftDetailView = ({ shiftDays }) => {
   const renderShift = useCallback((shift) => {
     const endTime = shift?.end_time ? formatTime(shift?.end_time) : "N/A";
     const startTime = shift?.start_time ? formatTime(shift?.start_time) : "N/A";
+    
     if (shift?.is_week_off && !shift?.is_sunday_occasional_working) {
       return (
         <div className={styles.avatorSubFlex} key={shift?.name}>
@@ -39,7 +40,7 @@ const ShiftDetailView = ({ shiftDays }) => {
               {startTime} - {endTime}
             </div>
             <div className={styles.fontSize}>
-              (Occasional Working Days: 1st, 3rd)
+              (Occasional Working Days: {shift?.working_sundays?.map((res, i, arr)=><span>{res}{i !== (arr.length-1) ? ', ' : ''}</span>)})
             </div>
           </div>
         </div>
