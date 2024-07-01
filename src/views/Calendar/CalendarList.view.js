@@ -1,8 +1,7 @@
 import React from "react";
 import CalendarMui from "./components/CalendarMui/CalendarMui";
 import styles from "./Style.module.css";
-import { Checkbox, FormControlLabel, Typography } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+import { Checkbox, FormControlLabel } from "@material-ui/core";
 import CalendarDetail from "./components/FullCalendar/FullCalendar";
 import PageBox from "../../components/PageBox/PageBox.component";
 import SidePanelComponent from "../../components/SidePanel/SidePanel.component";
@@ -23,17 +22,14 @@ function CalendarList() {
     editData,
     renderList,
   } = useCalendarList({});
-  const useStyles = makeStyles((theme) => ({
-    checkboxLabel: {
-      color: "#636578",
-      fontWeight: "bold",
-      fontSize: "14px",
-      fontWeight: "500",
-    },
-  }));
-  const classes = useStyles();
+  const checkboxLabel = {
+    color: "#636578",
+    fontWeight: "bold",
+    fontSize: "14px",
+    fontWeight: "500",
+  };
   return (
-    <PageBox classStyles={classes.pageBox}>
+    <PageBox>
       <div className={styles.mainFlex}>
         <div className={styles.left}>
           <div className={styles.calContainer}>
@@ -64,7 +60,7 @@ function CalendarList() {
                     onChange={handleCheckboxChange}
                   />
                 }
-                className={classes.checkboxLabel}
+                style={checkboxLabel}
                 label="View All"
               />
             </div>
@@ -78,7 +74,7 @@ function CalendarList() {
                     onChange={handleCheckboxChange}
                   />
                 }
-                className={classes.checkboxLabel}
+                style={checkboxLabel}
                 label="Holiday"
               />
             </div>
@@ -92,7 +88,7 @@ function CalendarList() {
                     onChange={handleCheckboxChange}
                   />
                 }
-                className={classes.checkboxLabel}
+                style={checkboxLabel}
                 label="Restricted Holiday"
               />
             </div>
@@ -106,7 +102,7 @@ function CalendarList() {
                     onChange={handleCheckboxChange}
                   />
                 }
-                className={classes.checkboxLabel}
+                style={checkboxLabel}
                 label="Optional (only 1 can be taken)"
               />
             </div>
