@@ -46,6 +46,13 @@ const ShiftDetailsIncludeFields = ({
     }
   }, [data?.start_time, data?.end_time]);
 
+  useEffect(() => {
+    if (!data?.is_sunday_occasional_working) {
+      changeData(index, {
+        ["working_sundays"]: [],
+      });
+    }
+  }, [data?.is_sunday_occasional_working]);
   return (
     <div>
       <div className={styles.flexContainer}>
@@ -151,33 +158,35 @@ const ShiftDetailsIncludeFields = ({
           </div>
           <div className={styles.formGrp1}></div>
         </div>
-        <div className={styles.formWrp}>
-          <div className={styles.formGrp}></div>
-          <div className={styles.formGrp14}>
-            {" "}
-            <Autocomplete
-              multiple
-              id="tags-outlined"
-              onChange={(e, value) => {
-                handleChange(value, "working_sundays");
-              }}
-              value={data?.working_sundays}
-              // id="tags-standard"
-              options={[1, 2, 3, 4]}
-              getOptionLabel={(option) => option}
-              defaultValue={data?.working_sundays}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  variant="outlined"
-                  label="Choose Working Days"
-                  error={errors?.working_sundays}
-                />
-              )}
-            />
+        {data?.is_sunday_occasional_working && (
+          <div className={styles.formWrp}>
+            <div className={styles.formGrp}></div>
+            <div className={styles.formGrp14}>
+              {" "}
+              <Autocomplete
+                multiple
+                id="tags-outlined"
+                onChange={(e, value) => {
+                  handleChange(value, "working_sundays");
+                }}
+                value={data?.working_sundays}
+                // id="tags-standard"
+                options={[1, 2, 3, 4]}
+                getOptionLabel={(option) => option}
+                defaultValue={data?.working_sundays}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    label="Choose Working Days"
+                    error={errors?.working_sundays}
+                  />
+                )}
+              />
+            </div>
+            <div className={styles.formGrp1}></div>
           </div>
-          <div className={styles.formGrp1}></div>
-        </div>
+        )}
       </div>
       {fieldLendth !== index + 1 && (
         <div className={styles.horizontalLine}></div>
