@@ -14,7 +14,7 @@ import {
   RadioGroup,
 } from "@material-ui/core";
 
-const EventForm = ({ isOpen, handleToggle, editData,renderList }) => {
+const EventForm = ({ isOpen, handleToggle, editData, renderList }) => {
   const {
     changeTextData,
     errorData,
@@ -25,7 +25,8 @@ const EventForm = ({ isOpen, handleToggle, editData,renderList }) => {
     isSubmitted,
     isSubmitting,
     listData,
-  } = useEventFormHook({ isOpen, handleToggle, editData ,renderList});
+    handleDelete,
+  } = useEventFormHook({ isOpen, handleToggle, editData, renderList });
 
   return (
     <div>
@@ -147,9 +148,16 @@ const EventForm = ({ isOpen, handleToggle, editData,renderList }) => {
           />
         </div>
         <div className={styles.printFlex}>
-          <ButtonBase className={styles.edit} onClick={handleToggle}>
-            Cancel
-          </ButtonBase>
+          {editData?.id ? (
+            <ButtonBase
+              className={styles.edit}
+              onClick={() => handleDelete(editData?.id)}
+            >
+              Delete
+            </ButtonBase>
+          ) : (
+            <div></div>
+          )}
           <Button
             className={styles.createBtn}
             onClick={handleSubmit}

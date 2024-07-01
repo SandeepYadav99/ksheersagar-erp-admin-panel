@@ -9,6 +9,7 @@ import React, {
 import LogUtils from "../../../../../libs/LogUtils";
 import { useParams } from "react-router";
 import ShiftDetailsIncludeFields from "./ShiftDetailsIncludeFields.component";
+import SnackbarUtils from "../../../../../libs/SnackbarUtils";
 
 const TEMP_OBJ = {
   name: "",
@@ -64,6 +65,10 @@ const ShiftDetailsIncludeForm = ({ data, errorData: errorForm }, ref) => {
           err[key] = true;
         }
       });
+      if(val?.total_hours && val?.total_hours < 0){
+        err["total_hours"] = true ;
+        SnackbarUtils.error("Start time cannot be less than End time")
+      }
       if (
         val?.is_sunday_occasional_working &&
         val?.working_sundays?.length === 0
