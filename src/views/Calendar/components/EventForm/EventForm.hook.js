@@ -3,6 +3,7 @@ import SnackbarUtils from "../../../../libs/SnackbarUtils";
 import { serviceGetList } from "../../../../services/index.services";
 import {
   serviceCreateCalendar,
+  serviceDeleteCalendar,
   serviceUpdateCalendar,
 } from "../../../../services/Calendar.service";
 
@@ -186,6 +187,20 @@ const useEventFormHook = ({ isOpen, handleToggle, editData, renderList }) => {
     [changeTextData]
   );
 
+  const handleDelete = useCallback(
+    (id) => {
+      const req = serviceDeleteCalendar({ id: id });
+      req.then((res) => {
+        if (!res?.error) {
+          SnackbarUtils.success("Deleted Successfully");
+          handleToggle();
+          renderList();
+        }
+      });
+    },
+    [handleToggle, renderList]
+  );
+  
   return {
     form,
     changeTextData,
@@ -196,6 +211,7 @@ const useEventFormHook = ({ isOpen, handleToggle, editData, renderList }) => {
     isSubmitting,
     isSubmitted,
     listData,
+    handleDelete,
   };
 };
 
