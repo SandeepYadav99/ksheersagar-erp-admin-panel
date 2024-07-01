@@ -40,16 +40,20 @@ const useEventFormHook = ({ isOpen, handleToggle, editData, renderList }) => {
       const obj = {};
       if (editData?.id) {
         obj.id = editData?.id;
+        Object.keys({ ...initialForm }).forEach((key) => {
+          if (key === "excluded_employees") {
+            obj[key] = editData["excludedEmployees"]
+              ? editData["excludedEmployees"]
+              : [];
+          } else {
+            obj[key] = editData[key] ? editData[key] : "";
+          }
+        });
+      } else {
+        obj.start_date = editData?.start_date;
+        obj.end_date = editData?.end_date;
+        obj.type = "FULL_DAY";
       }
-      Object.keys({ ...initialForm }).forEach((key) => {
-        if (key === "excluded_employees") {
-          obj[key] = editData["excludedEmployees"]
-            ? editData["excludedEmployees"]
-            : [];
-        } else {
-          obj[key] = editData[key] ? editData[key] : "";
-        }
-      });
       return obj;
     }
     return {};
@@ -88,7 +92,7 @@ const useEventFormHook = ({ isOpen, handleToggle, editData, renderList }) => {
         t["end_date"] = "";
         t[fieldName] = text;
       } else if (fieldName === "start_date") {
-        if ((form?.type === "HALF_DAY")) {
+        if (form?.type === "HALF_DAY") {
           t["end_date"] = text;
         }
         t[fieldName] = text;
