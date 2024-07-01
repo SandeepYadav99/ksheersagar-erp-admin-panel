@@ -74,7 +74,7 @@
     right: calc(-60vw) !important;
   }
   .noScrollbar > .noScrollbar {
-    max-height: calc(100vh) !important;
+    max-height: 100vh !important;
   }
   .sideUpper {
     width: 100%;
