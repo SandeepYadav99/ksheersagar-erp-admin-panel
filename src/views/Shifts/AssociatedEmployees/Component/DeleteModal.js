@@ -51,7 +51,7 @@ const dispatch= useDispatch()
        
 
         <div className={styles.loginSignupText}>
-          <h1 className={styles.headingText}>Reset Password</h1>
+          <h1 className={styles.headingText}>Remove Employee</h1>
           <div className={styles.newLine} />
         </div>
         <div className={"formGroup"}>
@@ -70,7 +70,7 @@ const dispatch= useDispatch()
             className={styles.createBtn}
              onClick={()=>handleUpdate()}
           >
-            UPDATE
+            REMOVE
           </ButtonBase>
         </div>
       </div>
