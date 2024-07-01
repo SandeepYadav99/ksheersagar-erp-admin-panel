@@ -25,7 +25,6 @@ import Machines from "../views/Machines/Lists/Machines";
 import ShiftDetail from "../views/Shifts/ShiftDetail/ShiftDetail";
 import CalendarList from "../views/Calendar/CalendarList.view";
 import Dashboard from "../views/dashboard/Dashboard";
-import { CalendarMonth } from "@mui/icons-material";
 
 const NewDashboard = lazy(() => import("../views/dashboard/NewDashboard.view"));
 const LocationList = lazy(() =>
@@ -299,7 +298,7 @@ const dashboardRoutes = [
     path: `${RouteName.CALENDAR}`,
     sidebarName: "Calendar",
     // navbarName: "Calendar",
-    icon: CalendarMonth,
+    icon: EventNote,
     component: CalendarList,
     is_sidebar: true,
     is_protect: true,
