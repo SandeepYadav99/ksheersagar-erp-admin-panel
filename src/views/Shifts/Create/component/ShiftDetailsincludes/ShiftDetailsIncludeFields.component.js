@@ -1,17 +1,12 @@
 import React, { useEffect, useMemo } from "react";
 import {
   TextField,
-  ButtonBase,
-  InputAdornment,
-  IconButton,
 } from "@material-ui/core";
 import styles from "./style.module.css";
 import CustomCheckbox from "../../../../../components/FormFields/CustomCheckbox";
-import AccessTimeIcon from "@material-ui/icons/AccessTime";
-import { MuiPickersUtilsProvider, TimePicker } from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
-
 import { Autocomplete } from "@mui/material";
+import CustomDateTimePicker from "../../../../../components/FormFields/DatePicker/CustomDateTimePicker";
+
 const ShiftDetailsIncludeFields = ({
   index,
   changeData,
@@ -59,7 +54,13 @@ const ShiftDetailsIncludeFields = ({
         <div className={styles.formWrp}>
           <div className={styles.formGrphours}>{data?.name}</div>
           <div className={styles.formGrp1}>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <CustomDateTimePicker
+                    label={"Choose Time"}
+                    value={data?.start_time}
+                    onChange={(e) => handleChange(e, "start_time")}
+                    isError={errors?.start_time}
+                  />
+            {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <TimePicker
                 margin="dense"
                 variant="inline"
@@ -85,10 +86,16 @@ const ShiftDetailsIncludeFields = ({
                   ),
                 }}
               />
-            </MuiPickersUtilsProvider>
+            </MuiPickersUtilsProvider> */}
           </div>
           <div className={styles.formGrp1}>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <CustomDateTimePicker
+                    label={"Choose Time"}
+                    value={data?.end_time}
+                    onChange={(e) => handleChange(e, "end_time")}
+                    isError={errors?.end_time}
+                  />
+            {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <TimePicker
                 margin="dense"
                 variant="inline"
@@ -114,7 +121,7 @@ const ShiftDetailsIncludeFields = ({
                   ),
                 }}
               />
-            </MuiPickersUtilsProvider>
+            </MuiPickersUtilsProvider> */}
           </div>
           <div className={styles.formGrphours}>
             {data?.total_hours ? data?.total_hours : 0}
