@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import SnackbarUtils from "../../../../libs/SnackbarUtils";
-import { serviceGetList } from "../../../../services/index.services";
 import {
   serviceCreateCalendar,
   serviceDeleteCalendar,
@@ -11,10 +10,9 @@ const initialForm = {
   name: "",
   holiday_type: "",
   type: "FULL_DAY",
+  half_day_type:"",
   start_date: "",
-  end_date: "",
   applies_locations: "",
-  excluded_employees: [],
 };
 const useEventFormHook = ({ isOpen, handleToggle, editData, renderList }) => {
   const [form, setForm] = useState(
@@ -23,18 +21,9 @@ const useEventFormHook = ({ isOpen, handleToggle, editData, renderList }) => {
   const [errorData, setErrorData] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [declaration, setDeclaration] = useState(false);
   const [listData, setListData] = useState({
     EMPLOYEES: [],
   });
-
-  useEffect(() => {
-    serviceGetList(["EMPLOYEES"]).then((res) => {
-      if (!res.error) {
-        setListData(res.data);
-      }
-    });
-  }, []);
 
   const getEmpData = useMemo(() => {
     if (editData) {
@@ -42,17 +31,16 @@ const useEventFormHook = ({ isOpen, handleToggle, editData, renderList }) => {
       if (editData?.id) {
         obj.id = editData?.id;
         Object.keys({ ...initialForm }).forEach((key) => {
-          if (key === "excluded_employees") {
-            obj[key] = editData["excludedEmployees"]
-              ? editData["excludedEmployees"]
-              : [];
-          } else {
+          // if (key === "excluded_employees") {
+          //   obj[key] = editData["excludedEmployees"]
+          //     ? editData["excludedEmployees"]
+          //     : [];
+          // } else {
             obj[key] = editData[key] ? editData[key] : "";
-          }
+          // }
         });
       } else {
         obj.start_date = editData?.start_date;
-        obj.end_date = editData?.end_date;
         obj.type = "FULL_DAY";
       }
       return obj;
@@ -89,12 +77,8 @@ const useEventFormHook = ({ isOpen, handleToggle, editData, renderList }) => {
       let shouldRemoveError = true;
       const t = { ...form };
       if (fieldName === "type") {
-        t["start_date"] = "";
-        t["end_date"] = "";
-        t[fieldName] = text;
-      } else if (fieldName === "start_date") {
-        if (form?.type === "HALF_DAY") {
-          t["end_date"] = text;
+        if(text === "FULL_DAY"){
+          t["half_day_type"] = ""
         }
         t[fieldName] = text;
       } else {
@@ -107,15 +91,13 @@ const useEventFormHook = ({ isOpen, handleToggle, editData, renderList }) => {
   );
 
   const checkFormValidation = useCallback(() => {
-    const errors = { ...errorData };
+    const errors = {...errorData};
     let required = [
       "name",
       "holiday_type",
       "type",
-      // "excluded_employees",
       "applies_locations",
       "start_date",
-      // "end_date",
     ];
     required.forEach((val) => {
       if (
@@ -127,14 +109,13 @@ const useEventFormHook = ({ isOpen, handleToggle, editData, renderList }) => {
         delete errors[val];
       }
     });
-    if (form?.type === "FULL_DAY") {
-      if (!form?.end_date) {
-        errors["end_date"] = true;
-      }
-    }
     if (!form?.type) {
       errors["type"] = true;
       SnackbarUtils.error("Please select the Nature of leave");
+    }
+    if(form?.type === "HALF_DAY" && !form?.half_day_type){
+      errors["half_day_type"] = true;
+      SnackbarUtils.error("Please select Half day Leave Type");
     }
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
@@ -147,14 +128,15 @@ const useEventFormHook = ({ isOpen, handleToggle, editData, renderList }) => {
   const submitToServer = useCallback(() => {
     if (!isSubmitting) {
       setIsSubmitting(true);
-      const getEmpID = form?.excluded_employees?.map((item) => item?.id);
       let req = serviceCreateCalendar;
       if (editData?.id) {
         req = serviceUpdateCalendar;
       }
+      if(form?.type === "FULL_DAY"){
+        delete form?.half_day_type
+      }
       req({
         ...form,
-        excluded_employees: getEmpID ? getEmpID : [],
       }).then((res) => {
         if (!res.error) {
           handleToggle();
