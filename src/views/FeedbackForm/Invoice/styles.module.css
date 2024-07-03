@@ -1,33 +1,40 @@
 .container {
-    display: flex;
-    justify-content: center;
-  }
-  .headerContainer {
-    /* margin: 5rem auto !important; */
-    box-shadow: 2rem !important;
-    background-color: #fff !important;
-    border: "20px solid #00000011" !important;
-    padding: 20px !important;
-    width: 375px !important;
-    height: auto !important;
-    align-items: center;
-  }
-  .logo {
-    text-align: center;
-  }
-.title{
+  display: flex;
+  justify-content: center;
+}
+.headerContainer {
+  /* margin: 5rem auto !important; */
+  box-shadow: 2rem !important;
+  background-color: #fff !important;
+  border: "20px solid #00000011" !important;
+  padding: 20px !important;
+  width: 375px !important;
+  height: auto !important;
+  align-items: center;
+}
+.logo {
+  text-align: center;
+}
+.title {
   font-size: 14px !important;
   color: #212125 !important;
   font-weight: bold !important;
   letter-spacing: 0.14px !important;
   font-style: normal normal bold 14px/18px Mulish;
 }
-.subTitle{
+.subTitle {
   font-size: 12px !important;
   color: #212125 !important;
   font-weight: normal !important;
   letter-spacing: 0.14px !important;
   font-style: normal normal bold 12px/15px Mulish;
+}
+.subTitleQr{
+  font-size: 10px !important;
+  color: #212125 !important;
+  font-weight: normal !important;
+  letter-spacing: 0.14px !important;
+  font-weight: 600 !important;
 }
 .subTitlePara {
   font-size: 12px !important;
@@ -37,7 +44,7 @@
   font-style: normal normal bold 12px/15px Mulish;
   text-align: center !important;
 }
-.actions{
+.actions {
   text-align: center;
 }
 .createBtn {
@@ -50,113 +57,166 @@
   font-weight: 600 !important;
   width: 300px !important;
 }
-.footer{
+.footer {
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
 }
-.sugar{
+.sugar {
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
 }
-.download{
+.download {
   text-align: center !important;
 }
-.star{
+.star {
   display: flex !important;
   justify-content: center !important;
   gap: 2px !important;
-
+  margin-top: -15px !important;
 }
-.flexbox{
+.flexbox {
   display: flex !important;
   align-items: center !important;
 }
-  .gaps {
-    margin-top: 10px;
-  }
-  .footerlink{
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 10px !important;
-    cursor:pointer  !important;
-   
-  }
+.gaps {
+  margin-top: 10px;
+}
+.footerlink {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 10px !important;
+  cursor: pointer !important;
+}
 
-  .footerlinkqr{
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 10px !important;
-    cursor:pointer  !important;
-    flex-direction: column !important;
-  }
+.footerlinkqr {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 10px !important;
+  cursor: pointer !important;
+  flex-direction: column !important;
+}
 
-  .footertitle{
-    font-size: 10px !important;
-    color: #007AFF !important;
-    font-weight: bold !important;
-    letter-spacing: 0.14px !important;
-    font-style: normal normal bold 12px/15px Mulish;
-    text-align: center !important;
-   width: 181px !important;
-  }
-  .scanTitle{
-    font-size: 10px !important;
-    color: #161616 !important;
-    font-weight: bold !important;
-    letter-spacing: 0.14px !important;
-    font-style: normal normal bold 12px/15px Mulish;
-    text-align: center !important;
-   width: 179px !important;
-  }
-  /* Table */
-  .myTable {
-    border-collapse: collapse !important;
-    font-size: 12px !important;
-    color: #161616 !important;
-    width: 375px !important;
-  
-  }
-  
-  .myTable th,
-  .myTable td {
-    padding: 8px;
-  }
-  
-  .myTable th {
-    text-align: left !important;
-  }
-  
-  .myTable td {
-    text-align: center !important;
-   
-  }
-  
-  .noBorder {
-    border: none;
-  }
-  
-  .bgColor4Cols {
-    background-color: #D6E7FB !important;
-  }
-  
-  .bgColorRow {
-    background-color: #ECF7FF;
-  }
-  
-  .bgColorRow > td {
-    font-weight: bold;
-  }
-  
-  .totalCols {
-    background-color: #2896E9;
-    color: #FFFFFF;
-  }
-  
-  .grayBgColor {
-    background-color: #F7F7F7;
-  }
-  
+.footertitle {
+  font-size: 10px !important;
+  color: #007aff !important;
+  font-weight: bold !important;
+  letter-spacing: 0.14px !important;
+  font-style: normal normal bold 12px/15px Mulish;
+  text-align: center !important;
+  width: 181px !important;
+}
+.scanTitle {
+  font-size: 10px !important;
+  color: #161616 !important;
+  font-weight: bold !important;
+  letter-spacing: 0.14px !important;
+  font-style: normal normal bold 12px/15px Mulish;
+  text-align: center !important;
+  width: 179px !important;
+}
+/* Table */
+.myTable {
+  border-collapse: collapse !important;
+  font-size: 12px !important;
+  color: #161616 !important;
+  width: 375px !important;
+}
+
+.myTable th,
+.myTable td {
+  padding: 8px;
+}
+
+.myTable th {
+  text-align: left !important;
+}
+
+.myTable td {
+  /* text-align: center !important; */
+}
+
+.noBorder {
+  border: none;
+}
+
+.bgColor4Cols {
+  background-color: #d6e7fb !important;
+}
+
+.bgColorRow {
+  background-color: #ecf7ff;
+}
+
+.bgColorRow > td {
+  font-weight: bold;
+}
+
+.totalCols {
+  background-color: #2896e9;
+  color: #ffffff;
+}
+
+.grayBgColor {
+  background-color: #f7f7f7;
+}
+
+.totalInvoice {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 0px 5px !important;
+  margin-bottom: 8px !important;
+}
+.hrLine {
+  border: 1px solid #e5e5e5 !important;
+}
+.titleTotal {
+  font-size: 12px !important;
+  color: #161616 !important;
+  font-weight: 600 !important;
+}
+.titleTotalWord {
+  font-size: 12px !important;
+  color: #161616 !important;
+  margin-bottom: 8px !important;
+}
+.thankyounote {
+  font-size: 14px !important;
+  text-align: center !important;
+  color: #007aff !important;
+  font-weight: 600 !important;
+}
+.ulList{
+  margin-top: 20px !important;
+}
+.ulList, li{
+  font-size: 12PX !important;
+  margin-left: -12px !important;
+  margin-top: 5px !important;
+}
+.titleAply{
+  font-size: 14px !important;
+  color: #212125 !important;
+  font-weight: bold !important;
+  letter-spacing: 0.14px !important;
+  font-style: normal normal bold 14px/18px Mulish;
+  margin-left: -5% !important;
+  margin-top: 20px !important;
+}
+.logoTitle {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #212125 !important;
+}
+.logoInvoice {
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  color: #212125 !important;
+}
+.stateCode{
+  margin-left: 20px !important;
+}
