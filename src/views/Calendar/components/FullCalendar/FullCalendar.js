@@ -8,6 +8,7 @@ import { ButtonBase, Typography ,Button,ButtonGroup} from "@material-ui/core";
 import styles from "./Style.module.css";
 import { getBgColor, getTextColor } from "../../../../helper/calenderData";
 import { makeStyles } from '@material-ui/core/styles';
+import SnackbarUtils from "../../../../libs/SnackbarUtils";
 
 const localizer = momentLocalizer(moment);
 const useStyles = makeStyles((theme) => ({
@@ -118,12 +119,18 @@ const CalendarDetail = ({ data, selectedDate, handleSideToggle }) => {
     );
   };
   const handleSlotSelect = (slotInfo) => {
+    const hasExistingEvent = events?.some((event) =>
+      moment(event?.start)?.isSame(slotInfo?.start, 'day')
+    );
     const values = {
       start_date: slotInfo?.start,
       end_date: slotInfo?.end,
     };
-    handleSideToggle(values);
-    // setActiveDate(slotInfo.start); // Update state with selected date
+    if(hasExistingEvent){
+      SnackbarUtils.error("An holiday already exists for this day.")
+    }else{
+      handleSideToggle(values);
+    }
   };
   return (
     <div className={styles.detailWrap}>
