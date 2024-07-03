@@ -3,7 +3,7 @@ import styles from "./Style.module.css";
 import CustomTextField from "../../../../components/FormFields/TextField/TextField.component";
 import useEventFormHook from "./EventForm.hook";
 import CustomSelectField from "../../../../components/FormFields/SelectField/SelectField.component";
-import { Autocomplete, MenuItem, TextField } from "@mui/material";
+import { MenuItem } from "@mui/material";
 import CustomDatePicker from "../../../../components/FormFields/DatePicker/CustomDatePicker";
 import {
   Button,
@@ -21,7 +21,6 @@ const EventForm = ({ isOpen, handleToggle, editData, renderList }) => {
     form,
     handleSubmit,
     onBlurHandler,
-    removeError,
     isSubmitted,
     isSubmitting,
     listData,
@@ -57,6 +56,7 @@ const EventForm = ({ isOpen, handleToggle, editData, renderList }) => {
             <MenuItem value="OPTIONAL">OPTIONAL</MenuItem>
             <MenuItem value="RESTRICTED">RESTRICTED</MenuItem>
           </CustomSelectField>
+          <div className={styles.radioWrapper}>
           <RadioGroup
             aria-label="option"
             name="type"
@@ -76,41 +76,38 @@ const EventForm = ({ isOpen, handleToggle, editData, renderList }) => {
               label="Half Day"
             />
           </RadioGroup>
-          {form?.type === "FULL_DAY" ? (
-            <>
-              <CustomDatePicker
-                clearable
-                label={"Start Date"}
-                // minDate={new Date()}
-                onChange={(date) => {
-                  changeTextData(date, "start_date");
-                }}
-                value={form?.start_date}
-                isError={errorData?.start_date}
+          {form?.type === "HALF_DAY" && (
+            <RadioGroup
+              aria-label="option"
+              name="half_day_type"
+              value={form?.half_day_type}
+              onChange={(e) => changeTextData(e.target.value, "half_day_type")}
+              row
+              className={styles.radioWrap}
+            >
+              <FormControlLabel
+                value="FIRST_HALF"
+                control={<Radio />}
+                label="First Half"
               />
-              <CustomDatePicker
-                clearable
-                label={"End Date"}
-                // minDate={new Date()}
-                onChange={(date) => {
-                  changeTextData(date, "end_date");
-                }}
-                value={form?.end_date}
-                isError={errorData?.end_date}
+              <FormControlLabel
+                value="SECOND_HALF"
+                control={<Radio />}
+                label="Second Half"
               />
-            </>
-          ) : (
-            <CustomDatePicker
-              clearable
-              label={"Date"}
-              // minDate={new Date()}
-              onChange={(date) => {
-                changeTextData(date, "start_date");
-              }}
-              value={form?.start_date}
-              isError={errorData?.start_date}
-            />
+            </RadioGroup>
           )}
+          </div>
+          <CustomDatePicker
+            clearable
+            label={form?.type === "FULL_DAY" ? "Start Date" : "Date"}
+            // minDate={new Date()}
+            onChange={(date) => {
+              changeTextData(date, "start_date");
+            }}
+            value={form?.start_date}
+            isError={errorData?.start_date}
+          />
 
           <CustomSelectField
             isError={errorData?.applies_locations}
@@ -126,7 +123,7 @@ const EventForm = ({ isOpen, handleToggle, editData, renderList }) => {
             <MenuItem value="FACTORY">FACTORY</MenuItem>
             <MenuItem value="WAREHOUSE">WAREHOUSE</MenuItem>
           </CustomSelectField>
-          <Autocomplete
+          {/* <Autocomplete
             multiple
             id="tags-outlined"
             onChange={(e, value) => {
@@ -145,7 +142,7 @@ const EventForm = ({ isOpen, handleToggle, editData, renderList }) => {
                 error={errorData?.excluded_employees}
               />
             )}
-          />
+          /> */}
         </div>
         <div className={styles.printFlex}>
           {editData?.id ? (
