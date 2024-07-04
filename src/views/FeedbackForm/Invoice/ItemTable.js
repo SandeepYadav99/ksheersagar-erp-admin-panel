@@ -137,13 +137,16 @@ const DigitalItemTable = ({ posOder }) => {
                     ).toFixed(2)}
                   </td>
                   <td onClick={()=>setTotal(total)}>₹{total.toFixed(2)}</td>
+               
                 </tr>
-                <tr>
+                <br/>
+                <tr className={styles.hrlinetr} >
                 <td className={styles.titleTotal}>Tender Tax</td>
                 <td colSpan={4}></td>
                 <td className={styles.titleTotal} colSpan={4}>₹{total.toFixed(2)}</td>
                 </tr>
-                <tr>
+             
+                <tr className={styles.hrlinetr}>
                 <td className={styles.titleTotal}>Tender Amount</td>
                 <td colSpan={4}></td>
                 <td className={styles.titleTotal} colSpan={1}>₹{"000"}</td>

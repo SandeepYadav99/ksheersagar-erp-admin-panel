@@ -22,6 +22,9 @@
   letter-spacing: 0.14px !important;
   font-style: normal normal bold 14px/18px Mulish;
 }
+.hrlinetr{
+  border-bottom: 1px solid #e5e5e5 !important;;
+}
 .subTitle {
   font-size: 12px !important;
   color: #212125 !important;
