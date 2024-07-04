@@ -14,9 +14,9 @@ const DigitalItemTable = ({ posOder }) => {
     return sgst;
   }
   
-  const calculateIgst =(gst_slab, price)=>{
-return (gst_slab/2) + calculateIgst(price, gst_slab)
-  }
+//   const calculateIgst =(gst_slab, price)=>{
+// return (gst_slab/2) + calculateIgst(price, gst_slab)
+//   }
   return (
     <div>
       <table className={styles.myTable}>
@@ -89,7 +89,7 @@ return (gst_slab/2) + calculateIgst(price, gst_slab)
             <td>₹{calculateOriginalPrice(posOder?.cart.prices?.subtotal, product?.product?.gst_slab ).toFixed(2)}</td>
             <td>₹{product?.product?.gst_slab/2}</td>
             <td>₹{calculateSgst(product?.product?.price, product?.product?.gst_slab).toFixed(2)}</td>
-            <td>₹{calculateIgst(product?.product?.gst_slab, product?.product?.price)}</td>
+            <td>₹{}</td>
             <td>₹69.00</td>
           </tr>)})}
         </tbody>
