@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./styles.module.css";
 
-const DigitalItemTable = () => {
+const DigitalItemTable = ({ posOder }) => {
   return (
     <div>
       <table className={styles.myTable}>
@@ -12,24 +12,30 @@ const DigitalItemTable = () => {
             <th>Qty</th>
 
             <th>Price/Unit</th>
+            <th>GST%</th>
             <th>Total</th>
           </tr>
         </thead>
 
         <tbody>
-          <tr>
-            <td>Sugar</td>
-            <td>10</td>
-            <td>₹50/KG</td>
-            <td>5% GST</td>
-            <td>₹500</td>
-          </tr>
+          {posOder?.cart?.products?.map((product) => {
+            return (
+              <tr>
+                <td>{product?.product?.name_en}</td>
+                <td>{0}</td>
+                <td>{product?.weight}</td>
+                <td>₹{product?.product?.price}/{product?.weight}</td>
+                <td> {product?.product?.gst_slab ? `${product?.product?.gst_slab}%` : "0%"}</td>
+                <td>₹{product?.price}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
       <hr className={styles.hrLine} />
       <div className={styles.totalInvoice}>
         <div className={styles.titleTotal}>Total</div>
-        <div className={styles.titleTotal}>₹2230.00</div>
+        <div className={styles.titleTotal}>₹{posOder?.cart.prices?.total}</div>
       </div>
       <div className={styles.totalInvoice}>
         <div className={styles.titleTotal}>Round Off</div>
@@ -37,7 +43,7 @@ const DigitalItemTable = () => {
       </div>
       <div className={styles.totalInvoice}>
         <div className={styles.titleTotal}>Net Payable</div>
-        <div className={styles.titleTotal}>₹2230.00</div>
+        <div className={styles.titleTotal}>₹{posOder?.cart.prices?.subtotal}</div>
       </div>
       <div className={styles.totalInvoice}>
         <div className={styles.titleTotalWord}>Amount in words</div>
