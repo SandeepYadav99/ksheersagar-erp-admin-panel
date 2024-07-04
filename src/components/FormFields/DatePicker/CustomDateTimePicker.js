@@ -14,6 +14,7 @@ const CustomDateTimePicker = ({
   value,
   label,
   clearable,
+...rest
 }) => {
   const handleOnChange = (e, d) => {
     // const tempDate  = new Date(e);
@@ -50,6 +51,7 @@ const CustomDateTimePicker = ({
         keyboardIcon={
           <AccessTimeIcon style={isError ? { color: "#ff493f" } : {}} />
         }
+        {...rest}
         // KeyboardButtonProps={{
         //     'aria-label': 'change time',
         // }}

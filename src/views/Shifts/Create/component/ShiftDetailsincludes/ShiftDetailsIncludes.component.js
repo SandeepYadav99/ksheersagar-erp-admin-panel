@@ -70,9 +70,9 @@ const ShiftDetailsIncludeForm = ({ data, errorData: errorForm }, ref) => {
         SnackbarUtils.error("Please enter the valid Time");
         err["start_time"] = true;
       }
-      if (val?.end_date && !isDate(val?.end_date)) {
+      if (val?.end_time && !isDate(val?.end_time)) {
         SnackbarUtils.error("Please enter the valid Time");
-        err["end_date"] = true;
+        err["end_time"] = true;
       }
       if (val?.total_hours && val?.total_hours < 0) {
         err["total_hours"] = true;

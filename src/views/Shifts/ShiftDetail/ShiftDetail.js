@@ -23,25 +23,21 @@ const ShiftDetail = () => {
   if (!shiftDetail) {
     return <WaitingComponent />;
   }
-
+  
   return (
     <div>
       <div className={styles.container}>
         <ButtonBase onClick={() => historyUtils.goBack()}>
           <ArrowBackIos fontSize={"small"} />{" "}
           <span className={"capitalize"}>
-            <b> Showroom Shift</b>
+            <b> {shiftDetail?.details?.name}</b>
           </span>
         </ButtonBase>
         <div className={styles.newLine} />
       </div>
       <ShiftDetailView shiftDays={shiftDetail?.details?.shiftDays} />
       <div className={styles.employe}>
-        <AssociatedEmployees
-          associatedEmployeesCount={
-            shiftDetail?.details?.associatedEmployeesCount ?? ""
-          }
-        />
+        <AssociatedEmployees />
       </div>
     </div>
   );

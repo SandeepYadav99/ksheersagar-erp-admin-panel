@@ -1,11 +1,16 @@
 import React, { useEffect, useMemo } from "react";
-import {
-  TextField,
-} from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import styles from "./style.module.css";
 import CustomCheckbox from "../../../../../components/FormFields/CustomCheckbox";
 import { Autocomplete } from "@mui/material";
 import CustomDateTimePicker from "../../../../../components/FormFields/DatePicker/CustomDateTimePicker";
+
+const getWorkingDays = {
+  1: "First",
+  2: "Second",
+  3: "Third",
+  4: "Fouth",
+};
 
 const ShiftDetailsIncludeFields = ({
   index,
@@ -54,12 +59,13 @@ const ShiftDetailsIncludeFields = ({
         <div className={styles.formWrp}>
           <div className={styles.formGrphours}>{data?.name}</div>
           <div className={styles.formGrp1}>
-          <CustomDateTimePicker
-                    label={"Choose Time"}
-                    value={data?.start_time}
-                    onChange={(e) => handleChange(e, "start_time")}
-                    isError={errors?.start_time}
-                  />
+            <CustomDateTimePicker
+              disabled={data?.is_week_off}
+              label={"Choose Time"}
+              value={data?.start_time}
+              onChange={(e) => handleChange(e, "start_time")}
+              isError={errors?.start_time}
+            />
             {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <TimePicker
                 margin="dense"
@@ -89,12 +95,13 @@ const ShiftDetailsIncludeFields = ({
             </MuiPickersUtilsProvider> */}
           </div>
           <div className={styles.formGrp1}>
-          <CustomDateTimePicker
-                    label={"Choose Time"}
-                    value={data?.end_time}
-                    onChange={(e) => handleChange(e, "end_time")}
-                    isError={errors?.end_time}
-                  />
+            <CustomDateTimePicker
+              disabled={data?.is_week_off}
+              label={"Choose Time"}
+              value={data?.end_time}
+              onChange={(e) => handleChange(e, "end_time")}
+              isError={errors?.end_time}
+            />
             {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <TimePicker
                 margin="dense"
@@ -179,7 +186,7 @@ const ShiftDetailsIncludeFields = ({
                 value={data?.working_sundays}
                 // id="tags-standard"
                 options={[1, 2, 3, 4]}
-                getOptionLabel={(option) => option}
+                getOptionLabel={(option) => getWorkingDays[option]}
                 defaultValue={data?.working_sundays}
                 renderInput={(params) => (
                   <TextField
