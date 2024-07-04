@@ -18,21 +18,7 @@ const Invoice = () => {
   const {invoiceDetails, myParam}=InvoiceHook()
   const { posOder, employeeDetail, customerDetail } = invoiceDetails || {};
 
-  // const urlParams = new URLSearchParams(window.location.search);
-  // const myParam = urlParams.get("invoice_no");
-
-  // useEffect(() => {
-  //   serviceDownloadInvoice({ invoice_no: myParam }).then((res) => {
-  //     if (!res?.error) {
-  //       const data = res?.data;
-
-  //       setInvoiceDetails(data);
-  //     } else {
-  //       SnackbarUtils.error(res.message);
-  //     }
-  //   });
-  //   return () => {};
-  // }, [myParam]);
+ 
 
   return (
     <div className={styles.container}>

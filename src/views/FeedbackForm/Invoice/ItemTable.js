@@ -2,6 +2,21 @@ import React from "react";
 import styles from "./styles.module.css";
 
 const DigitalItemTable = ({ posOder }) => {
+  function calculateOriginalPrice(finalPrice, gstRate) {
+
+    const originalPrice = finalPrice / (1 + (gstRate / 100));
+    return originalPrice;
+  }
+
+  function calculateSgst(price, gstRate) {
+
+    const sgst = (price * gstRate) / 100;
+    return sgst;
+  }
+  
+  const calculateIgst =(gst_slab, price)=>{
+return (gst_slab/2) + calculateIgst(price, gst_slab)
+  }
   return (
     <div>
       <table className={styles.myTable}>
@@ -67,14 +82,16 @@ const DigitalItemTable = ({ posOder }) => {
         </thead>
 
         <tbody>
+        {posOder?.cart?.products?.map((product) => {
+            return (
           <tr>
-            <td>5%</td>
-            <td>₹1380.00</td>
-            <td>₹34.50</td>
-            <td>₹34.50</td>
-            <td>₹0.00</td>
+            <td>{product?.product?.gst_slab}%</td>
+            <td>₹{calculateOriginalPrice(posOder?.cart.prices?.subtotal, product?.product?.gst_slab ).toFixed(2)}</td>
+            <td>₹{product?.product?.gst_slab/2}</td>
+            <td>₹{calculateSgst(product?.product?.price, product?.product?.gst_slab).toFixed(2)}</td>
+            <td>₹{calculateIgst(product?.product?.gst_slab, product?.product?.price)}</td>
             <td>₹69.00</td>
-          </tr>
+          </tr>)})}
         </tbody>
       </table>
       <hr className={styles.hrLine} />
