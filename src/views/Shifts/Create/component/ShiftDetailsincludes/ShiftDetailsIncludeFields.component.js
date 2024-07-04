@@ -53,6 +53,21 @@ const ShiftDetailsIncludeFields = ({
       });
     }
   }, [data?.is_sunday_occasional_working]);
+
+  useEffect(() => {
+    if (data?.is_week_off) {
+      changeData(index, {
+        "start_time": null,
+        "end_time": null,
+        "total_hours": 0,
+      });
+    }else{
+      changeData(index, {
+        "is_sunday_occasional_working": false,
+      });
+    }
+  }, [data?.is_week_off]);
+
   return (
     <div>
       <div className={styles.flexContainer}>
@@ -148,7 +163,8 @@ const ShiftDetailsIncludeFields = ({
         </div>
         <div className={styles.formWrp}>
           <div className={styles.formGrp}></div>
-          <div className={styles.formGrp14}>
+          {
+            data?.is_week_off &&  <div className={styles.formGrp14}>
             {" "}
             <div className={styles.checkBox}>
               <input
@@ -170,6 +186,8 @@ const ShiftDetailsIncludeFields = ({
               <br />
             </div>
           </div>
+          }
+         
           <div className={styles.formGrp1}></div>
         </div>
         {data?.is_sunday_occasional_working && (

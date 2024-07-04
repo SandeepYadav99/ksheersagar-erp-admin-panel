@@ -10,7 +10,7 @@ import LogUtils from "../../../../../libs/LogUtils";
 import { useParams } from "react-router";
 import ShiftDetailsIncludeFields from "./ShiftDetailsIncludeFields.component";
 import SnackbarUtils from "../../../../../libs/SnackbarUtils";
-import { isDate } from "../../../../../libs/RegexUtils";
+import { isDate, isInvalidDateFormat } from "../../../../../libs/RegexUtils";
 
 const TEMP_OBJ = {
   name: "",
@@ -67,12 +67,16 @@ const ShiftDetailsIncludeForm = ({ data, errorData: errorForm }, ref) => {
         }
       });
       if (val?.start_time && !isDate(val?.start_time)) {
-        SnackbarUtils.error("Please enter the valid Time");
-        err["start_time"] = true;
+        if (isInvalidDateFormat(val?.start_time)) {
+          SnackbarUtils.error("Please enter the valid Time");
+          err["start_time"] = true;
+        }
       }
       if (val?.end_time && !isDate(val?.end_time)) {
-        SnackbarUtils.error("Please enter the valid Time");
-        err["end_time"] = true;
+        if (isInvalidDateFormat(val?.end_time)) {
+          SnackbarUtils.error("Please enter the valid Time");
+          err["end_time"] = true;
+        }
       }
       if (val?.total_hours && val?.total_hours < 0) {
         err["total_hours"] = true;
