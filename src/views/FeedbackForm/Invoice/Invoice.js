@@ -124,6 +124,7 @@ const Invoice = () => {
               <img key={index} src={ic_star} alt="" hight={15} width={15} />
             ))}
           </div>
+          
           <div className={styles.gaps} />
           <div className={styles.gaps} />
           <ButtonBase

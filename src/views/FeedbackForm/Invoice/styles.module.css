@@ -50,6 +50,7 @@
 }
 .actions {
   text-align: center;
+  margin-bottom: 10px !important;
 }
 .createBtn {
   background-color: #007aff !important;
