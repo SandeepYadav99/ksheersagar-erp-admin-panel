@@ -8,7 +8,7 @@
   background-color: #fff !important;
   border: "20px solid #00000011" !important;
   padding: 20px !important;
-  width: 375px !important;
+  width: 475px !important;
   height: auto !important;
   align-items: center;
 }
@@ -126,7 +126,7 @@
   border-collapse: collapse !important;
   font-size: 12px !important;
   color: #161616 !important;
-  width: 375px !important;
+  width: 475px !important;
 }
 
 .myTable th,
