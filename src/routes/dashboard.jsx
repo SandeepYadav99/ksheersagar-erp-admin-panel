@@ -216,8 +216,8 @@ const dashboardRoutes = [
   },
   {
     path: RouteName.STATIC_QR,
-    sidebarName: "Static QR",
-    navbarName: "Static QR",
+    sidebarName: "PayTM QR Codes",
+    navbarName: "PayTM QR Codes",
     icon: PeopleOutlined,
     component: StaticQr,
     is_sidebar: true,

@@ -87,12 +87,12 @@ const StaticQr = ({}) => {
         sortable: false,
         render: (temp, all) => <div>{all?.code}</div>,
       },
-      // {
-      //   key: "status",
-      //   label: "STATUS",
-      //   sortable: false,
-      //   render: (temp, all) => <div>{<StatusPill status={all?.status} />}</div>,
-      // },
+      {
+        key: "name",
+        label: "NAME",
+        sortable: false,
+        render: (temp, all) => <div>{all?.name || "N/A"}</div>,
+      },
       {
         key: "user_id",
         label: "Action",
@@ -145,7 +145,7 @@ const StaticQr = ({}) => {
       <PageBox>
         <div className={styles.headerContainer}>
           <div>
-            <span className={styles.title}>Static QR List</span>
+            <span className={styles.title}>PayTM QR Codes</span>
             <div className={styles.newLine} />
           </div>
           <div>

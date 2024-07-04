@@ -10,8 +10,6 @@ import Invoice from "../views/FeedbackForm/Invoice/Invoice.js";
 import DownloadInvoice from "../views/FeedbackForm/Invoice/DownloadInvoice.js";
 import EmpInfo from "../views/EmployeeDetail/Component/EmpInfo.js";
 
-
-
 const RouteComponent = () => (
   <Switch>
     <Route path={"/login"} component={Login} />
@@ -21,9 +19,9 @@ const RouteComponent = () => (
     <Route path={"/feedback/submit"} component={CompletionScreen} />
     <Route path={"/feedback"} component={OverAllFeedbackForm} />
     <Route path={"/invoice"} component={Invoice} />
+
     <Route path={"/employe/information/:empId"} component={EmpInfo} />
     <Route path={"/"} component={Dashboard} />
-  
   </Switch>
 );
 export default RouteComponent;

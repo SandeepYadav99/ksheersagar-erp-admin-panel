@@ -1,15 +1,12 @@
 import React, { useCallback, useState } from "react";
 import styles from "./styles.module.css";
-
-import { ButtonBase } from "@material-ui/core";
-import ic_star from "../../../assets/img/feedback/ic_star.png";
-import dummy_qr from "../../../assets/img/feedback/dummy qr.png";
-import ic_print from "../../../assets/img/feedback/ic_print.png";
-import ic_quantity from "../../../assets/img/feedback/ic_quantity.png";
 import ic_topnav_logo from "../../../assets/img/feedback/ic_topnav_logo.png";
-import ic_download from "../../../assets/img/feedback/ic_download.png";
-import ItemTable from "./ItemTable";
+
+import InvoiceHook from "./InvoiceHook";
+import DigitalItemTable from "./ItemTable";
 const DownloadInvoice = () => {
+  const { invoiceDetails, myParam } = InvoiceHook();
+  const { posOder, employeeDetail, customerDetail } = invoiceDetails || {};
   const [selectedRating, setSelectedRating] = useState(null);
   const [overAll, setOverAll] = useState("");
 
@@ -27,106 +24,102 @@ const DownloadInvoice = () => {
       <div className={styles.headerContainer}>
         <div className={styles.logo}>
           <img src={ic_topnav_logo} alt="" width={166} height={34} />
+          <br />
+          <span className={styles.logoTitle}>Tax Invoice</span>
+          <br />
+          <span className={styles.logoInvoice}>(Digital Invoice)</span>
         </div>
-        <p className={styles.title}>Ksheer Sagar Sonarpura</p>
+        <hr className={styles.hrLine} />
+        <p className={styles.title}>{employeeDetail?.location?.name}</p>
+        <p className={styles.subTitle}>{employeeDetail?.permanent_address}</p>
         <p className={styles.subTitle}>
-          B 15/45, Sonarpura, Varanasi, Uttar Pradesh, 221001
+          Phone No.:<strong>{employeeDetail?.contact || "N/A"}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
-          GSTIN:<strong>98881091A35</strong>{" "}
+          GSTIN:<strong>{employeeDetail?.location?.gstin}</strong>{" "}
+          <span className={styles.stateCode}>
+            {" "}
+            State Code: <strong>{employeeDetail?.location?.state_code}</strong>
+          </span>
         </p>
         <p className={styles.subTitle}>
-          Phone No.<strong>8762209802</strong>{" "}
+          FSSAI No.:<strong>{employeeDetail?.location?.fssai_number}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
-          CIN: <strong>UI567HH78KL009</strong>{" "}
-        </p>
-        <p className={styles.subTitle}>
-          FSSAI No: <strong>209456880011</strong>{" "}
-        </p>
-        <p className={styles.subTitle}>
-          Website. <a href="https://ksheersagar.com/">https://ksheersagar.com/</a>{" "}
+          CIN No.:<strong>{employeeDetail?.location?.cin}</strong>{" "}
         </p>
         <div className={styles.gaps} />
-        <p className={styles.title}>Summary</p>
+        <hr className={styles.hrLine} />
+        <p className={styles.title}>Invoice Details</p>
         <p className={styles.subTitle}>
-          Invoice Number: <strong>INV - BC/2023/08/21</strong>{" "}
+          Invoice No.:<strong>{invoiceDetails?.invoice_no}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
-        Date:<strong>2/08/2023 | 11:00 AM</strong>{" "}
+          Date & Time:<strong>{employeeDetail?.updatedAtText}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
-        Temp Sales Order:<strong>KS/BC/2023/08/200</strong>{" "}
+          Cashier:<strong>{customerDetail?.name}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
-        Cashier:<strong>Abhinav Sharma</strong>{" "}
+          Mode of Payment:<strong>{posOder?.transection?.type}</strong>{" "}
         </p>
-      
+        <p className={styles.subTitle}>
+          Place of Supply:<strong>{employeeDetail?.permanent_address}</strong>{" "}
+        </p>
         <div className={styles.gaps} />
+        <hr className={styles.hrLine} />
+        {/* End DETAILL */}
+        {/* customer Detail */}
         <p className={styles.title}>Customer Details</p>
         <p className={styles.subTitle}>
-          <strong>Aakash Singh</strong>
+          Name:<strong>{posOder?.customer?.name}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
-          <strong>9887698342</strong>
+          Contact No:<strong> {posOder?.customer?.contact}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
-          GSTIN:<strong> 33881091A35</strong>
+          Company Name:<strong>{customerDetail?.business_name}</strong>{" "}
         </p>
-        <div className={styles.gaps} />
-        <hr />
-      
-        <div className={styles.gaps} />
-        <p className={styles.title}>Invoice Details</p>
-        <div className={styles.gaps} />
-        <div className={styles.footer}>
-          <p className={styles.subTitle}>
-            Total Amount:
-            <br /> <strong> ₹1000</strong>
-          </p>
-          <p>
-            <span className={styles.subTitle}>No. of Items: 02</span> <br />
-            <span className={styles.subTitle}>No. of Boxes: 20</span>
-          </p>
-        </div>
-{/* Item List Invoice */}
-<div >
+        <p className={styles.subTitle}>
+          GSTIN:<strong> {customerDetail?.gst_no}</strong>{" "}
+        </p>
 
-<ItemTable/>
-</div>
-{/* Item List Invoice End*/}
-       
         <div className={styles.gaps} />
-        <div className={styles.footer}>
-          <p className={styles.subTitle}>Item Total</p>
-          <p className={styles.subTitle}>
-            <strong>₹500</strong>{" "}
-          </p>
-        </div>
-        <div className={styles.footer}>
-          <p className={styles.subTitle}>IGST</p>
-          <p className={styles.subTitle}>
-            <strong>₹500</strong>{" "}
-          </p>
-        </div>
-        <hr />
-        <div className={styles.footer}>
-          <p className={styles.subTitle}>Total Amount Paid</p>
-          <p className={styles.subTitle}>
-            <strong>₹500</strong>{" "}
-          </p>
-        </div>
-        <p className={styles.subTitle}>Nine Hundred and Eighty Seven Rupees only</p>
+        <hr className={styles.hrLine} />
+        {/* End Customer Detail */}
+        <p className={styles.title}>Summary</p>
+        <p className={styles.subTitle}>
+          No. of Items: <strong>{posOder?.cart?.items}</strong>{" "}
+        </p>
+        <p className={styles.subTitle}>
+          No. of Boxes: <strong>{posOder?.cart?.boxes}</strong>{" "}
+        </p>
+        {/* Item List Invoice */}
+        <DigitalItemTable posOder={posOder} customerDetail={customerDetail} />
+
         <div className={styles.gaps} />
-        <p className={styles.scanTitle}>Scan below to get the bill information</p>
+        {/* Item List Invoice End*/}
+
+        <p className={styles.thankyounote}>Thank you for Shopping with us!</p>
+        <p className={styles.subTitlePara}>
+          For any queries please call/email us on customer care M: 7311122332,
+          E: customer.care@ksheersagar.com Visit us at{" "}
+          <a href="www.ksheersagar.com" target="_blank" rel="noopener">
+            www.ksheersagar.com
+          </a>
+        </p>
+        <hr className={styles.hrLine} />
         <div className={styles.download}>
-          <p className={styles.subTitle}>
+          <p className={styles.subTitleQr}>
             Now get a digital copy of your invoice
           </p>
           <div className={styles.footerlinkqr}>
-            
-            <img src={dummy_qr} alt="" width={110} height={110} />
-          <p className={styles.footertitle}> Thank you for visiting Ksheer Sagar, we are delightful to serve you !</p>
+            <img src={posOder?.qr_code} alt="" width={110} height={110} />
+            {/* <p className={styles.footertitle}>
+              {" "}
+              Thank you for visiting Ksheer Sagar, we are delightful to serve
+              you !
+            </p> */}
           </div>
         </div>
       </div>
