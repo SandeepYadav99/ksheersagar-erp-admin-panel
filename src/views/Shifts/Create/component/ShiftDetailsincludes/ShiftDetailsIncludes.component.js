@@ -9,6 +9,8 @@ import React, {
 import LogUtils from "../../../../../libs/LogUtils";
 import { useParams } from "react-router";
 import ShiftDetailsIncludeFields from "./ShiftDetailsIncludeFields.component";
+import SnackbarUtils from "../../../../../libs/SnackbarUtils";
+import { isDate, isInvalidDateFormat } from "../../../../../libs/RegexUtils";
 
 const TEMP_OBJ = {
   name: "",
@@ -17,8 +19,8 @@ const TEMP_OBJ = {
   end_time: new Date(0, 0, 0, 10, 0),
   total_hours: null,
   is_week_off: false,
-  is_sunday_occasional_working: false,
-  working_sundays: [],
+  is_occasional_working: false,
+  occasional_working_days: [],
 };
 
 const ShiftDetailsIncludeForm = ({ data, errorData: errorForm }, ref) => {
@@ -64,11 +66,33 @@ const ShiftDetailsIncludeForm = ({ data, errorData: errorForm }, ref) => {
           err[key] = true;
         }
       });
+      if (val?.start_time && !isDate(val?.start_time)) {
+        if (isInvalidDateFormat(val?.start_time)) {
+          SnackbarUtils.error("Please enter the valid Time");
+          err["start_time"] = true;
+        }
+      }
+      if (val?.end_time && !isDate(val?.end_time)) {
+        if (isInvalidDateFormat(val?.end_time)) {
+          SnackbarUtils.error("Please enter the valid Time");
+          err["end_time"] = true;
+        }
+      }
+      if (val?.total_hours && val?.total_hours < 0) {
+        err["start_time"] = true;
+        err["end_time"] = true;
+        SnackbarUtils.error("Start time cannot be less than End time");
+      }
+      if(val?.start_time && val?.start_time && val?.total_hours == 0){
+        err["start_time"] = true;
+        err["end_time"] = true;
+        SnackbarUtils.error("Start time cannot be same as End time");
+      }
       if (
-        val?.is_sunday_occasional_working &&
-        val?.working_sundays?.length === 0
+        val?.is_occasional_working &&
+        val?.occasional_working_days?.length === 0
       ) {
-        err["working_sundays"] = true;
+        err["occasional_working_days"] = true;
       }
       if (Object.keys(err)?.length > 0) {
         errors[index] = err;

@@ -248,6 +248,13 @@ export const shiftdays= {
   end_time: null,
   total_hours: null,
   is_week_off: false,
-  is_sunday_occasional_working: false,
-  working_sundays: [],
+  is_occasional_working: false,
+  occasional_working_days: [],
 }
+export const getWorkingDays = {
+  1: "First",
+  2: "Second",
+  3: "Third",
+  4: "Fouth",
+  5:"Fifth"
+};

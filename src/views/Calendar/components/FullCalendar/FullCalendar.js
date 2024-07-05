@@ -2,17 +2,28 @@ import React, { useEffect, useState } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { ButtonBase, Typography } from "@mui/material";
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
+import { ButtonBase, Typography ,Button,ButtonGroup} from "@material-ui/core";
 import styles from "./Style.module.css";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { getBgColor, getTextColor } from "../../../../helper/calenderData";
-import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
+import { makeStyles } from '@material-ui/core/styles';
+import SnackbarUtils from "../../../../libs/SnackbarUtils";
 
 const localizer = momentLocalizer(moment);
-
+const useStyles = makeStyles((theme) => ({
+  buttonGroup: {
+    border: '#1285F9',
+    borderRadius: '4px',
+    overflow: 'hidden',
+  },
+  button: {
+    color: '#2896E9',
+    borderColor: '#2896E9',
+  },
+}));
 const CalendarDetail = ({ data, selectedDate, handleSideToggle }) => {
+  const classes = useStyles();
   const [events, setEvents] = useState([...data]);
   const [activeMonth, setActiveMonth] = useState("month");
 
@@ -69,29 +80,34 @@ const CalendarDetail = ({ data, selectedDate, handleSideToggle }) => {
         </div>
         <div>
           <ButtonGroup
+            className={classes.buttonGroup}
             variant="outlined"
             size="large"
             aria-label="Medium-sized button group"
           >
             <Button
+            className={classes.button}
               onClick={() => onView("month")}
               style={activeMonth === "month" ? activeClass : {}}
             >
               <Typography variant="body1">MONTH</Typography>
             </Button>
             <Button
+            className={classes.button}
               onClick={() => onView("week")}
               style={activeMonth === "week" ? activeClass : {}}
             >
               <Typography variant="body1">WEEK</Typography>
             </Button>
             <Button
+            className={classes.button}
               onClick={() => onView("day")}
               style={activeMonth === "day" ? activeClass : {}}
             >
               <Typography variant="body1">DAY</Typography>
             </Button>
             <Button
+            className={classes.button}
               onClick={() => onView("agenda")}
               style={activeMonth === "agenda" ? activeClass : {}}
             >
@@ -103,12 +119,18 @@ const CalendarDetail = ({ data, selectedDate, handleSideToggle }) => {
     );
   };
   const handleSlotSelect = (slotInfo) => {
+    const hasExistingEvent = events?.some((event) =>
+      moment(event?.start)?.isSame(slotInfo?.start, 'day')
+    );
     const values = {
       start_date: slotInfo?.start,
       end_date: slotInfo?.end,
     };
-    handleSideToggle(values);
-    // setActiveDate(slotInfo.start); // Update state with selected date
+    if(hasExistingEvent){
+      SnackbarUtils.error("An holiday already exists for this day.")
+    }else{
+      handleSideToggle(values);
+    }
   };
   return (
     <div className={styles.detailWrap}>

@@ -82,24 +82,24 @@ const ShiftsLists = ({}) => {
   const renderTile = useCallback(() => {
     return (
       <div>
-        <span className={styles.title}>{id ? "Update" : "Add"} Shift</span>
+        <span className={styles.title}>{updateData?.id ? "Update" : "Add"} Shift</span>
         <div className={styles.newLine} />
       </div>
     );
-  }, [id]);
+  }, [updateData]);
 
   const workingDays = useCallback((all) => {
     return (
       <div className={styles.avatorFlex}>
         {all?.shiftDays?.map((shift) => {
-          if (shift?.is_week_off && !shift?.is_sunday_occasional_working) {
+          if (shift?.is_week_off && !shift?.is_occasional_working) {
             return (
               <Avatar className={styles.avator}>
                 {shift?.name?.substring(0, 2)}
               </Avatar>
             );
           } else if (
-            shift?.is_sunday_occasional_working &&
+            shift?.is_occasional_working &&
             shift?.is_week_off
           ) {
             return (

@@ -98,3 +98,10 @@
 .checkBox > input {
   cursor: pointer;
 }
+.radioWrapper{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap:100px
+  /* justify-content: space-between; */
+}

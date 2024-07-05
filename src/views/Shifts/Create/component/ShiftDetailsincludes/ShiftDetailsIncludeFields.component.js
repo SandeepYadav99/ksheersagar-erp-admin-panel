@@ -1,17 +1,11 @@
 import React, { useEffect, useMemo } from "react";
-import {
-  TextField,
-  ButtonBase,
-  InputAdornment,
-  IconButton,
-} from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import styles from "./style.module.css";
 import CustomCheckbox from "../../../../../components/FormFields/CustomCheckbox";
-import AccessTimeIcon from "@material-ui/icons/AccessTime";
-import { MuiPickersUtilsProvider, TimePicker } from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
-
 import { Autocomplete } from "@mui/material";
+import CustomDateTimePicker from "../../../../../components/FormFields/DatePicker/CustomDateTimePicker";
+import { getWorkingDays } from "../../../../../helper/helper";
+
 const ShiftDetailsIncludeFields = ({
   index,
   changeData,
@@ -46,13 +40,42 @@ const ShiftDetailsIncludeFields = ({
     }
   }, [data?.start_time, data?.end_time]);
 
+  useEffect(() => {
+    if (!data?.is_occasional_working) {
+      changeData(index, {
+        ["occasional_working_days"]: [],
+      });
+    }
+  }, [data?.is_occasional_working]);
+
+  useEffect(() => {
+    if (data?.is_week_off) {
+      changeData(index, {
+        "start_time": null,
+        "end_time": null,
+        "total_hours": null,
+      });
+    }else{
+      changeData(index, {
+        "is_occasional_working": false,
+      });
+    }
+  }, [data?.is_week_off]);
+
   return (
     <div>
       <div className={styles.flexContainer}>
         <div className={styles.formWrp}>
           <div className={styles.formGrphours}>{data?.name}</div>
           <div className={styles.formGrp1}>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <CustomDateTimePicker
+              disabled={data?.is_week_off}
+              label={"Choose Time"}
+              value={data?.start_time}
+              onChange={(e) => handleChange(e, "start_time")}
+              isError={errors?.start_time}
+            />
+            {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <TimePicker
                 margin="dense"
                 variant="inline"
@@ -78,10 +101,17 @@ const ShiftDetailsIncludeFields = ({
                   ),
                 }}
               />
-            </MuiPickersUtilsProvider>
+            </MuiPickersUtilsProvider> */}
           </div>
           <div className={styles.formGrp1}>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <CustomDateTimePicker
+              disabled={data?.is_week_off}
+              label={"Choose Time"}
+              value={data?.end_time}
+              onChange={(e) => handleChange(e, "end_time")}
+              isError={errors?.end_time}
+            />
+            {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <TimePicker
                 margin="dense"
                 variant="inline"
@@ -107,7 +137,7 @@ const ShiftDetailsIncludeFields = ({
                   ),
                 }}
               />
-            </MuiPickersUtilsProvider>
+            </MuiPickersUtilsProvider> */}
           </div>
           <div className={styles.formGrphours}>
             {data?.total_hours ? data?.total_hours : 0}
@@ -127,21 +157,22 @@ const ShiftDetailsIncludeFields = ({
         </div>
         <div className={styles.formWrp}>
           <div className={styles.formGrp}></div>
-          <div className={styles.formGrp14}>
+          {
+            data?.is_week_off &&  <div className={styles.formGrp14}>
             {" "}
             <div className={styles.checkBox}>
               <input
                 type="checkbox"
-                name={"is_sunday_occasional_working"}
+                name={"is_occasional_working"}
                 onClick={() => {
                   changeData(index, {
-                    is_sunday_occasional_working:
-                      !data?.is_sunday_occasional_working,
+                    is_occasional_working:
+                      !data?.is_occasional_working,
                   });
                 }}
                 className={styles.check}
-                value={data?.is_sunday_occasional_working}
-                checked={data?.is_sunday_occasional_working}
+                value={data?.is_occasional_working}
+                checked={data?.is_occasional_working}
               />{" "}
               <label className={styles.checkboxlabel}>
                 Do you want Occasional Working On {data?.name}?
@@ -149,35 +180,39 @@ const ShiftDetailsIncludeFields = ({
               <br />
             </div>
           </div>
+          }
+         
           <div className={styles.formGrp1}></div>
         </div>
-        <div className={styles.formWrp}>
-          <div className={styles.formGrp}></div>
-          <div className={styles.formGrp14}>
-            {" "}
-            <Autocomplete
-              multiple
-              id="tags-outlined"
-              onChange={(e, value) => {
-                handleChange(value, "working_sundays");
-              }}
-              value={data?.working_sundays}
-              // id="tags-standard"
-              options={[1, 2, 3, 4]}
-              getOptionLabel={(option) => option}
-              defaultValue={data?.working_sundays}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  variant="outlined"
-                  label="Choose Working Days"
-                  error={errors?.working_sundays}
-                />
-              )}
-            />
+        {data?.is_occasional_working && (
+          <div className={styles.formWrp}>
+            <div className={styles.formGrp}></div>
+            <div className={styles.formGrp14}>
+              {" "}
+              <Autocomplete
+                multiple
+                id="tags-outlined"
+                onChange={(e, value) => {
+                  handleChange(value, "occasional_working_days");
+                }}
+                value={data?.occasional_working_days}
+                // id="tags-standard"
+                options={[1, 2, 3, 4,5]}
+                getOptionLabel={(option) => getWorkingDays[option]}
+                defaultValue={data?.occasional_working_days}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    label="Choose Working Days"
+                    error={errors?.occasional_working_days}
+                  />
+                )}
+              />
+            </div>
+            <div className={styles.formGrp1}></div>
           </div>
-          <div className={styles.formGrp1}></div>
-        </div>
+        )}
       </div>
       {fieldLendth !== index + 1 && (
         <div className={styles.horizontalLine}></div>

@@ -3,7 +3,7 @@ import styles from "./Style.module.css";
 import CustomTextField from "../../../../components/FormFields/TextField/TextField.component";
 import useEventFormHook from "./EventForm.hook";
 import CustomSelectField from "../../../../components/FormFields/SelectField/SelectField.component";
-import { Autocomplete, MenuItem, TextField } from "@mui/material";
+import { MenuItem,Autocomplete } from "@mui/material";
 import CustomDatePicker from "../../../../components/FormFields/DatePicker/CustomDatePicker";
 import {
   Button,
@@ -12,20 +12,23 @@ import {
   FormControlLabel,
   Radio,
   RadioGroup,
+  TextField,
 } from "@material-ui/core";
+import { removeUnderScore } from "../../../../helper/helper";
 
-const EventForm = ({ isOpen, handleToggle, editData,renderList }) => {
+const locationList = ["ALL_LOCATIONS", "SHOWROOM", "FACTORY", "WAREHOUSE"];
+const EventForm = ({ isOpen, handleToggle, editData, renderList }) => {
   const {
     changeTextData,
     errorData,
     form,
     handleSubmit,
     onBlurHandler,
-    removeError,
     isSubmitted,
     isSubmitting,
     listData,
-  } = useEventFormHook({ isOpen, handleToggle, editData ,renderList});
+    handleDelete,
+  } = useEventFormHook({ isOpen, handleToggle, editData, renderList });
 
   return (
     <div>
@@ -56,100 +59,92 @@ const EventForm = ({ isOpen, handleToggle, editData,renderList }) => {
             <MenuItem value="OPTIONAL">OPTIONAL</MenuItem>
             <MenuItem value="RESTRICTED">RESTRICTED</MenuItem>
           </CustomSelectField>
-          <RadioGroup
-            aria-label="option"
-            name="type"
-            value={form?.type}
-            onChange={(e) => changeTextData(e.target.value, "type")}
-            row
-            className={styles.radioWrap}
-          >
-            <FormControlLabel
-              value="FULL_DAY"
-              control={<Radio />}
-              label="Full Day"
-            />
-            <FormControlLabel
-              value="HALF_DAY"
-              control={<Radio />}
-              label="Half Day"
-            />
-          </RadioGroup>
-          {form?.type === "FULL_DAY" ? (
-            <>
-              <CustomDatePicker
-                clearable
-                label={"Start Date"}
-                // minDate={new Date()}
-                onChange={(date) => {
-                  changeTextData(date, "start_date");
-                }}
-                value={form?.start_date}
-                isError={errorData?.start_date}
+          <div className={styles.radioWrapper}>
+            <RadioGroup
+              aria-label="option"
+              name="type"
+              value={form?.type}
+              onChange={(e) => changeTextData(e.target.value, "type")}
+              row
+              className={styles.radioWrap}
+            >
+              <FormControlLabel
+                value="FULL_DAY"
+                control={<Radio />}
+                label="Full Day"
               />
-              <CustomDatePicker
-                clearable
-                label={"End Date"}
-                // minDate={new Date()}
-                onChange={(date) => {
-                  changeTextData(date, "end_date");
-                }}
-                value={form?.end_date}
-                isError={errorData?.end_date}
+              <FormControlLabel
+                value="HALF_DAY"
+                control={<Radio />}
+                label="Half Day"
               />
-            </>
-          ) : (
-            <CustomDatePicker
-              clearable
-              label={"Date"}
-              // minDate={new Date()}
-              onChange={(date) => {
-                changeTextData(date, "start_date");
-              }}
-              value={form?.start_date}
-              isError={errorData?.start_date}
-            />
-          )}
-
-          <CustomSelectField
-            isError={errorData?.applies_locations}
-            errorText={errorData?.applies_locations}
-            label={"Applies to"}
-            value={form?.applies_locations}
-            handleChange={(value) => {
-              changeTextData(value, "applies_locations");
+            </RadioGroup>
+            {form?.type === "HALF_DAY" && (
+              <RadioGroup
+                aria-label="option"
+                name="half_day_type"
+                value={form?.half_day_type}
+                onChange={(e) =>
+                  changeTextData(e.target.value, "half_day_type")
+                }
+                row
+                className={styles.radioWrap}
+              >
+                <FormControlLabel
+                  value="FIRST_HALF"
+                  control={<Radio />}
+                  label="First Half"
+                />
+                <FormControlLabel
+                  value="SECOND_HALF"
+                  control={<Radio />}
+                  label="Second Half"
+                />
+              </RadioGroup>
+            )}
+          </div>
+          <CustomDatePicker
+            clearable
+            label={form?.type === "FULL_DAY" ? "Start Date" : "Date"}
+            // minDate={new Date()}
+            onChange={(date) => {
+              changeTextData(date, "start_date");
             }}
-          >
-            <MenuItem value="ALL_LOCATIONS">ALL LOCATIONS</MenuItem>
-            <MenuItem value="SHOWROOM">SHOWROOM</MenuItem>
-            <MenuItem value="FACTORY">FACTORY</MenuItem>
-            <MenuItem value="WAREHOUSE">WAREHOUSE</MenuItem>
-          </CustomSelectField>
+            value={form?.start_date}
+            isError={errorData?.start_date}
+          />
           <Autocomplete
             multiple
             id="tags-outlined"
             onChange={(e, value) => {
-              changeTextData(value, "excluded_employees");
+              changeTextData(value, "applies_locations");
             }}
-            value={form?.excluded_employees}
+            value={form?.applies_locations}
             // id="tags-standard"
-            options={listData?.EMPLOYEES ? listData?.EMPLOYEES : []}
-            getOptionLabel={(option) => option.name}
-            defaultValue={form?.excluded_employees}
+            options={locationList}
+            getOptionLabel={(option) => removeUnderScore(option)}
+            defaultValue={form?.applies_locations}
             renderInput={(params) => (
               <TextField
                 {...params}
                 variant="outlined"
-                label="Excluded Employees"
-                error={errorData?.excluded_employees}
+                label="Applies to"
+                error={errorData?.applies_locations}
               />
             )}
           />
         </div>
         <div className={styles.printFlex}>
-          <ButtonBase className={styles.edit} onClick={handleToggle}>
-            Cancel
-          </ButtonBase>
+          {editData?.id ? (
+            <ButtonBase
+              className={styles.edit}
+              onClick={() => handleDelete(editData?.id)}
+            >
+              Delete
+            </ButtonBase>
+          ) : (
+            <div></div>
+          )}
           <Button
             className={styles.createBtn}
             onClick={handleSubmit}

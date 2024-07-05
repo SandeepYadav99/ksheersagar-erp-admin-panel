@@ -16,7 +16,7 @@ import AddEmployeeTable from "./Component/AddEmployeeTable/AddEmployeeTable.comp
 import StatusPill from "../../../components/Status/StatusPill.component";
 import { capitalizeFirstLetter } from "../../../hooks/CapsLetter";
 
-const AssociatedEmployees = ({ listData, id , associatedEmployeesCount}) => {
+const AssociatedEmployees = ({ listData, id }) => {
   const {
     handleSortOrderChange,
     handleRowSize,
@@ -31,7 +31,7 @@ const AssociatedEmployees = ({ listData, id , associatedEmployeesCount}) => {
     toggleRejectDialog,
     isSidePanel,
     handleSideToggle,
-    editId
+    editId,
   } = useAssociatedEmployeeHook({ listData, id });
 
   // const {
@@ -72,18 +72,21 @@ const AssociatedEmployees = ({ listData, id , associatedEmployeesCount}) => {
               alt="..."
             />
 
-            <div ><b>{capitalizeFirstLetter(all?.name_en)} </b> <br/> {all?.emp_code}</div>
+            <div>
+              <b>{capitalizeFirstLetter(all?.name_en)} </b> <br />{" "}
+              {all?.emp_code}
+            </div>
           </div>
         ),
       },
-     
+
       {
         key: "location",
         label: "LOCATION",
         sortable: false,
         render: (temp, all) => (
           <div className={styles.locationName}>
-             {all?.location?.name || "N/A"}
+            {all?.location?.name || "N/A"}
           </div>
         ),
         //  candidate?.applied_date
@@ -94,11 +97,9 @@ const AssociatedEmployees = ({ listData, id , associatedEmployeesCount}) => {
         label: "DEPARTMENT/ROLE",
         sortable: false,
         render: (temp, all) => (
-         
-         <div>
-        
-          {all?.department?.name || "N/A"} / {all?.role?.name || "N/A"}
-         </div>
+          <div>
+            {all?.department?.name || "N/A"} / {all?.role?.name || "N/A"}
+          </div>
         ),
       },
       {
@@ -106,11 +107,7 @@ const AssociatedEmployees = ({ listData, id , associatedEmployeesCount}) => {
         label: "STATUS",
         sortable: false,
         render: (temp, all) => (
-          <StatusPill
-            status={all?.status}
-            color={all?.status}
-          />
-        
+          <StatusPill status={all?.status} color={all?.status} />
         ),
       },
       {
@@ -119,15 +116,24 @@ const AssociatedEmployees = ({ listData, id , associatedEmployeesCount}) => {
         sortable: false,
         render: (temp, all) => (
           <div>
-            <IconButton  className={"tableActionBtn"}
-              color="secondary" onClick={() => toggleRejectDialog(all)}>
+            <IconButton
+              className={"tableActionBtn"}
+              color="secondary"
+              onClick={() => toggleRejectDialog(all)}
+            >
               <DeleteOutline fontSize="small" />
             </IconButton>
           </div>
         ),
       },
     ];
-  }, [renderFirstCell, handleViewDetails, handleEdit, isCalling, toggleRejectDialog]);
+  }, [
+    renderFirstCell,
+    handleViewDetails,
+    handleEdit,
+    isCalling,
+    toggleRejectDialog,
+  ]);
 
   const tableData = useMemo(() => {
     const datatableFunctions = {
@@ -167,7 +173,9 @@ const AssociatedEmployees = ({ listData, id , associatedEmployeesCount}) => {
   return (
     <PageBoxComponent>
       <div className={styles.listAction}>
-        <div className={styles.employeTitle}>Associated Employees ({associatedEmployeesCount})</div>
+        <div className={styles.employeTitle}>
+          Associated Employees ({data?.length || 0})
+        </div>
         <div>
           <ButtonBase onClick={handleSideToggle} className={"createBtn"}>
             ADD EMPLOYEE<Add fontSize={"small"} className={"plusIcon"}></Add>

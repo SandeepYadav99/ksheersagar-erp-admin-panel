@@ -25,7 +25,6 @@ import Machines from "../views/Machines/Lists/Machines";
 import ShiftDetail from "../views/Shifts/ShiftDetail/ShiftDetail";
 import CalendarList from "../views/Calendar/CalendarList.view";
 import Dashboard from "../views/dashboard/Dashboard";
-import { CalendarMonth } from "@mui/icons-material";
 import AttendanceReport from "../views/Reports/AttendanceReport/AttendanceReport";
 import ShiftWiseReport from "../views/Reports/ShiftWiseReport/ShiftWiseReport";
 import MusterReport from "../views/Reports/MusterReport/MusterReport";
@@ -302,7 +301,7 @@ const dashboardRoutes = [
     path: `${RouteName.CALENDAR}`,
     sidebarName: "Calendar",
     // navbarName: "Calendar",
-    icon: CalendarMonth,
+    icon: EventNote,
     component: CalendarList,
     is_sidebar: true,
     is_protect: true,

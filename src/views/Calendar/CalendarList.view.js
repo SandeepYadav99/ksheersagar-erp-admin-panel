@@ -1,8 +1,7 @@
 import React from "react";
 import CalendarMui from "./components/CalendarMui/CalendarMui";
 import styles from "./Style.module.css";
-import { Checkbox, FormControlLabel, Typography } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+import { Checkbox, FormControlLabel } from "@material-ui/core";
 import CalendarDetail from "./components/FullCalendar/FullCalendar";
 import PageBox from "../../components/PageBox/PageBox.component";
 import SidePanelComponent from "../../components/SidePanel/SidePanel.component";
@@ -21,31 +20,25 @@ function CalendarList() {
     selectedDate,
     handleDateChange,
     editData,
-    renderList
+    renderList,
   } = useCalendarList({});
-  const useStyles = makeStyles((theme) => ({
-    checkboxLabel: {
-      color: "#636578",
-      fontWeight: "bold",
-      fontSize: "14px",
-      fontWeight: "500",
-    },
-  }));
-  const classes = useStyles();
+  const checkboxLabel = {
+    color: "#636578",
+    fontWeight: "bold",
+    fontSize: "14px",
+    fontWeight: "500",
+  };
   return (
-    <PageBox classStyles={classes.pageBox}>
+    <PageBox>
       <div className={styles.mainFlex}>
         <div className={styles.left}>
           <div className={styles.calContainer}>
             <ButtonBase
               type={"button"}
-              onClick={()=>handleSideToggle()}
+              onClick={() => handleSideToggle()}
               className={styles.createBtn}
             >
-              <Add
-                fontSize={"small"}
-                className={"plusIcon"}
-              ></Add>
+              <Add fontSize={"small"} className={"plusIcon"}></Add>
               ADD HOLIDAY
             </ButtonBase>
             <div className="calender_Wrapper">
@@ -67,7 +60,7 @@ function CalendarList() {
                     onChange={handleCheckboxChange}
                   />
                 }
-                className={classes.checkboxLabel}
+                style={checkboxLabel}
                 label="View All"
               />
             </div>
@@ -81,7 +74,7 @@ function CalendarList() {
                     onChange={handleCheckboxChange}
                   />
                 }
-                className={classes.checkboxLabel}
+                style={checkboxLabel}
                 label="Holiday"
               />
             </div>
@@ -95,7 +88,7 @@ function CalendarList() {
                     onChange={handleCheckboxChange}
                   />
                 }
-                className={classes.checkboxLabel}
+                style={checkboxLabel}
                 label="Restricted Holiday"
               />
             </div>
@@ -109,7 +102,7 @@ function CalendarList() {
                     onChange={handleCheckboxChange}
                   />
                 }
-                className={classes.checkboxLabel}
+                style={checkboxLabel}
                 label="Optional (only 1 can be taken)"
               />
             </div>
@@ -125,11 +118,16 @@ function CalendarList() {
       </div>
       <SidePanelComponent
         handleToggle={handleSideToggle}
-        title={"Add Event"}
+        title={`${editData?.id ? "Update " : "Add"} Holiday`}
         open={isSidePanel}
         side={"right"}
       >
-        <EventForm isOpen={isSidePanel} handleToggle={handleSideToggle} editData={editData} renderList={renderList}/>
+        <EventForm
+          isOpen={isSidePanel}
+          handleToggle={handleSideToggle}
+          editData={editData}
+          renderList={renderList}
+        />
       </SidePanelComponent>
     </PageBox>
   );

@@ -1,11 +1,11 @@
 import {postRequest,formDataRequest} from '../libs/AxiosService.util';
 
 export async function serviceCreateCalendar(params) {
-    return await formDataRequest('holidays/create', params);
+    return await postRequest('holidays/create', params);
 }
 
 export async function serviceUpdateCalendar(params) {
-    return await formDataRequest('holidays/update', params);
+    return await postRequest('holidays/update', params);
 }
 
 export async function serviceDeleteCalendar(params) {

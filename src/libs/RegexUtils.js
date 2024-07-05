@@ -75,7 +75,10 @@ function validateESI(esiNumber) {
   const regex = /^\d{17}$/;
   return regex.test(esiNumber);
 }
-
+function isInvalidDateFormat(dateString) {
+  const regex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
+  return !regex.test(dateString);
+}
 export {
   isUrl,
   isEmail,
@@ -95,4 +98,5 @@ export {
   validateESI,
   isAlphaNumeric,
   isUpiID,
+  isInvalidDateFormat
 };
