@@ -3,7 +3,7 @@ import styles from "./Style.module.css";
 import CustomTextField from "../../../../components/FormFields/TextField/TextField.component";
 import useEventFormHook from "./EventForm.hook";
 import CustomSelectField from "../../../../components/FormFields/SelectField/SelectField.component";
-import { MenuItem } from "@mui/material";
+import { MenuItem,Autocomplete } from "@mui/material";
 import CustomDatePicker from "../../../../components/FormFields/DatePicker/CustomDatePicker";
 import {
   Button,
@@ -12,8 +12,11 @@ import {
   FormControlLabel,
   Radio,
   RadioGroup,
+  TextField,
 } from "@material-ui/core";
+import { removeUnderScore } from "../../../../helper/helper";
 
+const locationList = ["ALL_LOCATIONS", "SHOWROOM", "FACTORY", "WAREHOUSE"];
 const EventForm = ({ isOpen, handleToggle, editData, renderList }) => {
   const {
     changeTextData,
@@ -57,46 +60,48 @@ const EventForm = ({ isOpen, handleToggle, editData, renderList }) => {
             <MenuItem value="RESTRICTED">RESTRICTED</MenuItem>
           </CustomSelectField>
           <div className={styles.radioWrapper}>
-          <RadioGroup
-            aria-label="option"
-            name="type"
-            value={form?.type}
-            onChange={(e) => changeTextData(e.target.value, "type")}
-            row
-            className={styles.radioWrap}
-          >
-            <FormControlLabel
-              value="FULL_DAY"
-              control={<Radio />}
-              label="Full Day"
-            />
-            <FormControlLabel
-              value="HALF_DAY"
-              control={<Radio />}
-              label="Half Day"
-            />
-          </RadioGroup>
-          {form?.type === "HALF_DAY" && (
             <RadioGroup
               aria-label="option"
-              name="half_day_type"
-              value={form?.half_day_type}
-              onChange={(e) => changeTextData(e.target.value, "half_day_type")}
+              name="type"
+              value={form?.type}
+              onChange={(e) => changeTextData(e.target.value, "type")}
               row
               className={styles.radioWrap}
             >
               <FormControlLabel
-                value="FIRST_HALF"
+                value="FULL_DAY"
                 control={<Radio />}
-                label="First Half"
+                label="Full Day"
               />
               <FormControlLabel
-                value="SECOND_HALF"
+                value="HALF_DAY"
                 control={<Radio />}
-                label="Second Half"
+                label="Half Day"
               />
             </RadioGroup>
-          )}
+            {form?.type === "HALF_DAY" && (
+              <RadioGroup
+                aria-label="option"
+                name="half_day_type"
+                value={form?.half_day_type}
+                onChange={(e) =>
+                  changeTextData(e.target.value, "half_day_type")
+                }
+                row
+                className={styles.radioWrap}
+              >
+                <FormControlLabel
+                  value="FIRST_HALF"
+                  control={<Radio />}
+                  label="First Half"
+                />
+                <FormControlLabel
+                  value="SECOND_HALF"
+                  control={<Radio />}
+                  label="Second Half"
+                />
+              </RadioGroup>
+            )}
           </div>
           <CustomDatePicker
             clearable
@@ -108,41 +113,26 @@ const EventForm = ({ isOpen, handleToggle, editData, renderList }) => {
             value={form?.start_date}
             isError={errorData?.start_date}
           />
-
-          <CustomSelectField
-            isError={errorData?.applies_locations}
-            errorText={errorData?.applies_locations}
-            label={"Applies to"}
-            value={form?.applies_locations}
-            handleChange={(value) => {
-              changeTextData(value, "applies_locations");
-            }}
-          >
-            <MenuItem value="ALL_LOCATIONS">ALL LOCATIONS</MenuItem>
-            <MenuItem value="SHOWROOM">SHOWROOM</MenuItem>
-            <MenuItem value="FACTORY">FACTORY</MenuItem>
-            <MenuItem value="WAREHOUSE">WAREHOUSE</MenuItem>
-          </CustomSelectField>
-          {/* <Autocomplete
+          <Autocomplete
             multiple
             id="tags-outlined"
             onChange={(e, value) => {
-              changeTextData(value, "excluded_employees");
+              changeTextData(value, "applies_locations");
             }}
-            value={form?.excluded_employees}
+            value={form?.applies_locations}
             // id="tags-standard"
-            options={listData?.EMPLOYEES ? listData?.EMPLOYEES : []}
-            getOptionLabel={(option) => option.name}
-            defaultValue={form?.excluded_employees}
+            options={locationList}
+            getOptionLabel={(option) => removeUnderScore(option)}
+            defaultValue={form?.applies_locations}
             renderInput={(params) => (
               <TextField
                 {...params}
                 variant="outlined"
-                label="Excluded Employees"
-                error={errorData?.excluded_employees}
+                label="Applies to"
+                error={errorData?.applies_locations}
               />
             )}
-          /> */}
+          />
         </div>
         <div className={styles.printFlex}>
           {editData?.id ? (

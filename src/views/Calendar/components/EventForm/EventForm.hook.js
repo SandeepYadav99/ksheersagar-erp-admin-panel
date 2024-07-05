@@ -10,9 +10,9 @@ const initialForm = {
   name: "",
   holiday_type: "",
   type: "FULL_DAY",
-  half_day_type:"",
+  half_day_type: "",
   start_date: "",
-  applies_locations: "",
+  applies_locations: [],
 };
 const useEventFormHook = ({ isOpen, handleToggle, editData, renderList }) => {
   const [form, setForm] = useState(
@@ -31,13 +31,11 @@ const useEventFormHook = ({ isOpen, handleToggle, editData, renderList }) => {
       if (editData?.id) {
         obj.id = editData?.id;
         Object.keys({ ...initialForm }).forEach((key) => {
-          // if (key === "excluded_employees") {
-          //   obj[key] = editData["excludedEmployees"]
-          //     ? editData["excludedEmployees"]
-          //     : [];
-          // } else {
+          if (key === "applies_locations") {
+            obj[key] = Array.isArray(editData[key]) ? editData[key] : [];
+          } else {
             obj[key] = editData[key] ? editData[key] : "";
-          // }
+          }
         });
       } else {
         obj.start_date = editData?.start_date;
@@ -77,8 +75,8 @@ const useEventFormHook = ({ isOpen, handleToggle, editData, renderList }) => {
       let shouldRemoveError = true;
       const t = { ...form };
       if (fieldName === "type") {
-        if(text === "FULL_DAY"){
-          t["half_day_type"] = ""
+        if (text === "FULL_DAY") {
+          t["half_day_type"] = "";
         }
         t[fieldName] = text;
       } else {
@@ -91,7 +89,7 @@ const useEventFormHook = ({ isOpen, handleToggle, editData, renderList }) => {
   );
 
   const checkFormValidation = useCallback(() => {
-    const errors = {...errorData};
+    const errors = { ...errorData };
     let required = [
       "name",
       "holiday_type",
@@ -113,7 +111,7 @@ const useEventFormHook = ({ isOpen, handleToggle, editData, renderList }) => {
       errors["type"] = true;
       SnackbarUtils.error("Please select the Nature of leave");
     }
-    if(form?.type === "HALF_DAY" && !form?.half_day_type){
+    if (form?.type === "HALF_DAY" && !form?.half_day_type) {
       errors["half_day_type"] = true;
       SnackbarUtils.error("Please select Half day Leave Type");
     }
@@ -132,8 +130,8 @@ const useEventFormHook = ({ isOpen, handleToggle, editData, renderList }) => {
       if (editData?.id) {
         req = serviceUpdateCalendar;
       }
-      if(form?.type === "FULL_DAY"){
-        delete form?.half_day_type
+      if (form?.type === "FULL_DAY") {
+        delete form?.half_day_type;
       }
       req({
         ...form,
