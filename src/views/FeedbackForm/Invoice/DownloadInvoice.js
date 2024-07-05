@@ -31,9 +31,9 @@ const DownloadInvoice = () => {
         </div>
         <hr className={styles.hrLine} />
         <p className={styles.title}>{employeeDetail?.location?.name}</p>
-        <p className={styles.subTitle}>{employeeDetail?.permanent_address}</p>
+        <p className={styles.subTitleAddres}>{employeeDetail?.location?.address}</p>
         <p className={styles.subTitle}>
-          Phone No.:<strong>{employeeDetail?.contact || "N/A"}</strong>{" "}
+          Phone No.:<strong>{employeeDetail?.location?.contact || "N/A"}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
           GSTIN:<strong>{employeeDetail?.location?.gstin}</strong>{" "}
@@ -55,16 +55,19 @@ const DownloadInvoice = () => {
           Invoice No.:<strong>{invoiceDetails?.invoice_no}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
-          Date & Time:<strong>{employeeDetail?.updatedAtText}</strong>{" "}
+          Date & Time:<strong>{posOder?.orderData}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
-          Cashier:<strong>{customerDetail?.name}</strong>{" "}
+          Cashier:<strong>{posOder?.employee?.name_en}</strong>
+          <span className={styles.stateCode}>
+            Cashier Code: <strong>{posOder?.employee?.emp_code}</strong>
+          </span>
         </p>
         <p className={styles.subTitle}>
           Mode of Payment:<strong>{posOder?.transection?.type}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
-          Place of Supply:<strong>{employeeDetail?.permanent_address}</strong>{" "}
+          Place of Supply:<strong>{employeeDetail?.location?.city}</strong>{" "}
         </p>
         <div className={styles.gaps} />
         <hr className={styles.hrLine} />
@@ -77,12 +80,14 @@ const DownloadInvoice = () => {
         <p className={styles.subTitle}>
           Contact No:<strong> {posOder?.customer?.contact}</strong>{" "}
         </p>
+        {customerDetail?.business_name &&
         <p className={styles.subTitle}>
           Company Name:<strong>{customerDetail?.business_name}</strong>{" "}
-        </p>
+        </p> }
+        {customerDetail?.gst_no && 
         <p className={styles.subTitle}>
           GSTIN:<strong> {customerDetail?.gst_no}</strong>{" "}
-        </p>
+        </p>}
 
         <div className={styles.gaps} />
         <hr className={styles.hrLine} />
@@ -104,8 +109,12 @@ const DownloadInvoice = () => {
         <p className={styles.subTitlePara}>
           For any queries please call/email us on customer care M: 7311122332,
           E: customer.care@ksheersagar.com Visit us at{" "}
-          <a href="www.ksheersagar.com" target="_blank" rel="noopener">
-            www.ksheersagar.com
+          <a
+            href="https://www.ksheersagar.com"
+            target="_blank"
+            rel="no-referrer"
+          >
+            www.ksheersagar.com"
           </a>
         </p>
         <hr className={styles.hrLine} />
