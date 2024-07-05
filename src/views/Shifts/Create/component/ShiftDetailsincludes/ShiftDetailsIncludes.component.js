@@ -79,8 +79,14 @@ const ShiftDetailsIncludeForm = ({ data, errorData: errorForm }, ref) => {
         }
       }
       if (val?.total_hours && val?.total_hours < 0) {
-        err["total_hours"] = true;
+        err["start_time"] = true;
+        err["end_time"] = true;
         SnackbarUtils.error("Start time cannot be less than End time");
+      }
+      if(val?.start_time && val?.start_time && val?.total_hours == 0){
+        err["start_time"] = true;
+        err["end_time"] = true;
+        SnackbarUtils.error("Start time cannot be same as End time");
       }
       if (
         val?.is_sunday_occasional_working &&

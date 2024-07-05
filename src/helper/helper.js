@@ -251,3 +251,10 @@ export const shiftdays= {
   is_sunday_occasional_working: false,
   working_sundays: [],
 }
+export const getWorkingDays = {
+  1: "First",
+  2: "Second",
+  3: "Third",
+  4: "Fouth",
+  5:"Fifth"
+};

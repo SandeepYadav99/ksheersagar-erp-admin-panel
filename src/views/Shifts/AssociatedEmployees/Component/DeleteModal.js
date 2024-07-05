@@ -29,7 +29,7 @@ const dispatch= useDispatch()
   const handleUpdate =useCallback(()=>{
    if(!isOpen) return;
     dispatch(actionDeleteShiftEmpDeleted(shiftId?.shift_id, shiftId?.id))
-    dispatch(actionGetJobOpeningShiftEmp(1, {}, {}))
+    dispatch(actionGetJobOpeningShiftEmp(1, {}, {},id))
     handleDialog()
     SnackbarUtils.success("Successfully Deleted")
   },[id, shiftId, isOpen, handleDialog])

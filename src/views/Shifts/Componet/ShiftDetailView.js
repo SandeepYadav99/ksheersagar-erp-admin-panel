@@ -2,6 +2,7 @@ import React, { useCallback } from "react";
 import PageBoxComponent from "../../../components/PageBox/PageBox.component";
 import { Avatar } from "@material-ui/core";
 import styles from "./Style.module.css";
+import { getWorkingDays } from "../../../helper/helper";
 
 const formatTime = (timestamp) => {
   const date = new Date(timestamp);
@@ -40,7 +41,7 @@ const ShiftDetailView = ({ shiftDays }) => {
               {startTime} - {endTime}
             </div>
             <div className={styles.fontSize}>
-              (Occasional Working Days: {shift?.working_sundays?.map((res, i, arr)=><span>{res}{i !== (arr.length-1) ? ', ' : ''}</span>)})
+              (Occasional Working Days: {shift?.working_sundays?.map((res, i, arr)=><span>{getWorkingDays[res]}{i !== (arr.length-1) ? ', ' : ''}</span>)})
             </div>
           </div>
         </div>

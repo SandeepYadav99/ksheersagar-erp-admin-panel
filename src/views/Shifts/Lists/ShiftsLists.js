@@ -82,11 +82,11 @@ const ShiftsLists = ({}) => {
   const renderTile = useCallback(() => {
     return (
       <div>
-        <span className={styles.title}>{id ? "Update" : "Add"} Shift</span>
+        <span className={styles.title}>{updateData?.id ? "Update" : "Add"} Shift</span>
         <div className={styles.newLine} />
       </div>
     );
-  }, [id]);
+  }, [updateData]);
 
   const workingDays = useCallback((all) => {
     return (

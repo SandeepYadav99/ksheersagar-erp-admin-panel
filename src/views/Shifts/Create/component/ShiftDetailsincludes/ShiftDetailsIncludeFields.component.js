@@ -4,13 +4,7 @@ import styles from "./style.module.css";
 import CustomCheckbox from "../../../../../components/FormFields/CustomCheckbox";
 import { Autocomplete } from "@mui/material";
 import CustomDateTimePicker from "../../../../../components/FormFields/DatePicker/CustomDateTimePicker";
-
-const getWorkingDays = {
-  1: "First",
-  2: "Second",
-  3: "Third",
-  4: "Fouth",
-};
+import { getWorkingDays } from "../../../../../helper/helper";
 
 const ShiftDetailsIncludeFields = ({
   index,
@@ -59,7 +53,7 @@ const ShiftDetailsIncludeFields = ({
       changeData(index, {
         "start_time": null,
         "end_time": null,
-        "total_hours": 0,
+        "total_hours": null,
       });
     }else{
       changeData(index, {
@@ -203,7 +197,7 @@ const ShiftDetailsIncludeFields = ({
                 }}
                 value={data?.working_sundays}
                 // id="tags-standard"
-                options={[1, 2, 3, 4]}
+                options={[1, 2, 3, 4,5]}
                 getOptionLabel={(option) => getWorkingDays[option]}
                 defaultValue={data?.working_sundays}
                 renderInput={(params) => (
