@@ -13,8 +13,8 @@ import { serviceGetAppSettings } from "../../../services/AppSettings.service";
 const initialForm = {
   key: "",
 
-  full_day: '',
-  half_day: '',
+  full_day: "",
+  half_day: "",
 };
 
 const useHoursCreateHook = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
@@ -25,23 +25,22 @@ const useHoursCreateHook = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [listData, setListData] = useState({ LOCATIONS: [] });
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
- if(!isSidePanel) return;
-      serviceGetAppSettings({ }).then((res) => {
-        if (!res.error) {
-          const data = JSON.parse(res?.data?.WORKING_HOURS);
-        
-          setForm({
-            ...form,
-             full_day: data?.full_day,
-             half_day:data?.half_day
-          });
-        } else {
-          SnackbarUtils.error(res?.message);
-        }
-      });
-    
+    if (!isSidePanel) return;
+    serviceGetAppSettings({}).then((res) => {
+      if (!res.error) {
+        const data = JSON.parse(res?.data?.WORKING_HOURS);
+
+        setForm({
+          ...form,
+          full_day: data?.full_day,
+          half_day: data?.half_day,
+        });
+      } else {
+        SnackbarUtils.error(res?.message);
+      }
+    });
   }, [isSidePanel]);
 
   useEffect(() => {
@@ -61,16 +60,29 @@ const useHoursCreateHook = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
         errors[val] = true;
       }
     });
-    let fullDayValue = parseFloat(form?.full_day);
-  let halfDayValue = parseFloat(form?.half_day);
+    const fullDayValue = parseFloat(form?.full_day);
+    const halfDayValue = parseFloat(form?.half_day);
 
-  if (isNaN(fullDayValue) || fullDayValue > 24) {
-    errors.full_day = "Full day hours cann't be greater than 24";
-  }
+    if (isNaN(fullDayValue) || fullDayValue > 24) {
+      errors.full_day = "Full day hours cann't be greater than 24";
+    }
 
-  if (!isNaN(fullDayValue) && !isNaN(halfDayValue) && halfDayValue > fullDayValue) {
-    errors.half_day = "Half day hours can't be more than full day hours";
-  }
+    if (
+      !isNaN(fullDayValue) &&
+      !isNaN(halfDayValue) &&
+      halfDayValue > fullDayValue
+    ) {
+      errors.half_day = "Half day hours can't be more than full day hours";
+    }
+    if (!form?.full_day) {
+      errors.full_day = "Please enter the full day hours";
+    }
+
+    if (form?.full_day && form?.half_day === 0) {
+      errors.half_day = "Please enter positive half day hours";
+    } else {
+      delete errors.half_day;
+    }
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
         delete errors[key];
@@ -86,9 +98,9 @@ const useHoursCreateHook = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
     }
     const valueString = JSON.stringify({
       full_day: Number(form.full_day),
-      half_day: Number(form.half_day) ,
-    })
-  
+      half_day: Number(form.half_day),
+    });
+
     const formData = {
       key: "WORKING_HOURS",
       value: valueString,
@@ -133,9 +145,19 @@ const useHoursCreateHook = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
       let shouldRemoveError = true;
 
       const t = { ...form };
-      if (fieldName === "name") {
-        t[fieldName] = text?.trimStart();
-      }  else {
+      if (fieldName === "full_day") {
+        if (text > 0) {
+          t[fieldName] = text;
+        } else {
+          t[fieldName] = "";
+        }
+      } else if (fieldName === "half_day") {
+        if (text > 0) {
+          t[fieldName] = text;
+        } else {
+          t[fieldName] = "";
+        }
+      } else {
         t[fieldName] = text;
       }
 

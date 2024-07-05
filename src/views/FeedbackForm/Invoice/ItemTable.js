@@ -1,22 +1,20 @@
 import React, { useState } from "react";
 import styles from "./styles.module.css";
-import GstTableFooter from "./GstTableFooter";
 
 const DigitalItemTable = ({ posOder }) => {
-  const [total, setTotal]=useState()
   function calculateOriginalPrice(finalPrice, gstRate) {
     const originalPrice = finalPrice / (1 + gstRate / 100);
-    return originalPrice;
+    return originalPrice || 0;
   }
 
   function calculateSgst(price, gstRate) {
     const sgst = (price * gstRate) / 100;
-    return sgst;
+    return sgst || 0;
   }
 
   const calculateIgst = (gst_slab, price) => {
     const igst = gst_slab + price;
-    return igst;
+    return igst || 0;
   };
 
   return (
@@ -39,11 +37,9 @@ const DigitalItemTable = ({ posOder }) => {
             return (
               <tr>
                 <td>{product?.product?.name_en}</td>
-                <td>{0}</td>
+                <td>{product?.product?.hsn}</td>
                 <td>{product?.weight}</td>
-                <td>
-                  ₹{product?.product?.price}/{product?.weight}
-                </td>
+                <td>₹{product?.product?.price}</td>
                 <td>
                   {" "}
                   {product?.product?.gst_slab
@@ -74,11 +70,11 @@ const DigitalItemTable = ({ posOder }) => {
       <div className={styles.totalInvoice}>
         <div className={styles.titleTotalWord}>Amount in words</div>
         <div className={styles.titleTotal}>
-          Two Thousand Two Hundred Thirty Rupees Only
+          {posOder?.cart.prices?.subtotalText}
         </div>
       </div>
 
-      {/* ////////// */}
+      {/* ////////// GST TABLE */}
       <table className={styles.myTable}>
         <thead>
           <tr className={styles.bgColor4Cols}>
@@ -110,21 +106,31 @@ const DigitalItemTable = ({ posOder }) => {
             return (
               <>
                 <tr>
-                  <td>{product?.product?.gst_slab}%</td>
+                  <td>
+                    {" "}
+                    {product?.product?.gst_slab
+                      ? `${product?.product?.gst_slab}%`
+                      : "0%"}
+                  </td>
                   <td>
                     ₹
                     {calculateOriginalPrice(
                       posOder?.cart.prices?.subtotal,
                       product?.product?.gst_slab
-                    ).toFixed(2)}
+                    ).toFixed(2) || "0"}
                   </td>
-                  <td>₹{product?.product?.gst_slab / 2}</td>
+                  <td>
+                    ₹{" "}
+                    {product?.product?.gst_slab
+                      ? `${product?.product?.gst_slab / 2}`
+                      : "0"}
+                  </td>
                   <td>
                     ₹
                     {calculateSgst(
                       product?.product?.price,
                       product?.product?.gst_slab
-                    ).toFixed(2)}
+                    ).toFixed(2) || "0"}
                   </td>
                   <td>
                     ₹
@@ -134,39 +140,38 @@ const DigitalItemTable = ({ posOder }) => {
                         product?.product?.price,
                         product?.product?.gst_slab
                       )
-                    ).toFixed(2)}
+                    ).toFixed(2) || "0"}
                   </td>
-                  <td onClick={()=>setTotal(total)}>₹{total.toFixed(2)}</td>
-               
+                  <td>₹{total ? total.toFixed(2) : "0"}</td>
                 </tr>
-                <br/>
-                <tr className={styles.hrlinetr} >
-                <td className={styles.titleTotal}>Tender Tax</td>
-                <td colSpan={4}></td>
-                <td className={styles.titleTotal} colSpan={4}>₹{total.toFixed(2)}</td>
-                </tr>
-             
-                <tr className={styles.hrlinetr}>
-                <td className={styles.titleTotal}>Tender Amount</td>
-                <td colSpan={4}></td>
-                <td className={styles.titleTotal} colSpan={1}>₹{"000"}</td>
-                </tr>
-                <tr>
-                <td className={styles.titleTotal}>Return Amount</td>
-                <td colSpan={4}></td>
-                <td className={styles.titleTotal} colSpan={4}>₹{"000"}</td>
-                </tr>
-                {/* <div>
-
-                <GstTableFooter total={total.toFixed(2)} />
-                </div> */}
+                <br />
               </>
             );
           })}
+          <tr className={styles.hrlinetr}>
+            <td className={styles.titleTotal}>Tender Tax</td>
+            <td colSpan={4}></td>
+            <td className={styles.titleTotal} colSpan={4}>
+              ₹{"00"}
+            </td>
+          </tr>
+
+          <tr className={styles.hrlinetr}>
+            <td className={styles.titleTotal}>Tender Amount</td>
+            <td colSpan={4}></td>
+            <td className={styles.titleTotal} colSpan={1}>
+              ₹{"000"}
+            </td>
+          </tr>
+          <tr>
+            <td className={styles.titleTotal}>Return Amount</td>
+            <td colSpan={4}></td>
+            <td className={styles.titleTotal} colSpan={4}>
+              ₹{"000"}
+            </td>
+          </tr>
         </tbody>
       </table>
-    
-     
     </div>
   );
 };

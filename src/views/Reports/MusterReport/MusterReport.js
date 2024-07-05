@@ -292,9 +292,11 @@ const MusterReport = ({}) => {
               <TablePagination
                 rowsPerPageOptions={[]}
                 component="div"
-                count={data?.length}
+                // count={data?.length}
+                count={1}
                 rowsPerPage={50}
-                page={currentPage - 1}
+                // page={currentPage - 1}
+                page={0}
                 onChangePage={(event, newPage) => {
                   handlePageChange(newPage);
                 }}

@@ -1,4 +1,4 @@
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./styles.module.css";
 
 import { ButtonBase } from "@material-ui/core";
@@ -8,17 +8,13 @@ import ic_topnav_logo from "../../../assets/img/feedback/ic_topnav_logo.png";
 import ic_download from "../../../assets/img/feedback/ic_download.png";
 import historyUtils from "../../../libs/history.utils";
 
-
 import DigitalItemTable from "./ItemTable";
 import InvoiceHook from "./InvoiceHook";
 
-
 const Invoice = () => {
   // const [invoiceDetails, setInvoiceDetails] = useState();
-  const {invoiceDetails, myParam}=InvoiceHook()
+  const { invoiceDetails, myParam } = InvoiceHook();
   const { posOder, employeeDetail, customerDetail } = invoiceDetails || {};
-
- 
 
   return (
     <div className={styles.container}>
@@ -32,24 +28,22 @@ const Invoice = () => {
         </div>
         <hr className={styles.hrLine} />
         <p className={styles.title}>{employeeDetail?.location?.name}</p>
+        <p className={styles.subTitleAddres}>{employeeDetail?.location?.address}</p>
         <p className={styles.subTitle}>
-          {employeeDetail?.permanent_address}
+          Phone No.:<strong>{employeeDetail?.location?.contact || "N/A"}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
-          Phone No.:<strong>{employeeDetail?.contact || "N/A"}</strong>{" "}
-        </p>
-        <p className={styles.subTitle}>
-          GSTIN:<strong>{employeeDetail?.location?.gstin }</strong>{" "}
+          GSTIN:<strong>{employeeDetail?.location?.gstin}</strong>{" "}
           <span className={styles.stateCode}>
             {" "}
-            State Code: <strong>{employeeDetail?.location?.state_code }</strong>
+            State Code: <strong>{employeeDetail?.location?.state_code}</strong>
           </span>
         </p>
         <p className={styles.subTitle}>
-          FSSAI No.:<strong>{employeeDetail?.location?.fssai_number }</strong>{" "}
+          FSSAI No.:<strong>{employeeDetail?.location?.fssai_number}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
-          CIN No.:<strong>{employeeDetail?.location?.cin }</strong>{" "}
+          CIN No.:<strong>{employeeDetail?.location?.cin}</strong>{" "}
         </p>
         <div className={styles.gaps} />
         <hr className={styles.hrLine} />
@@ -59,16 +53,19 @@ const Invoice = () => {
           Invoice No.:<strong>{invoiceDetails?.invoice_no}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
-          Date & Time:<strong>{employeeDetail?.updatedAtText}</strong>{" "}
+          Date & Time:<strong>{posOder?.orderData}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
-          Cashier:<strong>{customerDetail?.name}</strong><span className={styles.stateCode}>Cashier Code: <strong>{}</strong></span>
+          Cashier:<strong>{posOder?.employee?.name_en}</strong>
+          <span className={styles.stateCode}>
+            Cashier Code: <strong>{posOder?.employee?.emp_code}</strong>
+          </span>
         </p>
         <p className={styles.subTitle}>
-          Mode of Payment:<strong>{posOder?.transection?.type}</strong>{" "} 
+          Mode of Payment:<strong>{posOder?.transection?.type}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
-          Place of Supply:<strong>{employeeDetail?.permanent_address}</strong>{" "}
+          Place of Supply:<strong>{employeeDetail?.location?.city}</strong>{" "}
         </p>
         <div className={styles.gaps} />
         <hr className={styles.hrLine} />
@@ -81,12 +78,16 @@ const Invoice = () => {
         <p className={styles.subTitle}>
           Contact No:<strong> {posOder?.customer?.contact}</strong>{" "}
         </p>
-        {/* <p className={styles.subTitle}>
-          Company Name:<strong>{customerDetail?.business_name}</strong>{" "}
-        </p>
-        <p className={styles.subTitle}>
-          GSTIN:<strong> {customerDetail?.gst_no}</strong>{" "}
-        </p> */}
+        {customerDetail?.business_name && (
+          <p className={styles.subTitle}>
+            Company Name:<strong>{customerDetail?.business_name}</strong>{" "}
+          </p>
+        )}
+        {customerDetail?.gst_no && (
+          <p className={styles.subTitle}>
+            GSTIN:<strong> {customerDetail?.gst_no}</strong>{" "}
+          </p>
+        )}
 
         <div className={styles.gaps} />
         <hr className={styles.hrLine} />
@@ -98,15 +99,22 @@ const Invoice = () => {
         <p className={styles.subTitle}>
           No. of Boxes: <strong>{posOder?.cart?.boxes}</strong>{" "}
         </p>
-        <DigitalItemTable posOder={posOder} customerDetail={customerDetail}/>
+        <DigitalItemTable posOder={posOder} customerDetail={customerDetail} />
 
         <div className={styles.gaps} />
-       
+
         <div className={styles.gaps} />
         <p className={styles.thankyounote}>Thank you for Shopping with us!</p>
         <p className={styles.subTitlePara}>
-          For any queries please call/email us on customer care For any queries
-          please call/email us on customer care Visit us at www.ksheersagar.com
+          For any queries please call/email us on customer care M: 7311122332,
+          E: customer.care@ksheersagar.com Visit us at{" "}
+          <a
+            href="https://www.ksheersagar.com"
+            target="_blank"
+            rel="no-referrer"
+          >
+            www.ksheersagar.com"
+          </a>
         </p>
         <hr className={styles.hrLine} />
         <p className={styles.subTitlePara}>
@@ -124,9 +132,9 @@ const Invoice = () => {
               <img key={index} src={ic_star} alt="" hight={15} width={15} />
             ))}
           </div>
-          
-          <div className={styles.gaps} />
-          <div className={styles.gaps} />
+
+          <div className={styles.gaps1} />
+
           <ButtonBase
             className={styles.createBtn}
             onClick={() =>
@@ -139,7 +147,7 @@ const Invoice = () => {
           </ButtonBase>
         </div>
         {/* ///////////// */}
-        <br/>
+        <br />
         <hr className={styles.hrLine} />
         <ul className={styles.ulList}>
           <div className={styles.titleAply}>** T&C Apply</div>
@@ -147,7 +155,9 @@ const Invoice = () => {
             {" "}
             All disputes are subject to Varanasi, Uttar Pradesh, jurisdicition.
           </li>
-          <li className={styles.listStyle}>Goods once sold will not be taken back or exchanged.</li>
+          <li className={styles.listStyle}>
+            Goods once sold will not be taken back or exchanged.
+          </li>
           <li className={styles.listStyle}>
             All Bengali Sweets must be kept in a refrigerator and consumed
             within same day.
@@ -163,7 +173,9 @@ const Invoice = () => {
             Dhokla, Rabri, Rasmalai, Cheena Payas, Chhena Roll, Doodh Chamcham
             must be consumed within 6 hours of purchase.
           </li>
-          <li className={styles.listStyle}>Rasgulla must be consumed within the same day of purchase.</li>
+          <li className={styles.listStyle}>
+            Rasgulla must be consumed within the same day of purchase.
+          </li>
           <li className={styles.listStyle}>All prices are inclusive of GST.</li>
           <li className={styles.listStyle}>
             Guest are requested to provide digital / physical invoice to collect
@@ -181,7 +193,13 @@ const Invoice = () => {
             Now get a digital copy of your invoice
           </p>
           <div className={styles.footerlink}>
-            <a href={`${"/download/invoice"}?invoice_no=${invoiceDetails?.invoice_no}`}>Download Now</a>
+            <a
+              href={`${"/download/invoice"}?invoice_no=${
+                invoiceDetails?.invoice_no
+              }`}
+            >
+              Download Now
+            </a>
             <img src={ic_download} alt="" width={26} height={26} />
           </div>
         </div>
