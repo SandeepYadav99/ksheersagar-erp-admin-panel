@@ -26,6 +26,9 @@ import ShiftDetail from "../views/Shifts/ShiftDetail/ShiftDetail";
 import CalendarList from "../views/Calendar/CalendarList.view";
 import Dashboard from "../views/dashboard/Dashboard";
 import { CalendarMonth } from "@mui/icons-material";
+import AttendanceReport from "../views/Reports/AttendanceReport/AttendanceReport";
+import ShiftWiseReport from "../views/Reports/ShiftWiseReport/ShiftWiseReport";
+import MusterReport from "../views/Reports/MusterReport/MusterReport";
 
 const NewDashboard = lazy(() => import("../views/dashboard/NewDashboard.view"));
 const LocationList = lazy(() =>
@@ -217,8 +220,8 @@ const dashboardRoutes = [
   },
   {
     path: RouteName.STATIC_QR,
-    sidebarName: "Static QR",
-    navbarName: "Static QR",
+    sidebarName: "PayTM QR Codes",
+    navbarName: "PayTM QR Codes",
     icon: PeopleOutlined,
     component: StaticQr,
     is_sidebar: true,
@@ -326,6 +329,46 @@ const dashboardRoutes = [
   //   parent: "inventory",
   //   // roles: [Roles.ADMIN, Roles.CORPORATE_HR],
   // },
+  {
+    path: "null",
+    sidebarName: "Reports",
+    navbarName: "Reports",
+    icon: EventNote,
+    is_sidebar: true,
+    slug: "reports",
+    is_parent: true,
+    // roles: [Roles.ADMIN, Roles.CORPORATE_HR],
+  },
+  {
+    path: RouteName.ATTENDACE_REPORT,
+    sidebarName: "Attendance Report",
+    navbarName: "Attendance Report",
+    icon: PeopleOutlined,
+    is_sidebar: true,
+    parent: "reports",
+  component:AttendanceReport
+    // roles: [Roles.ADMIN, Roles.CORPORATE_HR],
+  },
+  {
+    path: RouteName.SHIFTS_WISE_REPORT,
+    sidebarName: "Shift Wise Report",
+    navbarName: "Shift Wise Report",
+    icon: PeopleOutlined,
+    is_sidebar: true,
+    parent: "reports",
+    component:ShiftWiseReport
+    // roles: [Roles.ADMIN, Roles.CORPORATE_HR],
+  },
+  {
+    path: RouteName.MUSTER_REPORT,
+    sidebarName: "Attendance Report",
+    navbarName: "Attendance Report",
+    icon: PeopleOutlined,
+    is_sidebar: true,
+    parent: "reports",
+    component:MusterReport
+    // roles: [Roles.ADMIN, Roles.CORPORATE_HR],
+  },
 ];
 
 export default dashboardRoutes;

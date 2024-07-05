@@ -10,13 +10,12 @@ import Constants from "../../../config/constants";
 import FilterComponent from "../../../components/Filter/Filter.component";
 
 import StatusPill from "../../../components/Status/StatusPill.component";
+import useAttendanceReportHook from "./AttendanceReportHook";
+import AttendanceReportInputFiled from "./component/AttendanceReportInputFiled";
 
-import SidePanelComponent from "../../../components/SidePanel/SidePanel.component";
 
-import useStaticQrHook from "./StaticQrHook";
-import StaticQrCreate from "../Create/StaticQrCreate";
 
-const StaticQr = ({}) => {
+const AttendanceReport = ({}) => {
   const {
     handleSortOrderChange,
     handleRowSize,
@@ -30,14 +29,14 @@ const StaticQr = ({}) => {
     configFilter,
     id,
     handleToggleSidePannel,
-  } = useStaticQrHook({});
+  } = useAttendanceReportHook({});
 
   const {
     data,
     all: allData,
     currentPage,
     is_fetching: isFetching,
-  } = useSelector((state) => state?.StaticQr);
+  } = useSelector((state) => state?.PaytmMachines);
 
   const renderStatus = useCallback((status) => {
     return <StatusPill status={status} />;
@@ -60,7 +59,7 @@ const StaticQr = ({}) => {
   const renderTile = useCallback(() => {
     return (
       <div>
-        <span className={styles.title}>{id ? "Update" : "Add"}  UPI ID</span>
+        <span className={styles.title}>{id ? "Update" : "Add"} Machine</span>
         <div className={styles.newLine} />
       </div>
     );
@@ -68,49 +67,68 @@ const StaticQr = ({}) => {
   const tableStructure = useMemo(() => {
     return [
       {
-        key: "upi_id",
-        label: "UPI ID",
+        key: "employee",
+        label: "EMPLOYEE",
         sortable: false,
-        render: (value, all) => <div>{all?.upi_id || "N/A"}</div>,
+        render: (value, all) => <div>{all?.name}</div>,
+      },
+      {
+        key: "date_day",
+        label: "DATE/DAY",
+        sortable: false,
+        render: (temp, all) => (
+          <div >{all?.t_id}</div>
+        ),
+      },
+      {
+        key: "department_role",
+        label: "DEPARTMENT/ROLE",
+        sortable: false,
+        render: (temp, all) => <div>{all?.serial_no}</div>,
       },
       {
         key: "location",
         label: "LOCATION",
         sortable: false,
-        render: (temp, all) => (
-          <div style={{ width: "15rem" }}>{all?.location?.name}</div>
-        ),
+        render: (temp, all) => <div>{}</div>,
       },
       {
-        key: "m_id",
-        label: "M ID",
+        key: "punch_in_time",
+        label: "PUNCH IN TIME",
         sortable: false,
-        render: (temp, all) => <div>{all?.code}</div>,
+        render: (temp, all) => <div>{all?.serial_no}</div>,
       },
       {
-        key: "name",
-        label: "NAME",
+        key: "punch_out_time",
+        label: "PUNCH OUT TIME",
         sortable: false,
-        render: (temp, all) => <div>{all?.name || "N/A"}</div>,
+        render: (temp, all) => <div>{all?.serial_no}</div>,
       },
       {
-        key: "user_id",
-        label: "Action",
-        render: (temp, all) => (
-          <div>
-            <IconButton
-              className={"tableActionBtn"}
-              color="secondary"
-              disabled={isCalling}
-              onClick={() => {
-                handleViewDetails(all);
-              }}
-            >
-              <Edit fontSize={"small"} />
-            </IconButton>
-          </div>
-        ),
+        key: "working_hours",
+        label: "WORKING HOURS",
+        sortable: false,
+        render: (temp, all) => <div>{all?.serial_no}</div>,
       },
+      {
+        key: "break_hours",
+        label: "BREAK HOURS",
+        sortable: false,
+        render: (temp, all) => <div>{all?.serial_no}</div>,
+      },
+      {
+        key: "status",
+        label: "STATUS",
+        sortable: false,
+        render: (temp, all) => <div>{<StatusPill status={all?.status} />}</div>,
+      },
+      {
+        key: "employee_status",
+        label: "EMPLOYEE STATUS",
+        sortable: false,
+        render: (temp, all) => <div>{<StatusPill status={all?.status} />}</div>,
+      },
+      
     ];
   }, [renderStatus, renderFirstCell, handleViewDetails, handleEdit, isCalling]);
 
@@ -145,26 +163,21 @@ const StaticQr = ({}) => {
       <PageBox>
         <div className={styles.headerContainer}>
           <div>
-            <span className={styles.title}>PayTM QR Codes</span>
+            <span className={styles.title}>Attendance Report</span>
             <div className={styles.newLine} />
           </div>
           <div>
             <ButtonBase
               onClick={handleToggleSidePannel}
-              className={"createBtn"}
+              className={"createBtnOutland"}
             >
-             ADD UPI ID <Add fontSize={"small"} className={"plusIcon"}></Add>
+             DOWNLOAD
             </ButtonBase>
           </div>
         </div>
 
         <div>
-          <FilterComponent
-            is_progress={isFetching}
-            filters={configFilter}
-            handleSearchValueChange={handleSearchValueChange}
-            handleFilterDataChange={handleFilterDataChange}
-          />
+         <AttendanceReportInputFiled/>
           <div>
             <br />
             <div style={{ width: "100%" }}>
@@ -176,21 +189,21 @@ const StaticQr = ({}) => {
           </div>
         </div>
       </PageBox>
-      <SidePanelComponent
+      {/* <SidePanelComponent
         handleToggle={handleToggleSidePannel}
         title={renderTile()}
         open={isSidePanel}
         side={"right"}
         arrowBack={true}
       >
-        <StaticQrCreate
+        <MachinesCreate
           isSidePanel={isSidePanel}
           handleToggleSidePannel={handleToggleSidePannel}
-          qrId={id}
+          machineId={id}
         />
-      </SidePanelComponent>
+      </SidePanelComponent> */}
     </div>
   );
 };
 
-export default StaticQr;
+export default AttendanceReport;

@@ -8,7 +8,7 @@
   background-color: #fff !important;
   border: "20px solid #00000011" !important;
   padding: 20px !important;
-  width: 375px !important;
+  width: 475px !important;
   height: auto !important;
   align-items: center;
 }
@@ -22,6 +22,9 @@
   letter-spacing: 0.14px !important;
   font-style: normal normal bold 14px/18px Mulish;
 }
+.hrlinetr {
+  border-bottom: 1px solid #e5e5e5 !important;
+}
 .subTitle {
   font-size: 12px !important;
   color: #212125 !important;
@@ -29,7 +32,7 @@
   letter-spacing: 0.14px !important;
   font-style: normal normal bold 12px/15px Mulish;
 }
-.subTitleQr{
+.subTitleQr {
   font-size: 10px !important;
   color: #212125 !important;
   font-weight: normal !important;
@@ -41,11 +44,13 @@
   color: #212125 !important;
   font-weight: normal !important;
   letter-spacing: 0.14px !important;
-  font-style: normal normal bold 12px/15px Mulish;
+  width: 330px !important;
   text-align: center !important;
+  margin: auto !important;
 }
 .actions {
   text-align: center;
+  margin-bottom: 10px !important;
 }
 .createBtn {
   background-color: #007aff !important;
@@ -123,7 +128,7 @@
   border-collapse: collapse !important;
   font-size: 12px !important;
   color: #161616 !important;
-  width: 375px !important;
+  width: 475px !important;
 }
 
 .myTable th,
@@ -145,6 +150,7 @@
 
 .bgColor4Cols {
   background-color: #d6e7fb !important;
+  width: 100% !important;
 }
 
 .bgColorRow {
@@ -190,15 +196,15 @@
   color: #007aff !important;
   font-weight: 600 !important;
 }
-.ulList{
+.ulList {
   margin-top: 20px !important;
 }
-.ulList, li{
-  font-size: 12PX !important;
+ .listStyle {
+  font-size: 12px !important;
   margin-left: -12px !important;
   margin-top: 5px !important;
 }
-.titleAply{
+.titleAply {
   font-size: 14px !important;
   color: #212125 !important;
   font-weight: bold !important;
@@ -217,6 +223,6 @@
   font-weight: 500 !important;
   color: #212125 !important;
 }
-.stateCode{
+.stateCode {
   margin-left: 20px !important;
 }
