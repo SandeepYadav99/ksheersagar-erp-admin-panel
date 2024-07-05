@@ -9,7 +9,7 @@ import Constants from "../../../config/constants";
 
 import StatusPill from "../../../components/Status/StatusPill.component";
 
-import AttendanceReportInputFiled from "../AttendanceReport/component/AttendanceReportInputFiled";
+
 import useShiftWiseReportHook from "./ShiftWiseReportHook";
 import ShiftWiseFiled from "./component/ShiftWiseFiled";
 
@@ -70,6 +70,7 @@ const ShiftWiseReport = ({}) => {
         key: "employee",
         label: "EMPLOYEE",
         sortable: false,
+        
         render: (value, all) => <div>{all?.name}</div>,
       },
     
