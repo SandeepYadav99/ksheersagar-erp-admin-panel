@@ -34,4 +34,7 @@ export default {
      SHIFTS:"/shifts",
      SHIFTS_DETAILS:"/shifts/detail/",
   CALENDAR:"/calendar",
+  ATTENDACE_REPORT:"/attendace/report",
+  MUSTER_REPORT:"/muster/report",
+  SHIFTS_WISE_REPORT:"/shifts/report",
 };
