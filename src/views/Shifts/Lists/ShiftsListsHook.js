@@ -12,6 +12,8 @@ import {
 const useShiftsListsHook = ({}) => {
   const [isSidePanel, setSidePanel] = useState(false);
   const [isSidePanelHours, setSidePanelHours] = useState(false);
+  const [isDelete,setIsDelete] = useState(false);
+  const [deleteId,setDeleteId]=useState(null)
   const [isCalling, setIsCalling] = useState(false);
   const [editData, setEditData] = useState(null);
   const [updateData, setUpdateData] = useState(null);
@@ -114,6 +116,14 @@ const useShiftsListsHook = ({}) => {
     [setSidePanel, setUpdateData]
   );
 
+  const toggleDelete = useCallback(
+    (data) => {
+      setIsDelete((e) => !e);
+      data ? setDeleteId(data) : setDeleteId(null);
+    },
+    [isDelete,setDeleteId,deleteId]
+  );
+
   const handleToggleSidePannelHours = useCallback(() => {
     setSidePanelHours((e) => !e);
     setMachineId("");
@@ -182,6 +192,9 @@ const useShiftsListsHook = ({}) => {
     handleToggleSidePannelHours,
     handleViewShiftDetail,
     updateData,
+    toggleDelete,
+    isDelete,
+    deleteId
   };
 };
 

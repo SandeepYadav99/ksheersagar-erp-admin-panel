@@ -605,6 +605,27 @@ const EmployeeListCreate = ({ location }) => {
             />
           </div>
         </div>
+        <div className={"formFlex"}>
+        <div className={"formGroup"}>
+          <CustomSelectField
+            isError={errorData?.shift_id}
+            errorText={errorData?.shift_id}
+            label={"Assign Shift"}
+            value={form?.shift_id}
+            handleChange={(value) => {
+              changeTextData(value, "shift_id");
+            }}
+          >
+            {listData?.SHIFTS?.map((item, index) => (
+              <MenuItem key={`rep_${index}`} value={item?.id}>
+                {item?.name}
+              </MenuItem>
+            ))}
+          </CustomSelectField>
+        </div>
+        <div className={"formGroup"}></div>
+
+      </div>
       </div>
 
       <div className={styles.btnCont}>

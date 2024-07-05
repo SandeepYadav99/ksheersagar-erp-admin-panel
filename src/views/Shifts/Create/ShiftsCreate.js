@@ -13,7 +13,6 @@ const ShiftsCreate = ({ handleToggleSidePannel, isSidePanel, editData }) => {
     onBlurHandler,
     handleSubmit,
     isSubmitting,
-    listData,
     shiftRef,
   } = useShiftsCreateHook({ handleToggleSidePannel, isSidePanel, editData });
 
