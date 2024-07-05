@@ -70,7 +70,7 @@ const DigitalItemTable = ({ posOder }) => {
       <div className={styles.totalInvoice}>
         <div className={styles.titleTotalWord}>Amount in words</div>
         <div className={styles.titleTotal}>
-          Two Thousand Two Hundred Thirty Rupees Only
+          {posOder?.cart.prices?.subtotalText}
         </div>
       </div>
 

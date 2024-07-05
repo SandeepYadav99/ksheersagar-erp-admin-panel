@@ -29,7 +29,6 @@ const HoursCreate = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
             label={"Full Day Hours"}
             value={form?.full_day}
             onTextChange={(text) => {
-             
               changeTextData(text, "full_day");
             }}
             onBlur={() => {
