@@ -41,12 +41,12 @@ const ShiftDetailsIncludeFields = ({
   }, [data?.start_time, data?.end_time]);
 
   useEffect(() => {
-    if (!data?.is_sunday_occasional_working) {
+    if (!data?.is_occasional_working) {
       changeData(index, {
-        ["working_sundays"]: [],
+        ["occasional_working_days"]: [],
       });
     }
-  }, [data?.is_sunday_occasional_working]);
+  }, [data?.is_occasional_working]);
 
   useEffect(() => {
     if (data?.is_week_off) {
@@ -57,7 +57,7 @@ const ShiftDetailsIncludeFields = ({
       });
     }else{
       changeData(index, {
-        "is_sunday_occasional_working": false,
+        "is_occasional_working": false,
       });
     }
   }, [data?.is_week_off]);
@@ -163,16 +163,16 @@ const ShiftDetailsIncludeFields = ({
             <div className={styles.checkBox}>
               <input
                 type="checkbox"
-                name={"is_sunday_occasional_working"}
+                name={"is_occasional_working"}
                 onClick={() => {
                   changeData(index, {
-                    is_sunday_occasional_working:
-                      !data?.is_sunday_occasional_working,
+                    is_occasional_working:
+                      !data?.is_occasional_working,
                   });
                 }}
                 className={styles.check}
-                value={data?.is_sunday_occasional_working}
-                checked={data?.is_sunday_occasional_working}
+                value={data?.is_occasional_working}
+                checked={data?.is_occasional_working}
               />{" "}
               <label className={styles.checkboxlabel}>
                 Do you want Occasional Working On {data?.name}?
@@ -184,7 +184,7 @@ const ShiftDetailsIncludeFields = ({
          
           <div className={styles.formGrp1}></div>
         </div>
-        {data?.is_sunday_occasional_working && (
+        {data?.is_occasional_working && (
           <div className={styles.formWrp}>
             <div className={styles.formGrp}></div>
             <div className={styles.formGrp14}>
@@ -193,19 +193,19 @@ const ShiftDetailsIncludeFields = ({
                 multiple
                 id="tags-outlined"
                 onChange={(e, value) => {
-                  handleChange(value, "working_sundays");
+                  handleChange(value, "occasional_working_days");
                 }}
-                value={data?.working_sundays}
+                value={data?.occasional_working_days}
                 // id="tags-standard"
                 options={[1, 2, 3, 4,5]}
                 getOptionLabel={(option) => getWorkingDays[option]}
-                defaultValue={data?.working_sundays}
+                defaultValue={data?.occasional_working_days}
                 renderInput={(params) => (
                   <TextField
                     {...params}
                     variant="outlined"
                     label="Choose Working Days"
-                    error={errors?.working_sundays}
+                    error={errors?.occasional_working_days}
                   />
                 )}
               />

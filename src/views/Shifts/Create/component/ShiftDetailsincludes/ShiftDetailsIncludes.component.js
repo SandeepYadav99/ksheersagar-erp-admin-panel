@@ -19,8 +19,8 @@ const TEMP_OBJ = {
   end_time: new Date(0, 0, 0, 10, 0),
   total_hours: null,
   is_week_off: false,
-  is_sunday_occasional_working: false,
-  working_sundays: [],
+  is_occasional_working: false,
+  occasional_working_days: [],
 };
 
 const ShiftDetailsIncludeForm = ({ data, errorData: errorForm }, ref) => {
@@ -89,10 +89,10 @@ const ShiftDetailsIncludeForm = ({ data, errorData: errorForm }, ref) => {
         SnackbarUtils.error("Start time cannot be same as End time");
       }
       if (
-        val?.is_sunday_occasional_working &&
-        val?.working_sundays?.length === 0
+        val?.is_occasional_working &&
+        val?.occasional_working_days?.length === 0
       ) {
-        err["working_sundays"] = true;
+        err["occasional_working_days"] = true;
       }
       if (Object.keys(err)?.length > 0) {
         errors[index] = err;
