@@ -25,6 +25,7 @@ import HoursCreate from "../WorkingHoursCreate/HoursCreate";
 
 import WeekSection from "../Componet/WeekSection";
 import ShiftsCreate from "../Create/ShiftsCreate";
+import DeleteDialog from "./component/DeleteDialog/DeleteDialog.view";
 
 const ShiftsLists = ({}) => {
   const {
@@ -43,6 +44,9 @@ const ShiftsLists = ({}) => {
     handleToggleSidePannel,
     handleViewShiftDetail,
     updateData,
+    toggleDelete,
+    isDelete,
+    deleteId,
   } = useShiftsListsHook({});
 
   const {
@@ -82,7 +86,9 @@ const ShiftsLists = ({}) => {
   const renderTile = useCallback(() => {
     return (
       <div>
-        <span className={styles.title}>{updateData?.id ? "Update" : "Add"} Shift</span>
+        <span className={styles.title}>
+          {updateData?.id ? "Update" : "Add"} Shift
+        </span>
         <div className={styles.newLine} />
       </div>
     );
@@ -98,10 +104,7 @@ const ShiftsLists = ({}) => {
                 {shift?.name?.substring(0, 2)}
               </Avatar>
             );
-          } else if (
-            shift?.is_occasional_working &&
-            shift?.is_week_off
-          ) {
+          } else if (shift?.is_occasional_working && shift?.is_week_off) {
             return (
               <Avatar className={styles.avatorSeletedCircle}>
                 {shift?.name?.substring(0, 2)}
@@ -166,16 +169,18 @@ const ShiftsLists = ({}) => {
             >
               <Edit fontSize={"small"} />
             </IconButton>
-            <IconButton
-              className={"tableActionBtn"}
-              color="secondary"
-              disabled={isCalling}
-              onClick={() => {
-                handleViewDelete(all);
-              }}
-            >
-              <DeleteOutline fontSize={"small"} />
-            </IconButton>
+            {!all?.is_default && (
+              <IconButton
+                className={"tableActionBtn"}
+                color="secondary"
+                disabled={isCalling}
+                onClick={() => {
+                  toggleDelete(all);
+                }}
+              >
+                <DeleteOutline fontSize={"small"} />
+              </IconButton>
+            )}
           </div>
         ),
       },
@@ -250,6 +255,11 @@ const ShiftsLists = ({}) => {
             <WeekSection />
           </div>
         </div>
+        <DeleteDialog
+          isOpen={isDelete}
+          handleToggle={toggleDelete}
+          deleteId={deleteId}
+        />
         <div>
           {/* <FilterComponent
             is_progress={isFetching}

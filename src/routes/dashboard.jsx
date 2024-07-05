@@ -125,16 +125,6 @@ const dashboardRoutes = [
     is_protect: true,
     // roles: [Roles.ADMIN, Roles.RECRUITER, Roles.CORPORATE_HR],
   },
-  {
-    path: `${RouteName.EMPLOYEE_UPDATE}:id`,
-    sidebarName: "Employee Update",
-    navbarName: "Employee Update",
-    icon: DashboardOutlined,
-    component: EmployeeEdit,
-    is_sidebar: false,
-    is_protect: true,
-    // roles: [Roles.ADMIN, Roles.RECRUITER, Roles.CORPORATE_HR],
-  },
 
   {
     path: "null",

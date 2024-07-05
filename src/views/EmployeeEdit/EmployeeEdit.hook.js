@@ -53,7 +53,7 @@ function EmployeeEditHook({ location }) {
     esi_no:"",
     external_emp_code:"",
     bank_name: "",
-   
+    shift_id:"",
     account_no:"",
     bank_branch: "",
     ifsc: "",
@@ -81,6 +81,7 @@ function EmployeeEditHook({ location }) {
     LEVEL: [],
     LOCATIONS: [],
     ROLES: [],
+    SHIFTS:[]
   });
   useEffect(() => {
     Promise.allSettled([
@@ -97,6 +98,7 @@ function EmployeeEditHook({ location }) {
         "LEVEL",
         "LOCATIONS",
         "ROLES",
+        "SHIFTS"
       ]),
       serviceGetEmployeeDetails({ id: id }),
     ]).then((promises) => {
@@ -145,7 +147,7 @@ function EmployeeEditHook({ location }) {
       "status",
       "father_name",
       "doj",
-    
+      "shift_id"
       // "uan_no",
       // "esi_no"
     ];

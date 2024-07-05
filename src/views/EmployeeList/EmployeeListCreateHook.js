@@ -59,6 +59,7 @@ function EmployeeListCreateHook({ location }) {
     account_no: "",
     bank_branch: "",
     ifsc: "",
+    shift_id: "",
   };
   const [form, setForm] = useState({ ...initialForm });
   const [errorData, setErrorData] = useState({});
@@ -81,6 +82,7 @@ function EmployeeListCreateHook({ location }) {
     LEVEL: [],
     LOCATIONS: [],
     ROLES: [],
+    SHIFTS: [],
   });
   const [showPasswordCurrent, setShowPasswordCurrent] = useState(false);
 
@@ -94,6 +96,7 @@ function EmployeeListCreateHook({ location }) {
       "DESIGNATIONS",
       "LOCATIONS",
       "ROLES",
+      "SHIFTS",
     ]).then((res) => {
       if (!res.error) {
         setListData(res.data);
@@ -105,21 +108,35 @@ function EmployeeListCreateHook({ location }) {
       let req;
       if (candidateId) {
         req = serviceGetEmployeeConversionInfo({ candidate_id: candidateId });
-      }
-      req.then((res) => {
-        const empData = res?.data;
-        setDefaultImg(empData?.image);
-        setRemotePath(empData?.remote_image_path);
-        const data = { image: "" };
-        Object.keys({ ...initialForm }).forEach((key) => {
-          if (key in initialForm && key !== "image") {
-            data[key] = empData[key];
-          }
+        req.then((res) => {
+          const empData = res?.data;
+          setDefaultImg(empData?.image);
+          setRemotePath(empData?.remote_image_path);
+          const data = { image: "" };
+          Object.keys({ ...initialForm }).forEach((key) => {
+            if (key in initialForm && key !== "image") {
+              data[key] = empData[key];
+            }
+          });
+          setForm({ ...initialForm, ...data });
         });
-        setForm({ ...initialForm, ...data });
-      });
+      }
     }
   }, [candidateId, listData]);
+
+  useEffect(() => {
+    if (!candidateId && listData?.SHIFTS?.length > 0) {
+      const defaultId =
+        listData?.SHIFTS?.length > 0
+          ? listData?.SHIFTS?.find((key) => key?.is_default)
+          : {};
+      setForm({
+        ...form,
+        shift_id: defaultId?.id,
+      });
+    }
+  }, [listData]);
+
   LogUtils.log("formLLL", form, remotePath);
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
@@ -130,6 +147,7 @@ function EmployeeListCreateHook({ location }) {
       "doj",
       "location_id",
       "password",
+      "shift_id",
       // "pin",
       // "department_id",
       "role_id",
@@ -164,8 +182,8 @@ function EmployeeListCreateHook({ location }) {
     if (form?.uan_no && form?.uan_no?.length < 12) {
       errors["uan_no"] = "Min 12 digit required";
     }
-    if(form?.ifsc && form?.ifsc?.length !== 11){
-      errors.ifsc = true
+    if (form?.ifsc && form?.ifsc?.length !== 11) {
+      errors.ifsc = true;
     }
     // if (form?.esi_no && !validateESI(form?.esi_no)) {
     //   errors["esi_no"] = "Min 17 digit required";
@@ -319,7 +337,7 @@ function EmployeeListCreateHook({ location }) {
   const submitToServer = useCallback(() => {
     if (!isSubmitting) {
       setIsSubmitting(true);
-   
+
       const fd = new FormData();
       Object.keys(form).forEach((key) => {
         LogUtils.log("key", key);

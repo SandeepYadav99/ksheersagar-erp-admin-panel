@@ -31,7 +31,6 @@ const useShiftsCreateHook = ({
   const [errorData, setErrorData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [listData, setListData] = useState({ LOCATIONS: [] });
   const shiftRef = useRef(null);
   const dispatch = useDispatch();
 
@@ -63,13 +62,6 @@ const useShiftsCreateHook = ({
     }
   }, [isSidePanel]);
 
-  useEffect(() => {
-    serviceGetList(["LOCATIONS"]).then((res) => {
-      if (!res.error) {
-        setListData(res.data);
-      }
-    });
-  }, []);
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
@@ -189,7 +181,6 @@ const useShiftsCreateHook = ({
     isLoading,
     handleDelete,
     isSubmitting,
-    listData,
     shiftRef,
   };
 };
