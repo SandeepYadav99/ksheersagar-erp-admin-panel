@@ -341,8 +341,8 @@ const dashboardRoutes = [
   },
   {
     path: RouteName.ATTENDACE_REPORT,
-    sidebarName: "ATTENDACE REPORT",
-    navbarName: "ATTENDACE REPORT",
+    sidebarName: "Attendance Report",
+    navbarName: "Attendance Report",
     icon: PeopleOutlined,
     is_sidebar: true,
     parent: "reports",
@@ -361,8 +361,8 @@ const dashboardRoutes = [
   },
   {
     path: RouteName.MUSTER_REPORT,
-    sidebarName: "MUSTER REPORT",
-    navbarName: "MUSTER REPORT",
+    sidebarName: "Attendance Report",
+    navbarName: "Attendance Report",
     icon: PeopleOutlined,
     is_sidebar: true,
     parent: "reports",
