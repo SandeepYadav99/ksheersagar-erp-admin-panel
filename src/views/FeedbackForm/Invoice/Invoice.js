@@ -143,33 +143,33 @@ const Invoice = () => {
         <hr className={styles.hrLine} />
         <ul className={styles.ulList}>
           <div className={styles.titleAply}>** T&C Apply</div>
-          <li>
+          <li className={styles.listStyle}>
             {" "}
             All disputes are subject to Varanasi, Uttar Pradesh, jurisdicition.
           </li>
-          <li>Goods once sold will not be taken back or exchanged.</li>
-          <li>
+          <li className={styles.listStyle}>Goods once sold will not be taken back or exchanged.</li>
+          <li className={styles.listStyle}>
             All Bengali Sweets must be kept in a refrigerator and consumed
             within same day.
           </li>
-          <li>
+          <li className={styles.listStyle}>
             Desi Ghee & Dry Fruit sweets must be consumed within 4 days from
             date of purchase.
           </li>
-          <li>
+          <li className={styles.listStyle}>
             Khoya sweets must be consumed within 2 days from date of purchase.
           </li>
-          <li>
+          <li className={styles.listStyle}>
             Dhokla, Rabri, Rasmalai, Cheena Payas, Chhena Roll, Doodh Chamcham
             must be consumed within 6 hours of purchase.
           </li>
-          <li>Rasgulla must be consumed within the same day of purchase.</li>
-          <li>All prices are inclusive of GST.</li>
-          <li>
+          <li className={styles.listStyle}>Rasgulla must be consumed within the same day of purchase.</li>
+          <li className={styles.listStyle}>All prices are inclusive of GST.</li>
+          <li className={styles.listStyle}>
             Guest are requested to provide digital / physical invoice to collect
             food item (s) From the counter.
           </li>
-          <li>
+          <li className={styles.listStyle}>
             Total invoice amount is rounded off to next nearest rupees for cash.
           </li>
         </ul>
