@@ -44,12 +44,14 @@ const ShiftDetailsIncludeFields = ({
     if (!data?.is_occasional_working) {
       changeData(index, {
         ["occasional_working_days"]: [],
+        "start_time": null,
+        "end_time": null,
       });
     }
   }, [data?.is_occasional_working]);
 
   useEffect(() => {
-    if (data?.is_week_off) {
+    if (data?.is_week_off && !data?.is_occasional_working) {
       changeData(index, {
         "start_time": null,
         "end_time": null,
@@ -69,7 +71,7 @@ const ShiftDetailsIncludeFields = ({
           <div className={styles.formGrphours}>{data?.name}</div>
           <div className={styles.formGrp1}>
             <CustomDateTimePicker
-              disabled={data?.is_week_off}
+              disabled={(data?.is_week_off && !data?.is_occasional_working)}
               label={"Choose Time"}
               value={data?.start_time}
               onChange={(e) => handleChange(e, "start_time")}
@@ -105,7 +107,7 @@ const ShiftDetailsIncludeFields = ({
           </div>
           <div className={styles.formGrp1}>
             <CustomDateTimePicker
-              disabled={data?.is_week_off}
+              disabled={(data?.is_week_off && !data?.is_occasional_working)}
               label={"Choose Time"}
               value={data?.end_time}
               onChange={(e) => handleChange(e, "end_time")}

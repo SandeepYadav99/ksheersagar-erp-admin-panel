@@ -6,7 +6,10 @@ import { actionDeleteRoles } from "../../../actions/UserRoles.action";
 import { useDispatch } from "react-redux";
 import { serviceGetList } from "../../../services/Common.service";
 import { shiftdays } from "../../../helper/helper";
-import { serviceCreateShifts, serviceUpdateShifts } from "../../../services/Shifts.service";
+import {
+  serviceCreateShifts,
+  serviceUpdateShifts,
+} from "../../../services/Shifts.service";
 import { actionFetchShifts } from "../../../actions/ShiftsLists.action";
 
 const initialForm = {
@@ -57,11 +60,10 @@ const useShiftsCreateHook = ({
   useEffect(() => {
     if (!isSidePanel) {
       handleReset();
-      shiftRef.current?.setData([...getdays])
-      setErrorData({})
+      shiftRef.current?.setData([...getdays]);
+      setErrorData({});
     }
   }, [isSidePanel]);
-
 
   const checkFormValidation = useCallback(() => {
     const errors = { ...errorData };
@@ -88,26 +90,32 @@ const useShiftsCreateHook = ({
       setIsSubmitting(true);
     }
     const shiftData = shiftRef.current.getData();
-    const updatedData = {
-      ...form,
-      shift_days: [...shiftData],
-    };
-    let req;
-    if (editData?.id) {
-      req = serviceUpdateShifts({ ...updatedData, id: editData?.id });
-    } else {
-      req = serviceCreateShifts({ ...updatedData });
-    }
-
-    req.then((res) => {
-      if (!res.error) {
-        handleToggleSidePannel();
-        dispatch(actionFetchShifts(1, {}, {}));
+    const checkShift = shiftData?.some((day) => !day?.is_week_off);
+    if (checkShift) {
+      const updatedData = {
+        ...form,
+        shift_days: [...shiftData],
+      };
+      let req;
+      if (editData?.id) {
+        req = serviceUpdateShifts({ ...updatedData, id: editData?.id });
       } else {
-        SnackbarUtils.error(res.message);
+        req = serviceCreateShifts({ ...updatedData });
       }
-      setIsSubmitting(false);
-    });
+
+      req.then((res) => {
+        if (!res.error) {
+          handleToggleSidePannel();
+          dispatch(actionFetchShifts(1, {}, {}));
+        } else {
+          SnackbarUtils.error(res.message);
+        }
+        setIsSubmitting(false);
+      });
+    } else {
+      SnackbarUtils.error("Please select any any slot");
+    }
+    setIsSubmitting(false)
   }, [form, isSubmitting, setIsSubmitting, editData, handleToggleSidePannel]);
 
   const handleSubmit = useCallback(async () => {

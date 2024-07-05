@@ -42,7 +42,7 @@ const ShiftsCreate = ({ handleToggleSidePannel, isSidePanel, editData }) => {
           <div className={styles.divHead}>TOTAL HOURS</div>
           <div className={styles.divHead21}>WEEK OFF</div>
         </div>
-        <ShiftDetailsIncludeForm ref={shiftRef} />
+        <ShiftDetailsIncludeForm ref={shiftRef} isSidePanel={isSidePanel}/>
       </div>
 
       <div className={styles.actionButton}>

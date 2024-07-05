@@ -23,7 +23,7 @@ const TEMP_OBJ = {
   occasional_working_days: [],
 };
 
-const ShiftDetailsIncludeForm = ({ data, errorData: errorForm }, ref) => {
+const ShiftDetailsIncludeForm = ({ data, errorData: errorForm, isSidePanel}, ref) => {
   const [fields, setFields] = useState([JSON.parse(JSON.stringify(TEMP_OBJ))]);
   const [errorData, setErrorData] = useState({});
   const [variants, setVariants] = useState([]);
@@ -42,6 +42,12 @@ const ShiftDetailsIncludeForm = ({ data, errorData: errorForm }, ref) => {
       setFields([...data]);
     },
   }));
+
+  useEffect(()=>{
+    if(!isSidePanel){
+      setErrorData({})
+    }
+  },[isSidePanel])
 
   const validateData = (index, type) => {
     const errors = {};
@@ -187,6 +193,8 @@ const ShiftDetailsIncludeForm = ({ data, errorData: errorForm }, ref) => {
     handlePress,
     onBlur,
     fields,
+    isSidePanel,
+    setErrorData
   ]);
 
   return <>{renderFields}</>;
