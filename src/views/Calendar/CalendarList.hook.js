@@ -35,6 +35,7 @@ function useCalendarList() {
   const handleDateChange = (date) => {
     console.log(">>>>", date);
     setSelectedDate(date);
+    handleSideToggle({ start_date: date?.$d });
   };
   console.log("data", data);
   const handleCheckboxChange = useCallback(
@@ -89,7 +90,7 @@ function useCalendarList() {
     selectedDate,
     handleDateChange,
     editData,
-    renderList
+    renderList,
   };
 }
 
