@@ -15,7 +15,7 @@ const Invoice = () => {
   // const [invoiceDetails, setInvoiceDetails] = useState();
   const { invoiceDetails, myParam } = InvoiceHook();
   const { posOder, employeeDetail, customerDetail } = invoiceDetails || {};
-
+  
   return (
     <div className={styles.container}>
       <div className={styles.headerContainer}>
@@ -28,9 +28,12 @@ const Invoice = () => {
         </div>
         <hr className={styles.hrLine} />
         <p className={styles.title}>{employeeDetail?.location?.name}</p>
-        <p className={styles.subTitleAddres}>{employeeDetail?.location?.address}</p>
+        <p className={styles.subTitleAddres}>
+          {employeeDetail?.location?.address}
+        </p>
         <p className={styles.subTitle}>
-          Phone No.:<strong>{employeeDetail?.location?.contact || "N/A"}</strong>{" "}
+          Phone No.:
+          <strong>{employeeDetail?.location?.contact || "N/A"}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
           GSTIN:<strong>{employeeDetail?.location?.gstin}</strong>{" "}
@@ -139,7 +142,7 @@ const Invoice = () => {
             className={styles.createBtn}
             onClick={() =>
               historyUtils.push(
-                `/feedback?invoice_id=${myParam}&customer_id=${invoiceDetails?.posOder?.customer_id}`
+                `/feedback?invoice_id=${myParam}&customer_id=${invoiceDetails?.posOder?.customer_id}&location_id=${invoiceDetails?.employeeDetail?.location?.id}`
               )
             }
           >

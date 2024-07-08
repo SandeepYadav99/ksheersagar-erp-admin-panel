@@ -58,6 +58,10 @@ const DigitalItemTable = ({ posOder }) => {
         <div className={styles.titleTotal}>₹{posOder?.cart.prices?.total}</div>
       </div>
       <div className={styles.totalInvoice}>
+        <div className={styles.titleTotal}>Discount</div>
+        <div className={styles.titleTotal}>₹0.00</div>
+      </div>
+      <div className={styles.totalInvoice}>
         <div className={styles.titleTotal}>Round Off</div>
         <div className={styles.titleTotal}>₹0.00</div>
       </div>
