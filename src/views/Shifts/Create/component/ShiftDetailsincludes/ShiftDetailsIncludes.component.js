@@ -11,6 +11,7 @@ import { useParams } from "react-router";
 import ShiftDetailsIncludeFields from "./ShiftDetailsIncludeFields.component";
 import SnackbarUtils from "../../../../../libs/SnackbarUtils";
 import { isDate, isInvalidDateFormat } from "../../../../../libs/RegexUtils";
+import debounce from "lodash.debounce";
 
 const TEMP_OBJ = {
   name: "",
@@ -23,7 +24,10 @@ const TEMP_OBJ = {
   occasional_working_days: [],
 };
 
-const ShiftDetailsIncludeForm = ({ data, errorData: errorForm, isSidePanel}, ref) => {
+const ShiftDetailsIncludeForm = (
+  { data, errorData: errorForm, isSidePanel },
+  ref
+) => {
   const [fields, setFields] = useState([JSON.parse(JSON.stringify(TEMP_OBJ))]);
   const [errorData, setErrorData] = useState({});
   const [variants, setVariants] = useState([]);
@@ -43,11 +47,11 @@ const ShiftDetailsIncludeForm = ({ data, errorData: errorForm, isSidePanel}, ref
     },
   }));
 
-  useEffect(()=>{
-    if(!isSidePanel){
-      setErrorData({})
+  useEffect(() => {
+    if (!isSidePanel) {
+      setErrorData({});
     }
-  },[isSidePanel])
+  }, [isSidePanel]);
 
   const validateData = (index, type) => {
     const errors = {};
@@ -89,7 +93,7 @@ const ShiftDetailsIncludeForm = ({ data, errorData: errorForm, isSidePanel}, ref
         err["end_time"] = true;
         SnackbarUtils.error("Start time cannot be less than End time");
       }
-      if(val?.start_time && val?.start_time && val?.total_hours == 0){
+      if (val?.start_time && val?.end_time && val?.total_hours == 0) {
         err["start_time"] = true;
         err["end_time"] = true;
         SnackbarUtils.error("Start time cannot be same as End time");
@@ -133,11 +137,8 @@ const ShiftDetailsIncludeForm = ({ data, errorData: errorForm, isSidePanel}, ref
 
   const changeData = (index, data, dateValue) => {
     const tempData = [...fields];
-    if (dateValue) {
-      tempData.forEach((item) => (item.travel_date = ""));
-    } else {
-      tempData[index] = { ...tempData[index], ...data };
-    }
+
+    tempData[index] = { ...tempData[index], ...data };
     LogUtils.log("data", data);
     setFields(tempData);
     const errArr = [];
@@ -145,6 +146,27 @@ const ShiftDetailsIncludeForm = ({ data, errorData: errorForm, isSidePanel}, ref
       errArr.push(key);
     });
     removeErrors(index, errArr);
+  };
+
+  const handleTime = (e, fieldName, ind) => {
+    const temp = [...fields];
+    const updateTime = temp?.map((item, index) => {
+      if (
+        (!item?.is_week_off && !item[fieldName]) ||
+        index === ind ||
+        (item?.is_week_off && item?.is_occasional_working)
+      ) {
+        return { ...item, [fieldName]: e };
+      }
+      return item;
+    });
+    setFields([...updateTime]);
+  };
+
+  const debouncedHandleTime = debounce(handleTime,2000);
+
+  const handleChangedebounce = (e, fieldName, ind) => {
+    debouncedHandleTime(e, fieldName, ind);
   };
 
   const onBlur = useCallback(() => {}, []);
@@ -181,6 +203,7 @@ const ShiftDetailsIncludeForm = ({ data, errorData: errorForm, isSidePanel}, ref
             index={index}
             onBlur={onBlur}
             fieldLendth={fields?.length}
+            handleChangedebounce={handleChangedebounce}
           />
         </div>
       );
@@ -194,7 +217,7 @@ const ShiftDetailsIncludeForm = ({ data, errorData: errorForm, isSidePanel}, ref
     onBlur,
     fields,
     isSidePanel,
-    setErrorData
+    setErrorData,
   ]);
 
   return <>{renderFields}</>;
