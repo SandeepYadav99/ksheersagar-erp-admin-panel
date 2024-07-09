@@ -59,7 +59,7 @@ const GstTable = ({posOder, calculateOriginalPrice}) => {
                     ).toFixed(2)}
                   </td>
 
-                  <td>₹ 0</td>
+                  <td>₹0</td>
                   <td>₹{total ? total.toFixed(2) : "0"}</td>
                 </tr>
                 <br />

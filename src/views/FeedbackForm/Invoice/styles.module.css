@@ -18,6 +18,12 @@
     padding: 15px !important;
   }
 }
+@media screen and (max-width: 350px) {
+  .headerContainer{
+    width: 300px !important ;
+    padding: 25px !important;
+  }
+}
 .logo {
   text-align: center;
 }

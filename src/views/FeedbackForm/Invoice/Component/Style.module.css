@@ -112,3 +112,9 @@
       padding: 15px !important;
     }
   }
+  @media screen and (max-width: 350px) {
+    .myTable{
+      width: 300px !important ;
+      padding: 25px !important;
+    }
+  }
