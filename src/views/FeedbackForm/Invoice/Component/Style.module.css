@@ -1,0 +1,108 @@
+
+/* Table */
+.myTable {
+    border-collapse: collapse !important;
+    font-size: 12px !important;
+    color: #161616 !important;
+    width: 450px !important;
+  }
+  
+  .myTable th,
+  .myTable td {
+    padding: 8px;
+  }
+  
+  .myTable th {
+    text-align: left !important;
+  }
+  
+  .myTable td {
+    /* text-align: center !important; */
+  }
+  
+  .noBorder {
+    border: none;
+  }
+  
+  .bgColor4Cols {
+    background-color: #d6e7fb !important;
+    width: 100% !important;
+  }
+  
+  .bgColorRow {
+    background-color: #ecf7ff;
+  }
+  
+  .bgColorRow > td {
+    font-weight: bold;
+  }
+  
+  .totalCols {
+    background-color: #2896e9;
+    color: #ffffff;
+  }
+  
+  .grayBgColor {
+    background-color: #f7f7f7;
+  }
+  
+  .totalInvoice {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 0px 14px 0px 6px !important;
+    margin-bottom: 8px !important;
+  }
+  .hrLine {
+    border: 1px solid #e5e5e5 !important;
+  }
+  .titleTotal {
+    font-size: 12px !important;
+    color: #161616 !important;
+    font-weight: 600 !important;
+    margin-bottom: 5px !important
+  }
+  .titleTotalWord {
+    font-size: 12px !important;
+    color: #161616 !important;
+    margin-bottom: 8px !important;
+  }
+  .thankyounote {
+    font-size: 14px !important;
+    text-align: center !important;
+    color: #007aff !important;
+    font-weight: 600 !important;
+    margin-bottom: 4px !important;
+   
+  }
+  .ulList {
+    margin-top: 20px !important;
+  }
+   .listStyle {
+    font-size: 12px !important;
+    margin-left: -12px !important;
+    margin-top: 5px !important;
+  }
+  .titleAply {
+    font-size: 14px !important;
+    color: #212125 !important;
+    font-weight: bold !important;
+    letter-spacing: 0.14px !important;
+    font-style: normal normal bold 14px/18px Mulish;
+    margin-left: -5% !important;
+    margin-top: 20px !important;
+  }
+  .logoTitle {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #212125 !important;
+  }
+  .logoInvoice {
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    color: #212125 !important;
+  }
+  .stateCode {
+    margin-left: 20px !important;
+  }
+  
