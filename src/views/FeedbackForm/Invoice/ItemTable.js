@@ -14,12 +14,13 @@ const DigitalItemTable = ({ posOder }) => {
   return (
     <div>
       <ProductTable posOder={posOder} />
-      <hr className={styles.hrLine} />
+      <div className={styles.gaps} />
       <ProductFooter posOder={posOder}/>
       <GstTable
         posOder={posOder}
         calculateOriginalPrice={calculateOriginalPrice}
       />
+     
     </div>
   );
 };

@@ -3,7 +3,8 @@ import styles from "./Style.module.css";
 const GstFooter = () => {
   return (
     <>
-      <tr className={styles.hrlinetr}>
+    
+      <tr className={styles.hrlinetrTender}>
         <td className={styles.titleTotal}>Tender Tax</td>
         <td colSpan={4}></td>
         <td className={styles.titleTotal} colSpan={4}>
@@ -11,7 +12,7 @@ const GstFooter = () => {
         </td>
       </tr>
 
-      <tr className={styles.hrlinetr}>
+      <tr >
         <td className={styles.titleTotal}>Tender Amount</td>
         <td colSpan={4}></td>
         <td className={styles.titleTotal} colSpan={1}>

@@ -6,10 +6,12 @@
     color: #161616 !important;
     width: 450px !important;
   }
-  
+  /* .gaps {
+    margin-top: 10px;
+  } */
   .myTable th,
   .myTable td {
-    padding: 8px;
+    padding: 10px 0px;
   }
   
   .myTable th {
@@ -106,6 +108,16 @@
     margin-left: 20px !important;
   }
   
+  .hrlinetrTender {
+    border-bottom: 1px solid #e5e5e5 !important;
+    padding: 0px 6px !important;
+    
+  }
+  .hrlinetr {
+    border-bottom: 1px solid #e5e5e5 !important;
+    padding: 0px 6px !important;
+
+  }
   @media screen and (max-width: 412px) {
     .myTable{
       width: 350px !important ;

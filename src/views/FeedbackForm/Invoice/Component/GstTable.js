@@ -37,13 +37,16 @@ const GstTable = ({posOder, calculateOriginalPrice}) => {
               
             return (
               <>
-                <tr>
+             
+                <tr className={styles.hrlinetr}>
+                
                   <td>
                     {" "}
                     {product?.product?.gst_slab
                       ? `${product?.product?.gst_slab}%`
                       : "0%"}
                   </td>
+                  
                   <td>₹ {originalPriceIs?.toFixed(2)}</td>
                   <td>
                     ₹{" "}

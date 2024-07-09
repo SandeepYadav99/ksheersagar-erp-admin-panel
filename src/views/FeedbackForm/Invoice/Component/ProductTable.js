@@ -20,7 +20,7 @@ const ProductTable = ({posOder}) => {
         const unitsIn = product?.product?.units?.map((n) => n?.name);
 
         return (
-          <tr>
+          <tr className={styles.hrlinetr}>
             <td>{product?.product?.name_en}</td>
             <td>{product?.product?.hsn || "N/A"}</td>
             <td>
