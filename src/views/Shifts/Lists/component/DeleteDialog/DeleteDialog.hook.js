@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import SnackbarUtils from "../../../../../libs/SnackbarUtils";
 import { serviceGetShiftsDelete } from "../../../../../services/Shifts.service";
 import { serviceGetList } from "../../../../../services/Common.service";
@@ -30,6 +30,13 @@ const useDeleteDialogHook = ({ isOpen, handleToggle, deleteId }) => {
     });
   }, []);
 
+  const updatedList = useMemo(() => {
+    if (listData?.SHIFTS?.length > 0) {
+      return listData?.SHIFTS?.filter((item) => item?.name !== deleteId?.name);
+    }
+    return [];
+  }, [listData,deleteId]);
+  
   useEffect(() => {
     if (isOpen) {
       const defaultId =
@@ -94,7 +101,7 @@ const useDeleteDialogHook = ({ isOpen, handleToggle, deleteId }) => {
         id: deleteId?.id,
       }).then((res) => {
         if (!res.error) {
-          SnackbarUtils.success("Request Rejected");
+          SnackbarUtils.success("Shift deleted successfully");
           handleToggle();
           dispatch(actionFetchShifts(1, {}, {}));
         } else {
@@ -133,6 +140,7 @@ const useDeleteDialogHook = ({ isOpen, handleToggle, deleteId }) => {
     setDeclaration,
     declaration,
     listData,
+    updatedList
   };
 };
 

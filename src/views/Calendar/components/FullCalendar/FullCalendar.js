@@ -99,13 +99,13 @@ const CalendarDetail = ({ data, selectedDate, handleSideToggle }) => {
             >
               <Typography variant="body1">WEEK</Typography>
             </Button>
-            <Button
+            {/* <Button
             className={classes.button}
               onClick={() => onView("day")}
               style={activeMonth === "day" ? activeClass : {}}
             >
               <Typography variant="body1">DAY</Typography>
-            </Button>
+            </Button> */}
             <Button
             className={classes.button}
               onClick={() => onView("agenda")}
@@ -151,6 +151,7 @@ const CalendarDetail = ({ data, selectedDate, handleSideToggle }) => {
         }}
         onView={(view) => setActiveMonth(view)}
         date={selectedDate?.$d && selectedDate?.$d}
+        drilldownView={null}
       />
     </div>
   );

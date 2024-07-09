@@ -116,23 +116,27 @@ const useAddEmployeeTable = ({ handleClose }) => {
     [selected, setSelected]
   );
   const handleSubmit = useCallback(() => {
-    if (!isSubmitting) {
-      setIsSubmitting(true);
-      const getEmpID = selected?.map((item) => item?.id);
-      let req = serviceAddEmployeeShift;
-      req({
-        shift_id: id,
-        employee_ids: getEmpID ? getEmpID : [],
-      }).then((res) => {
-        if (!res.error) {
-          handleClose();
-          // renderList();
-          SnackbarUtils.success("Request Approved");
-        } else {
-          SnackbarUtils.error(res?.message);
-        }
-        setIsSubmitting(false);
-      });
+    if (selected?.length > 0) {
+      if (!isSubmitting) {
+        setIsSubmitting(true);
+        const getEmpID = selected?.map((item) => item?.id);
+        let req = serviceAddEmployeeShift;
+        req({
+          shift_id: id,
+          employee_ids: getEmpID ? getEmpID : [],
+        }).then((res) => {
+          if (!res.error) {
+            handleClose();
+            // renderList();
+            SnackbarUtils.success("Added successfully");
+          } else {
+            SnackbarUtils.error(res?.message);
+          }
+          setIsSubmitting(false);
+        });
+      }
+    } else {
+      SnackbarUtils.error("Please select atlest one Employee");
     }
   }, [selected, setSelected, isSubmitting, setIsSubmitting, handleClose]);
 
