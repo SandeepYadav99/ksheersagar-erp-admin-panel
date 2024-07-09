@@ -20,7 +20,7 @@ const DigitalItemTable = ({ posOder }) => {
         posOder={posOder}
         calculateOriginalPrice={calculateOriginalPrice}
       />
-     
+       <hr className={styles.hrLine} />
     </div>
   );
 };
