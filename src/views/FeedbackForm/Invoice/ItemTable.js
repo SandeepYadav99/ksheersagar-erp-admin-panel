@@ -41,8 +41,7 @@ const DigitalItemTable = ({ posOder }) => {
                 <td>{product?.product?.name_en}</td>
                 <td>{product?.product?.hsn || "N/A"}</td>
                 <td>
-                  {product?.weight}
-                  {unitsIn}
+                  {product?.weight} {unitsIn}
                 </td>
                 <td>₹{product?.product?.price}</td>
                 <td>
@@ -79,7 +78,7 @@ const DigitalItemTable = ({ posOder }) => {
       <div className={styles.totalInvoice}>
         <div className={styles.titleTotalWord}>Amount in words</div>
         <div className={styles.titleTotal}>
-          {posOder?.cart.prices?.subtotalText}
+          {posOder?.cart.prices?.subtotalText || "N/A"}
         </div>
       </div>
 
@@ -129,20 +128,12 @@ const DigitalItemTable = ({ posOder }) => {
                       originalPriceIs,
                       product?.product?.gst_slab
                     ).toFixed(2)}
-                    {/* {product?.product?.gst_slab
-                      ? `${product?.product?.gst_slab / 2}`
-                      : "0"} */}
                   </td>
                   <td>
                     {calculateCgst(
                       originalPriceIs,
                       product?.product?.gst_slab
                     ).toFixed(2)}
-                    {/* ₹
-                    {calculateSgst(
-                      product?.product?.price,
-                      product?.product?.gst_slab
-                    ).toFixed(2) || "0"} */}
                   </td>
 
                   <td>₹ 0</td>

@@ -72,16 +72,15 @@ const useHoursCreateHook = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
       !isNaN(halfDayValue) &&
       halfDayValue > fullDayValue
     ) {
-      errors.half_day = "Half day hours can't be more than full day hours";
+      errors.half_day =
+        "Half day hours should not be greater than full day working hours";
     }
     if (!form?.full_day) {
       errors.full_day = "Please enter the full day hours";
     }
 
-    if (form?.full_day && form?.half_day === 0) {
-      errors.half_day = "Please enter positive half day hours";
-    } else {
-      delete errors.half_day;
+    if ((form?.full_day && form?.half_day === 0) || !form?.half_day) {
+      errors.half_day = true;
     }
     Object.keys(errors).forEach((key) => {
       if (!errors[key]) {
@@ -90,7 +89,7 @@ const useHoursCreateHook = ({ handleToggleSidePannel, isSidePanel, qrId }) => {
     });
     return errors;
   }, [form, errorData]);
-
+  console.log(form?.half_day);
   const submitToServer = useCallback(async () => {
     setIsLoading(true);
     if (!isSubmitting) {
