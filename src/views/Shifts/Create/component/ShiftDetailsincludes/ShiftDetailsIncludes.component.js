@@ -58,7 +58,7 @@ const ShiftDetailsIncludeForm = (
     fields.forEach((val, index) => {
       const err = {};
       const required = [];
-      if (!val?.is_week_off) {
+      if (!val?.is_week_off || (val?.is_week_off && val?.is_occasional_working)) {
         required.push("start_time", "end_time");
       }
 

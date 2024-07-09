@@ -34,7 +34,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const DeleteDialog = ({ isOpen, handleToggle, deleteId }) => {
   const classes = useStyles();
-  const { changeTextData, errorData, form, handleSubmit, listData } =
+  const { changeTextData, errorData, form, handleSubmit, listData ,updatedList} =
     useDeleteDialogHook({ isOpen, handleToggle, deleteId });
 
   return (
@@ -78,7 +78,7 @@ const DeleteDialog = ({ isOpen, handleToggle, deleteId }) => {
                   changeTextData(value, "replacement_shift_id");
                 }}
               >
-                {listData?.SHIFTS?.map((item, index) => (
+                {updatedList?.map((item, index) => (
                   <MenuItem key={`rep_${index}`} value={item?.id}>
                     {item?.name}
                   </MenuItem>

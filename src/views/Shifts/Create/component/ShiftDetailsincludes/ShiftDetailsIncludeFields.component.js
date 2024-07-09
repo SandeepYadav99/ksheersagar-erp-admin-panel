@@ -111,7 +111,7 @@ const ShiftDetailsIncludeFields = ({
               disabled={data?.is_week_off && !data?.is_occasional_working}
               label={"Choose Time"}
               value={data?.end_time}
-              onChange={(e) => handleChangedebounce(e, "end_time")}
+              onChange={(e) => handleChange(e, "end_time")}
               isError={errors?.end_time}
             />
             {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>

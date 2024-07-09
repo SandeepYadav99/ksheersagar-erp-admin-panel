@@ -159,16 +159,19 @@ const ShiftsLists = ({}) => {
             >
               <InfoOutlined fontSize={"small"} />
             </IconButton>
-            <IconButton
-              className={"tableActionBtn"}
-              color="secondary"
-              disabled={isCalling}
-              onClick={() => {
-                handleToggleSidePannel(all);
-              }}
-            >
-              <Edit fontSize={"small"} />
-            </IconButton>
+            {!all?.is_default && (
+              <IconButton
+                className={"tableActionBtn"}
+                color="secondary"
+                disabled={isCalling}
+                onClick={() => {
+                  handleToggleSidePannel(all);
+                }}
+              >
+                <Edit fontSize={"small"} />
+              </IconButton>
+            )}
+
             {!all?.is_default && (
               <IconButton
                 className={"tableActionBtn"}
