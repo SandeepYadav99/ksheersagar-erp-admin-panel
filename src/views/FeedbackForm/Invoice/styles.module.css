@@ -189,7 +189,7 @@
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
-  padding: 0px 6px !important;
+  padding: 0px 14px 0px 6px !important;
   margin-bottom: 8px !important;
 }
 .hrLine {

@@ -7,10 +7,10 @@ const DigitalItemTable = ({ posOder }) => {
     return originalPrice || 0;
   }
 
-  function calculateSgst(price, gstRate) {
-    const sgst = (price * gstRate) / 100;
-    return sgst || 0;
-  }
+  // function calculateSgst(price, gstRate) {
+  //   const sgst = (price * gstRate) / 100;
+  //   return sgst || 0;
+  // }
 
   const calculateIgst = (gst_slab, price) => {
     const igst = gst_slab + price;
@@ -33,12 +33,16 @@ const DigitalItemTable = ({ posOder }) => {
         </thead>
 
         <tbody>
-          {posOder?.cart?.products?.map((product) => {
+          {posOder?.cart?.products?.map((product, index) => {
+            const unitsIn = product?.product?.units?.map((n) => n?.name);
+
             return (
               <tr>
                 <td>{product?.product?.name_en}</td>
-                <td>{product?.product?.hsn}</td>
-                <td>{product?.weight}</td>
+                <td>{product?.product?.hsn || "N/A"}</td>
+                <td>
+                  {product?.weight} {unitsIn}
+                </td>
                 <td>₹{product?.product?.price}</td>
                 <td>
                   {" "}
@@ -58,6 +62,10 @@ const DigitalItemTable = ({ posOder }) => {
         <div className={styles.titleTotal}>₹{posOder?.cart.prices?.total}</div>
       </div>
       <div className={styles.totalInvoice}>
+        <div className={styles.titleTotal}>Discount</div>
+        <div className={styles.titleTotal}>₹0.00</div>
+      </div>
+      <div className={styles.totalInvoice}>
         <div className={styles.titleTotal}>Round Off</div>
         <div className={styles.titleTotal}>₹0.00</div>
       </div>
@@ -70,7 +78,7 @@ const DigitalItemTable = ({ posOder }) => {
       <div className={styles.totalInvoice}>
         <div className={styles.titleTotalWord}>Amount in words</div>
         <div className={styles.titleTotal}>
-          {posOder?.cart.prices?.subtotalText}
+          {posOder?.cart.prices?.subtotalText || "N/A"}
         </div>
       </div>
 
@@ -83,6 +91,7 @@ const DigitalItemTable = ({ posOder }) => {
             <th>CGST</th>
 
             <th>SGST</th>
+
             <th>IGST</th>
             <th>Total</th>
           </tr>
@@ -90,19 +99,19 @@ const DigitalItemTable = ({ posOder }) => {
 
         <tbody>
           {posOder?.cart?.products?.map((product) => {
+            const originalPriceIs = calculateOriginalPrice(
+              posOder?.cart.prices?.subtotal,
+              product?.product?.gst_slab
+            );
+            const calculateCgst = (originalPriceIs, gstSlab) => {
+              return (originalPriceIs * gstSlab) / 100 / 2;
+            };
+
             const total =
-              calculateOriginalPrice(
-                posOder?.cart.prices?.subtotal,
-                product?.product?.gst_slab
-              ) +
+              originalPriceIs +
               product?.product?.gst_slab / 2 +
-              calculateIgst(
-                product?.product?.gst_slab / 2,
-                calculateSgst(
-                  product?.product?.price,
-                  product?.product?.gst_slab
-                )
-              );
+              calculateCgst(originalPriceIs, product?.product?.gst_slab) +
+              calculateCgst(originalPriceIs, product?.product?.gst_slab);
             return (
               <>
                 <tr>
@@ -112,36 +121,22 @@ const DigitalItemTable = ({ posOder }) => {
                       ? `${product?.product?.gst_slab}%`
                       : "0%"}
                   </td>
-                  <td>
-                    ₹
-                    {calculateOriginalPrice(
-                      posOder?.cart.prices?.subtotal,
-                      product?.product?.gst_slab
-                    ).toFixed(2) || "0"}
-                  </td>
+                  <td>₹ {originalPriceIs?.toFixed(2)}</td>
                   <td>
                     ₹{" "}
-                    {product?.product?.gst_slab
-                      ? `${product?.product?.gst_slab / 2}`
-                      : "0"}
-                  </td>
-                  <td>
-                    ₹
-                    {calculateSgst(
-                      product?.product?.price,
+                    {calculateCgst(
+                      originalPriceIs,
                       product?.product?.gst_slab
-                    ).toFixed(2) || "0"}
+                    ).toFixed(2)}
                   </td>
                   <td>
-                    ₹
-                    {calculateIgst(
-                      product?.product?.gst_slab / 2,
-                      calculateSgst(
-                        product?.product?.price,
-                        product?.product?.gst_slab
-                      )
-                    ).toFixed(2) || "0"}
+                    {calculateCgst(
+                      originalPriceIs,
+                      product?.product?.gst_slab
+                    ).toFixed(2)}
                   </td>
+
+                  <td>₹ 0</td>
                   <td>₹{total ? total.toFixed(2) : "0"}</td>
                 </tr>
                 <br />
