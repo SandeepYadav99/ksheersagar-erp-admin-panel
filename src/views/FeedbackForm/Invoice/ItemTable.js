@@ -33,12 +33,17 @@ const DigitalItemTable = ({ posOder }) => {
         </thead>
 
         <tbody>
-          {posOder?.cart?.products?.map((product) => {
+          {posOder?.cart?.products?.map((product, index) => {
+            const unitsIn = product?.product?.units?.map((n) => n?.name);
+
             return (
               <tr>
                 <td>{product?.product?.name_en}</td>
-                <td>{product?.product?.hsn}</td>
-                <td>{product?.weight}</td>
+                <td>{product?.product?.hsn || "N/A"}</td>
+                <td>
+                  {product?.weight}
+                  {unitsIn}
+                </td>
                 <td>₹{product?.product?.price}</td>
                 <td>
                   {" "}
