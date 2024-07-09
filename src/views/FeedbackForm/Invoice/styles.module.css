@@ -12,6 +12,19 @@
   height: auto !important;
   align-items: center;
 }
+@media screen and (max-width: 412px) {
+  .headerContainer{
+    width: 350px !important ;
+    padding: 15px !important;
+  }
+}
+@media screen and (max-width: 350px) {
+  .headerContainer{
+    width: 300px !important ;
+    padding: 25px !important;
+  }
+}
+
 .logo {
   text-align: center;
 }
@@ -21,6 +34,16 @@
   font-weight: bold !important;
   letter-spacing: 0.14px !important;
   font-style: normal normal bold 14px/18px Mulish;
+}
+.titleLocation {
+  font-size: 14px !important;
+  color: #212125 !important;
+  font-weight: bold !important;
+  letter-spacing: 0.14px !important;
+  font-style: normal normal bold 14px/18px Mulish;
+}
+.titleLocation::first-letter{
+  text-transform: uppercase !important;
 }
 .hrlinetr {
   border-bottom: 1px solid #e5e5e5 !important;
