@@ -43,7 +43,7 @@ const DownloadInvoice = () => {
           </span>
         </p>
         <p className={styles.subTitle}>
-          FSSAI No.:<strong>{employeeDetail?.location?.fssai_number}</strong>{" "}
+          FSSAI No.:<strong>{employeeDetail?.location?.fssai_number || "N/A"}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
           CIN No.:<strong>{employeeDetail?.location?.cin}</strong>{" "}
@@ -86,7 +86,7 @@ const DownloadInvoice = () => {
         </p> }
         {customerDetail?.gst_no && 
         <p className={styles.subTitle}>
-          GSTIN:<strong> {customerDetail?.gst_no}</strong>{" "}
+          GSTIN:<strong> {employeeDetail?.location?.gstin}</strong>{" "}
         </p>}
 
         <div className={styles.gaps} />
@@ -94,10 +94,10 @@ const DownloadInvoice = () => {
         {/* End Customer Detail */}
         <p className={styles.title}>Summary</p>
         <p className={styles.subTitle}>
-          No. of Items: <strong>{posOder?.cart?.items}</strong>{" "}
+          No. of Items: <strong>{posOder?.qty}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
-          No. of Boxes: <strong>{posOder?.cart?.boxes}</strong>{" "}
+          No. of Boxes: <strong>{posOder?.total_boxes}</strong>{" "}
         </p>
         {/* Item List Invoice */}
         <DigitalItemTable posOder={posOder} customerDetail={customerDetail} />
