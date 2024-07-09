@@ -88,7 +88,7 @@ const Invoice = () => {
         )}
         {customerDetail?.gst_no && (
           <p className={styles.subTitle}>
-            GSTIN:<strong> {customerDetail?.gst_no}</strong>{" "}
+            GSTIN:<strong> {employeeDetail?.location?.gstin}</strong>{" "}
           </p>
         )}
 
@@ -97,10 +97,10 @@ const Invoice = () => {
         {/* End Customer Detail */}
         <p className={styles.title}>Summary</p>
         <p className={styles.subTitle}>
-          No. of Items: <strong>{posOder?.cart?.items}</strong>{" "}
+          No. of Items: <strong>{posOder?.qty}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
-          No. of Boxes: <strong>{posOder?.cart?.boxes}</strong>{" "}
+          No. of Boxes: <strong>{posOder?.total_boxes}</strong>{" "}
         </p>
         <DigitalItemTable posOder={posOder} customerDetail={customerDetail} />
 

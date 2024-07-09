@@ -16,21 +16,21 @@ const ProductTable = ({posOder}) => {
     </thead>
 
     <tbody>
-      {posOder?.cart?.products?.map((product, index) => {
-        const unitsIn = product?.product?.units?.map((n) => n?.name);
-
+    {  console.log(posOder)}
+      {posOder?.products?.map((product, index) => {
+      
         return (
           <tr className={styles.hrlinetr}>
-            <td>{product?.product?.name_en}</td>
-            <td>{product?.product?.hsn || "N/A"}</td>
+            <td>{product?.name_en}</td>
+            <td>{product?.hsn || "N/A"}</td>
             <td>
-              {product?.weight} {unitsIn}
+              {product?.qty} {product?.unit}
             </td>
-            <td>₹{product?.product?.price}</td>
+            <td>₹{product?.list_price}</td>
             <td>
               {" "}
-              {product?.product?.gst_slab
-                ? `${product?.product?.gst_slab}%`
+              {product?.gst
+                ? `${product?.gst}%`
                 : "0%"}
             </td>
             <td>₹{product?.price}</td>
