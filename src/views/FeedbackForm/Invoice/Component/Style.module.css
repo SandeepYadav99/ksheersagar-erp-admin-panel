@@ -64,6 +64,15 @@
     font-weight: 600 !important;
     margin-bottom: 5px !important
   }
+  .titleTotalWords{
+    font-size: 12px !important;
+    color: #161616 !important;
+    font-weight: 600 !important;
+    margin-bottom: 5px !important
+  }
+  .titleTotalWords::first-letter{
+    text-transform: uppercase !important;
+  }
   .titleTotalWord {
     font-size: 12px !important;
     color: #161616 !important;

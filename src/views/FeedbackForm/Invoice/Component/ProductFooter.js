@@ -23,7 +23,7 @@ const ProductFooter = ({ posOder }) => {
       </div>
       <div className={styles.totalInvoice}>
         <div className={styles.titleTotalWord}>Amount in words</div>
-        <div className={styles.titleTotal}>
+        <div className={styles.titleTotalWords}>
           {posOder?.prices?.total_in_words || "N/A"}
         </div>
       </div>
