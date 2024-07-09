@@ -27,7 +27,7 @@ const Invoice = () => {
           <span className={styles.logoInvoice}>(Digital Invoice)</span>
         </div>
         <hr className={styles.hrLine} />
-        <p className={styles.title}>{employeeDetail?.location?.name}</p>
+        <p className={styles.titleLocation}>{employeeDetail?.location?.name}</p>
         <p className={styles.subTitleAddres}>
           {employeeDetail?.location?.address}
         </p>

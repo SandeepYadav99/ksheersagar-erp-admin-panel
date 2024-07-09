@@ -22,6 +22,16 @@
   letter-spacing: 0.14px !important;
   font-style: normal normal bold 14px/18px Mulish;
 }
+.titleLocation {
+  font-size: 14px !important;
+  color: #212125 !important;
+  font-weight: bold !important;
+  letter-spacing: 0.14px !important;
+  font-style: normal normal bold 14px/18px Mulish;
+}
+.titleLocation::first-letter{
+  text-transform: uppercase !important;
+}
 .hrlinetr {
   border-bottom: 1px solid #e5e5e5 !important;
   padding: 0PX 6px !important;
