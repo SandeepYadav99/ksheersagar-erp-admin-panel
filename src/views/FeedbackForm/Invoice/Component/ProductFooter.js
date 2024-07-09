@@ -5,7 +5,7 @@ const ProductFooter = ({ posOder }) => {
     <div>
       <div className={styles.totalInvoice}>
         <div className={styles.titleTotal}>Total</div>
-        <div className={styles.titleTotal}>₹{posOder?.cart.prices?.total}</div>
+        <div className={styles.titleTotal}>₹{posOder?.cart?.prices?.total}</div>
       </div>
       <div className={styles.totalInvoice}>
         <div className={styles.titleTotal}>Discount</div>
@@ -18,13 +18,13 @@ const ProductFooter = ({ posOder }) => {
       <div className={styles.totalInvoice}>
         <div className={styles.titleTotal}>Net Payable</div>
         <div className={styles.titleTotal}>
-          ₹{posOder?.cart.prices?.subtotal || 0}
+          ₹{posOder?.cart?.prices?.subtotal || 0}
         </div>
       </div>
       <div className={styles.totalInvoice}>
         <div className={styles.titleTotalWord}>Amount in words</div>
         <div className={styles.titleTotal}>
-          {posOder?.cart.prices?.subtotalText || "N/A"}
+          {posOder?.cart?.prices?.subtotalText || "N/A"}
         </div>
       </div>
     </div>

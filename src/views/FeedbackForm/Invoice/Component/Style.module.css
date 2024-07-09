@@ -118,7 +118,7 @@
     padding: 0px 6px !important;
 
   }
-  @media screen and (max-width: 412px) {
+  @media screen and (max-width: 428px) {
     .myTable{
       width: 350px !important ;
       padding: 15px !important;
@@ -127,7 +127,9 @@
   @media screen and (max-width: 350px) {
     .myTable{
       width: 300px !important ;
-      padding: 25px !important;
+      padding: 10px !important;
+      
     }
+ 
   }
 

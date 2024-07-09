@@ -21,7 +21,7 @@ const GstTable = ({posOder, calculateOriginalPrice}) => {
         <tbody>
           {posOder?.cart?.products?.map((product) => {
             const originalPriceIs = calculateOriginalPrice(
-              posOder?.cart.prices?.subtotal,
+              posOder?.cart?.prices?.subtotal,
               product?.product?.gst_slab
             );
             // CGST , SGST
