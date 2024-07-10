@@ -6,6 +6,7 @@ import { getWorkingDays } from "../../../helper/helper";
 
 const ShiftDetailView = ({ shiftDays }) => {
   const renderShift = useCallback((shift) => {
+    
     if (shift?.is_week_off && !shift?.is_occasional_working) {
       return (
         <div className={styles.avatorSubFlex} key={shift?.name}>

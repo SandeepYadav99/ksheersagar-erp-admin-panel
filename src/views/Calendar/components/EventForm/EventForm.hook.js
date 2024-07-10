@@ -139,7 +139,9 @@ const useEventFormHook = ({ isOpen, handleToggle, editData, renderList }) => {
         if (!res.error) {
           handleToggle();
           renderList();
-          SnackbarUtils.success("Request Approved");
+          SnackbarUtils.success(
+            `${editData?.id ? "Updated" : "Created"} successfully`
+          );
         } else {
           SnackbarUtils.error(res?.message);
         }

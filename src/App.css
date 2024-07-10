@@ -1034,10 +1034,16 @@ font-size: medium;
     padding-top: 5px;
   }
   .rbc-button-link {
-    color: #75757a;
+    color: #75757a !important;
     font-weight: 500 !important;
-    font-size: 1rem;
-    margin-bottom: 10px;
+    font-size: 1rem !important;
+    margin-bottom: 10px!important;
+  }
+  .rbc-now{
+    color: #75757a !important;
+    font-weight: 500 !important;
+    font-size: 1rem !important;
+    margin-bottom: 10px!important;
   }
   .rbc-time-slot {
     color: #75757a;

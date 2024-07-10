@@ -105,6 +105,9 @@ const useShiftsCreateHook = ({
 
       req.then((res) => {
         if (!res.error) {
+          SnackbarUtils.success(
+            `Shift ${editData?.id ? "updated" : "created"} successfully`
+          );
           handleToggleSidePannel();
           dispatch(actionFetchShifts(1, {}, {}));
         } else {
@@ -113,9 +116,9 @@ const useShiftsCreateHook = ({
         setIsSubmitting(false);
       });
     } else {
-      SnackbarUtils.error("Please select any any slot");
+      SnackbarUtils.error("Please select at least one slot");
     }
-    setIsSubmitting(false)
+    setIsSubmitting(false);
   }, [form, isSubmitting, setIsSubmitting, editData, handleToggleSidePannel]);
 
   const handleSubmit = useCallback(async () => {

@@ -202,7 +202,10 @@ const AssociatedEmployees = ({ listData, id }) => {
         side={"right"}
         arrowBack={true}
       >
+        {
+          isSidePanel && 
         <AddEmployeeTable isOpen={isSidePanel} handleClose={handleSideToggle} />
+        }
       </SidePanelComponent>
     </PageBoxComponent>
   );
