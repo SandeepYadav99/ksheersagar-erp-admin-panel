@@ -23,7 +23,7 @@ const GstFooter = ({ posOder }) => {
         <td className={styles.titleTotal}>Return Amount</td>
         <td colSpan={4}></td>
         <td className={styles.titleTotal} colSpan={4}>
-        {posOder?.billing?.return ? `₹${posOder?.billing?.return}` : "N/A"}
+        ₹{posOder?.billing?.return} 
          
         </td>
       </tr>
