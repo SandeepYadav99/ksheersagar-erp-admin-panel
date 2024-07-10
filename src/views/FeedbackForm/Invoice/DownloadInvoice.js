@@ -6,7 +6,7 @@ import InvoiceHook from "./InvoiceHook";
 import DigitalItemTable from "./ItemTable";
 const DownloadInvoice = () => {
   const { invoiceDetails, myParam } = InvoiceHook();
-  const { posOder, employeeDetail, customerDetail } = invoiceDetails || {};
+  const { posOder, employeeDetail, customerDetail , fssai_no} = invoiceDetails || {};
   const [selectedRating, setSelectedRating] = useState(null);
   const [overAll, setOverAll] = useState("");
 
@@ -43,7 +43,7 @@ const DownloadInvoice = () => {
           </span>
         </p>
         <p className={styles.subTitle}>
-          FSSAI No.:<strong>{employeeDetail?.location?.fssai_number || "N/A"}</strong>{" "}
+          FSSAI No.:<strong>{fssai_no || "N/A"}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
           CIN No.:<strong>{employeeDetail?.location?.cin}</strong>{" "}
