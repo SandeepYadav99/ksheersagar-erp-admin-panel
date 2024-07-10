@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from "./Style.module.css"
 import GstFooter from './GstFooter';
-const GstTable = ({posOder, calculateOriginalPrice}) => {
+const GstTable = ({posOder}) => {
   return (
     <>
  <table className={styles.myTable}>
@@ -19,22 +19,8 @@ const GstTable = ({posOder, calculateOriginalPrice}) => {
         </thead>
 
         <tbody>
-          {posOder?.cart?.products?.map((product) => {
-            const originalPriceIs = calculateOriginalPrice(
-              posOder?.cart.prices?.subtotal,
-              product?.product?.gst_slab
-            );
-            // CGST , SGST
-            const calculateCgst = (originalPriceIs, gstSlab) => {
-              return ((originalPriceIs * gstSlab) / 100) / 2;
-            };
-            // TOTAL 
-            const total =
-              originalPriceIs +
-              product?.product?.gst_slab / 2 +
-              calculateCgst(originalPriceIs, product?.product?.gst_slab) +
-              calculateCgst(originalPriceIs, product?.product?.gst_slab);
-              
+          {posOder?.products?.map((product) => {
+           
             return (
               <>
              
@@ -42,35 +28,28 @@ const GstTable = ({posOder, calculateOriginalPrice}) => {
                 
                   <td>
                     {" "}
-                    {product?.product?.gst_slab
-                      ? `${product?.product?.gst_slab}%`
+                    {product?.gst
+                      ? `${product?.gst}%`
                       : "0%"}
                   </td>
                   
-                  <td>₹ {originalPriceIs?.toFixed(2)}</td>
+                  <td>₹{product?.taxable_price || "N/A"}</td>
                   <td>
-                    ₹{" "}
-                    {calculateCgst(
-                      originalPriceIs,
-                      product?.product?.gst_slab
-                    ).toFixed(2)}
+                    ₹{(product?.gst/2)?.toFixed(2)}
                   </td>
                   <td>
-                  ₹{calculateCgst(
-                      originalPriceIs,
-                      product?.product?.gst_slab
-                    ).toFixed(2)}
+                  ₹{(product?.gst/2)?.toFixed(2)}
                   </td>
 
                   <td>₹0</td>
-                  <td>₹{total ? total.toFixed(2) : "0"}</td>
+                  <td>₹{product?.price ? product?.price?.toFixed(2) : "0"}</td>
                 </tr>
                 <br />
               </>
             );
           })}
       
-          <GstFooter/>
+          <GstFooter posOder={posOder}/>
         </tbody>
       </table>
     </>

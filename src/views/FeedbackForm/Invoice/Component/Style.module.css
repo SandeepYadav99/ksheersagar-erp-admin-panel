@@ -11,7 +11,7 @@
   } */
   .myTable th,
   .myTable td {
-    padding: 10px 0px;
+    padding: 10px 8px;
   }
   
   .myTable th {
@@ -63,6 +63,15 @@
     color: #161616 !important;
     font-weight: 600 !important;
     margin-bottom: 5px !important
+  }
+  .titleTotalWords{
+    font-size: 12px !important;
+    color: #161616 !important;
+    font-weight: 600 !important;
+    margin-bottom: 5px !important
+  }
+  .titleTotalWords::first-letter{
+    text-transform: uppercase !important;
   }
   .titleTotalWord {
     font-size: 12px !important;
@@ -118,7 +127,7 @@
     padding: 0px 6px !important;
 
   }
-  @media screen and (max-width: 412px) {
+  @media screen and (max-width: 428px) {
     .myTable{
       width: 350px !important ;
       padding: 15px !important;
@@ -127,7 +136,9 @@
   @media screen and (max-width: 350px) {
     .myTable{
       width: 300px !important ;
-      padding: 25px !important;
+      padding: 10px !important;
+      
     }
+ 
   }
 
