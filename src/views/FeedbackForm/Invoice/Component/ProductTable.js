@@ -26,7 +26,7 @@ const ProductTable = ({ posOder }) => {
                   {product?.qty} {product?.unit}
                 </td>
                 <td>₹{product?.list_price}</td>
-                <td> {product?.gst ? `${product?.gst}%` : "0%"}</td>
+                <td> {product?.gst_slab? `${product?.gst_slab}%` : "0%"}</td>
                 <td>₹{product?.price}</td>
               </tr>
             );

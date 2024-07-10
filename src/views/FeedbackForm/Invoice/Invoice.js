@@ -32,43 +32,42 @@ const Invoice = () => {
           {employeeDetail?.location?.address}
         </p>
         <p className={styles.subTitle}>
-          Phone No.:
-          <strong>{employeeDetail?.location?.contact || "N/A"}</strong>{" "}
+          Phone No.: <strong>{employeeDetail?.location?.contact || "N/A"}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
-          GSTIN:<strong>{employeeDetail?.location?.gstin}</strong>{" "}
+          GSTIN: <strong>{employeeDetail?.location?.gstin}</strong>{" "}
           <span className={styles.stateCode}>
             {" "}
             State Code: <strong>{employeeDetail?.location?.state_code}</strong>
           </span>
         </p>
         <p className={styles.subTitle}>
-          FSSAI No.:<strong>{fssai_no || "N/A"}</strong>{" "}
+          FSSAI No.: <strong>{fssai_no || "N/A"}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
-          CIN No.:<strong>{employeeDetail?.location?.cin}</strong>{" "}
+          CIN No.: <strong>{employeeDetail?.location?.cin}</strong>{" "}
         </p>
         <div className={styles.gaps} />
         <hr className={styles.hrLine} />
         {/* Invoice Detail */}
         <p className={styles.title}>Invoice Details</p>
         <p className={styles.subTitle}>
-          Invoice No.:<strong>{invoiceDetails?.invoice_no}</strong>{" "}
+          Invoice No.: <strong>{invoiceDetails?.invoice_no}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
-          Date & Time:<strong>{posOder?.orderData}</strong>{" "}
+          Date & Time: <strong>{posOder?.orderData}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
-          Cashier:<strong>{posOder?.employee?.name_en}</strong>
+          Cashier: <strong>{posOder?.employee?.name_en}</strong>
           <span className={styles.stateCode}>
             Cashier Code: <strong>{posOder?.employee?.emp_code}</strong>
           </span>
         </p>
         <p className={styles.subTitle}>
-          Mode of Payment:<strong>{posOder?.transection?.type}</strong>{" "}
+          Mode of Payment: <strong>{posOder?.transection?.type}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
-          Place of Supply:<strong>{employeeDetail?.location?.city}</strong>{" "}
+          Place of Supply: <strong>{employeeDetail?.location?.city}</strong>{" "}
         </p>
         <div className={styles.gaps} />
         <hr className={styles.hrLine} />
@@ -76,19 +75,19 @@ const Invoice = () => {
         {/* customer Detail */}
         <p className={styles.title}>Customer Details</p>
         <p className={styles.subTitle}>
-          Name:<strong>{posOder?.customer?.name}</strong>{" "}
+          Name: <strong>{posOder?.customer?.name}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
-          Contact No:<strong> {posOder?.customer?.contact}</strong>{" "}
+          Contact No: <strong> {posOder?.customer?.contact}</strong>{" "}
         </p>
         {customerDetail?.business_name && (
           <p className={styles.subTitle}>
-            Company Name:<strong>{customerDetail?.business_name}</strong>{" "}
+            Company Name: <strong>{customerDetail?.business_name}</strong>{" "}
           </p>
         )}
         {customerDetail?.gst_no && (
           <p className={styles.subTitle}>
-            GSTIN:<strong> {employeeDetail?.location?.gstin}</strong>{" "}
+            GSTIN: <strong> {employeeDetail?.location?.gstin}</strong>{" "}
           </p>
         )}
 

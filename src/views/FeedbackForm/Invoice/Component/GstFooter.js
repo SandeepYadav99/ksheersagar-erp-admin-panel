@@ -1,13 +1,14 @@
 import React from "react";
 import styles from "./Style.module.css";
 const GstFooter = ({ posOder }) => {
+  
   return (
     <>
       <tr className={styles.hrlinetrTender}>
         <td className={styles.titleTotal}>Tender Tax</td>
         <td colSpan={4}></td>
         <td className={styles.titleTotal} colSpan={4}>
-          ₹{posOder?.prices?.total}
+          ₹{posOder?.prices?.gst}
         </td>
       </tr>
 
@@ -22,7 +23,8 @@ const GstFooter = ({ posOder }) => {
         <td className={styles.titleTotal}>Return Amount</td>
         <td colSpan={4}></td>
         <td className={styles.titleTotal} colSpan={4}>
-          ₹{posOder?.billing?.received}
+        {posOder?.billing?.return ? `₹${posOder?.billing?.return}` : "N/A"}
+         
         </td>
       </tr>
     </>
