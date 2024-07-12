@@ -20,6 +20,7 @@ const GstTable = ({posOder}) => {
 
         <tbody>
           {posOder?.products?.map((product) => {
+        
            
             return (
               <>
@@ -28,8 +29,8 @@ const GstTable = ({posOder}) => {
                 
                   <td>
                     {" "}
-                    {product?.gst
-                      ? `${product?.gst}%`
+                    {product?.gst_slab
+                      ? `${product?.gst_slab}%`
                       : "0%"}
                   </td>
                   
@@ -42,7 +43,7 @@ const GstTable = ({posOder}) => {
                   </td>
 
                   <td>₹0</td>
-                  <td>₹{product?.price ? product?.price?.toFixed(2) : "0"}</td>
+                  <td>₹{product?.gst ? product?.gst?.toFixed(2) : "0"}</td>
                 </tr>
                 <br />
               </>
