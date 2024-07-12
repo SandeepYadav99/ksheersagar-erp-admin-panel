@@ -25,6 +25,15 @@ const days = [
   "Friday",
   "Saturday",
 ];
+const getWeekDays = {
+  Sunday: 0,
+  Monday: 1,
+  Tuesday: 2,
+  Wednesday: 3,
+  Thursday: 4,
+  Friday: 5,
+  Saturday: 6,
+};
 const useShiftsCreateHook = ({
   handleToggleSidePannel,
   isSidePanel,
@@ -42,6 +51,7 @@ const useShiftsCreateHook = ({
       return {
         ...shiftdays,
         name: item,
+        week_day:getWeekDays[item]
       };
     });
   }, [shiftdays]);
