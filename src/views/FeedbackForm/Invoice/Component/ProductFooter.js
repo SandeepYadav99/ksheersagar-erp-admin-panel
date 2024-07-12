@@ -18,7 +18,7 @@ const ProductFooter = ({ posOder }) => {
       <div className={styles.totalInvoice}>
         <div className={styles.titleTotal}>Net Payable</div>
         <div className={styles.titleTotal}>
-          ₹{posOder?.prices?.subtotal || 0}
+          ₹{posOder?.prices?.total || 0}
         </div>
       </div>
       <div className={styles.totalInvoice}>
