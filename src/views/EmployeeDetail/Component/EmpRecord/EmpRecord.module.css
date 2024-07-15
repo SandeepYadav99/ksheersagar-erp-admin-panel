@@ -81,9 +81,12 @@
   outline: none;
 }
 .event_status{
-  margin-top: 15px;
+  /* margin-top: 15px; */
   font-size: 14px !important;
   outline: none !important;
+}
+.event_status::first-letter{
+  text-transform: uppercase !important;
 }
 
 .modal-open {

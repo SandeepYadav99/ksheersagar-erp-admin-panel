@@ -8,20 +8,28 @@ import { serviceGetEmployMonthData } from "../../../../services/Employee.service
 import styles from "./EmpRecord.module.css";
 import AddEmployRecord_Dilog from "../AddEmployRecord_Dilog/AddEmployRecord_Dilog";
 import {
-  capitalizeFirstLetter,
+
   getGetterBgColor,
   getGetterTextColor,
 } from "../../../../helper/AttendanceView";
 import { ArrowBackIos, ArrowForwardIos } from "@material-ui/icons";
 import { ButtonBase } from "@material-ui/core";
 
+const allViews = Object.keys(Views).map((k) => Views[k]);
+
+const ColoredDateCellWrapper = ({ children }) =>
+  React.cloneElement(React.Children.only(children), {
+    style: {
+      backgroundColor: "lightblue",
+    },
+  });
 
 const JobCalendarComponent = ({ id }) => {
   const [events, setEvents] = useState([]);
   const [isApprovalPopUp, setIsApprovalPopUp] = useState(false);
   const [formValue, setFormValue] = useState({});
   const [startDate, setStartDate] = useState("");
- 
+  const [endDate, setEndDate] = useState("");
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const toggleApprovalDialog = useCallback(
@@ -44,21 +52,17 @@ const JobCalendarComponent = ({ id }) => {
       employee_id: id,
       month,
       year,
-      // start_date,
-      // end_date
     });
     const monthData = req?.data?.month_data;
     const holiday = req?.data?.holidays;
     if (!req?.error) {
       const data = [...monthData, ...holiday];
       console.log(data);
-      const newEvents = monthData?.map((val) => ({
+      const newEvents = data?.map((val, index) => ({
         start: moment(val.date),
         end: moment(val.date),
-        type: val.status,
-        title: capitalizeFirstLetter(
-          val.status.toLowerCase().replaceAll("_", " ")
-        ),
+        type: val?.status === "HOLIDAY" ? val.holiday_type : val?.status,
+        title: val?.status === "HOLIDAY" ? val.holiday_type : val?.status,
       }));
       setEvents(newEvents);
     }
@@ -79,7 +83,6 @@ const JobCalendarComponent = ({ id }) => {
           color: textColor,
           marginTop: "-10px",
           textAlign: "justify",
-       
         },
       };
     },
@@ -108,7 +111,7 @@ const JobCalendarComponent = ({ id }) => {
     ({ event }) => (
       <div className="custom-event">
         <div className={styles.event_status}>
-          {event.title.replaceAll("_", " ")}
+          {event.title?.toLowerCase().replaceAll("_", " ")}
         </div>
         {/* <div className="event-date">{moment(event.start).format("DD")}</div> */}
       </div>
@@ -143,13 +146,10 @@ const JobCalendarComponent = ({ id }) => {
       </div>
       <div style={{ marginTop: "20px" }} />
       <Calendar
-        // views={[Views.MONTH]}
-        // components={{
-        //   timeSlotWrapper: ColoredDateCellWrapper,
-        //   event: CustomEventComponent,
-        // }}
-
+        views={[Views.MONTH]}
         components={{
+          timeSlotWrapper: ColoredDateCellWrapper,
+          event: CustomEventComponent,
           toolbar: CustomToolbar,
         }}
         onNavigate={handleNavigation}
@@ -157,11 +157,10 @@ const JobCalendarComponent = ({ id }) => {
         defaultDate={new Date()}
         eventPropGetter={eventPropGetter}
         defaultView="month"
-       
         events={events}
         style={{ padding: "20px", height: "90vh" }}
         onSelectEvent={handleEventClick}
-        // date={selectedDate?.$d && selectedDate?.$d}
+       
       />
       {isApprovalPopUp && (
         <AddEmployRecord_Dilog

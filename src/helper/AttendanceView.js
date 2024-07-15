@@ -1,10 +1,10 @@
 export const capitalizeFirstLetter = (str) => {
-  if (str[0] === str[0].toUpperCase()) {
+  if (str[0] === str[0]?.toUpperCase()) {
     // First letter is already capitalized, return as is
     return str;
   } else {
     // Capitalize the first letter
-    return str.charAt(0).toUpperCase() + str.slice(1);
+    return str?.charAt(0)?.toUpperCase() + str?.slice(1);
   }
 };
 
