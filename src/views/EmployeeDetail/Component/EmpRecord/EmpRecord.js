@@ -64,7 +64,7 @@ const JobCalendarComponent = ({ id }) => {
         start: moment(val.date),
         end: moment(val.date),
         type: val.status,
-        title: capitalizeFirstLetter(val.status.toLowerCase()),
+        title: capitalizeFirstLetter(val.status.toLowerCase()?.replaceAll("_", " ")),
       }));
       setEvents(newEvents);
     }
