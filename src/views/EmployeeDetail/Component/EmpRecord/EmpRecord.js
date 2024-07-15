@@ -15,21 +15,13 @@ import {
 import { ArrowBackIos, ArrowForwardIos } from "@material-ui/icons";
 import { ButtonBase } from "@material-ui/core";
 
-const allViews = Object.keys(Views).map((k) => Views[k]);
-
-const ColoredDateCellWrapper = ({ children }) =>
-  React.cloneElement(React.Children.only(children), {
-    style: {
-      backgroundColor: "lightblue",
-    },
-  });
 
 const JobCalendarComponent = ({ id }) => {
   const [events, setEvents] = useState([]);
   const [isApprovalPopUp, setIsApprovalPopUp] = useState(false);
   const [formValue, setFormValue] = useState({});
   const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+ 
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const toggleApprovalDialog = useCallback(
@@ -48,9 +40,6 @@ const JobCalendarComponent = ({ id }) => {
     const month = moment(new Date(date)).format("MM");
     const year = moment(new Date(date)).format("YYYY");
 
-    const start_date = moment(date).format("YYYY-MM-DD");
-    const end_date = moment(date).format("YYYY-MM-DD");
-
     const req = await serviceGetEmployMonthData({
       employee_id: id,
       month,
@@ -58,13 +47,18 @@ const JobCalendarComponent = ({ id }) => {
       // start_date,
       // end_date
     });
+    const monthData = req?.data?.month_data;
+    const holiday = req?.data?.holidays;
     if (!req?.error) {
-      const data = req.data.month_data;
-      const newEvents = data?.map((val) => ({
+      const data = [...monthData, ...holiday];
+      console.log(data);
+      const newEvents = monthData?.map((val) => ({
         start: moment(val.date),
         end: moment(val.date),
         type: val.status,
-        title: capitalizeFirstLetter(val.status.toLowerCase()?.replaceAll("_", " ")),
+        title: capitalizeFirstLetter(
+          val.status.toLowerCase().replaceAll("_", " ")
+        ),
       }));
       setEvents(newEvents);
     }
@@ -77,15 +71,14 @@ const JobCalendarComponent = ({ id }) => {
 
   const eventPropGetter = useCallback(
     (event) => {
-      let backgroundColor = getGetterBgColor(event?.type); 
+      let backgroundColor = getGetterBgColor(event?.type);
       let textColor = getGetterTextColor(event?.type);
       return {
-       
         style: {
           backgroundColor: backgroundColor,
           color: textColor,
-          marginTop: '-10px',
-          textAlign:"justify"
+          marginTop: "-10px",
+          textAlign: "justify",
        
         },
       };
@@ -130,37 +123,32 @@ const JobCalendarComponent = ({ id }) => {
           <ButtonBase onClick={() => onNavigate("PREV")}>
             <ArrowBackIos fontSize={"small"} className={styles.backIcon} />
           </ButtonBase>
-            <span className={styles.label}>{label}</span>
+          <span className={styles.label}>{label}</span>
           <ButtonBase onClick={() => onNavigate("NEXT")}>
-            <ArrowForwardIos
-              fontSize={"small"}
-              className={styles.backIcon}
-            />
+            <ArrowForwardIos fontSize={"small"} className={styles.backIcon} />
           </ButtonBase>
         </div>
         <div className={styles.subHoliday}>
-        <div className={styles.titleIs}>(H)-Holiday</div>
-        <div className={styles.titleIs}>(RH)-Restricted Holiday</div>
-        <div className={styles.titleIs}>(O)-Optional Holiday</div>
-      </div>
-       
+          <div className={styles.titleIs}>(H)-Holiday</div>
+          <div className={styles.titleIs}>(RH)-Restricted Holiday</div>
+          <div className={styles.titleIs}>(O)-Optional Holiday</div>
+        </div>
       </div>
     );
   };
   return (
     <div className={styles.plainPaper}>
       <div className={styles.holiday}>
-
-      <div>Attendance Record</div>
-   
+        <div>Attendance Record</div>
       </div>
       <div style={{ marginTop: "20px" }} />
       <Calendar
-        views={[Views.MONTH]}
+        // views={[Views.MONTH]}
         // components={{
         //   timeSlotWrapper: ColoredDateCellWrapper,
         //   event: CustomEventComponent,
         // }}
+
         components={{
           toolbar: CustomToolbar,
         }}
@@ -169,10 +157,11 @@ const JobCalendarComponent = ({ id }) => {
         defaultDate={new Date()}
         eventPropGetter={eventPropGetter}
         defaultView="month"
-        events={events}
        
+        events={events}
         style={{ padding: "20px", height: "90vh" }}
         onSelectEvent={handleEventClick}
+        // date={selectedDate?.$d && selectedDate?.$d}
       />
       {isApprovalPopUp && (
         <AddEmployRecord_Dilog
