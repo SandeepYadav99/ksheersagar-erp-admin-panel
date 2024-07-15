@@ -7,6 +7,11 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import { serviceGetEmployMonthData } from "../../../../services/Employee.service";
 import styles from "./EmpRecord.module.css";
 import AddEmployRecord_Dilog from "../AddEmployRecord_Dilog/AddEmployRecord_Dilog";
+import {
+  capitalizeFirstLetter,
+  getGetterBgColor,
+  getGetterTextColor,
+} from "../../../../helper/AttendanceView";
 
 const allViews = Object.keys(Views).map((k) => Views[k]);
 
@@ -36,7 +41,8 @@ const JobCalendarComponent = ({ id }) => {
     [isApprovalPopUp, formValue]
   );
 
-  const getData = async (date ) => { // date = new Date()
+  const getData = async (date) => {
+    // date = new Date()
     const month = moment(new Date(date)).format("MM");
     const year = moment(new Date(date)).format("YYYY");
 
@@ -56,7 +62,7 @@ const JobCalendarComponent = ({ id }) => {
         start: moment(val.date),
         end: moment(val.date),
         type: val.status,
-        title: val.status,
+        title: capitalizeFirstLetter(val.status.toLowerCase()),
       }));
       setEvents(newEvents);
     }
@@ -67,158 +73,23 @@ const JobCalendarComponent = ({ id }) => {
     setCurrentDate(d);
   }, []);
 
-  const eventPropGetter = useCallback((e) => {
-    if (e.type === "ABSENT") {
+  const eventPropGetter = useCallback(
+    (event) => {
+      let backgroundColor = getGetterBgColor(event?.type); 
+      let textColor = getGetterTextColor(event?.type);
       return {
-        className: "status_absendt",
         style: {
-          backgroundColor: "#FFE4E2",
-          color: "#FF493F",
+          backgroundColor: backgroundColor,
+          color: textColor,
           outline: "none",
           fontSize: "10px",
-          textAlign: "bottom",
-          padding: "20px",
+          textAlign: "center",
+       
         },
       };
-    } else if (e.type === "PRESENT") {
-      return {
-        className: "deliverySlot",
-        style: {
-          backgroundColor: "#EDFCED",
-          color: "#0E9717",
-
-          padding: "20px",
-          outline: "none",
-          fontSize: "10px",
-        },
-      };
-    } else if (e.type === "HALF_DAY") {
-      return {
-        className: "deliverySlot",
-        style: {
-          backgroundColor: "#F3EDFE",
-          color: "#7848CB",
-
-          padding: "20px",
-          outline: "none",
-          fontSize: "10px",
-        },
-      };
-    } else if (e.type === "OFF_DUTY") {
-      return {
-        className: "deliverySlot",
-        style: {
-          backgroundColor: "#FFE4E2",
-          color: "#FF493F",
-
-          padding: "20px",
-          outline: "none",
-          fontSize: "10px",
-        },
-      };
-    } else if (e.type === "LEAVE") {
-      return {
-        className: "deliverySlot",
-        style: {
-          backgroundColor: "#EDFCED",
-          color: "#0E9717",
-
-          padding: "20px",
-          outline: "none",
-          fontSize: "10px",
-        },
-      };
-    } else if (e.type === "Full_Day") {
-      return {
-        className: "deliverySlot",
-        style: {
-          backgroundColor: "#FCEDFB",
-          color: "#CB48B7",
-
-          padding: "20px",
-          outline: "none",
-          fontSize: "10px",
-        },
-      };
-    } else if (e.type === "ON_DUTY") {
-      return {
-        className: "deliverySlot",
-        style: {
-          backgroundColor: "#EDFCED",
-          color: "#0E9717",
-
-          padding: "20px",
-          outline: "none",
-          fontSize: "10px",
-        },
-      };
-    } else if (e.type === "HOLIDAY") {
-      return {
-        className: "deliverySlot",
-        style: {
-          backgroundColor: "#FCFAED",
-          color: "#D6B820",
-
-          padding: "20px",
-          outline: "none",
-          fontSize: "10px",
-        },
-      };
-    } else if (e.type === "WEEKEND") {
-      return {
-        className: "deliverySlot",
-        style: {
-          backgroundColor: "#EBFCFC",
-          color: "#0D9191",
-
-          padding: "20px",
-          outline: "none",
-          fontSize: "10px",
-        },
-      };
-    }else if (e.type === "DUTY_DONE") {
-      return {
-        className: "deliverySlot",
-        style: {
-          backgroundColor: "#EBFCFC",
-          color: "#0D9191",
-
-          padding: "20px",
-          outline: "none",
-          fontSize: "10px",
-        },
-      };
-    } else if (e.type === "N/A") {
-      return {
-        className: "deliverySlot",
-        style: {
-          backgroundColor: "#EEF3FF",
-          color: "#919BB0",
-
-          padding: "20px",
-          outline: "none",
-          fontSize: "10px",
-        },
-      };
-    } else if (e.type === "ON_BREAK") {
-      return {
-        className: "deliverySlot",
-        style: {
-          backgroundColor: "#FCF5ED",
-          color: "#FFA60C",
-
-          padding: "20px",
-          outline: "none",
-          fontSize: "10px",
-        },
-      };
-    }
-    return {
-      style: {
-        border: "none",
-      },
-    };
-  }, []);
+    },
+    [getGetterBgColor, getGetterTextColor]
+  );
 
   useEffect(() => {
     getData(currentDate);
@@ -241,7 +112,9 @@ const JobCalendarComponent = ({ id }) => {
   const CustomEventComponent = useCallback(
     ({ event }) => (
       <div className="custom-event">
-        <div className={styles.event_status}>{event.title.replaceAll('_', " ")}</div>
+        <div className={styles.event_status}>
+          {event.title.replaceAll("_", " ")}
+        </div>
         {/* <div className="event-date">{moment(event.start).format("DD")}</div> */}
       </div>
     ),
@@ -264,9 +137,9 @@ const JobCalendarComponent = ({ id }) => {
         eventPropGetter={eventPropGetter}
         defaultView="month"
         events={events}
+        popup
         style={{ padding: "20px", height: "90vh" }}
         onSelectEvent={handleEventClick}
-       
       />
       {isApprovalPopUp && (
         <AddEmployRecord_Dilog
