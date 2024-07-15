@@ -83,7 +83,7 @@ const JobCalendarComponent = ({ id }) => {
           color: textColor,
           outline: "none",
           fontSize: "10px",
-          textAlign: "center",
+          // textAlign: "center",
        
         },
       };
