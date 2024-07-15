@@ -78,12 +78,11 @@ const JobCalendarComponent = ({ id }) => {
       let backgroundColor = getGetterBgColor(event?.type); 
       let textColor = getGetterTextColor(event?.type);
       return {
+       
         style: {
           backgroundColor: backgroundColor,
           color: textColor,
-          outline: "none",
-          fontSize: "10px",
-          // textAlign: "center",
+         
        
         },
       };
@@ -123,7 +122,15 @@ const JobCalendarComponent = ({ id }) => {
 
   return (
     <div className={styles.plainPaper}>
+      <div className={styles.holiday}>
+
       <div>Attendance Record</div>
+      <div className={styles.subHoliday}>
+        <div >(H) - Holiday</div>
+        <div>(RH) - Restricted Holiday</div>
+        <div>(O) - Optional Holiday</div>
+      </div>
+      </div>
       <div style={{ marginTop: "20px" }} />
       <Calendar
         views={[Views.MONTH]}
@@ -131,13 +138,14 @@ const JobCalendarComponent = ({ id }) => {
           timeSlotWrapper: ColoredDateCellWrapper,
           event: CustomEventComponent,
         }}
+      
         onNavigate={handleNavigation}
         localizer={localizer}
         defaultDate={new Date()}
         eventPropGetter={eventPropGetter}
         defaultView="month"
         events={events}
-        popup
+       
         style={{ padding: "20px", height: "90vh" }}
         onSelectEvent={handleEventClick}
       />

@@ -77,17 +77,28 @@
   outline: none;
 }
 .half_day {
-  background-color: #edfced;
-  color: #0e9717;
-  font-size: 10px;
-  margin-top: 50px;
+ 
+  font-size: 10px !important;
+  /* margin-top: 50px; */
   outline: none;
 }
 .event_status{
-  /* margin-top: -15px; */
+  margin-top: 15px;
+  font-size: 14px !important;
+  outline: none !important;
 }
 
 .modal-open {
   overflow: hidden;
   z-index: 0;
+}
+.holiday{
+  display: flex !important;
+  justify-content: space-between;
+}
+.subHoliday{
+  display: flex !important;
+  gap: 5px !important;
+  font-size: 14px !important;
+  color: #161616 !important;
 }
