@@ -12,6 +12,8 @@ import {
   getGetterBgColor,
   getGetterTextColor,
 } from "../../../../helper/AttendanceView";
+import { ArrowBackIos, ArrowForwardIos } from "@material-ui/icons";
+import { ButtonBase } from "@material-ui/core";
 
 const allViews = Object.keys(Views).map((k) => Views[k]);
 
@@ -82,7 +84,7 @@ const JobCalendarComponent = ({ id }) => {
         style: {
           backgroundColor: backgroundColor,
           color: textColor,
-          marginTop: '-20px',
+          marginTop: '-10px',
           textAlign:"justify"
        
         },
@@ -121,25 +123,47 @@ const JobCalendarComponent = ({ id }) => {
     []
   );
 
+  const CustomToolbar = ({ label, onNavigate, onView }) => {
+    return (
+      <div className={styles.toolWrapper}>
+        <div className={styles.upperWrap}>
+          <ButtonBase onClick={() => onNavigate("PREV")}>
+            <ArrowBackIos fontSize={"small"} className={styles.backIcon} />
+          </ButtonBase>
+            <span className={styles.label}>{label}</span>
+          <ButtonBase onClick={() => onNavigate("NEXT")}>
+            <ArrowForwardIos
+              fontSize={"small"}
+              className={styles.backIcon}
+            />
+          </ButtonBase>
+        </div>
+        <div className={styles.subHoliday}>
+        <div className={styles.titleIs}>(H)-Holiday</div>
+        <div className={styles.titleIs}>(RH)-Restricted Holiday</div>
+        <div className={styles.titleIs}>(O)-Optional Holiday</div>
+      </div>
+       
+      </div>
+    );
+  };
   return (
     <div className={styles.plainPaper}>
       <div className={styles.holiday}>
 
       <div>Attendance Record</div>
-      <div className={styles.subHoliday}>
-        <div >(H) - Holiday</div>
-        <div>(RH) - Restricted Holiday</div>
-        <div>(O) - Optional Holiday</div>
-      </div>
+   
       </div>
       <div style={{ marginTop: "20px" }} />
       <Calendar
         views={[Views.MONTH]}
+        // components={{
+        //   timeSlotWrapper: ColoredDateCellWrapper,
+        //   event: CustomEventComponent,
+        // }}
         components={{
-          timeSlotWrapper: ColoredDateCellWrapper,
-          event: CustomEventComponent,
+          toolbar: CustomToolbar,
         }}
-      
         onNavigate={handleNavigation}
         localizer={localizer}
         defaultDate={new Date()}
