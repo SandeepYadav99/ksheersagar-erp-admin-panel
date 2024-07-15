@@ -82,7 +82,8 @@ const JobCalendarComponent = ({ id }) => {
         style: {
           backgroundColor: backgroundColor,
           color: textColor,
-         
+          marginTop: '-20px',
+          textAlign:"justify"
        
         },
       };
