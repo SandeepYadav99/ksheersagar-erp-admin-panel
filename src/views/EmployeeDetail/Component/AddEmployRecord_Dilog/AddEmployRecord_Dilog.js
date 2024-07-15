@@ -50,7 +50,7 @@ const AddEmployRecord_Dilog = ({
     serviceGetEmployLogs({ employee_id: id, date: date }).then((res) => {
       setDetails(res?.data);
     });
-  }, [date]);
+  }, [date, id]);
 
   const tableStructure = useMemo(() => {
     return [
