@@ -5,6 +5,7 @@
     font-size: 12px !important;
     color: #161616 !important;
     width: 450px !important;
+   
   }
   /* .gaps {
     margin-top: 10px;
@@ -12,6 +13,7 @@
   .myTable th,
   .myTable td {
     padding: 10px 2px;
+ 
   }
   
   .myTable th {
@@ -32,8 +34,9 @@
   }
   @media screen and (max-width: 768px) {
     .myTable{
-      width: 345px !important ;
+      max-width: 360px !important ;
       padding: 20px !important;
+      
     }
     
   
