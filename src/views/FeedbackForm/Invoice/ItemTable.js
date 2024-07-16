@@ -6,7 +6,7 @@ import GstTable from "./Component/GstTable";
 
 const DigitalItemTable = ({ posOder }) => {
   return (
-    <div>
+    <div className={styles.tableView}>
       <ProductTable posOder={posOder} />
       <div className={styles.gaps} />
       <ProductFooter posOder={posOder} />

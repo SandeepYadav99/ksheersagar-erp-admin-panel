@@ -1,6 +1,7 @@
 .container {
   display: flex;
   justify-content: center;
+
 }
 .headerContainer {
   /* margin: 5rem auto !important; */
@@ -11,19 +12,21 @@
   width: 450px !important;
   height: auto !important;
   align-items: center;
+  overflow: hidden !important;
 }
-@media screen and (max-width: 428px) {
+@media screen and (max-width: 768px) {
   .headerContainer{
-    width: 350px !important ;
-    padding: 15px !important;
+    width: 380px !important ;
+    padding: 10px !important;
   }
+  
 }
-@media screen and (max-width: 350px) {
+/* @media screen and (max-width: 320px) {
   .headerContainer{
     width: 300px !important ;
     padding: 10px !important;
   }
-}
+} */
 
 .logo {
   text-align: center;
