@@ -121,15 +121,15 @@ const JobCalendarComponent = ({ id }) => {
     ({ event }) => (
       <div className="custom-event">
         <div className={styles.event_status}>
-          <span>
-            {event.title === "PRESENT" || event.type === "HOLIDAY" ? (
+     
+          {event.title?.toLowerCase().replaceAll("_", " ")}
+          {event.title  === "PRESENT" || event.type === "HOLIDAY" && (
               <span>
-                ({event?.holiday?.substring(0, 1)}) {event.holidayName}
+         
+             {event?.holiday  && `(${event?.holiday?.substring(0, 1)})`} 
+             {event.holidayName}
               </span>
-            ) : (
-              event.title?.toLowerCase().replaceAll("_", " ")
-            )}
-          </span>
+             ) } 
         </div>
       </div>
     ),
