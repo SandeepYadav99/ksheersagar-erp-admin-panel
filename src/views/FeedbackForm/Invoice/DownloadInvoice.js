@@ -43,7 +43,7 @@ const DownloadInvoice = () => {
           </span>
         </p>
         <p className={styles.subTitle}>
-          FSSAI No.: <strong>{fssai_no || "N/A"}</strong>{" "}
+          FSSAI No.: <strong>{employeeDetail?.location?.fssai_number || "N/A"}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
           CIN No.: <strong>{employeeDetail?.location?.cin}</strong>{" "}

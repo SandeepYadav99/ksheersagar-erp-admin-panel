@@ -14,7 +14,7 @@ import InvoiceHook from "./InvoiceHook";
 const Invoice = () => {
   // const [invoiceDetails, setInvoiceDetails] = useState();
   const { invoiceDetails, myParam } = InvoiceHook();
-  const { posOder, employeeDetail, customerDetail , fssai_no} = invoiceDetails || {};
+  const { posOder, employeeDetail, customerDetail , fssai_number} = invoiceDetails || {};
   
   return (
     <div className={styles.container}>
@@ -42,7 +42,7 @@ const Invoice = () => {
           </span>
         </p>
         <p className={styles.subTitle}>
-          FSSAI No.: <strong>{fssai_no || "N/A"}</strong>{" "}
+          FSSAI No.: <strong>{employeeDetail?.location?.fssai_number || "N/A"}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
           CIN No.: <strong>{employeeDetail?.location?.cin}</strong>{" "}
@@ -196,9 +196,9 @@ const Invoice = () => {
           </p>
           <div className={styles.footerlink}>
             <a
-              href={`${"/download/invoice"}?invoice_no=${
-                invoiceDetails?.invoice_no
-              }`}
+            target="_blank"
+              href={posOder?.invoice}
+              rel="no-referrer noreferrer"
             >
               Download Now
             </a>
