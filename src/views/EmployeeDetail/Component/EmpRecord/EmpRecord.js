@@ -8,7 +8,6 @@ import { serviceGetEmployMonthData } from "../../../../services/Employee.service
 import styles from "./EmpRecord.module.css";
 import AddEmployRecord_Dilog from "../AddEmployRecord_Dilog/AddEmployRecord_Dilog";
 import {
-
   getGetterBgColor,
   getGetterTextColor,
 } from "../../../../helper/AttendanceView";
@@ -57,46 +56,48 @@ const JobCalendarComponent = ({ id }) => {
     const holiday = req?.data?.holidays;
     if (!req?.error) {
       const data = [...monthData, ...holiday];
- 
+
       const newEvents = monthData?.map((val, index) => ({
         start: moment(val.date),
         end: moment(val.date),
-        type:  val?.status,
-        title:  val?.status,
+        type: val?.status,
+        title: val?.status,
       }));
-      holiday?.forEach((singleVal)=>{
+      holiday?.forEach((singleVal) => {
         newEvents?.push({
           start: moment(singleVal.start_date),
           end: moment(singleVal.end_date),
-          type:  "HOLIDAY",
-          title:  'HOLIDAY',
-        })
-      })
-    
+          type: "HOLIDAY",
+            //  title:  singleVal?.type,
+          holiday: singleVal?.holiday_type,
+          holidayName: singleVal?.name,
+        });
+      });
+
       setEvents(newEvents);
     }
   };
 
-  const handleNavigation = useCallback((d, c, e, f) => {
-    getData(d);
-    setCurrentDate(d);
-  }, [getData]);
-
-  const eventPropGetter = useCallback(
-    (event) => {
-      let backgroundColor = getGetterBgColor(event?.type);
-      let textColor = getGetterTextColor(event?.type);
-      return {
-        style: {
-          backgroundColor: backgroundColor,
-          color: textColor,
-          marginTop: "-10px",
-          textAlign: "justify",
-        },
-      };
+  const handleNavigation = useCallback(
+    (d, c, e, f) => {
+      getData(d);
+      setCurrentDate(d);
     },
-    []
+    [getData]
   );
+
+  const eventPropGetter = useCallback((event) => {
+    let backgroundColor = getGetterBgColor(event?.type);
+    let textColor = getGetterTextColor(event?.type);
+    return {
+      style: {
+        backgroundColor: backgroundColor,
+        color: textColor,
+        marginTop: "-10px",
+        textAlign: "justify",
+      },
+    };
+  }, []);
 
   useEffect(() => {
     getData(currentDate);
@@ -120,9 +121,17 @@ const JobCalendarComponent = ({ id }) => {
     ({ event }) => (
       <div className="custom-event">
         <div className={styles.event_status}>
-          {event.title?.toLowerCase().replaceAll("_", " ")}
+         
+            <span>{event.title?.toLowerCase().replaceAll("_", " ")}</span>
+            {event.type === "PRESENT" || event.type === "HOLIDAY" ? <>
+             
+              {event?.holiday && (
+                <span>({event?.holiday?.substring(1, 2)})</span>
+              )}
+              <span>{event?.holidayName}</span>{" "}
+            </>: <></>}
+
         </div>
-        {/* <div className="event-date">{moment(event.start).format("DD")}</div> */}
       </div>
     ),
     []
@@ -155,7 +164,7 @@ const JobCalendarComponent = ({ id }) => {
       </div>
       <div style={{ marginTop: "20px" }} />
       <Calendar
-        // views={[Views.MONTH]}
+        views={[Views.MONTH]}
         components={{
           timeSlotWrapper: ColoredDateCellWrapper,
           event: CustomEventComponent,
@@ -167,9 +176,12 @@ const JobCalendarComponent = ({ id }) => {
         eventPropGetter={eventPropGetter}
         defaultView="month"
         events={events}
+        showAllEvents={false}
+        resizable
+        popup
+        selectable
         style={{ padding: "20px", height: "90vh" }}
         onSelectEvent={handleEventClick}
-       
       />
       {isApprovalPopUp && (
         <AddEmployRecord_Dilog
