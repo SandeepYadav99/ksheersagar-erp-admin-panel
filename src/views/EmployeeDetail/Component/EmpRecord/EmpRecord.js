@@ -29,7 +29,7 @@ const JobCalendarComponent = ({ id }) => {
   const [isApprovalPopUp, setIsApprovalPopUp] = useState(false);
   const [formValue, setFormValue] = useState({});
   const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const toggleApprovalDialog = useCallback(
@@ -57,13 +57,22 @@ const JobCalendarComponent = ({ id }) => {
     const holiday = req?.data?.holidays;
     if (!req?.error) {
       const data = [...monthData, ...holiday];
-      console.log(data);
-      const newEvents = data?.map((val, index) => ({
+ 
+      const newEvents = monthData?.map((val, index) => ({
         start: moment(val.date),
         end: moment(val.date),
-        type: val?.status === "HOLIDAY" ? val.holiday_type : val?.status,
-        title: val?.status === "HOLIDAY" ? val.holiday_type : val?.status,
+        type:  val?.status,
+        title:  val?.status,
       }));
+      holiday?.forEach((singleVal)=>{
+        newEvents?.push({
+          start: moment(singleVal.start_date),
+          end: moment(singleVal.end_date),
+          type:  "HOLIDAY",
+          title:  'HOLIDAY',
+        })
+      })
+    
       setEvents(newEvents);
     }
   };
@@ -71,7 +80,7 @@ const JobCalendarComponent = ({ id }) => {
   const handleNavigation = useCallback((d, c, e, f) => {
     getData(d);
     setCurrentDate(d);
-  }, []);
+  }, [getData]);
 
   const eventPropGetter = useCallback(
     (event) => {
@@ -86,7 +95,7 @@ const JobCalendarComponent = ({ id }) => {
         },
       };
     },
-    [getGetterBgColor, getGetterTextColor]
+    []
   );
 
   useEffect(() => {
@@ -146,7 +155,7 @@ const JobCalendarComponent = ({ id }) => {
       </div>
       <div style={{ marginTop: "20px" }} />
       <Calendar
-        views={[Views.MONTH]}
+        // views={[Views.MONTH]}
         components={{
           timeSlotWrapper: ColoredDateCellWrapper,
           event: CustomEventComponent,
