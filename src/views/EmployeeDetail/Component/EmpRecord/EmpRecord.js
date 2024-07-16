@@ -68,9 +68,9 @@ const JobCalendarComponent = ({ id }) => {
           start: moment(singleVal.start_date),
           end: moment(singleVal.end_date),
           type: "HOLIDAY",
-            title:  singleVal?.name,
+          // title: singleVal?.name,
           holiday: singleVal?.holiday_type,
-          // holidayName: singleVal?.name,
+           holidayName: singleVal?.name,
         });
       });
 
@@ -121,8 +121,15 @@ const JobCalendarComponent = ({ id }) => {
     ({ event }) => (
       <div className="custom-event">
         <div className={styles.event_status}>
-          <span>{event.title === "PRESENT" || event.type === "HOLIDAY"  ? <span>({event?.holiday?.substring(0, 1)}) {event.title?.toLowerCase().replaceAll("_", " ")}</span>:  event.title?.toLowerCase().replaceAll("_", " ")}</span>
-          
+          <span>
+            {event.title === "PRESENT" || event.type === "HOLIDAY" ? (
+              <span>
+                ({event?.holiday?.substring(0, 1)}) {event.holidayName}
+              </span>
+            ) : (
+              event.title?.toLowerCase().replaceAll("_", " ")
+            )}
+          </span>
         </div>
       </div>
     ),
