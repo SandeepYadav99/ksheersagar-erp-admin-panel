@@ -27,6 +27,15 @@ const GstFooter = ({ posOder }) => {
          
         </td>
       </tr>
+      {posOder?.customer?.type === "PRIVILEGED" && 
+      <tr className={styles.hrlinetrTenderTop}>
+        <td className={styles.titleTotal}>Balance Amount</td>
+        <td colSpan={4}></td>
+        <td className={styles.titleTotal} colSpan={4}>
+        ₹{posOder?.prices?.total_due} 
+         
+        </td>
+      </tr>}
     </>
   );
 };

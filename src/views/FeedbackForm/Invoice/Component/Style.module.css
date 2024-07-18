@@ -131,6 +131,11 @@
     padding: 0px 6px !important;
     
   }
+  .hrlinetrTenderTop {
+    border-top: 1px solid #e5e5e5 !important;
+    padding: 0px 6px !important;
+    
+  }
   .hrlinetr {
     border-bottom: 1px solid #e5e5e5 !important;
     padding: 0px 6px !important;

@@ -9,7 +9,7 @@ const ProductFooter = ({ posOder }) => {
       </div>
       <div className={styles.totalInvoice}>
         <div className={styles.titleTotal}>Discount</div>
-        <div className={styles.titleTotal}>₹0.00</div>
+        <div className={styles.titleTotal}>₹{posOder?.prices?.discount?.toFixed(2)}</div>
       </div>
       <div className={styles.totalInvoice}>
         <div className={styles.titleTotal}>Round Off</div>
