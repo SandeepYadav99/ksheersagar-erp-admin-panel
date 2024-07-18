@@ -85,9 +85,9 @@ const Invoice = () => {
             Company Name: <strong>{customerDetail?.business_name}</strong>{" "}
           </p>
         )}
-        {customerDetail?.gst_no && (
+        {customerDetail?.gst_no !== "null" && (
           <p className={styles.subTitle}>
-            GSTIN: <strong> {employeeDetail?.location?.gstin}</strong>{" "}
+            GSTIN: <strong> {customerDetail?.gst_no}</strong>{" "}
           </p>
         )}
 
