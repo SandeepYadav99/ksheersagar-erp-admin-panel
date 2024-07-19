@@ -14,7 +14,7 @@ import InvoiceHook from "./InvoiceHook";
 const Invoice = () => {
   // const [invoiceDetails, setInvoiceDetails] = useState();
   const { invoiceDetails, myParam } = InvoiceHook();
-  const { posOder, employeeDetail, customerDetail , fssai_no} = invoiceDetails || {};
+  const { posOder, employeeDetail, customerDetail , fssai_no, posTransection } = invoiceDetails || {};
   
   return (
     <div className={styles.container}>
@@ -80,16 +80,17 @@ const Invoice = () => {
         <p className={styles.subTitle}>
           Contact No: <strong> {posOder?.customer?.contact}</strong>{" "}
         </p>
-        {customerDetail?.business_name && (
+        {posTransection?.invoice_type === "GST" && (
+          <>
           <p className={styles.subTitle}>
             Company Name: <strong>{customerDetail?.business_name}</strong>{" "}
           </p>
-        )}
-        {customerDetail?.gst_no !== "null" && (
           <p className={styles.subTitle}>
-            GSTIN: <strong> {customerDetail?.gst_no}</strong>{" "}
+            GSTIN: <strong> {customerDetail?.gst_no !== "null" && customerDetail?.gst_no}</strong>{" "}
           </p>
+          </>
         )}
+     
 
         <div className={styles.gaps} />
         <hr className={styles.hrLine} />
