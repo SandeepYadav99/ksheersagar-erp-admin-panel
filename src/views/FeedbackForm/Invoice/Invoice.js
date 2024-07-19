@@ -14,7 +14,7 @@ import InvoiceHook from "./InvoiceHook";
 const Invoice = () => {
   // const [invoiceDetails, setInvoiceDetails] = useState();
   const { invoiceDetails, myParam } = InvoiceHook();
-  const { posOder, employeeDetail, customerDetail , fssai_number} = invoiceDetails || {};
+  const { posOder, employeeDetail, customerDetail , fssai_no} = invoiceDetails || {};
   
   return (
     <div className={styles.container}>
@@ -42,7 +42,7 @@ const Invoice = () => {
           </span>
         </p>
         <p className={styles.subTitle}>
-          FSSAI No.: <strong>{employeeDetail?.location?.fssai_number || "N/A"}</strong>{" "}
+          FSSAI No.: <strong>{fssai_no || "N/A"}</strong>{" "}
         </p>
         <p className={styles.subTitle}>
           CIN No.: <strong>{employeeDetail?.location?.cin}</strong>{" "}

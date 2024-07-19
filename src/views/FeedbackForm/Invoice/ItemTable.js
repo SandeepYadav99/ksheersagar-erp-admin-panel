@@ -9,7 +9,9 @@ const DigitalItemTable = ({ posOder }) => {
     <div className={styles.tableView}>
       <ProductTable posOder={posOder} />
       <div className={styles.gaps} />
-      <ProductFooter posOder={posOder} />
+      <div className={styles.productFooterView}>
+        <ProductFooter posOder={posOder} />
+      </div>
       <GstTable posOder={posOder} />
       <hr className={styles.hrLine} />
     </div>

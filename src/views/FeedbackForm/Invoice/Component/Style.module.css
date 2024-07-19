@@ -34,12 +34,10 @@
   }
   @media screen and (max-width: 768px) {
     .myTable{
-      max-width: 360px !important ;
+      max-width: 340px !important ;
       padding: 20px !important;
       
     }
-    
-  
   }
   .bgColorRow {
     background-color: #ecf7ff;

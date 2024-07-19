@@ -19,7 +19,10 @@
     width: 380px !important ;
     padding: 10px !important;
   }
-  
+.productFooterView{
+  padding: 8px !important;
+  margin-left: -10px !important;
+}
 }
 /* @media screen and (max-width: 320px) {
   .headerContainer{
