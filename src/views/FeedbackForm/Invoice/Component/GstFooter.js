@@ -4,38 +4,41 @@ const GstFooter = ({ posOder }) => {
   
   return (
     <>
-      <tr className={styles.hrlinetrTender}>
-        <td className={styles.titleTotal}>Tender Tax</td>
-        <td colSpan={4}></td>
-        <td className={styles.titleTotal} colSpan={4}>
+      {/* <tr className={styles.hrlinetrTender}> */}
+        <div className={styles.totalInvoice1}>
+        <div className={styles.titleTotal}>Tender Tax</div>
+        {/* <td colSpan={4}></td> */}
+        <div className={styles.titleTotal} colSpan={4}>
           ₹{posOder?.prices?.gst}
-        </td>
-      </tr>
+        </div>
 
-      <tr>
-        <td className={styles.titleTotal}>Tender Amount</td>
-        <td colSpan={4}></td>
-        <td className={styles.titleTotal} colSpan={1}>
+        </div>
+      {/* </tr> */}
+
+      <div className={styles.totalInvoice}>
+        <div className={styles.titleTotal}>Tender Amount</div>
+        {/* <td colSpan={4}></td> */}
+        <div className={styles.titleTotal} colSpan={1}>
           ₹{posOder?.prices?.total}
-        </td>
-      </tr>
-      <tr>
-        <td className={styles.titleTotal}>Return Amount</td>
-        <td colSpan={4}></td>
-        <td className={styles.titleTotal} colSpan={4}>
+        </div>
+      </div>
+      <div className={styles.totalInvoice}>
+        <div className={styles.titleTotal}>Return Amount</div>
+        {/* <td colSpan={4}></td> */}
+        <div className={styles.titleTotal} colSpan={4}>
         ₹{posOder?.billing?.return} 
          
-        </td>
-      </tr>
+        </div>
+      </div>
       {posOder?.customer?.type === "PRIVILEGED" && 
-      <tr className={styles.hrlinetrTenderTop}>
-        <td className={styles.titleTotal}>Balance Amount</td>
-        <td colSpan={4}></td>
-        <td className={styles.titleTotal} colSpan={4}>
+      <div className={styles.totalInvoice1}>
+        <div className={styles.titleTotal}>Balance Amount</div>
+        {/* <td colSpan={4}></td> */}
+        <div className={styles.titleTotal} colSpan={4}>
         ₹{posOder?.prices?.total_due} 
          
-        </td>
-      </tr>}
+        </div>
+      </div>}
     </>
   );
 };

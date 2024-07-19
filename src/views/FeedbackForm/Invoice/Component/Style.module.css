@@ -5,7 +5,7 @@
     font-size: 12px !important;
     color: #161616 !important;
     width: 450px !important;
-   
+  
   }
   /* .gaps {
     margin-top: 10px;
@@ -22,6 +22,7 @@
   
   .myTable td {
     /* text-align: center !important; */
+    
   }
   
   .noBorder {
@@ -30,7 +31,7 @@
   
   .bgColor4Cols {
     background-color: #d6e7fb !important;
-    width: auto !important;
+    width: 330px !important;
   }
   @media screen and (max-width: 768px) {
     .myTable{
@@ -38,6 +39,10 @@
       padding: 20px !important;
       
     }
+   
+    /* .bgColor4Cols{
+      max-width: 250px !important;
+    } */
   }
   .bgColorRow {
     background-color: #ecf7ff;
@@ -62,6 +67,15 @@
     align-items: center !important;
     padding: 0px 14px 0px 6px !important;
     margin-bottom: 8px !important;
+  }
+  .totalInvoice1 {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 0px 14px 0px 6px !important;
+    margin-bottom: 8px !important;
+    border-bottom: 1px solid #e5e5e5 !important;
+    
   }
   .hrLine {
     border: 1px solid #e5e5e5 !important;

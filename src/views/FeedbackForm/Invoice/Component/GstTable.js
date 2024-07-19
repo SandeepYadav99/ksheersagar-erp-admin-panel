@@ -20,7 +20,7 @@ const GstTable = ({ posOder }) => {
   });
 
   return (
-    <>
+    <div style={{overflowX:"scroll"}}>
       <table className={styles.myTable}>
         <thead>
           <tr className={styles.bgColor4Cols}>
@@ -76,10 +76,10 @@ const GstTable = ({ posOder }) => {
             }
           })}  */}
 
-          <GstFooter posOder={posOder} />
+        
         </tbody>
       </table>
-    </>
+    </div>
   );
 };
 

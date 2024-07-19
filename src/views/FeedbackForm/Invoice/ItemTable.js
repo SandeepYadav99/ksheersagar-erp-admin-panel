@@ -3,6 +3,7 @@ import styles from "./styles.module.css";
 import ProductTable from "./Component/ProductTable";
 import ProductFooter from "./Component/ProductFooter";
 import GstTable from "./Component/GstTable";
+import GstFooter from "./Component/GstFooter";
 
 const DigitalItemTable = ({ posOder }) => {
   return (
@@ -13,6 +14,7 @@ const DigitalItemTable = ({ posOder }) => {
         <ProductFooter posOder={posOder} />
       </div>
       <GstTable posOder={posOder} />
+      <GstFooter posOder={posOder} />
       <hr className={styles.hrLine} />
     </div>
   );

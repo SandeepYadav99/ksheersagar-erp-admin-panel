@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./Style.module.css";
 const ProductTable = ({ posOder }) => {
   return (
-    <>
+    <div style={{overflowX:"scroll"}}>
       <table className={styles.myTable}>
         <thead>
           <tr className={styles.bgColor4Cols}>
@@ -33,7 +33,7 @@ const ProductTable = ({ posOder }) => {
           })}
         </tbody>
       </table>
-    </>
+    </div>
   );
 };
 
