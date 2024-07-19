@@ -8,6 +8,11 @@ import { useState } from "react";
 import { serviceGetEmployLogs } from "../../../../services/Employee.service";
 import { Close } from "@material-ui/icons";
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+
 const useStyles = makeStyles((theme) => ({
   flex: {
     display: "flex",
@@ -23,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   closeBtn: {
     position: "absolute",
     right: "10px",
-    top: "10px",
+    // top: "10px",
   },
   container: {
     overflow: "auto",
@@ -39,9 +44,7 @@ const AddEmployRecord_Dilog = ({
   handleClose,
 }) => {
   const classes = useStyles();
-  const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-  });
+ 
 
   const [details, setDetails] = useState([]);
 
@@ -125,7 +128,7 @@ const AddEmployRecord_Dilog = ({
     <div>
       <Dialog
         onBackdropClick={() => {}}
-        keepMounted
+        // keepMounted
         fullWidth={true}
         maxWidth={"md"}
         TransitionComponent={Transition}
@@ -133,8 +136,8 @@ const AddEmployRecord_Dilog = ({
         onClose={() => {
           handleClose();
         }}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+        // aria-labelledby="alert-dialog-title"
+        // aria-describedby="alert-dialog-description"
       >
         <>
           <div className={styles.headerContainer}>
