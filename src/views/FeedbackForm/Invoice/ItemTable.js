@@ -14,7 +14,9 @@ const DigitalItemTable = ({ posOder }) => {
         <ProductFooter posOder={posOder} />
       </div>
       <GstTable posOder={posOder} />
-      <GstFooter posOder={posOder} />
+      <div className={styles.productFooterView}>
+        <GstFooter posOder={posOder} />
+      </div>
       <hr className={styles.hrLine} />
     </div>
   );

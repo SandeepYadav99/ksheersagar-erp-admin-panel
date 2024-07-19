@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./Style.module.css";
 const ProductTable = ({ posOder }) => {
   return (
-    <div style={{overflowX:"scroll"}}>
+    <div style={{overflowX:"auto"}}>
       <table className={styles.myTable}>
         <thead>
           <tr className={styles.bgColor4Cols}>
