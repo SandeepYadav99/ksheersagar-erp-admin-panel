@@ -258,3 +258,14 @@ export const getWorkingDays = {
   4: "Fouth",
   5:"Fifth"
 };
+
+export const getFixedValue = (val) => {
+  const num = Number(val);
+  if (num === 0) {
+    return 0;
+  } else if (num === 1) {
+    return 170;
+  } else if (num === 2) {
+    return 340;
+  }
+};

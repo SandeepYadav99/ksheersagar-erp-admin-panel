@@ -2,7 +2,97 @@
 import { useCallback, useEffect, useMemo,  useState } from "react";
 import historyUtils from "../../../libs/history.utils";
 import { serviceGetList } from "../../../services/index.services";
-
+const datas =[
+    {
+       
+        "comparisionData": [
+            {
+                "_id": "667cf3c82c90259aaa4a829d",
+               
+                "employee": {
+                    "emp_code": "777777011234321",
+                    "id": "667cf3c62c90259aaa4a8292",
+                    "name": "JYOTSANA BEKTA",
+                    "location": "ISLL-Head Office"
+                },
+                "status":{
+                    "name":"ACTIVE",
+                },
+                "designation": {
+                    "name": "Advisor Corporate Affairs",
+                    "code": "ADVISOR-CORPORATE-AFFAIRS",
+                    "id": "64216a0524a9d5a4bd5f87d5"
+                },
+                "grade": {
+                    "name": "Junior Management",
+                    "code": "G6",
+                    "id": "63bfc505422c82b9e2531e69"
+                },
+                "cadre": {
+                    "name": "E-0",
+                    "code": "E-0",
+                    "id": "63bfc532422c82b9e2531e72"
+                },
+                "createdAtText": "27/06/2024",
+                "effectiveDateText": "01/03/2024",
+                "lastEffectiveDateText": "N/A"
+            }
+        ]
+    },
+    {
+       
+        "comparisionData": [
+            {
+                "_id": "668d3370233cd5956972c578",
+              
+                "deputation_allowance": 0,
+                "employee_id": "668d336d233cd5956972c567",
+                "grade_id": "63bfc561422c82b9e2531e78",
+                "cadre_id": "63bfc578422c82b9e2531e7d",
+                "designation_id": "63d79d1de67b56303faa11a0",
+                "salary_notes": "",
+                "createdAt": "2024-07-09T12:07:12.957Z",
+                "last_effective_date": "2024-06-30T07:48:00.000Z",
+                "id": "668d3370233cd5956972c578",
+                "employee": {
+                    "emp_code": "90191",
+                    "id": "668d336d233cd5956972c567",
+                    "name": "Amit singh",
+                    "location": "ISLL- R&D"
+                },
+                "designation": {
+                    "name": "Sr Executive",
+                    "code": "SR-EXECUTIVE",
+                    "id": "63d79d1de67b56303faa11a0"
+                },
+                "location": {
+                    "name": "chandigarh",
+                    "code": "SR-EXECUTIVE",
+                    "id": "63d79d1de67b56303faa11a0"
+                },
+                "grade": {
+                    "name": "Staff",
+                    "code": "G7",
+                    "id": "63bfc561422c82b9e2531e78"
+                },
+                "cadre": {
+                    "name": "S-2",
+                    "code": "S-2",
+                    "id": "63bfc578422c82b9e2531e7d"
+                },
+                "createdAtText": "09/07/2024",
+                "effectiveDateText": "N/A",
+                "lastEffectiveDateText": "30/06/2024"
+            },
+          
+        ]
+    },
+    
+   
+   
+   
+    
+]
 const totalShow = 50;
 const useMusterReportHook= ({}) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -38,7 +128,7 @@ const useMusterReportHook= ({}) => {
     }, [ setIsCalling]);
 
     useEffect(() => {
-        setData(apiData);
+        setData(datas);
     }, [apiData]);
 
     const handleDownload = useCallback(() => {
