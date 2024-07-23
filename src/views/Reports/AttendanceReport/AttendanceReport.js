@@ -90,7 +90,7 @@ const AttendanceReport = ({}) => {
         key: "location",
         label: "LOCATION",
         sortable: false,
-        render: (temp, all) => <div>{}</div>,
+        render: (temp, all) => <div>{"N/A"}</div>,
       },
       {
         key: "punch_in_time",

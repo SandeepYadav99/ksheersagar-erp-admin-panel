@@ -84,7 +84,7 @@ const ShiftWiseReport = ({}) => {
         key: "location",
         label: "LOCATION",
         sortable: false,
-        render: (temp, all) => <div>{}</div>,
+        render: (temp, all) => <div>{"N/A"}</div>,
       },
       {
         key: "shift_name",
