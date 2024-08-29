@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Router, Route, Switch} from "react-router-dom";
+import {Router} from "react-router-dom";
 import {MuiThemeProvider, createTheme} from '@material-ui/core/styles';
 import RouteComponent from './routes/index.route';
 import './App.css';
